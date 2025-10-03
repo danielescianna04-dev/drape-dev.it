@@ -2796,13 +2796,15 @@ footer {
     }
     
     .table-header,
-    .table-row {
+    .table-row,
+    .table-footer {
         min-width: 700px;
         font-size: 13px;
+        grid-template-columns: 150px repeat(5, 110px);
     }
     
     .feature-name {
-        min-width: 120px;
+        min-width: 150px;
         font-size: 13px;
         padding: 12px 10px;
     }
@@ -2819,6 +2821,10 @@ footer {
     
     .table-footer {
         font-size: 12px;
+    }
+    
+    .footer-cell {
+        padding: 12px 8px;
     }
     
     .score-big {
