@@ -347,29 +347,40 @@ if (contactForm) {
 }
 
 // MOBILE MENU TOGGLE
-document.addEventListener('DOMContentLoaded', () => {
-    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
+const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+const navLinks = document.querySelector('.nav-links');
 
-    if (mobileMenuToggle && navLinks) {
-        mobileMenuToggle.addEventListener('click', (e) => {
-            e.preventDefault();
-            mobileMenuToggle.classList.toggle('active');
-            navLinks.classList.toggle('active');
-            console.log('Menu toggled:', navLinks.classList.contains('active'));
-        });
+console.log('Mobile menu toggle:', mobileMenuToggle);
+console.log('Nav links:', navLinks);
+
+if (mobileMenuToggle && navLinks) {
+    mobileMenuToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         
-        // Close menu when clicking on a link
-        const navLinksItems = document.querySelectorAll('.nav-links a');
-        navLinksItems.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenuToggle.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
+        const isActive = navLinks.classList.contains('active');
+        
+        if (isActive) {
+            mobileMenuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+        } else {
+            mobileMenuToggle.classList.add('active');
+            navLinks.classList.add('active');
+        }
+        
+        console.log('Menu is now:', navLinks.classList.contains('active') ? 'open' : 'closed');
+    });
+    
+    // Close menu when clicking on a link
+    const navLinksItems = document.querySelectorAll('.nav-links a');
+    navLinksItems.forEach(function(link) {
+        link.addEventListener('click', function() {
+            mobileMenuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
         });
-    } else {
-        console.error('Mobile menu elements not found');
-    }
-});
+    });
+} else {
+    console.error('Mobile menu elements not found!');
+}
 
 console.log('🚀 Drape - Animations loaded successfully!');
