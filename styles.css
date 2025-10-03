@@ -2105,15 +2105,6 @@ tbody tr:hover {
     margin-top: 20px;
 }
 
-@media (max-width: 768px) {
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-    
-    .cta-form {
-        padding: 30px 20px;
-    }
-}
 
 /* ============================================
    CTA SECTION
@@ -2854,6 +2845,14 @@ footer {
     
     .market-trends li {
         font-size: 14px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .cta-form {
+        padding: 30px 20px;
     }
 }
 
