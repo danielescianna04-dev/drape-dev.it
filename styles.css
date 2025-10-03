@@ -2479,20 +2479,20 @@ footer {
     }
     
     .problem-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 15px;
     }
     
     .problem-card {
-        padding: 20px 15px;
+        padding: 24px 18px;
     }
     
     .problem-card h3 {
-        font-size: 16px;
+        font-size: 17px;
     }
     
     .problem-card p {
-        font-size: 13px;
+        font-size: 14px;
     }
     
     .pricing-grid {
@@ -2545,6 +2545,62 @@ footer {
     
     .use-case-stats span {
         font-size: 12px;
+    }
+    
+    .projection-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .projection {
+        padding: 24px 18px;
+    }
+    
+    .projection h4 {
+        font-size: 18px;
+    }
+    
+    .projection p {
+        font-size: 14px;
+    }
+    
+    .revenue {
+        font-size: 24px;
+    }
+    
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .team-card {
+        padding: 30px 20px;
+    }
+    
+    .team-avatar {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .avatar-placeholder {
+        font-size: 28px;
+    }
+    
+    .team-card h3 {
+        font-size: 20px;
+    }
+    
+    .team-role {
+        font-size: 12px;
+    }
+    
+    .team-bio {
+        font-size: 14px;
+    }
+    
+    .cta-stats {
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
     
     .market-grid {
@@ -2813,19 +2869,19 @@ footer {
     }
     
     .problem-grid {
-        gap: 10px;
+        gap: 12px;
     }
     
     .problem-card {
-        padding: 15px 10px;
+        padding: 20px 15px;
     }
     
     .problem-card h3 {
-        font-size: 14px;
+        font-size: 16px;
     }
     
     .problem-card p {
-        font-size: 12px;
+        font-size: 13px;
     }
     
     .pricing-grid {
@@ -2881,6 +2937,67 @@ footer {
     
     .use-case-stats span {
         font-size: 11px;
+    }
+    
+    .projection-grid {
+        gap: 15px;
+    }
+    
+    .projection {
+        padding: 20px 15px;
+    }
+    
+    .projection h4 {
+        font-size: 16px;
+    }
+    
+    .projection p {
+        font-size: 13px;
+    }
+    
+    .revenue {
+        font-size: 22px;
+    }
+    
+    .team-grid {
+        gap: 15px;
+    }
+    
+    .team-card {
+        padding: 25px 15px;
+    }
+    
+    .team-avatar {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .avatar-placeholder {
+        font-size: 24px;
+    }
+    
+    .team-card h3 {
+        font-size: 18px;
+    }
+    
+    .team-role {
+        font-size: 11px;
+    }
+    
+    .team-bio {
+        font-size: 13px;
+    }
+    
+    .cta-stat {
+        padding: 20px 15px;
+    }
+    
+    .stat-value {
+        font-size: 28px;
+    }
+    
+    .stat-label {
+        font-size: 13px;
     }
     
     .feature,
