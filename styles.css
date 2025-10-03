@@ -2313,300 +2313,6 @@ footer {
 /* ============================================
    RESPONSIVE DESIGN
    ============================================ */
-@media (max-width: 768px) {
-    body {
-        cursor: auto;
-    }
-    
-    .cursor-dot,
-    .cursor-outline {
-        display: none;
-    }
-    
-    .hero {
-        min-height: auto;
-        padding: 80px 0 60px;
-    }
-    
-    .hero h1 {
-        font-size: 32px;
-    }
-    
-    .hero-subtitle {
-        font-size: 16px;
-    }
-    
-    .hero-stats {
-        flex-direction: column;
-        gap: 30px;
-    }
-    
-    .code-demo {
-        margin: 40px auto;
-    }
-    
-    .phone-mockup {
-        width: 250px;
-        height: 500px;
-    }
-    
-    .nav-links {
-        display: none;
-    }
-    
-    .section {
-        padding: 60px 0;
-    }
-    
-    .section h2 {
-        font-size: 28px;
-    }
-    
-    .problem-grid,
-    .solution-features,
-    .market-grid,
-    .pricing-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .comparison-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .drape-card {
-        transform: scale(1);
-    }
-    
-    .drape-card:hover {
-        transform: scale(1) translateY(-5px);
-    }
-    
-    .traction-content {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-    
-    .ai-demo {
-        flex-direction: column;
-        gap: 40px;
-    }
-    
-    .cta-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .btn-primary,
-    .btn-secondary {
-        width: 100%;
-        max-width: 300px;
-    }
-    
-    .footer-content {
-        flex-direction: column;
-        gap: 20px;
-        text-align: center;
-    }
-    
-    .footer-links {
-        flex-direction: column;
-        gap: 15px;
-    }
-    
-    .pricing-card.featured {
-        transform: scale(1);
-    }
-    
-    .floating-shape {
-        display: none;
-    }
-    
-    table {
-        font-size: 14px;
-    }
-    
-    th, td {
-        padding: 12px 8px;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero h1 {
-        font-size: 24px;
-    }
-    
-    .stat-number {
-        font-size: 36px;
-    }
-    
-    .market-value {
-        font-size: 36px;
-    }
-    
-    .price {
-        font-size: 36px;
-    }
-    
-    .logo-circle {
-        width: 60px;
-        height: 60px;
-        font-size: 24px;
-    }
-    
-    .score-value {
-        font-size: 24px;
-    }
-}
-
-/* ============================================
-   SMOOTH SCROLLING
-   ============================================ */
-html {
-    scroll-behavior: smooth;
-}
-
-/* ============================================
-   SELECTION STYLING
-   ============================================ */
-::selection {
-    background: var(--primary);
-    color: white;
-}
-
-::-moz-selection {
-    background: var(--primary);
-    color: white;
-}
-
-/* ============================================
-   SCROLLBAR STYLING
-   ============================================ */
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: #000000;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--primary);
-    border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-dark);
-}
-
-/* ============================================
-   LOADING ANIMATION
-   ============================================ */
-@keyframes shimmer {
-    0% {
-        background-position: -1000px 0;
-    }
-    100% {
-        background-position: 1000px 0;
-    }
-}
-
-.loading {
-    animation: shimmer 2s infinite;
-    background: linear-gradient(to right, #0a0a0a 4%, #000000 25%, #0a0a0a 36%);
-    background-size: 1000px 100%;
-}
-
-    transition: width 0.6s, height 0.6s;
-}
-
-.btn-primary:hover::before,
-.btn-secondary:hover::before {
-    width: 300px;
-    height: 300px;
-}
-
-.btn-primary {
-    background: white;
-    color: var(--primary);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-.btn-primary:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-
-.btn-secondary {
-    background: transparent;
-    color: white;
-    border: 2px solid white;
-}
-
-.btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateY(-5px);
-}
-
-/* Footer */
-footer {
-    background: var(--dark-light);
-    padding: 60px 0 30px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
-
-.footer-logo {
-    font-size: 24px;
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.footer-links {
-    display: flex;
-    gap: 30px;
-}
-
-.footer-links a {
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.footer-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--primary);
-    transition: width 0.3s ease;
-}
-
-.footer-links a:hover::after {
-    width: 100%;
-}
-
-.footer-links a:hover {
-    color: var(--text);
-}
-
-.copyright {
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 14px;
-}
-
 /* ============================================
    RESPONSIVE DESIGN
    ============================================ */
@@ -2620,17 +2326,23 @@ footer {
         display: none;
     }
     
+    .container {
+        padding: 0 20px;
+    }
+    
     .hero {
         min-height: auto;
-        padding: 80px 0 60px;
+        padding: 100px 0 60px;
     }
     
     .hero h1 {
-        font-size: 32px;
+        font-size: 36px;
+        line-height: 1.2;
     }
     
     .hero-subtitle {
         font-size: 16px;
+        line-height: 1.6;
     }
     
     .hero-stats {
@@ -2640,11 +2352,19 @@ footer {
     
     .code-demo {
         margin: 40px auto;
+        max-width: 100%;
     }
     
     .phone-mockup {
-        width: 250px;
-        height: 500px;
+        width: 280px;
+        height: 560px;
+        margin: 0 auto;
+    }
+    
+    .phone-mockup img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
     
     .nav-links {
@@ -2656,14 +2376,20 @@ footer {
     }
     
     .section h2 {
-        font-size: 28px;
+        font-size: 32px;
+    }
+    
+    .section-subtitle {
+        font-size: 16px;
     }
     
     .problem-grid,
     .solution-features,
     .market-grid,
-    .pricing-grid {
+    .pricing-grid,
+    .use-cases-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
     }
     
     .comparison-grid {
@@ -2684,6 +2410,11 @@ footer {
         gap: 40px;
     }
     
+    .projection-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
     .ai-demo {
         flex-direction: column;
         gap: 40px;
@@ -2691,13 +2422,18 @@ footer {
     
     .cta-buttons {
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
+        gap: 15px;
     }
     
     .btn-primary,
     .btn-secondary {
         width: 100%;
-        max-width: 300px;
+    }
+    
+    .cta-stats {
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
     
     .footer-content {
@@ -2719,97 +2455,83 @@ footer {
         display: none;
     }
     
-    table {
-        font-size: 14px;
+    .comparison-table {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
-    th, td {
-        padding: 12px 8px;
+    .table-header,
+    .table-row {
+        min-width: 800px;
+    }
+    
+    .feature-name {
+        min-width: 150px;
+    }
+    
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .faq-question h3 {
+        font-size: 16px;
+    }
+    
+    .market-trends ul {
+        padding-left: 20px;
+    }
+    
+    .market-trends li {
+        font-size: 14px;
     }
 }
 
 @media (max-width: 480px) {
     .hero h1 {
-        font-size: 24px;
+        font-size: 28px;
+    }
+    
+    .hero-subtitle {
+        font-size: 15px;
+    }
+    
+    .phone-mockup {
+        width: 240px;
+        height: 480px;
+    }
+    
+    .section h2 {
+        font-size: 28px;
     }
     
     .stat-number {
-        font-size: 36px;
+        font-size: 32px;
     }
     
     .market-value {
-        font-size: 36px;
+        font-size: 32px;
     }
     
     .price {
-        font-size: 36px;
+        font-size: 32px;
     }
     
-    .logo-circle {
-        width: 60px;
-        height: 60px;
-        font-size: 24px;
+    .problem-card,
+    .feature,
+    .use-case-card {
+        padding: 24px;
     }
     
-    .score-value {
-        font-size: 24px;
+    .pricing-card {
+        padding: 30px 20px;
     }
-}
-
-/* ============================================
-   SMOOTH SCROLLING
-   ============================================ */
-html {
-    scroll-behavior: smooth;
-}
-
-/* ============================================
-   SELECTION STYLING
-   ============================================ */
-::selection {
-    background: var(--primary);
-    color: white;
-}
-
-::-moz-selection {
-    background: var(--primary);
-    color: white;
-}
-
-/* ============================================
-   SCROLLBAR STYLING
-   ============================================ */
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--dark);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--primary);
-    border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-dark);
-}
-
-/* ============================================
-   LOADING ANIMATION
-   ============================================ */
-@keyframes shimmer {
-    0% {
-        background-position: -1000px 0;
+    
+    .cta-form {
+        padding: 30px 20px;
     }
-    100% {
-        background-position: 1000px 0;
+    
+    .table-header,
+    .table-row {
+        min-width: 700px;
     }
-}
-
-.loading {
-    animation: shimmer 2s infinite;
-    background: linear-gradient(to right, var(--dark-light) 4%, var(--dark) 25%, var(--dark-light) 36%);
-    background-size: 1000px 100%;
 }
