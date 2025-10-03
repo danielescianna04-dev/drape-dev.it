@@ -2663,11 +2663,6 @@ footer {
         gap: 40px;
     }
     
-    .projection-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
     .ai-demo {
         flex-direction: column;
         gap: 40px;
