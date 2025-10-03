@@ -3021,10 +3021,15 @@ footer {
     
     .cta-stats {
         gap: 10px;
+        grid-template-columns: repeat(2, 1fr);
     }
     
     .cta-stat {
         padding: 18px 10px;
+    }
+    
+    .cta-stat:last-child {
+        grid-column: 1 / -1;
     }
     
     .stat-icon svg {
