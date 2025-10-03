@@ -1,0 +1,44 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#000000"/>
+  
+  <!-- Gradient overlay -->
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#c084fc;stop-opacity:0.1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grad)"/>
+  
+  <!-- Logo -->
+  <rect x="80" y="80" width="120" height="120" rx="24" fill="url(#logoGrad)"/>
+  <defs>
+    <linearGradient id="logoGrad" x1="0" y1="0" x2="120" y2="120">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#c084fc"/>
+    </linearGradient>
+  </defs>
+  <path d="M110 140l30 30 30-60" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Title -->
+  <text x="80" y="300" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="#ffffff">
+    Drape
+  </text>
+  
+  <!-- Subtitle -->
+  <text x="80" y="370" font-family="Arial, sans-serif" font-size="36" fill="#c084fc">
+    Il Primo IDE Mobile con AI Multimodello
+  </text>
+  
+  <!-- Features -->
+  <text x="80" y="450" font-family="Arial, sans-serif" font-size="28" fill="#e5e5e5">
+    ✓ Terminal Desktop-Grade
+  </text>
+  <text x="80" y="495" font-family="Arial, sans-serif" font-size="28" fill="#e5e5e5">
+    ✓ AI Agent Autonomo
+  </text>
+  <text x="80" y="540" font-family="Arial, sans-serif" font-size="28" fill="#e5e5e5">
+    ✓ GitHub Integration
+  </text>
+</svg>

@@ -383,4 +383,46 @@ if (mobileMenuToggle && navLinks) {
     console.error('Mobile menu elements not found!');
 }
 
+// COOKIE BANNER
+const cookieBanner = document.getElementById('cookie-banner');
+const acceptCookies = document.getElementById('accept-cookies');
+
+if (cookieBanner && acceptCookies) {
+    // Check if user already accepted
+    if (!localStorage.getItem('cookiesAccepted')) {
+        setTimeout(() => {
+            cookieBanner.classList.add('show');
+        }, 1000);
+    }
+    
+    acceptCookies.addEventListener('click', () => {
+        localStorage.setItem('cookiesAccepted', 'true');
+        cookieBanner.classList.remove('show');
+    });
+}
+
+// NEWSLETTER FORM
+const newsletterForm = document.getElementById('newsletter-form');
+
+if (newsletterForm) {
+    newsletterForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const email = newsletterForm.querySelector('input[type="email"]').value;
+        const button = newsletterForm.querySelector('button');
+        const originalText = button.textContent;
+        
+        button.textContent = 'Iscrizione...';
+        button.disabled = true;
+        
+        // Simulate submission (replace with actual API call)
+        setTimeout(() => {
+            alert('Grazie per esserti iscritto! Ti contatteremo presto.');
+            newsletterForm.reset();
+            button.textContent = originalText;
+            button.disabled = false;
+        }, 1000);
+    });
+}
+
 console.log('🚀 Drape - Animations loaded successfully!');
