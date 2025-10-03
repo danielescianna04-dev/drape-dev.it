@@ -2420,6 +2420,78 @@ footer {
         gap: 40px;
     }
     
+    .demo-description {
+        min-width: 100%;
+    }
+    
+    .demo-description h3 {
+        font-size: 24px;
+    }
+    
+    .demo-intro {
+        font-size: 16px;
+    }
+    
+    .demo-features {
+        gap: 20px;
+    }
+    
+    .demo-feature {
+        gap: 12px;
+    }
+    
+    .demo-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 16px;
+    }
+    
+    .demo-feature h4 {
+        font-size: 15px;
+    }
+    
+    .demo-feature p {
+        font-size: 14px;
+    }
+    
+    .phone-mockup-image {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .mockup-full {
+        height: 400px;
+        width: auto;
+        max-width: 100%;
+    }
+    
+    .solution-features {
+        gap: 20px;
+    }
+    
+    .feature {
+        padding: 24px;
+    }
+    
+    .feature-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .feature-icon svg {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .feature h3 {
+        font-size: 18px;
+    }
+    
+    .feature p {
+        font-size: 14px;
+    }
+    
     .cta-buttons {
         flex-direction: column;
         align-items: stretch;
@@ -2519,7 +2591,7 @@ footer {
     .problem-card,
     .feature,
     .use-case-card {
-        padding: 24px;
+        padding: 20px;
     }
     
     .pricing-card {
@@ -2533,5 +2605,25 @@ footer {
     .table-header,
     .table-row {
         min-width: 700px;
+    }
+    
+    .demo-description h3 {
+        font-size: 22px;
+    }
+    
+    .demo-intro {
+        font-size: 15px;
+    }
+    
+    .mockup-full {
+        height: 350px;
+    }
+    
+    .feature h3 {
+        font-size: 17px;
+    }
+    
+    .feature p {
+        font-size: 13px;
     }
 }
