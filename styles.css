@@ -2765,11 +2765,6 @@ footer {
         width: 100%;
     }
     
-    .cta-stats {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
     .footer-content {
         flex-direction: column;
         gap: 20px;
