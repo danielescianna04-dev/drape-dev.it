@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drape - Il Primo IDE Mobile con AI Multimodello</title>
+    <meta name="description" content="Drape è il primo IDE mobile-first con AI multimodello. Sviluppa con GPT-5, Claude 4.5 e Gemini Pro 2.5 direttamente da iPhone e Android.">
+    <meta name="keywords" content="IDE mobile, AI coding, mobile development, GPT-5, Claude, Gemini, coding app, developer tools">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://drape.app/">
+    <meta property="og:title" content="Drape - Il Primo IDE Mobile con AI Multimodello">
+    <meta property="og:description" content="Sviluppa con GPT-5, Claude 4.5 e Gemini Pro 2.5 direttamente da iPhone e Android. Terminal completo, GitHub integration, AI Agent autonomo.">
+    <meta property="og:image" content="https://drape.app/og-image.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://drape.app/">
+    <meta property="twitter:title" content="Drape - Il Primo IDE Mobile con AI Multimodello">
+    <meta property="twitter:description" content="Sviluppa con GPT-5, Claude 4.5 e Gemini Pro 2.5 direttamente da iPhone e Android.">
+    <meta property="twitter:image" content="https://drape.app/og-image.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Particles Background -->
+    <canvas id="particles"></canvas>
+    
+    <!-- Cursor Follower -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="#" class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="8" fill="url(#gradient)"/>
+                        <path d="M10 10h12v12H10z" fill="white" opacity="0.2"/>
+                        <path d="M12 16l4 4 4-8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <defs>
+                            <linearGradient id="gradient" x1="0" y1="0" x2="32" y2="32">
+                                <stop offset="0%" stop-color="#a855f7"/>
+                                <stop offset="100%" stop-color="#c084fc"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">Drape</span>
+                </a>
+                <div class="nav-links">
+                    <a href="#problema">Problema</a>
+                    <a href="#soluzione">Soluzione</a>
+                    <a href="#mercato">Mercato</a>
+                    <a href="#traction">Traction</a>
+                    <a href="#contatti" class="nav-cta">Contattaci</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="glitch" data-text="Il Primo IDE Mobile-First con AI Multimodello">Il Primo IDE Mobile-First con AI Multimodello</h1>
+                <p class="hero-subtitle fade-in">Porta la potenza di GPT-5, Claude 4.5 e Gemini Pro 2.5 su iPhone e Android. Sviluppa, testa e collabora interamente dal tuo smartphone.</p>
+                
+                <!-- Code Animation -->
+                <div class="code-demo">
+                    <div class="code-window">
+                        <div class="window-header">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                            <span class="window-title">drape_mobile_ide.dart</span>
+                        </div>
+                        <div class="code-content">
+                            <pre id="typing-code"></pre>
+                            <span class="cursor-blink">|</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat" data-target="8.6">
+                        <div class="stat-number">$<span class="counter">0</span>B</div>
+                        <div class="stat-label">TAM</div>
+                    </div>
+                    <div class="stat" data-target="28.7">
+                        <div class="stat-number"><span class="counter">0</span>M</div>
+                        <div class="stat-label">Developer Globali</div>
+                    </div>
+                    <div class="stat" data-target="150">
+                        <div class="stat-number"><span class="counter">0</span>%</div>
+                        <div class="stat-label">Growth AI Dev Tools</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Floating Elements -->
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+    </section>
+
+    <!-- Problema -->
+    <section id="problema" class="section">
+        <div class="container">
+            <h2 class="reveal">Il Problema</h2>
+            <div class="problem-grid">
+                <div class="problem-card reveal" data-delay="0">
+                    <div class="icon-wrapper">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                    </div>
+                    <h3>Desktop Dependency</h3>
+                    <p>Gli IDE attuali (VS Code, Cursor, Warp) sono progettati per desktop. Il mobile manca di un'esperienza fluida per lo sviluppo professionale.</p>
+                    <div class="card-glow"></div>
+                </div>
+                <div class="problem-card reveal" data-delay="100">
+                    <div class="icon-wrapper">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </div>
+                    <h3>AI Frammentata</h3>
+                    <p>Developer devono usare tool separati per GPT-5, Claude 4.5, Gemini Pro 2.5. Nessuna integrazione nativa in ambiente mobile.</p>
+                    <div class="card-glow"></div>
+                </div>
+                <div class="problem-card reveal" data-delay="200">
+                    <div class="icon-wrapper">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                        </svg>
+                    </div>
+                    <h3>Produttività Persa</h3>
+                    <p>68% dei developer lavorano remote/hybrid ma non possono essere produttivi su mobile durante spostamenti.</p>
+                    <div class="card-glow"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Soluzione -->
+    <section id="soluzione" class="section bg-dark">
+        <div class="container">
+            <h2 class="reveal">La Nostra Soluzione</h2>
+            
+            <!-- Interactive AI Demo -->
+            <div class="ai-demo reveal">
+                <div class="demo-description">
+                    <h3>Il Primo IDE Mobile Completo</h3>
+                    <p class="demo-intro">Drape porta l'esperienza di sviluppo desktop direttamente su mobile, con funzionalità che nessun competitor offre.</p>
+                    
+                    <div class="demo-features">
+                        <div class="demo-feature">
+                            <div class="demo-icon">→</div>
+                            <div>
+                                <h4>Terminal Bash/Zsh Completo</h4>
+                                <p>Esegui comandi, script e gestisci processi come su desktop. Nessuna limitazione.</p>
+                            </div>
+                        </div>
+                        <div class="demo-feature">
+                            <div class="demo-icon">→</div>
+                            <div>
+                                <h4>AI Agent Autonomo</h4>
+                                <p>L'AI crea e modifica progetti esistenti in autonomia, non solo genera template.</p>
+                            </div>
+                        </div>
+                        <div class="demo-feature">
+                            <div class="demo-icon">→</div>
+                            <div>
+                                <h4>GitHub Repository Integration</h4>
+                                <p>Clone, commit, push e gestisci PR direttamente dalle tue repo esistenti.</p>
+                            </div>
+                        </div>
+                        <div class="demo-feature">
+                            <div class="demo-icon">→</div>
+                            <div>
+                                <h4>Multi-Model AI</h4>
+                                <p>Scegli tra GPT-5, Claude 4.5 e Gemini Pro 2.5 per ogni task specifico.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="phone-mockup-image">
+                    <img src="Progetto senza titolo (3).png" alt="Drape App Mockup" class="mockup-full">
+                </div>
+            </div>
+            
+            <div class="solution-features">
+                <div class="feature reveal" data-delay="0">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="4 17 10 11 4 5"></polyline>
+                            <line x1="12" y1="19" x2="20" y2="19"></line>
+                        </svg>
+                    </div>
+                    <h3>Terminal Desktop-Grade</h3>
+                    <p>Terminal completo come da desktop con supporto comandi bash, zsh. Esegui script, gestisci processi e lavora come su un vero terminale.</p>
+                </div>
+                <div class="feature reveal" data-delay="100">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        </svg>
+                    </div>
+                    <h3>AI Agent Autonomo</h3>
+                    <p>Agent AI che può creare, modificare e gestire progetti in autonomia. Pianifica task complessi e li esegue step-by-step.</p>
+                </div>
+                <div class="feature reveal" data-delay="200">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                    </div>
+                    <h3>Modifica Progetti Esistenti</h3>
+                    <p>Importa e modifica progetti esistenti, non solo template. Lavora su codebase reali con pieno controllo.</p>
+                </div>
+                <div class="feature reveal" data-delay="300">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                    </div>
+                    <h3>GitHub Repo Integration</h3>
+                    <p>Connessione diretta alle repository GitHub. Clone, commit, push, pull e gestisci branch direttamente dall'app.</p>
+                </div>
+                <div class="feature reveal" data-delay="400">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M12 1v6m0 6v6m5.2-13.2l-4.2 4.2m0 6l4.2 4.2M23 12h-6m-6 0H1m18.2 5.2l-4.2-4.2m0-6l4.2-4.2"></path>
+                        </svg>
+                    </div>
+                    <h3>AI Multimodello</h3>
+                    <p>GPT-5, Claude 4.5 Sonnet, Gemini Pro 2.5 integrati. Switching trasparente tra modelli per task specifici.</p>
+                </div>
+                <div class="feature reveal" data-delay="500">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Full Code Editor</h3>
+                    <p>Editor completo con syntax highlighting, autocompletion, multi-file editing e tutte le feature di un IDE professionale.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases -->
+    <section class="section bg-dark">
+        <div class="container">
+            <h2 class="reveal">Casi d'Uso</h2>
+            <p class="section-subtitle reveal">Scenari reali in cui Drape fa la differenza</p>
+            <div class="use-cases-grid">
+                <div class="use-case-card reveal" data-delay="0">
+                    <div class="use-case-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Commuting Developer</h3>
+                    <p>Developer che passa 2-3 ore al giorno in treno/metro. Usa Drape per lavorare su feature, fixare bug, o imparare nuove tecnologie durante il viaggio.</p>
+                    <div class="use-case-stats">
+                        <span>⏱️ 10-15 ore/settimana recuperate</span>
+                    </div>
+                </div>
+
+                <div class="use-case-card reveal" data-delay="100">
+                    <div class="use-case-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Hotfix Urgenti</h3>
+                    <p>Production down mentre sei fuori ufficio. Con Drape cloni la repo, identifichi il bug con AI, fai il fix, testi e pushhi. Tutto da mobile in 10 minuti.</p>
+                    <div class="use-case-stats">
+                        <span>🚨 Downtime ridotto del 70%</span>
+                    </div>
+                </div>
+
+                <div class="use-case-card reveal" data-delay="200">
+                    <div class="use-case-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                        </svg>
+                    </div>
+                    <h3>Prototipazione Rapida</h3>
+                    <p>Hai un'idea alle 23:00. Invece di aspettare domani, apri Drape, chiedi all'AI di creare il boilerplate, e hai un prototipo funzionante in 20 minuti.</p>
+                    <div class="use-case-stats">
+                        <span>💡 Da idea a MVP in ore, non giorni</span>
+                    </div>
+                </div>
+
+                <div class="use-case-card reveal" data-delay="300">
+                    <div class="use-case-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h3>Code Review On-the-Go</h3>
+                    <p>Ricevi notifica di PR mentre sei in giro. Apri Drape, vedi il diff, testi le modifiche localmente, lasci commenti e approvi. Senza bloccare il team.</p>
+                    <div class="use-case-stats">
+                        <span>⚡ Review time ridotto del 50%</span>
+                    </div>
+                </div>
+
+                <div class="use-case-card reveal" data-delay="400">
+                    <div class="use-case-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                        </svg>
+                    </div>
+                    <h3>Learning & Sperimentazione</h3>
+                    <p>Vuoi imparare un nuovo framework o linguaggio. Usa Drape durante pause pranzo o tempi morti per seguire tutorial, sperimentare e fare pratica.</p>
+                    <div class="use-case-stats">
+                        <span>📚 Apprendimento continuo 24/7</span>
+                    </div>
+                </div>
+
+                <div class="use-case-card reveal" data-delay="500">
+                    <div class="use-case-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </div>
+                    <h3>Side Projects</h3>
+                    <p>Lavori su side project ma hai poco tempo. Con Drape sfrutti ogni momento libero: sala d'attesa, pausa caffè, weekend fuori. Il tuo progetto avanza sempre.</p>
+                    <div class="use-case-stats">
+                        <span>🚀 +300% tempo produttivo</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mercato -->
+    <section id="mercato" class="section">
+        <div class="container">
+            <h2 class="reveal">Opportunità di Mercato</h2>
+            <div class="market-grid">
+                <div class="market-card reveal" data-delay="0">
+                    <h3>TAM</h3>
+                    <div class="market-value">$8.6B</div>
+                    <p>28.7M developer globali × $100/anno medio</p>
+                    <div class="progress-ring">
+                        <svg width="120" height="120">
+                            <circle cx="60" cy="60" r="54" class="progress-ring-circle" style="--percent: 100"></circle>
+                        </svg>
+                    </div>
+                </div>
+                <div class="market-card highlight reveal" data-delay="100">
+                    <h3>SAM</h3>
+                    <div class="market-value">$860M</div>
+                    <p>4.3M mobile + AI interested developers</p>
+                    <div class="progress-ring">
+                        <svg width="120" height="120">
+                            <circle cx="60" cy="60" r="54" class="progress-ring-circle" style="--percent: 70"></circle>
+                        </svg>
+                    </div>
+                </div>
+                <div class="market-card reveal" data-delay="200">
+                    <h3>SOM (Year 3)</h3>
+                    <div class="market-value">$3.36M</div>
+                    <p>500K users, 5% conversion rate</p>
+                    <div class="progress-ring">
+                        <svg width="120" height="120">
+                            <circle cx="60" cy="60" r="54" class="progress-ring-circle" style="--percent: 40"></circle>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="market-trends reveal">
+                <h3>Trend Chiave</h3>
+                <ul>
+                    <li><strong>68%</strong> - Developer interessati a coding da mobile (Stack Overflow 2024)</li>
+                    <li><strong>+150% YoY</strong> - Crescita AI-powered development tools</li>
+                    <li><strong>$2.3B</strong> - Venture funding in AI dev tools (2024)</li>
+                    <li><strong>3.5 ore/giorno</strong> - Tempo medio in commute/travel per developer</li>
+                    <li><strong>92%</strong> - Developer che usano AI assistants regolarmente</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Model -->
+    <section class="section bg-dark">
+        <div class="container">
+            <h2 class="reveal">Modello di Business</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card reveal" data-delay="0">
+                    <h3>Free</h3>
+                    <div class="price">$0</div>
+                    <ul>
+                        <li>Editor Base</li>
+                        <li>100 AI requests/mese</li>
+                        <li>GitHub Basic</li>
+                        <li>1 Progetto attivo</li>
+                        <li>Community Support</li>
+                    </ul>
+                </div>
+                <div class="pricing-card featured reveal" data-delay="100">
+                    <div class="popular-badge">Popolare</div>
+                    <h3>Plus</h3>
+                    <div class="price">$20<span>/mese</span></div>
+                    <ul>
+                        <li>2.500 AI requests/mese</li>
+                        <li>Hot Reload & Testing</li>
+                        <li>Progetti Illimitati</li>
+                        <li>Cloud Sync</li>
+                        <li>Priority Support</li>
+                        <li>Advanced Debugging</li>
+                    </ul>
+                </div>
+                <div class="pricing-card reveal" data-delay="200">
+                    <h3>Pro</h3>
+                    <div class="price">$50<span>/mese</span></div>
+                    <ul>
+                        <li>10.000 AI requests/mese</li>
+                        <li>Fino a 10 membri</li>
+                        <li>Admin Dashboard</li>
+                        <li>Team Analytics</li>
+                        <li>Shared Workspaces</li>
+                        <li>Custom AI Models</li>
+                        <li>API Access</li>
+                    </ul>
+                </div>
+                <div class="pricing-card enterprise reveal" data-delay="300">
+                    <h3>Business</h3>
+                    <div class="price">$200<span>/mese</span></div>
+                    <ul>
+                        <li>Unlimited AI requests</li>
+                        <li>Team Illimitato</li>
+                        <li>On-Premise Deploy</li>
+                        <li>SSO & Advanced Security</li>
+                        <li>Dedicated Support 24/7</li>
+                        <li>Custom Integrations</li>
+                        <li>SLA Garantito</li>
+                        <li>Training & Onboarding</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Traction -->
+    <section id="traction" class="section">
+        <div class="container">
+            <h2 class="reveal">Trazione & Roadmap</h2>
+            <div class="traction-content">
+                <div class="roadmap">
+                    <div class="roadmap-item completed">
+                        <h4>Q1-Q3 2025 - Fondamenta</h4>
+                        <p>Prototipo iniziale, validazione concept, primi test con utenti beta</p>
+                    </div>
+                    <div class="roadmap-item">
+                        <h4>Q4 2025 - Lancio MVP</h4>
+                        <p>Editor base, Terminal integrato, AI GPT-5, Integrazione GitHub, UI ottimizzata per mobile</p>
+                    </div>
+                    <div class="roadmap-item">
+                        <h4>Q1 2026 - Potenziamento AI</h4>
+                        <p>AI Multi-modello (Claude 4.5, Gemini Pro 2.5), AI Agent autonomo, Debugging intelligente avanzato</p>
+                    </div>
+                    <div class="roadmap-item">
+                        <h4>Q2 2026 - Funzionalità Avanzate</h4>
+                        <p>Modifica progetti esistenti, Visualizzatore diff, Gestione PR, Collaborazione team, Target 3K+ utenti</p>
+                    </div>
+                    <div class="roadmap-item">
+                        <h4>Q3 2026 - Crescita & Scalabilità</h4>
+                        <p>Hot reload Flutter, Framework testing, Ottimizzazione performance, Target 8K+ utenti</p>
+                    </div>
+                    <div class="roadmap-item">
+                        <h4>Q4 2026 - Consolidamento</h4>
+                        <p>Featured su App Store, Espansione internazionale, 15K+ utenti, Preparazione Serie A</p>
+                    </div>
+                </div>
+                <div class="projections">
+                    <h3>Proiezioni Ricavi</h3>
+                    <div class="projection-grid">
+                        <div class="projection">
+                            <h4>Fine 2026</h4>
+                            <p>3K utenti gratuiti</p>
+                            <p>200 Plus ($20)</p>
+                            <p>20 Pro ($50)</p>
+                            <p>5 Business ($200)</p>
+                            <p class="revenue">$62K ARR</p>
+                        </div>
+                        <div class="projection highlight">
+                            <h4>Fine 2027</h4>
+                            <p>15K utenti gratuiti</p>
+                            <p>1.2K Plus ($20)</p>
+                            <p>80 Pro ($50)</p>
+                            <p>20 Business ($200)</p>
+                            <p class="revenue">$340K ARR</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Competitive Advantage -->
+    <section class="section bg-dark">
+        <div class="container">
+            <h2 class="reveal">Vantaggio Competitivo</h2>
+            <p class="section-subtitle reveal">Drape è l'unico IDE mobile con terminal completo e AI agent autonomo</p>
+            
+            <!-- Key Differentiators -->
+            <div class="differentiators-grid reveal">
+                <div class="differentiator-card">
+                    <div class="diff-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="4 17 10 11 4 5"></polyline>
+                            <line x1="12" y1="19" x2="20" y2="19"></line>
+                        </svg>
+                    </div>
+                    <h3>Terminal Desktop-Grade</h3>
+                    <p>L'unico con terminal bash/zsh completo su mobile. I competitor hanno solo console limitate o nessun terminal.</p>
+                </div>
+                <div class="differentiator-card">
+                    <div class="diff-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        </svg>
+                    </div>
+                    <h3>AI Agent Autonomo</h3>
+                    <p>Agent che crea e modifica progetti in autonomia. I competitor hanno solo AI assistenti passivi.</p>
+                </div>
+                <div class="differentiator-card">
+                    <div class="diff-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M12 1v6m0 6v6m5.2-13.2l-4.2 4.2m0 6l4.2 4.2M23 12h-6m-6 0H1m18.2 5.2l-4.2-4.2m0-6l4.2-4.2"></path>
+                        </svg>
+                    </div>
+                    <h3>Multi-Model AI</h3>
+                    <p>GPT-5, Claude 4.5, Gemini Pro 2.5 integrati. I competitor sono limitati a un singolo modello.</p>
+                </div>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="comparison-table-modern reveal">
+                <div class="table-header">
+                    <div class="header-cell"></div>
+                    <div class="header-cell drape-header">
+                        <div class="logo-badge">D</div>
+                        <span>Drape</span>
+                    </div>
+                    <div class="header-cell">VibeCode</div>
+                    <div class="header-cell">Rork</div>
+                    <div class="header-cell">Instance</div>
+                    <div class="header-cell">Lovable</div>
+                </div>
+                
+                <div class="table-row">
+                    <div class="feature-name">Terminal Completo</div>
+                    <div class="cell success">✓</div>
+                    <div class="cell fail">✗</div>
+                    <div class="cell fail">✗</div>
+                    <div class="cell fail">✗</div>
+                    <div class="cell fail">✗</div>
+                </div>
+                
+                <div class="table-row">
+                    <div class="feature-name">AI Agent Autonomo</div>
+                    <div class="cell success">✓</div>
+                    <div class="cell fail">✗</div>
+                    <div class="cell fail">✗</div>
+                    <div class="cell fail">✗</div>
+                    <div class="cell partial">~</div>
+                </div>
+                
+                <div class="table-row">
+                    <div class="feature-name">Modifica Progetti Esistenti</div>
+                    <div class="cell success">✓</div>
+                    <div class="cell fail">✗</div>
+                    <div class="cell fail">✗</div>
+                    <div class="cell fail">✗</div>
+                    <div class="cell fail">✗</div>
+                </div>
+                
+                <div class="table-row">
+                    <div class="feature-name">GitHub Repo Integration</div>
+                    <div class="cell success">✓</div>
+                    <div class="cell fail">✗</div>
+                    <div class="cell fail">✗</div>
+                    <div class="cell fail">✗</div>
+                    <div class="cell partial">~</div>
+                </div>
+                
+                <div class="table-row">
+                    <div class="feature-name">Multi-Model AI</div>
+                    <div class="cell success">✓</div>
+                    <div class="cell partial">~</div>
+                    <div class="cell fail">✗</div>
+                    <div class="cell fail">✗</div>
+                    <div class="cell fail">✗</div>
+                </div>
+                
+                <div class="table-row">
+                    <div class="feature-name">Full Code Editor</div>
+                    <div class="cell success">✓</div>
+                    <div class="cell fail">✗</div>
+                    <div class="cell partial">~</div>
+                    <div class="cell fail">✗</div>
+                    <div class="cell fail">✗</div>
+                </div>
+                
+                <div class="table-footer">
+                    <div class="footer-cell"></div>
+                    <div class="footer-cell drape-score">
+                        <div class="score-big">6/6</div>
+                        <div class="score-label">Leader</div>
+                    </div>
+                    <div class="footer-cell">
+                        <div class="score-small">0.5/6</div>
+                    </div>
+                    <div class="footer-cell">
+                        <div class="score-small">0.5/6</div>
+                    </div>
+                    <div class="footer-cell">
+                        <div class="score-small">0/6</div>
+                    </div>
+                    <div class="footer-cell">
+                        <div class="score-small">1/6</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section id="team" class="section">
+        <div class="container">
+            <h2 class="reveal">Il Team</h2>
+            <p class="section-subtitle reveal">I founder dietro Drape</p>
+            
+            <div class="team-grid">
+                <div class="team-card reveal" data-delay="0">
+                    <div class="team-avatar">
+                        <div class="avatar-placeholder">DS</div>
+                    </div>
+                    <h3>Daniele Scianna</h3>
+                    <div class="team-role">Co-Founder & Developer</div>
+                    <p class="team-bio">Programmatore full-stack con esperienza nello sviluppo mobile e AI integration.</p>
+                </div>
+                
+                <div class="team-card reveal" data-delay="100">
+                    <div class="team-avatar">
+                        <div class="avatar-placeholder">LR</div>
+                    </div>
+                    <h3>Leon Rivas</h3>
+                    <div class="team-role">Co-Founder & Developer</div>
+                    <p class="team-bio">Programmatore specializzato in mobile development e architetture scalabili.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+        <div class="container">
+            <h2 class="reveal">Domande Frequenti</h2>
+            <div class="faq-container">
+                <div class="faq-item reveal" data-delay="0">
+                    <div class="faq-question">
+                        <h3>Qual è il vostro vantaggio competitivo principale?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Siamo l'unico IDE mobile con terminal desktop-grade completo, AI Agent autonomo per modifiche multi-file, e integrazione nativa con GitHub. I competitor offrono solo editor base o playground limitati.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal" data-delay="100">
+                    <div class="faq-question">
+                        <h3>Come monetizzate?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Modello freemium con 4 tier: Free (100 AI requests/mese), Pro $20/mese (2.500 requests), Team $50/mese (10.000 requests), Enterprise $200/mese (unlimited). Revenue share con provider AI già negoziato.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal" data-delay="200">
+                    <div class="faq-question">
+                        <h3>Qual è la dimensione del mercato?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>TAM $8.2B (developer tools market), SAM $2.1B (mobile-first developers), SOM $180M (early adopters mobile coding). 27M developers worldwide, 68% interessati a coding mobile secondo Stack Overflow 2024.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal" data-delay="300">
+                    <div class="faq-question">
+                        <h3>Chi sono i vostri competitor?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>App mobile: VibeCode, Rork, Instance, Lovable. Nessuna ha terminal completo + AI Agent + GitHub integration insieme. Desktop tools (Replit, Cursor) non sono mobile-first.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal" data-delay="400">
+                    <div class="faq-question">
+                        <h3>Quali sono le proiezioni di crescita?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Fine 2026: 3K utenti, $62K ARR. Fine 2027: 15K utenti, $340K ARR. Assumiamo 8% conversion free-to-paid (conservativo per early-stage product).</p>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal" data-delay="500">
+                    <div class="faq-question">
+                        <h3>Quanto state cercando di raccogliere?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Seed round €500K-€1M per: completare sviluppo iOS/Android, scaling infrastruttura AI, team expansion (2 senior developers, 1 designer), marketing e user acquisition.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="section">
+        <div class="container">
+            <h2 class="reveal">Contattaci</h2>
+            <p style="text-align: center; color: var(--text-muted); max-width: 600px; margin: 0 auto 60px;">Interessato a investire o collaborare? Compila il form e ti risponderemo entro 24 ore.</p>
+            <form class="cta-form reveal">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Nome</label>
+                        <input type="text" id="name" name="name" required placeholder="Il tuo nome">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="tua@email.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="message">Messaggio</label>
+                    <textarea id="message" name="message" rows="5" required placeholder="Raccontaci del tuo interesse..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary">Invia Messaggio</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section id="contatti" class="section cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <div class="cta-stats">
+                    <div class="cta-stat">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">15K+</div>
+                            <div class="stat-label">Target Utenti 2027</div>
+                        </div>
+                    </div>
+                    <div class="cta-stat">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="1" x2="12" y2="23"></line>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">$340K</div>
+                            <div class="stat-label">ARR Proiettato 2027</div>
+                        </div>
+                    </div>
+                    <div class="cta-stat">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">6/6</div>
+                            <div class="stat-label">Vantaggio vs Competitor</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cta-main">
+                    <h2>Investire in Drape</h2>
+                    <p>Cerchiamo investitori visionari per portare il primo IDE mobile completo a milioni di developer. Unisciti a noi nella rivoluzione dello sviluppo mobile.</p>
+                    <div class="cta-buttons">
+                        <a href="mailto:invest@drape.dev" class="btn-primary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            Richiedi Pitch Deck
+                        </a>
+                        <a href="#" class="btn-secondary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                                <polyline points="10 17 15 12 10 7"></polyline>
+                                <line x1="15" y1="12" x2="3" y2="12"></line>
+                            </svg>
+                            Prenota Demo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">DRAPE</div>
+                <div class="footer-links">
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="terms-of-service.html">Terms of Service</a>
+                    <a href="mailto:hello@drape.dev">Contatti</a>
+                </div>
+            </div>
+            <p class="copyright">© 2024 Drape. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>
