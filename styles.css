@@ -2764,14 +2764,28 @@ footer {
     }
     
     .footer-content {
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: space-between;
         gap: 20px;
-        text-align: center;
+        text-align: left;
+    }
+    
+    .footer-logo {
+        font-size: 20px;
     }
     
     .footer-links {
-        flex-direction: column;
+        flex-direction: row;
         gap: 15px;
+        font-size: 13px;
+    }
+    
+    .footer-links a {
+        font-size: 12px;
+    }
+    
+    .copyright {
+        font-size: 12px;
     }
     
     .pricing-card.featured {
