@@ -2473,12 +2473,78 @@ footer {
         font-size: 16px;
     }
     
-    .problem-grid,
-    .solution-features,
-    .pricing-grid,
-    .use-cases-grid {
+    .solution-features {
         grid-template-columns: 1fr;
         gap: 20px;
+    }
+    
+    .problem-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+    
+    .problem-card {
+        padding: 20px 15px;
+    }
+    
+    .problem-card h3 {
+        font-size: 16px;
+    }
+    
+    .problem-card p {
+        font-size: 13px;
+    }
+    
+    .pricing-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .pricing-card {
+        padding: 25px 15px;
+    }
+    
+    .pricing-card h3 {
+        font-size: 18px;
+    }
+    
+    .price {
+        font-size: 28px;
+    }
+    
+    .pricing-card ul li {
+        font-size: 13px;
+    }
+    
+    .use-cases-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .use-case-card {
+        padding: 20px 15px;
+    }
+    
+    .use-case-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .use-case-icon svg {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .use-case-card h3 {
+        font-size: 16px;
+    }
+    
+    .use-case-card p {
+        font-size: 13px;
+    }
+    
+    .use-case-stats span {
+        font-size: 12px;
     }
     
     .market-grid {
@@ -2715,18 +2781,80 @@ footer {
         line-height: 1.3;
     }
     
-    .price {
-        font-size: 32px;
+    .problem-grid {
+        gap: 10px;
     }
     
-    .problem-card,
-    .feature,
-    .use-case-card {
-        padding: 20px;
+    .problem-card {
+        padding: 15px 10px;
+    }
+    
+    .problem-card h3 {
+        font-size: 14px;
+    }
+    
+    .problem-card p {
+        font-size: 12px;
+    }
+    
+    .pricing-grid {
+        gap: 10px;
     }
     
     .pricing-card {
-        padding: 30px 20px;
+        padding: 20px 12px;
+    }
+    
+    .pricing-card h3 {
+        font-size: 16px;
+    }
+    
+    .price {
+        font-size: 24px;
+    }
+    
+    .pricing-card ul li {
+        font-size: 12px;
+    }
+    
+    .popular-badge {
+        font-size: 10px;
+        padding: 4px 10px;
+    }
+    
+    .use-cases-grid {
+        gap: 10px;
+    }
+    
+    .use-case-card {
+        padding: 15px 12px;
+    }
+    
+    .use-case-icon {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .use-case-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .use-case-card h3 {
+        font-size: 14px;
+    }
+    
+    .use-case-card p {
+        font-size: 12px;
+    }
+    
+    .use-case-stats span {
+        font-size: 11px;
+    }
+    
+    .feature,
+    .solution-features .feature {
+        padding: 20px;
     }
     
     .cta-form {
