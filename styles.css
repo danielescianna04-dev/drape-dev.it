@@ -2840,10 +2840,6 @@ footer {
         -webkit-overflow-scrolling: touch;
     }
     
-    .team-grid {
-        grid-template-columns: 1fr;
-    }
-    
     .faq-question h3 {
         font-size: 16px;
     }
