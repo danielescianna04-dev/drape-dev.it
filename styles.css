@@ -2456,27 +2456,27 @@ footer {
     
     .hero-stats {
         flex-direction: row;
-        gap: 5px;
+        gap: 3px;
         flex-wrap: nowrap;
         justify-content: space-between;
         max-width: 100%;
-        margin: 0 -15px;
+        margin: 0 -20px;
     }
     
     .stat {
         flex: 1;
         min-width: 0;
-        padding: 0 3px;
+        padding: 0 2px;
     }
     
     .stat-number {
-        font-size: 18px;
+        font-size: 16px;
         white-space: nowrap;
         overflow: visible;
     }
     
     .stat-label {
-        font-size: 8px;
+        font-size: 7px;
         line-height: 1.2;
     }
     
