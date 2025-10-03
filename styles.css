@@ -178,6 +178,7 @@ html {
     min-height: 100vh;
     display: flex;
     align-items: center;
+    overscroll-behavior: none;
 }
 
 .hero::before {
@@ -2440,6 +2441,7 @@ footer {
     .hero {
         min-height: auto;
         padding: 100px 0 60px;
+        overscroll-behavior: auto;
     }
     
     .hero h1 {
