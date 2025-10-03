@@ -28,6 +28,7 @@ body {
 html {
     overflow-x: hidden;
     max-width: 100vw;
+    overscroll-behavior-y: none;
 }
 
 * {
@@ -2798,8 +2799,8 @@ footer {
     
     .comparison-table-modern {
         overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
         border-radius: 12px;
+        overscroll-behavior-x: contain;
     }
     
     .table-header,
@@ -2840,11 +2841,6 @@ footer {
     
     .score-small {
         font-size: 14px;
-    }
-    
-    .comparison-table {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
     }
     
     .faq-question h3 {
