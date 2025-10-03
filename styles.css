@@ -2311,6 +2311,40 @@ footer {
 }
 
 /* ============================================
+   MOBILE MENU
+   ============================================ */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 1001;
+}
+
+.mobile-menu-toggle span {
+    width: 25px;
+    height: 2px;
+    background: var(--primary);
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* ============================================
    RESPONSIVE DESIGN
    ============================================ */
 /* ============================================
@@ -2328,6 +2362,62 @@ footer {
     
     .container {
         padding: 0 20px;
+    }
+    
+    .navbar .container {
+        padding: 0 20px;
+    }
+    
+    .nav-content {
+        height: 60px;
+    }
+    
+    .logo svg {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .logo-text {
+        font-size: 18px;
+    }
+    
+    .mobile-menu-toggle {
+        display: flex;
+    }
+    
+    .nav-links {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.98);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        gap: 0;
+        padding: 20px;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        border-top: 1px solid rgba(168, 85, 247, 0.2);
+    }
+    
+    .nav-links.active {
+        transform: translateX(0);
+    }
+    
+    .nav-links a {
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+        width: 100%;
+        font-size: 16px;
+    }
+    
+    .nav-links a:last-child {
+        border-bottom: none;
+    }
+    
+    .nav-cta {
+        margin-top: 10px;
+        text-align: center;
     }
     
     .hero {
