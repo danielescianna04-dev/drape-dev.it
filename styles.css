@@ -2464,6 +2464,8 @@ footer {
     
     .stat {
         flex: 0 0 auto;
+        min-width: 90px;
+        text-align: center;
     }
     
     .stat-number {
