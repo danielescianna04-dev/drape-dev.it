@@ -2707,18 +2707,49 @@ footer {
         display: none;
     }
     
-    .comparison-table {
+    .comparison-table-modern {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+        border-radius: 12px;
     }
     
     .table-header,
     .table-row {
-        min-width: 800px;
+        min-width: 700px;
+        font-size: 13px;
     }
     
     .feature-name {
-        min-width: 150px;
+        min-width: 120px;
+        font-size: 13px;
+        padding: 12px 10px;
+    }
+    
+    .competitor-name {
+        font-size: 12px;
+        padding: 12px 8px;
+    }
+    
+    .cell {
+        padding: 12px 8px;
+        font-size: 16px;
+    }
+    
+    .table-footer {
+        font-size: 12px;
+    }
+    
+    .score-big {
+        font-size: 20px;
+    }
+    
+    .score-small {
+        font-size: 14px;
+    }
+    
+    .comparison-table {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
     .team-grid {
