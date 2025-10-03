@@ -2475,11 +2475,35 @@ footer {
     
     .problem-grid,
     .solution-features,
-    .market-grid,
     .pricing-grid,
     .use-cases-grid {
         grid-template-columns: 1fr;
         gap: 20px;
+    }
+    
+    .market-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+    
+    .market-card {
+        padding: 20px 15px;
+    }
+    
+    .market-card h3 {
+        font-size: 14px;
+    }
+    
+    .market-value {
+        font-size: 28px;
+    }
+    
+    .market-card p {
+        font-size: 12px;
+    }
+    
+    .progress-ring {
+        display: none;
     }
     
     .comparison-grid {
@@ -2670,8 +2694,25 @@ footer {
         font-size: 32px;
     }
     
+    .market-grid {
+        gap: 10px;
+    }
+    
+    .market-card {
+        padding: 15px 10px;
+    }
+    
+    .market-card h3 {
+        font-size: 12px;
+    }
+    
     .market-value {
-        font-size: 32px;
+        font-size: 24px;
+    }
+    
+    .market-card p {
+        font-size: 11px;
+        line-height: 1.3;
     }
     
     .price {
