@@ -347,23 +347,29 @@ if (contactForm) {
 }
 
 // MOBILE MENU TOGGLE
-const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-const navLinks = document.querySelector('.nav-links');
+document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
 
-if (mobileMenuToggle) {
-    mobileMenuToggle.addEventListener('click', () => {
-        mobileMenuToggle.classList.toggle('active');
-        navLinks.classList.toggle('active');
-    });
-    
-    // Close menu when clicking on a link
-    const navLinksItems = document.querySelectorAll('.nav-links a');
-    navLinksItems.forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenuToggle.classList.remove('active');
-            navLinks.classList.remove('active');
+    if (mobileMenuToggle && navLinks) {
+        mobileMenuToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            mobileMenuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            console.log('Menu toggled:', navLinks.classList.contains('active'));
         });
-    });
-}
+        
+        // Close menu when clicking on a link
+        const navLinksItems = document.querySelectorAll('.nav-links a');
+        navLinksItems.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+    } else {
+        console.error('Mobile menu elements not found');
+    }
+});
 
 console.log('🚀 Drape - Animations loaded successfully!');
