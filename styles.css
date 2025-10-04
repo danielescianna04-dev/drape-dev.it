@@ -1983,6 +1983,204 @@ tbody tr:hover {
 }
 
 /* ============================================
+   INVESTMENT SECTION
+   ============================================ */
+.investment-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin: 60px 0;
+}
+
+.investment-card {
+    background: #0a0a0a;
+    padding: 40px 30px;
+    border-radius: 16px;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    text-align: center;
+    transition: all 0.4s ease;
+}
+
+.investment-card.highlight {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(192, 132, 252, 0.05));
+}
+
+.investment-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(168, 85, 247, 0.2);
+}
+
+.investment-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.investment-icon svg {
+    width: 32px;
+    height: 32px;
+    color: white;
+}
+
+.investment-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+
+.investment-amount,
+.investment-status,
+.investment-goal {
+    font-size: 48px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+}
+
+.investment-card p {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.use-of-funds {
+    margin: 80px 0;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.use-of-funds h3 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text);
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.funds-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.fund-item {
+    background: #0a0a0a;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.fund-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(168, 85, 247, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.fund-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 4px;
+    transition: width 1s ease;
+}
+
+.fund-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.fund-label {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.fund-amount {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.fund-description {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.why-now {
+    margin-top: 80px;
+}
+
+.why-now h3 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text);
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.why-now-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.why-card {
+    background: #0a0a0a;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    position: relative;
+}
+
+.why-number {
+    position: absolute;
+    top: -20px;
+    left: 30px;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 800;
+    color: white;
+}
+
+.why-card h4 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+    margin-top: 10px;
+}
+
+.why-card p {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ============================================
    FAQ SECTION
    ============================================ */
 .faq-container {
@@ -3031,6 +3229,22 @@ footer {
     
     .cookie-btn {
         width: 100%;
+    }
+    
+    .investment-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .investment-amount,
+    .investment-status,
+    .investment-goal {
+        font-size: 36px;
+    }
+    
+    .why-now-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
     }
 }
 
