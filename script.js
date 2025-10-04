@@ -353,6 +353,41 @@ const navLinks = document.querySelector('.nav-links');
 console.log('Mobile menu toggle:', mobileMenuToggle);
 console.log('Nav links:', navLinks);
 
+// LANGUAGE TOGGLE
+let currentLang = localStorage.getItem('language') || 'it';
+
+function translatePage(lang) {
+    currentLang = lang;
+    localStorage.setItem('language', lang);
+    
+    // Update active button
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+    
+    // Translate all elements with data-translate attribute
+    document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.dataset.translate;
+        if (translations[lang] && translations[lang][key]) {
+            if (element.tagName === 'INPUT') {
+                element.placeholder = translations[lang][key];
+            } else {
+                element.textContent = translations[lang][key];
+            }
+        }
+    });
+}
+
+// Initialize language buttons
+document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        translatePage(btn.dataset.lang);
+    });
+});
+
+// Set initial language
+translatePage(currentLang);
+
 if (mobileMenuToggle && navLinks) {
     mobileMenuToggle.addEventListener('click', function(e) {
         e.preventDefault();

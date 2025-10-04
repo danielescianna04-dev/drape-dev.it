@@ -169,6 +169,36 @@ html {
     box-shadow: 0 8px 24px rgba(168, 85, 247, 0.4);
 }
 
+.lang-toggle {
+    display: flex;
+    gap: 4px;
+    background: rgba(168, 85, 247, 0.1);
+    padding: 4px;
+    border-radius: 8px;
+    margin-left: 20px;
+}
+
+.lang-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.lang-btn:hover {
+    color: var(--text);
+}
+
+.lang-btn.active {
+    background: var(--primary);
+    color: white;
+}
+
 /* Hero Section */
 .hero {
     padding: 120px 0 80px;
@@ -2527,6 +2557,12 @@ footer {
     
     .mobile-menu-toggle {
         display: flex;
+    }
+    
+    .lang-toggle {
+        order: -1;
+        margin-left: auto;
+        margin-right: 15px;
     }
     
     .nav-links {
