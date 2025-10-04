@@ -2784,28 +2784,25 @@ footer {
     }
     
     .hero-stats {
-        flex-direction: row;
-        gap: 10px;
-        flex-wrap: nowrap;
-        justify-content: center;
+        flex-direction: column;
+        gap: 20px;
         max-width: 100%;
     }
     
     .stat {
-        flex: 0 0 auto;
-        min-width: 100px;
+        flex: 1;
+        min-width: 100%;
         text-align: center;
     }
     
     .stat-number {
-        font-size: 16px;
+        font-size: 32px;
         white-space: nowrap;
     }
     
     .stat-label {
-        font-size: 8px;
-        line-height: 1.2;
-        word-wrap: break-word;
+        font-size: 13px;
+        line-height: 1.3;
     }
     
     .code-demo {
