@@ -353,18 +353,19 @@ const navLinks = document.querySelector('.nav-links');
 console.log('Mobile menu toggle:', mobileMenuToggle);
 console.log('Nav links:', navLinks);
 
-// LANGUAGE TOGGLE
-let currentLang = localStorage.getItem('language') || 'it';
+// AUTO LANGUAGE DETECTION
+function detectLanguage() {
+    // Get browser language
+    const browserLang = navigator.language || navigator.userLanguage;
+    
+    // Check if it's Italian, otherwise default to English
+    if (browserLang.startsWith('it')) {
+        return 'it';
+    }
+    return 'en';
+}
 
 function translatePage(lang) {
-    currentLang = lang;
-    localStorage.setItem('language', lang);
-    
-    // Update active button
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === lang);
-    });
-    
     // Translate all elements with data-translate attribute
     document.querySelectorAll('[data-translate]').forEach(element => {
         const key = element.dataset.translate;
@@ -376,17 +377,13 @@ function translatePage(lang) {
             }
         }
     });
+    
+    console.log('Page translated to:', lang);
 }
 
-// Initialize language buttons
-document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        translatePage(btn.dataset.lang);
-    });
-});
-
-// Set initial language
-translatePage(currentLang);
+// Auto-detect and translate on page load
+const detectedLang = detectLanguage();
+translatePage(detectedLang);
 
 if (mobileMenuToggle && navLinks) {
     mobileMenuToggle.addEventListener('click', function(e) {
