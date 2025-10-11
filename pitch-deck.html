@@ -12,7 +12,168 @@
             padding: 0;
             width: 100vw;
             height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #ffffff;
         }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        .pitch-container {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .slide.active { display: flex; align-items: center; justify-content: center; }
+        
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            padding: 80px 60px;
+            text-align: center;
+        }
+        
+        .slide h1 {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #a855f7, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .slide h2 {
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: #ffffff;
+        }
+        
+        .slide p {
+            font-size: 1.6rem;
+            line-height: 1.8;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 2rem !important;
+            color: #94a3b8;
+        }
+        
+        .problem-grid, .solution-features, .market-grid, .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .problem-card, .feature, .market-card, .pricing-card {
+            background: rgba(168, 85, 247, 0.1);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            text-align: left;
+        }
+        
+        .problem-card h3, .feature h3, .market-card h3, .pricing-card h3 {
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .problem-card p, .feature p, .market-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+        
+        .icon-wrapper, .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(168, 85, 247, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .icon, .feature-icon svg {
+            width: 24px;
+            height: 24px;
+            color: #a855f7;
+        }
+        
+        .slide-number {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: #94a3b8;
+            background: rgba(168, 85, 247, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            padding: 12px 24px;
+            background: rgba(168, 85, 247, 0.2);
+            border: 1px solid #a855f7;
+            border-radius: 8px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover { background: #a855f7; }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: #a855f7;
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-home {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            padding: 12px 24px;
+            background: rgba(168, 85, 247, 0.2);
+            border: 1px solid #a855f7;
+            border-radius: 8px;
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-home:hover { background: #a855f7; }
         .pitch-container {
             height: 100vh;
             width: 100vw;
