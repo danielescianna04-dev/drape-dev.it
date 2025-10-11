@@ -38,9 +38,117 @@
             top: 0;
             left: 0;
             overflow-y: auto;
+            opacity: 0;
+            transform: translateX(100px) scale(0.95);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
-        .slide.active { display: flex; align-items: center; justify-content: center; }
+        .slide.active { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+        
+        .slide.slide-out-left {
+            transform: translateX(-100px) scale(0.95);
+            opacity: 0;
+        }
+        
+        .slide.slide-in-right {
+            transform: translateX(100px) scale(0.95);
+            opacity: 0;
+        }
+        
+        /* Animazioni particelle */
+        .slide-transition-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: particleFloat 1.5s ease-out forwards;
+        }
+        
+        @keyframes particleFloat {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-200px) scale(0);
+            }
+        }
+        
+        /* Effetto wave */
+        .slide-wave {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            z-index: 9998;
+            opacity: 0.1;
+            animation: waveSlide 0.8s ease-in-out;
+        }
+        
+        @keyframes waveSlide {
+            0% {
+                left: -100%;
+                transform: skewX(-15deg);
+            }
+            50% {
+                left: 0%;
+                transform: skewX(0deg);
+            }
+            100% {
+                left: 100%;
+                transform: skewX(15deg);
+            }
+        }
+        
+        /* Glow effect per slide attiva */
+        .slide.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+            animation: slideGlow 2s ease-in-out;
+        }
+        
+        @keyframes slideGlow {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+        }
         
         .slide-content {
             max-width: 1200px;
@@ -1363,26 +1471,76 @@
         
         // Trigger animations when slide becomes active
         function showSlide(n) {
-            slides[currentSlide].classList.remove('active');
+            const oldSlide = slides[currentSlide];
             currentSlide = (n + totalSlides) % totalSlides;
-            slides[currentSlide].classList.add('active');
+            const newSlide = slides[currentSlide];
             
-            // Update progress bar
-            const progress = ((currentSlide + 1) / totalSlides) * 100;
-            document.getElementById('progressBar').style.width = progress + '%';
+            // Crea effetti particelle
+            createParticles();
             
-            // Reset and trigger animations for current slide
-            const currentSlideReveals = slides[currentSlide].querySelectorAll('.reveal');
-            currentSlideReveals.forEach(el => el.classList.remove('revealed'));
+            // Crea wave effect
+            createWaveEffect();
+            
+            // Animazione slide out
+            oldSlide.classList.add('slide-out-left');
             
             setTimeout(() => {
-                currentSlideReveals.forEach((element, index) => {
-                    const delay = element.getAttribute('data-delay') || (index * 100);
+                oldSlide.classList.remove('active', 'slide-out-left');
+                newSlide.classList.add('slide-in-right');
+                
+                setTimeout(() => {
+                    newSlide.classList.remove('slide-in-right');
+                    newSlide.classList.add('active');
+                    
+                    // Update progress bar con animazione
+                    const progress = ((currentSlide + 1) / totalSlides) * 100;
+                    document.getElementById('progressBar').style.width = progress + '%';
+                    
+                    // Reset e trigger animazioni reveal
+                    const currentSlideReveals = newSlide.querySelectorAll('.reveal');
+                    currentSlideReveals.forEach(el => el.classList.remove('revealed'));
+                    
                     setTimeout(() => {
-                        element.classList.add('revealed');
-                    }, delay);
-                });
-            }, 100);
+                        currentSlideReveals.forEach((element, index) => {
+                            const delay = element.getAttribute('data-delay') || (index * 100);
+                            setTimeout(() => {
+                                element.classList.add('revealed');
+                            }, delay);
+                        });
+                    }, 200);
+                }, 100);
+            }, 400);
+        }
+        
+        // Crea particelle animate
+        function createParticles() {
+            const container = document.createElement('div');
+            container.className = 'slide-transition-particles';
+            document.body.appendChild(container);
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh';
+                particle.style.animationDelay = Math.random() * 0.5 + 's';
+                container.appendChild(particle);
+            }
+            
+            setTimeout(() => {
+                document.body.removeChild(container);
+            }, 1500);
+        }
+        
+        // Crea effetto wave
+        function createWaveEffect() {
+            const wave = document.createElement('div');
+            wave.className = 'slide-wave';
+            document.body.appendChild(wave);
+            
+            setTimeout(() => {
+                document.body.removeChild(wave);
+            }, 800);
         }
         
         // Initialize first slide animations
