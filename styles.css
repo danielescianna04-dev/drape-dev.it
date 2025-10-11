@@ -1357,7 +1357,7 @@ html {
 .table-row,
 .table-footer {
     display: grid;
-    grid-template-columns: 2fr repeat(5, 1fr);
+    grid-template-columns: 2fr repeat(6, 1fr);
     gap: 1px;
     background: rgba(168, 85, 247, 0.1);
 }
@@ -1381,7 +1381,7 @@ html {
 .header-cell {
     font-weight: 700;
     font-size: 14px;
-    color: var(--text-muted);
+    color: #333333;
     flex-direction: column;
     gap: 8px;
 }
@@ -1407,7 +1407,7 @@ html {
 .feature-name {
     justify-content: flex-start;
     font-weight: 600;
-    color: var(--text);
+    color: #333333;
     font-size: 15px;
 }
 
@@ -1417,12 +1417,12 @@ html {
 }
 
 .cell.success {
-    color: var(--primary);
+    color: #059669;
 }
 
 .cell.fail {
-    color: #ef4444;
-    opacity: 0.5;
+    color: #dc2626;
+    opacity: 0.8;
 }
 
 .cell.partial {
@@ -1430,7 +1430,7 @@ html {
 }
 
 .cell.warning {
-    color: #f59e0b;
+    color: #d97706;
 }
 
 .table-row:hover .cell {
@@ -3165,7 +3165,7 @@ footer {
     .table-footer {
         min-width: 700px;
         font-size: 13px;
-        grid-template-columns: 150px repeat(5, 110px);
+        grid-template-columns: 150px repeat(6, 110px);
     }
     
     .feature-name {
