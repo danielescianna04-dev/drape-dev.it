@@ -360,7 +360,7 @@
     <div class="pitch-container">
         <!-- Slide 1: Cover -->
         <div class="slide active">
-            <div class="slide-number">1/12</div>
+            <div class="slide-number">1/8</div>
             <div class="slide-content">
                 <section class="hero">
                     <div class="container">
@@ -376,9 +376,9 @@
 
         <!-- Slide 2: Problema -->
         <div class="slide">
-            <div class="slide-number">2/12</div>
+            <div class="slide-number">2/8</div>
             <div class="slide-content">
-                <section class="section">
+                <section id="problema" class="section">
                     <div class="container">
                         <h2 class="reveal">Il Problema</h2>
                         <div class="problem-grid">
@@ -391,7 +391,7 @@
                                     </svg>
                                 </div>
                                 <h3>Desktop Dependency</h3>
-                                <p>Developer sono incatenati ai desktop. Nessun IDE mobile offre terminal bash/zsh completo per workflow reali.</p>
+                                <p>Gli IDE attuali (VS Code, Cursor, Warp) sono progettati per desktop. Il mobile manca di un'esperienza fluida per lo sviluppo professionale.</p>
                                 <div class="card-glow"></div>
                             </div>
                             <div class="problem-card reveal" data-delay="100">
@@ -432,10 +432,8 @@
                             <div class="problem-card reveal" data-delay="400">
                                 <div class="icon-wrapper">
                                     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <monitor>
-                                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                                            <line x1="8" y1="21" x2="16" y2="21"></line>
-                                        </monitor>
+                                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                        <line x1="8" y1="21" x2="16" y2="21"></line>
                                     </svg>
                                 </div>
                                 <h3>Nessun Real-Time Preview</h3>
@@ -460,7 +458,7 @@
 
         <!-- Slide 3: Soluzione -->
         <div class="slide">
-            <div class="slide-number">3/12</div>
+            <div class="slide-number">3/8</div>
             <div class="slide-content">
                 <section class="section">
                     <div class="container">
@@ -959,7 +957,7 @@ class DrapeIDE {
     <script>
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
-        const totalSlides = slides.length;
+        const totalSlides = 8;
 
         function showSlide(n) {
             slides[currentSlide].classList.remove('active');
