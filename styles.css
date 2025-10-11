@@ -1347,7 +1347,7 @@ html {
    COMPARISON TABLE MODERN
    ============================================ */
 .comparison-table-modern {
-    background: #ffffff;
+    background: #0a0a0a;
     border-radius: 16px;
     overflow: hidden;
     border: 1px solid rgba(168, 85, 247, 0.2);
@@ -1370,7 +1370,7 @@ html {
 .cell,
 .footer-cell,
 .feature-name {
-    background: #ffffff;
+    background: #0a0a0a;
     padding: 20px;
     display: flex;
     align-items: center;
@@ -1381,7 +1381,7 @@ html {
 .header-cell {
     font-weight: 700;
     font-size: 14px;
-    color: #333333;
+    color: var(--text-muted);
     flex-direction: column;
     gap: 8px;
 }
@@ -1407,7 +1407,7 @@ html {
 .feature-name {
     justify-content: flex-start;
     font-weight: 600;
-    color: #333333;
+    color: var(--text);
     font-size: 15px;
 }
 
@@ -1417,12 +1417,12 @@ html {
 }
 
 .cell.success {
-    color: #059669;
+    color: var(--primary);
 }
 
 .cell.fail {
-    color: #dc2626;
-    opacity: 0.8;
+    color: #ef4444;
+    opacity: 0.5;
 }
 
 .cell.partial {
@@ -1430,7 +1430,7 @@ html {
 }
 
 .cell.warning {
-    color: #d97706;
+    color: #f59e0b;
 }
 
 .table-row:hover .cell {
