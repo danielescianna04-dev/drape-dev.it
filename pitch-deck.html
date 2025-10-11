@@ -1518,271 +1518,44 @@
         // Trigger animations when slide becomes active
         function showSlide(n) {
             const oldSlide = slides[currentSlide];
-            const oldIndex = currentSlide;
             currentSlide = (n + totalSlides) % totalSlides;
             const newSlide = slides[currentSlide];
             
-            // Scegli animazione custom basata sulla slide
-            const animationType = getCustomAnimation(oldIndex, currentSlide);
-            
-            // Esegui animazione custom
-            executeCustomAnimation(oldSlide, newSlide, animationType);
-            
-            // Update progress bar
-            setTimeout(() => {
-                const progress = ((currentSlide + 1) / totalSlides) * 100;
-                document.getElementById('progressBar').style.width = progress + '%';
-            }, 400);
-        }
-        
-        // Determina tipo di animazione basata sulle slide
-        function getCustomAnimation(from, to) {
-            const animations = [
-                'particles', 'zoom', 'typewriter', 'explode', 'matrix', 'spiral', 'wave', 'glitch'
-            ];
-            return animations[to % animations.length];
-        }
-        
-        // Esegui animazione custom
-        function executeCustomAnimation(oldSlide, newSlide, type) {
-            switch(type) {
-                case 'zoom':
-                    zoomTransition(oldSlide, newSlide);
-                    break;
-                case 'typewriter':
-                    typewriterTransition(oldSlide, newSlide);
-                    break;
-                case 'explode':
-                    explodeTransition(oldSlide, newSlide);
-                    break;
-                case 'matrix':
-                    matrixTransition(oldSlide, newSlide);
-                    break;
-                case 'spiral':
-                    spiralTransition(oldSlide, newSlide);
-                    break;
-                case 'glitch':
-                    glitchTransition(oldSlide, newSlide);
-                    break;
-                default:
-                    defaultTransition(oldSlide, newSlide);
-            }
-        }
-        
-        // Animazione ZOOM con costruzione testo
-        function zoomTransition(oldSlide, newSlide) {
-            // Zoom out della slide corrente
-            oldSlide.style.transform = 'scale(0.1)';
-            oldSlide.style.opacity = '0';
-            
-            setTimeout(() => {
-                oldSlide.classList.remove('active');
-                newSlide.classList.add('active');
-                
-                // Zoom in della nuova slide
-                newSlide.style.transform = 'scale(3)';
-                newSlide.style.opacity = '0';
-                
-                setTimeout(() => {
-                    newSlide.style.transform = 'scale(1)';
-                    newSlide.style.opacity = '1';
-                    
-                    // Costruisci il testo lettera per lettera
-                    buildTextLetterByLetter(newSlide);
-                }, 100);
-            }, 500);
-        }
-        
-        // Animazione TYPEWRITER
-        function typewriterTransition(oldSlide, newSlide) {
-            oldSlide.style.transform = 'translateY(-100vh)';
-            
-            setTimeout(() => {
-                oldSlide.classList.remove('active');
-                newSlide.classList.add('active');
-                newSlide.style.opacity = '1';
-                
-                // Effetto macchina da scrivere
-                const titles = newSlide.querySelectorAll('h1, h2, h3');
-                titles.forEach((title, index) => {
-                    const text = title.textContent;
-                    title.textContent = '';
-                    title.style.borderRight = '2px solid var(--primary)';
-                    
-                    setTimeout(() => {
-                        typeText(title, text, 50);
-                    }, index * 500);
-                });
-            }, 400);
-        }
-        
-        // Animazione EXPLODE
-        function explodeTransition(oldSlide, newSlide) {
-            // Crea frammenti della slide corrente
-            createFragments(oldSlide);
-            
-            setTimeout(() => {
-                oldSlide.classList.remove('active');
-                newSlide.classList.add('active');
-                
-                // Nuova slide appare con particelle che si ricompongono
-                createReassemblyEffect(newSlide);
-            }, 800);
-        }
-        
-        // Animazione MATRIX
-        function matrixTransition(oldSlide, newSlide) {
-            createMatrixRain();
-            
-            setTimeout(() => {
-                oldSlide.classList.remove('active');
-                newSlide.classList.add('active');
-                newSlide.style.opacity = '1';
-                
-                // Effetto digitale sui testi
-                digitalizeText(newSlide);
-            }, 1000);
-        }
-        
-        // Animazione SPIRAL
-        function spiralTransition(oldSlide, newSlide) {
-            oldSlide.style.transform = 'rotate(720deg) scale(0)';
-            
-            setTimeout(() => {
-                oldSlide.classList.remove('active');
-                newSlide.classList.add('active');
-                
-                // Nuova slide appare con spirale
-                newSlide.style.transform = 'rotate(-720deg) scale(0)';
-                newSlide.style.opacity = '1';
-                
-                setTimeout(() => {
-                    newSlide.style.transform = 'rotate(0deg) scale(1)';
-                }, 100);
-            }, 600);
-        }
-        
-        // Animazione GLITCH
-        function glitchTransition(oldSlide, newSlide) {
-            // Effetto glitch sulla slide corrente
-            oldSlide.style.animation = 'glitchOut 0.5s ease-in-out';
-            
-            setTimeout(() => {
-                oldSlide.classList.remove('active');
-                newSlide.classList.add('active');
-                
-                // Nuova slide con effetto glitch in
-                newSlide.style.animation = 'glitchIn 0.5s ease-in-out';
-                newSlide.style.opacity = '1';
-            }, 500);
-        }
-        
-        // Funzioni helper
-        function buildTextLetterByLetter(slide) {
-            const titles = slide.querySelectorAll('h1, h2, h3');
-            titles.forEach((title, index) => {
-                const text = title.textContent;
-                title.innerHTML = '';
-                
-                setTimeout(() => {
-                    [...text].forEach((letter, i) => {
-                        setTimeout(() => {
-                            const span = document.createElement('span');
-                            span.textContent = letter;
-                            span.style.opacity = '0';
-                            span.style.transform = 'translateY(20px)';
-                            span.style.transition = 'all 0.3s ease';
-                            title.appendChild(span);
-                            
-                            setTimeout(() => {
-                                span.style.opacity = '1';
-                                span.style.transform = 'translateY(0)';
-                            }, 50);
-                        }, i * 50);
-                    });
-                }, index * 300);
-            });
-        }
-        
-        function typeText(element, text, speed) {
-            let i = 0;
-            const timer = setInterval(() => {
-                element.textContent += text.charAt(i);
-                i++;
-                if (i >= text.length) {
-                    clearInterval(timer);
-                    element.style.borderRight = 'none';
-                }
-            }, speed);
-        }
-        
-        function createFragments(slide) {
-            const rect = slide.getBoundingClientRect();
-            for (let i = 0; i < 20; i++) {
-                const fragment = document.createElement('div');
-                fragment.style.position = 'fixed';
-                fragment.style.width = '50px';
-                fragment.style.height = '50px';
-                fragment.style.background = 'var(--primary)';
-                fragment.style.left = Math.random() * rect.width + 'px';
-                fragment.style.top = Math.random() * rect.height + 'px';
-                fragment.style.animation = `explodeFragment 0.8s ease-out forwards`;
-                document.body.appendChild(fragment);
-                
-                setTimeout(() => document.body.removeChild(fragment), 800);
-            }
-        }
-        
-        function createMatrixRain() {
-            const matrix = document.createElement('div');
-            matrix.style.position = 'fixed';
-            matrix.style.top = '0';
-            matrix.style.left = '0';
-            matrix.style.width = '100vw';
-            matrix.style.height = '100vh';
-            matrix.style.background = 'black';
-            matrix.style.zIndex = '9999';
-            
-            for (let i = 0; i < 50; i++) {
-                const drop = document.createElement('div');
-                drop.textContent = String.fromCharCode(0x30A0 + Math.random() * 96);
-                drop.style.position = 'absolute';
-                drop.style.color = 'var(--primary)';
-                drop.style.left = Math.random() * 100 + 'vw';
-                drop.style.animation = `matrixDrop 1s linear infinite`;
-                drop.style.animationDelay = Math.random() * 1 + 's';
-                matrix.appendChild(drop);
-            }
-            
-            document.body.appendChild(matrix);
-            setTimeout(() => document.body.removeChild(matrix), 1000);
-        }
-        
-        function defaultTransition(oldSlide, newSlide) {
+            // Crea effetti particelle
             createParticles();
+            
+            // Crea wave effect
             createWaveEffect();
             
+            // Animazione slide out
             oldSlide.classList.add('slide-out-left');
             
             setTimeout(() => {
                 oldSlide.classList.remove('active', 'slide-out-left');
-                newSlide.classList.add('active');
-                triggerRevealAnimations(newSlide);
-            }, 400);
-        }
-        
-        function triggerRevealAnimations(slide) {
-            const reveals = slide.querySelectorAll('.reveal');
-            reveals.forEach(el => el.classList.remove('revealed'));
-            
-            setTimeout(() => {
-                reveals.forEach((element, index) => {
-                    const delay = element.getAttribute('data-delay') || (index * 100);
+                newSlide.classList.add('slide-in-right');
+                
+                setTimeout(() => {
+                    newSlide.classList.remove('slide-in-right');
+                    newSlide.classList.add('active');
+                    
+                    // Update progress bar con animazione
+                    const progress = ((currentSlide + 1) / totalSlides) * 100;
+                    document.getElementById('progressBar').style.width = progress + '%';
+                    
+                    // Reset e trigger animazioni reveal
+                    const currentSlideReveals = newSlide.querySelectorAll('.reveal');
+                    currentSlideReveals.forEach(el => el.classList.remove('revealed'));
+                    
                     setTimeout(() => {
-                        element.classList.add('revealed');
-                    }, delay);
-                });
-            }, 200);
+                        currentSlideReveals.forEach((element, index) => {
+                            const delay = element.getAttribute('data-delay') || (index * 100);
+                            setTimeout(() => {
+                                element.classList.add('revealed');
+                            }, delay);
+                        });
+                    }, 200);
+                }, 100);
+            }, 400);
         }
         
         // Crea particelle animate
