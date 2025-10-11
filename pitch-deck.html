@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drape - Pitch Deck</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .pitch-container {
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            background: #0a0a0a;
+        }
+        
+        .slide {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+            position: absolute;
+            width: 100%;
+            top: 0;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            transform: translateY(0);
+            position: relative;
+        }
+        
+        .slide-content {
+            max-width: 1200px;
+            text-align: center;
+        }
+        
+        .slide h1 {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .slide h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: var(--text);
+        }
+        
+        .slide p {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+        
+        .slide-number {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            padding: 12px 24px;
+            background: rgba(168, 85, 247, 0.2);
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: var(--primary);
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .metric-card {
+            background: rgba(168, 85, 247, 0.1);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+        
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+        
+        .feature-list {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .feature-list li {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--text);
+            list-style: none;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .back-home {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            padding: 12px 24px;
+            background: rgba(168, 85, 247, 0.2);
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-home:hover {
+            background: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <a href="index.html" class="back-home">← Home</a>
+    
+    <div class="pitch-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="slide-number">1/12</div>
+            <div class="slide-content">
+                <h1>DRAPE</h1>
+                <p>Il Primo IDE Mobile con AI Multimodello</p>
+                <p style="color: var(--primary); font-size: 1.2rem;">Rivoluzionando lo sviluppo software su mobile</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Problema -->
+        <div class="slide">
+            <div class="slide-number">2/12</div>
+            <div class="slide-content">
+                <h2>Il Problema</h2>
+                <div class="feature-list">
+                    <li>Gli sviluppatori sono limitati ai desktop per il coding</li>
+                    <li>Nessun IDE mobile offre un terminal completo</li>
+                    <li>L'AI nei tool esistenti è passiva e limitata</li>
+                    <li>Impossibile lavorare su progetti reali da mobile</li>
+                    <li>Mercato da $26.9B completamente scoperto</li>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Soluzione -->
+        <div class="slide">
+            <div class="slide-number">3/12</div>
+            <div class="slide-content">
+                <h2>La Nostra Soluzione</h2>
+                <div class="feature-list">
+                    <li>Terminal bash/zsh completo su mobile</li>
+                    <li>AI Agent autonomo per modifiche multi-file</li>
+                    <li>Multi-Model AI (GPT-5, Claude 4.5, Gemini Pro)</li>
+                    <li>Integrazione nativa con GitHub</li>
+                    <li>Editor di codice desktop-grade</li>
+                    <li>Esperienza mobile-first ottimizzata</li>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Mercato -->
+        <div class="slide">
+            <div class="slide-number">4/12</div>
+            <div class="slide-content">
+                <h2>Mercato Enorme</h2>
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">$26.9B</div>
+                        <div class="metric-label">Mercato IDE Globale</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">28M</div>
+                        <div class="metric-label">Sviluppatori Mondiali</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">0%</div>
+                        <div class="metric-label">IDE Mobile Completi</div>
+                    </div>
+                </div>
+                <p>Primo mover advantage in un mercato completamente inesplorato</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Competitor -->
+        <div class="slide">
+            <div class="slide-number">5/12</div>
+            <div class="slide-content">
+                <h2>Vantaggio Competitivo</h2>
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">6/6</div>
+                        <div class="metric-label">Drape Features</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">4/6</div>
+                        <div class="metric-label">Miglior Competitor</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">100%</div>
+                        <div class="metric-label">Vantaggio Tecnico</div>
+                    </div>
+                </div>
+                <p>Unico con Terminal + AI Agent + GitHub Integration insieme</p>
+            </div>
+        </div>
+
+        <!-- Slide 6: Business Model -->
+        <div class="slide">
+            <div class="slide-number">6/12</div>
+            <div class="slide-content">
+                <h2>Business Model</h2>
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">€0</div>
+                        <div class="metric-label">Piano Free</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">€19</div>
+                        <div class="metric-label">Piano Pro/mese</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">€49</div>
+                        <div class="metric-label">Piano Team/mese</div>
+                    </div>
+                </div>
+                <p>Modello freemium con upgrade naturale per funzionalità avanzate</p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Traction -->
+        <div class="slide">
+            <div class="slide-number">7/12</div>
+            <div class="slide-content">
+                <h2>Traction Iniziale</h2>
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">1.2K</div>
+                        <div class="metric-label">Beta Users</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">89%</div>
+                        <div class="metric-label">Retention Rate</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">4.8/5</div>
+                        <div class="metric-label">User Rating</div>
+                    </div>
+                </div>
+                <p>Forte product-market fit dimostrato dai primi utenti</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Proiezioni -->
+        <div class="slide">
+            <div class="slide-number">8/12</div>
+            <div class="slide-content">
+                <h2>Proiezioni Finanziarie</h2>
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">€2.1M</div>
+                        <div class="metric-label">ARR Anno 3</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">15K</div>
+                        <div class="metric-label">Utenti Paganti</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">€140</div>
+                        <div class="metric-label">ARPU Medio</div>
+                    </div>
+                </div>
+                <p>Crescita sostenibile con margini elevati (80%+)</p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Team -->
+        <div class="slide">
+            <div class="slide-number">9/12</div>
+            <div class="slide-content">
+                <h2>Il Team</h2>
+                <div class="feature-list">
+                    <li>Founder con esperienza in mobile development</li>
+                    <li>Background in AI e machine learning</li>
+                    <li>Track record in product development</li>
+                    <li>Network nel settore developer tools</li>
+                    <li>Visione chiara del mercato mobile</li>
+                </div>
+                <p>Team tecnico con le competenze giuste per eseguire</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Roadmap -->
+        <div class="slide">
+            <div class="slide-number">10/12</div>
+            <div class="slide-content">
+                <h2>Roadmap</h2>
+                <div class="feature-list">
+                    <li><strong>Q1 2025:</strong> Launch pubblico e prime 1K utenti</li>
+                    <li><strong>Q2 2025:</strong> Funzionalità team e collaboration</li>
+                    <li><strong>Q3 2025:</strong> Integrazione cloud providers</li>
+                    <li><strong>Q4 2025:</strong> Espansione internazionale</li>
+                    <li><strong>2026:</strong> Enterprise features e partnerships</li>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Investimento -->
+        <div class="slide">
+            <div class="slide-number">11/12</div>
+            <div class="slide-content">
+                <h2>Investimento Richiesto</h2>
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">€500K</div>
+                        <div class="metric-label">Seed Round</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">18 mesi</div>
+                        <div class="metric-label">Runway</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">15%</div>
+                        <div class="metric-label">Equity Offerta</div>
+                    </div>
+                </div>
+                <p>Fondi per sviluppo prodotto, team expansion e go-to-market</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Call to Action -->
+        <div class="slide">
+            <div class="slide-number">12/12</div>
+            <div class="slide-content">
+                <h1>Unisciti alla Rivoluzione</h1>
+                <p>Il futuro dello sviluppo software è mobile</p>
+                <p style="color: var(--primary); font-size: 1.8rem; margin-top: 40px;">
+                    Drape è pronto a guidare questa trasformazione
+                </p>
+                <div style="margin-top: 60px;">
+                    <a href="mailto:hello@drape.dev" style="color: var(--primary); font-size: 1.3rem; text-decoration: none;">
+                        hello@drape.dev
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()">← Precedente</button>
+        <button class="nav-btn" onclick="nextSlide()">Successiva →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            // Update progress bar
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+
+        // Touch navigation for mobile
+        let startX = 0;
+        document.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            const endX = e.changedTouches[0].clientX;
+            const diff = startX - endX;
+            
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    previousSlide();
+                }
+            }
+        });
+
+        // Auto-advance (optional)
+        // setInterval(nextSlide, 10000);
+    </script>
+</body>
+</html>
