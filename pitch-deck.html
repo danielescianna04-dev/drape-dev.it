@@ -502,6 +502,72 @@
             }
         }
         
+        /* Miglioramenti visivi slide 5 */
+        .demo-feature {
+            background: rgba(168, 85, 247, 0.05) !important;
+            border: 1px solid rgba(168, 85, 247, 0.1) !important;
+            border-radius: 12px !important;
+            padding: 15px !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .demo-feature:hover {
+            background: rgba(168, 85, 247, 0.1) !important;
+            border-color: rgba(168, 85, 247, 0.3) !important;
+            transform: translateX(10px) !important;
+        }
+        
+        .demo-icon {
+            background: var(--primary) !important;
+            color: white !important;
+            width: 30px !important;
+            height: 30px !important;
+            border-radius: 50% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 1rem !important;
+            flex-shrink: 0 !important;
+        }
+        
+        .mockup-container {
+            position: relative !important;
+            display: inline-block !important;
+        }
+        
+        .mockup-glow {
+            position: absolute !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            width: 120% !important;
+            height: 120% !important;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, transparent 70%) !important;
+            border-radius: 50% !important;
+            z-index: -1 !important;
+            animation: pulse-glow 3s ease-in-out infinite !important;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
+        }
+        
+        .mockup-full {
+            filter: drop-shadow(0 20px 40px rgba(168, 85, 247, 0.2)) !important;
+            transition: transform 0.3s ease !important;
+        }
+        
+        .mockup-full:hover {
+            transform: scale(1.05) !important;
+        }
+        
+        .demo-description h3 {
+            background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+        
 
     </style>
 </head>
@@ -671,34 +737,34 @@
                         <h2 class="reveal">La Nostra Soluzione</h2>
                         
                         <!-- Interactive AI Demo -->
-                        <div class="ai-demo reveal">
+                        <div class="ai-demo reveal" data-delay="0">
                             <div class="demo-description">
-                                <h3>Il Primo IDE Mobile Completo</h3>
-                                <p class="demo-intro">Drape porta l'esperienza di sviluppo desktop direttamente su mobile, con funzionalità che nessun competitor offre.</p>
+                                <h3 class="reveal" data-delay="100">Il Primo IDE Mobile Completo</h3>
+                                <p class="demo-intro reveal" data-delay="200">Drape porta l'esperienza di sviluppo desktop direttamente su mobile, con funzionalità che nessun competitor offre.</p>
                                 
                                 <div class="demo-features">
-                                    <div class="demo-feature">
+                                    <div class="demo-feature reveal" data-delay="300">
                                         <div class="demo-icon">→</div>
                                         <div>
                                             <h4>Terminal Bash/Zsh Completo</h4>
                                             <p>Esegui comandi, script e gestisci processi come su desktop. Nessuna limitazione.</p>
                                         </div>
                                     </div>
-                                    <div class="demo-feature">
+                                    <div class="demo-feature reveal" data-delay="400">
                                         <div class="demo-icon">→</div>
                                         <div>
                                             <h4>AI Agent Autonomo</h4>
                                             <p>L'AI crea e modifica progetti esistenti in autonomia, non solo genera template.</p>
                                         </div>
                                     </div>
-                                    <div class="demo-feature">
+                                    <div class="demo-feature reveal" data-delay="500">
                                         <div class="demo-icon">→</div>
                                         <div>
                                             <h4>GitHub Repository Integration</h4>
                                             <p>Clone, commit, push e gestisci PR direttamente dalle tue repo esistenti.</p>
                                         </div>
                                     </div>
-                                    <div class="demo-feature">
+                                    <div class="demo-feature reveal" data-delay="600">
                                         <div class="demo-icon">→</div>
                                         <div>
                                             <h4>Multi-Model AI</h4>
@@ -708,8 +774,11 @@
                                 </div>
                             </div>
                             
-                            <div class="phone-mockup-image">
-                                <img src="Progetto senza titolo (3).png" alt="Drape App Mockup" class="mockup-full">
+                            <div class="phone-mockup-image reveal" data-delay="700">
+                                <div class="mockup-container">
+                                    <img src="Progetto senza titolo (3).png" alt="Drape App Mockup" class="mockup-full">
+                                    <div class="mockup-glow"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
