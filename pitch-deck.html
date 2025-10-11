@@ -418,6 +418,90 @@
             }
         }
         
+        /* Fix per ai-demo section */
+        .ai-demo {
+            display: flex !important;
+            gap: 40px !important;
+            align-items: center !important;
+            max-width: 100% !important;
+        }
+        
+        .demo-description {
+            flex: 1 !important;
+            max-width: 50% !important;
+        }
+        
+        .demo-description h3 {
+            font-size: 2rem !important;
+            color: #ffffff !important;
+            margin-bottom: 20px !important;
+        }
+        
+        .demo-intro {
+            font-size: 1.1rem !important;
+            color: #a1a1aa !important;
+            margin-bottom: 30px !important;
+        }
+        
+        .demo-features {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 20px !important;
+        }
+        
+        .demo-feature {
+            display: flex !important;
+            align-items: flex-start !important;
+            gap: 15px !important;
+        }
+        
+        .demo-icon {
+            color: var(--primary) !important;
+            font-size: 1.2rem !important;
+            font-weight: bold !important;
+            margin-top: 2px !important;
+        }
+        
+        .demo-feature h4 {
+            color: #ffffff !important;
+            font-size: 1.1rem !important;
+            margin-bottom: 5px !important;
+        }
+        
+        .demo-feature p {
+            color: #a1a1aa !important;
+            font-size: 0.9rem !important;
+            line-height: 1.5 !important;
+        }
+        
+        .phone-mockup-image {
+            flex: 1 !important;
+            max-width: 45% !important;
+            display: flex !important;
+            justify-content: center !important;
+        }
+        
+        .mockup-full {
+            max-width: 100% !important;
+            height: auto !important;
+            max-height: 400px !important;
+        }
+        
+        @media (max-width: 900px) {
+            .ai-demo {
+                flex-direction: column !important;
+                gap: 30px !important;
+            }
+            
+            .demo-description, .phone-mockup-image {
+                max-width: 100% !important;
+            }
+            
+            .mockup-full {
+                max-height: 300px !important;
+            }
+        }
+        
 
     </style>
 </head>
