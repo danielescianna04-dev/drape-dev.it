@@ -583,6 +583,76 @@
             background: transparent !important;
         }
         
+        /* Fix slide 8 - roadmap e proiezioni */
+        .roadmap {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 15px !important;
+            margin-bottom: 30px !important;
+        }
+        
+        .roadmap-item {
+            background: rgba(168, 85, 247, 0.1) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            border-radius: 12px !important;
+            padding: 15px !important;
+            font-size: 0.9rem !important;
+        }
+        
+        .roadmap-item h4 {
+            color: var(--primary) !important;
+            font-size: 1rem !important;
+            margin-bottom: 8px !important;
+        }
+        
+        .roadmap-item p {
+            color: var(--text-muted) !important;
+            font-size: 0.85rem !important;
+            line-height: 1.4 !important;
+        }
+        
+        .projections {
+            margin-top: 20px !important;
+        }
+        
+        .projection-grid {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 20px !important;
+        }
+        
+        .projection {
+            background: rgba(168, 85, 247, 0.1) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            border-radius: 12px !important;
+            padding: 20px !important;
+            text-align: center !important;
+        }
+        
+        .projection h4 {
+            color: var(--primary) !important;
+            font-size: 1.1rem !important;
+            margin-bottom: 10px !important;
+        }
+        
+        .projection p {
+            font-size: 0.8rem !important;
+            color: var(--text-muted) !important;
+            margin: 3px 0 !important;
+        }
+        
+        .revenue {
+            color: var(--primary) !important;
+            font-weight: bold !important;
+            font-size: 1rem !important;
+        }
+        
+        @media (max-width: 800px) {
+            .projection-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+        
         .slide:first-child .hero {
             width: 100vw !important;
             margin: 0 !important;
