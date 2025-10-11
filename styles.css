@@ -1357,7 +1357,7 @@ html {
 .table-row,
 .table-footer {
     display: grid;
-    grid-template-columns: 2fr repeat(6, 1fr);
+    grid-template-columns: 2fr repeat(5, 1fr);
     gap: 1px;
     background: rgba(168, 85, 247, 0.1);
 }
@@ -3165,7 +3165,7 @@ footer {
     .table-footer {
         min-width: 700px;
         font-size: 13px;
-        grid-template-columns: 150px repeat(6, 110px);
+        grid-template-columns: 150px repeat(5, 110px);
     }
     
     .feature-name {
