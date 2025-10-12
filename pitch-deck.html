@@ -1381,171 +1381,106 @@
             }
         }
 
-        /* Slide 5: Market Opportunity Redesign */
+        /* Slide 5: Market Opportunity - Clean Layout */
         .market-opportunity-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-            width: 100%;
-            text-align: left;
-        }
-
-        .market-diagram-container {
-            position: relative;
-            width: 100%;
-            max-width: 500px;
-            aspect-ratio: 1 / 1;
-            margin: 0 auto;
-        }
-
-        .market-circle {
-            position: absolute;
-            border-radius: 50%;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-            border-style: solid;
-        }
-
-        .tam-circle {
+            flex-direction: column;
+            gap: 50px;
             width: 100%;
-            height: 100%;
-            background: rgba(168, 85, 247, 0.03);
-            border: 3px solid rgba(168, 85, 247, 0.3);
-            top: 0;
-            left: 0;
         }
 
-        .sam-circle {
-            width: 65%;
-            height: 65%;
-            background: rgba(168, 85, 247, 0.08);
-            border: 3px solid rgba(168, 85, 247, 0.5);
-            top: 17.5%;
-            left: 17.5%;
+        .market-size-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
         }
 
-        .som-circle {
-            width: 35%;
-            height: 35%;
-            background: rgba(168, 85, 247, 0.15);
-            border: 3px solid var(--primary);
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
-            top: 32.5%;
-            left: 32.5%;
+        .market-size-card {
+            background: rgba(10, 10, 10, 0.8);
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            border-radius: 20px;
+            padding: 35px 25px;
+            text-align: center;
+            transition: all 0.3s ease;
         }
 
-        .market-label {
-            position: absolute;
-            text-align: left;
-            opacity: 0;
-            transition: opacity 0.5s ease 0.5s;
-            background: rgba(10, 10, 10, 0.9);
-            padding: 15px 20px;
-            border-radius: 12px;
-            border: 1px solid rgba(168, 85, 247, 0.3);
-            backdrop-filter: blur(10px);
-            min-width: 180px;
+        .market-size-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
         }
 
-        .slide.active .market-label {
-            opacity: 1;
+        .market-size-card.highlight {
+            border-color: var(--primary);
+            background: rgba(168, 85, 247, 0.1);
         }
 
-        .market-label h3 {
-            font-size: 0.85rem;
-            margin: 0 0 8px 0;
+        .market-size-card h3 {
+            font-size: 0.9rem;
             color: var(--primary);
+            margin-bottom: 15px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
+            letter-spacing: 2px;
         }
-        .market-label .value {
-            font-size: 2.2rem;
-            font-weight: 800;
+
+        .market-size-card .value {
+            font-size: 3.5rem;
+            font-weight: 900;
             color: #ffffff;
-            margin-bottom: 8px;
+            margin-bottom: 15px;
             line-height: 1;
         }
-        .market-label p {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin: 0;
-            line-height: 1.5;
-        }
 
-        .tam-label { 
-            top: -10%; 
-            left: 50%; 
-            transform: translateX(-50%);
-        }
-        .sam-label { 
-            top: 50%; 
-            left: -25%; 
-            transform: translateY(-50%);
-        }
-        .som-label { 
-            bottom: -10%; 
-            right: -15%;
+        .market-size-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
         }
 
         .market-trends-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
         }
 
         .trend-card {
-            background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(20, 20, 30, 0.95));
-            border: 1px solid rgba(168, 85, 247, 0.3);
-            border-radius: 20px;
-            padding: 30px;
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .trend-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at top right, rgba(168, 85, 247, 0.1), transparent 60%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
+            background: rgba(10, 10, 10, 0.6);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 16px;
+            padding: 25px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
         }
         
         .trend-card:hover {
-            transform: translateY(-8px) scale(1.02);
+            transform: translateY(-5px);
             border-color: var(--primary);
-            box-shadow: 0 15px 40px rgba(168, 85, 247, 0.3);
-        }
-        
-        .trend-card:hover::before {
-            opacity: 1;
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2);
         }
 
         .trend-card .value {
-            font-size: 3rem;
-            font-weight: 900;
+            font-size: 2.5rem;
+            font-weight: 800;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             line-height: 1;
-            position: relative;
-            z-index: 1;
         }
+        
         .trend-card .label {
-            font-size: 0.95rem;
-            color: #e0e0e0;
-            line-height: 1.6;
-            position: relative;
-            z-index: 1;
+            font-size: 0.85rem;
+            color: #d0d0d0;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 1000px) {
+            .market-size-cards {
+                grid-template-columns: 1fr;
+            }
+            .market-trends-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         /* Slide 8: Traction & Roadmap Redesign */
@@ -1900,48 +1835,43 @@
                 <section class="section">
                     <div class="container">
                         <h2 class="reveal">Opportunità di Mercato</h2>
-                        <p class="section-subtitle reveal" data-delay="100">Un mercato in rapida crescita guidato dall'adozione dell'AI e dalla necessità di flessibilità.</p>
+                        <p class="section-subtitle reveal" data-delay="100">Un mercato in rapida crescita guidato dall'adozione dell'AI</p>
                         
                         <div class="market-opportunity-grid">
-                            <div class="market-diagram-container reveal" data-delay="200">
-                                <div class="market-circle tam-circle">
-                                    <div class="market-label tam-label">
-                                        <h3>TAM</h3>
-                                        <div class="value">$8.6B</div>
-                                        <p>28.7M developer globali</p>
-                                    </div>
+                            <div class="market-size-cards">
+                                <div class="market-size-card reveal" data-delay="200">
+                                    <h3>TAM</h3>
+                                    <div class="value">$8.6B</div>
+                                    <p>28.7M developer globali</p>
                                 </div>
-                                <div class="market-circle sam-circle">
-                                    <div class="market-label sam-label">
-                                        <h3>SAM</h3>
-                                        <div class="value">$860M</div>
-                                        <p>4.3M developer interessati a mobile + AI</p>
-                                    </div>
+                                <div class="market-size-card reveal" data-delay="300">
+                                    <h3>SAM</h3>
+                                    <div class="value">$860M</div>
+                                    <p>4.3M developer interessati a mobile + AI</p>
                                 </div>
-                                <div class="market-circle som-circle">
-                                    <div class="market-label som-label">
-                                        <h3>SOM (Y3)</h3>
-                                        <div class="value">$3.36M</div>
-                                        <p>Nostro target raggiungibile</p>
-                                    </div>
+                                <div class="market-size-card highlight reveal" data-delay="400">
+                                    <h3>SOM (Y3)</h3>
+                                    <div class="value">$3.36M</div>
+                                    <p>Nostro target raggiungibile</p>
                                 </div>
                             </div>
+                            
                             <div class="market-trends-grid">
-                                <div class="trend-card reveal" data-delay="400">
-                                    <div class="value">68%</div>
-                                    <div class="label">Dei developer è interessato a programmare da mobile.</div>
-                                </div>
                                 <div class="trend-card reveal" data-delay="500">
-                                    <div class="value">+150%</div>
-                                    <div class="label">Crescita annua degli strumenti di sviluppo basati su AI.</div>
+                                    <div class="value">68%</div>
+                                    <div class="label">Developer interessati a mobile dev</div>
                                 </div>
                                 <div class="trend-card reveal" data-delay="600">
-                                    <div class="value">$2.3B</div>
-                                    <div class="label">Finanziamenti VC in AI dev tools nel solo 2024.</div>
+                                    <div class="value">+150%</div>
+                                    <div class="label">Crescita AI dev tools</div>
                                 </div>
                                 <div class="trend-card reveal" data-delay="700">
+                                    <div class="value">$2.3B</div>
+                                    <div class="label">Finanziamenti VC 2024</div>
+                                </div>
+                                <div class="trend-card reveal" data-delay="800">
                                     <div class="value">92%</div>
-                                    <div class="label">Dei developer usa regolarmente assistenti AI nel proprio workflow.</div>
+                                    <div class="label">Usa assistenti AI</div>
                                 </div>
                             </div>
                         </div>
