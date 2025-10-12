@@ -265,27 +265,97 @@
             margin-bottom: 10px !important;
         }
         
-        .funding-request {
-            text-align: center !important;
-            margin: 40px 0 !important;
+        /* Slide 11: Funding Request - Clean Card Layout */
+        .funding-hero {
+            text-align: center;
+            margin-bottom: 50px;
         }
-        
-        .funding-amount {
-            margin-bottom: 40px !important;
+
+        .funding-amount-card {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15));
+            border: 2px solid var(--primary);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 500px;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 40px rgba(168, 85, 247, 0.3);
         }
-        
-        .usage-list {
-            max-width: 600px !important;
-            margin: 20px auto !important;
+
+        .funding-amount-card h1 {
+            font-size: 5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0 0 15px 0;
+            line-height: 1;
         }
-        
-        .usage-item {
-            background: rgba(168, 85, 247, 0.1) !important;
-            border: 1px solid rgba(168, 85, 247, 0.2) !important;
-            border-radius: 8px !important;
-            padding: 15px !important;
-            margin: 10px 0 !important;
-            color: #ffffff !important;
+
+        .funding-amount-card p {
+            font-size: 1.3rem;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .funding-breakdown {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .breakdown-card {
+            background: rgba(10, 10, 10, 0.8);
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .breakdown-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+        }
+
+        .breakdown-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
+        }
+
+        .breakdown-card .percentage {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .breakdown-card .category {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .breakdown-card .amount {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        @media (max-width: 800px) {
+            .funding-breakdown {
+                grid-template-columns: 1fr;
+            }
         }
         
         .contact-grid {
@@ -2223,19 +2293,34 @@
                 <section class="section">
                     <div class="container">
                         <h2 class="reveal">Richiesta di Finanziamento</h2>
-                        <div class="funding-request">
-                            <div class="funding-amount reveal">
-                                <h1 style="color: var(--primary); font-size: 4rem;">€500K</h1>
-                                <p style="font-size: 1.5rem;">Seed Round - 15% equity</p>
+                        
+                        <div class="funding-hero">
+                            <div class="funding-amount-card reveal" data-delay="100">
+                                <h1>€500K</h1>
+                                <p>Seed Round • 15% Equity</p>
                             </div>
-                            <div class="fund-usage reveal" data-delay="200">
-                                <h3>Utilizzo Fondi</h3>
-                                <div class="usage-list">
-                                    <div class="usage-item">40% Sviluppo Prodotto (€200K)</div>
-                                    <div class="usage-item">30% Team Expansion (€150K)</div>
-                                    <div class="usage-item">20% Marketing & Sales (€100K)</div>
-                                    <div class="usage-item">10% Operations (€50K)</div>
-                                </div>
+                        </div>
+                        
+                        <div class="funding-breakdown">
+                            <div class="breakdown-card reveal" data-delay="200">
+                                <div class="percentage">40%</div>
+                                <div class="category">Sviluppo Prodotto</div>
+                                <div class="amount">€200K</div>
+                            </div>
+                            <div class="breakdown-card reveal" data-delay="300">
+                                <div class="percentage">30%</div>
+                                <div class="category">Team Expansion</div>
+                                <div class="amount">€150K</div>
+                            </div>
+                            <div class="breakdown-card reveal" data-delay="400">
+                                <div class="percentage">20%</div>
+                                <div class="category">Marketing & Sales</div>
+                                <div class="amount">€100K</div>
+                            </div>
+                            <div class="breakdown-card reveal" data-delay="500">
+                                <div class="percentage">10%</div>
+                                <div class="category">Operations</div>
+                                <div class="amount">€50K</div>
                             </div>
                         </div>
                     </div>
