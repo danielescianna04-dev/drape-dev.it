@@ -1,0 +1,91 @@
+
+/* New Traction & Roadmap Section */
+.traction-roadmap-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 60px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.traction-new, .roadmap-new {
+    background: rgba(10, 10, 10, 0.8);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 16px;
+    padding: 40px;
+}
+
+.traction-title, .roadmap-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.traction-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+}
+
+.traction-card {
+    text-align: center;
+}
+
+.traction-value {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+.traction-label {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.roadmap-timeline {
+    position: relative;
+    padding-left: 40px;
+    border-left: 2px solid rgba(168, 85, 247, 0.2);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -49px;
+    top: 5px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(168, 85, 247, 0.4);
+    border: 2px solid var(--primary);
+}
+
+.timeline-item.current .timeline-dot {
+    background: var(--primary);
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.7);
+}
+
+.timeline-content h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.timeline-content p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+}
