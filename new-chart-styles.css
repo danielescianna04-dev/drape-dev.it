@@ -1,10 +1,9 @@
-
 /* Financial Chart - New Bar Chart */
 .financial-chart {
     position: relative;
     height: 250px;
-    margin: 60px 0 40px;
-    width: 100%;
+    margin: 60px 0 40px 60px; /* Added left margin */
+    width: calc(100% - 60px); /* Adjusted width */
 }
 
 .chart-bars {
@@ -60,9 +59,13 @@
     color: #ffffff;
     font-size: 1.1rem;
     font-weight: 700;
-    opacity: 0;
-    animation: fadeIn 0.5s ease forwards;
-    animation-delay: calc(var(--delay) + 0.8s);
+    opacity: 1; /* Make values visible by default */
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.chart-bar:hover .bar-value {
+    transform: translateY(0);
 }
 
 .chart-axis {
@@ -73,6 +76,32 @@
     height: 2px;
     background: rgba(168, 85, 247, 0.2);
     z-index: 1;
+}
+
+.chart-y-axis {
+    position: absolute;
+    top: -15px;
+    left: -60px;
+    height: calc(100% + 15px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.y-axis-label {
+    position: relative;
+}
+
+.y-axis-label::after {
+    content: '';
+    position: absolute;
+    left: 50px;
+    right: -100vw;
+    top: 50%;
+    height: 1px;
+    background: rgba(168, 85, 247, 0.1);
 }
 
 @keyframes barGrowUp {
