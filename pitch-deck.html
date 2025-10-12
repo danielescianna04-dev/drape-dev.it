@@ -1020,35 +1020,35 @@
         .financial-dashboard {
             display: flex !important;
             flex-direction: column !important;
-            gap: 40px !important;
-            margin: 40px 0 !important;
+            gap: 30px !important;
+            margin: 30px 0 !important;
         }
         
         .growth-chart {
             background: rgba(10, 10, 10, 0.8) !important;
             border: 1px solid rgba(168, 85, 247, 0.2) !important;
-            border-radius: 20px !important;
-            padding: 40px !important;
+            border-radius: 16px !important;
+            padding: 25px !important;
             backdrop-filter: blur(10px) !important;
         }
         
         .chart-header {
             text-align: center !important;
-            margin-bottom: 40px !important;
+            margin-bottom: 25px !important;
         }
         
         .chart-header h3 {
             color: #ffffff !important;
-            font-size: 1.8rem !important;
-            margin-bottom: 10px !important;
+            font-size: 1.4rem !important;
+            margin-bottom: 8px !important;
         }
         
         .growth-indicator {
             background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
             color: white !important;
-            padding: 8px 20px !important;
-            border-radius: 25px !important;
-            font-size: 0.9rem !important;
+            padding: 6px 16px !important;
+            border-radius: 20px !important;
+            font-size: 0.8rem !important;
             font-weight: 600 !important;
             display: inline-block !important;
         }
@@ -1057,84 +1057,84 @@
             display: flex !important;
             align-items: end !important;
             justify-content: space-around !important;
-            height: 250px !important;
-            gap: 20px !important;
+            height: 180px !important;
+            gap: 15px !important;
         }
         
         .chart-bar {
             flex: 1 !important;
-            max-width: 120px !important;
+            max-width: 80px !important;
             position: relative !important;
             cursor: pointer !important;
             transition: all 0.3s ease !important;
         }
         
         .chart-bar:hover {
-            transform: translateY(-5px) !important;
+            transform: translateY(-3px) !important;
         }
         
         .chart-bar.highlight .bar-fill {
             background: linear-gradient(180deg, #ffd700, var(--primary)) !important;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5) !important;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4) !important;
         }
         
         .bar-fill {
             background: linear-gradient(180deg, var(--primary), var(--secondary)) !important;
-            border-radius: 8px 8px 0 0 !important;
+            border-radius: 6px 6px 0 0 !important;
             position: relative !important;
             animation: barGrowUp 1.5s ease-out forwards !important;
-            box-shadow: 0 5px 20px rgba(168, 85, 247, 0.3) !important;
+            box-shadow: 0 3px 15px rgba(168, 85, 247, 0.3) !important;
         }
         
-        .chart-bar[data-value="15"] .bar-fill { height: 30px !important; }
-        .chart-bar[data-value="180"] .bar-fill { height: 80px !important; }
-        .chart-bar[data-value="750"] .bar-fill { height: 150px !important; }
-        .chart-bar[data-value="2100"] .bar-fill { height: 220px !important; }
+        .chart-bar[data-value="15"] .bar-fill { height: 25px !important; }
+        .chart-bar[data-value="180"] .bar-fill { height: 60px !important; }
+        .chart-bar[data-value="750"] .bar-fill { height: 110px !important; }
+        .chart-bar[data-value="2100"] .bar-fill { height: 160px !important; }
         
         .bar-value {
             position: absolute !important;
-            top: -35px !important;
+            top: -28px !important;
             left: 50% !important;
             transform: translateX(-50%) !important;
             color: #ffffff !important;
             font-weight: bold !important;
-            font-size: 1.1rem !important;
+            font-size: 0.9rem !important;
             background: rgba(0, 0, 0, 0.7) !important;
-            padding: 5px 10px !important;
-            border-radius: 8px !important;
+            padding: 3px 8px !important;
+            border-radius: 6px !important;
             border: 1px solid var(--primary) !important;
         }
         
         .bar-year {
             position: absolute !important;
-            bottom: -25px !important;
+            bottom: -20px !important;
             left: 50% !important;
             transform: translateX(-50%) !important;
             color: var(--primary) !important;
             font-weight: 600 !important;
-            font-size: 1rem !important;
+            font-size: 0.9rem !important;
         }
         
         .bar-details {
             position: absolute !important;
-            bottom: -45px !important;
+            bottom: -35px !important;
             left: 50% !important;
             transform: translateX(-50%) !important;
             color: var(--text-muted) !important;
-            font-size: 0.8rem !important;
+            font-size: 0.7rem !important;
         }
         
         .key-metrics {
             display: flex !important;
             justify-content: space-around !important;
-            gap: 20px !important;
+            gap: 15px !important;
         }
         
         .metric-highlight {
             background: rgba(168, 85, 247, 0.1) !important;
             border: 2px solid var(--primary) !important;
-            border-radius: 16px !important;
-            padding: 25px !important;
+            border-radius: 12px !important;
+            padding: 18px !important;
             text-align: center !important;
             flex: 1 !important;
             transition: all 0.3s ease !important;
@@ -1154,8 +1154,8 @@
         }
         
         .metric-highlight:hover {
-            transform: translateY(-5px) !important;
-            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3) !important;
+            transform: translateY(-3px) !important;
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.3) !important;
         }
         
         .metric-highlight:hover::before {
@@ -1163,20 +1163,20 @@
         }
         
         .metric-icon {
-            font-size: 2rem !important;
-            margin-bottom: 10px !important;
+            font-size: 1.5rem !important;
+            margin-bottom: 8px !important;
         }
         
         .metric-number {
             color: var(--primary) !important;
-            font-size: 2.2rem !important;
+            font-size: 1.6rem !important;
             font-weight: bold !important;
-            margin-bottom: 5px !important;
+            margin-bottom: 4px !important;
         }
         
         .metric-label {
             color: var(--text-muted) !important;
-            font-size: 0.9rem !important;
+            font-size: 0.8rem !important;
         }
         
         @keyframes barGrowUp {
