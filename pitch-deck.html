@@ -1086,36 +1086,66 @@
             content: '' !important;
             position: absolute !important;
             bottom: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            height: 2px !important;
+            left: 12.5% !important;
+            right: 12.5% !important;
+            height: 3px !important;
             background: linear-gradient(90deg, var(--primary), var(--secondary), #ffd700) !important;
             border-radius: 2px !important;
             animation: lineGrow 2s ease-out forwards !important;
             transform-origin: left !important;
-            clip-path: polygon(8% 80%, 33% 60%, 66% 30%, 92% 10%, 92% 100%, 8% 100%) !important;
+            clip-path: polygon(0% 80%, 33% 60%, 66% 30%, 100% 10%, 100% 100%, 0% 100%) !important;
         }
         
         .data-point {
             position: relative !important;
             cursor: pointer !important;
             transition: all 0.3s ease !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+        }
+        
+        .data-point::after {
+            content: '' !important;
+            width: 3px !important;
+            background: linear-gradient(180deg, var(--primary), rgba(168, 85, 247, 0.3)) !important;
+            border-radius: 2px !important;
+            animation: columnGrow 1.5s ease-out 0.5s forwards !important;
+            transform-origin: bottom !important;
+            transform: scaleY(0) !important;
         }
         
         .data-point[data-revenue="15K"] {
             margin-bottom: 20px !important;
         }
         
+        .data-point[data-revenue="15K"]::after {
+            height: 40px !important;
+        }
+        
         .data-point[data-revenue="180K"] {
             margin-bottom: 60px !important;
+        }
+        
+        .data-point[data-revenue="180K"]::after {
+            height: 80px !important;
         }
         
         .data-point[data-revenue="750K"] {
             margin-bottom: 120px !important;
         }
         
+        .data-point[data-revenue="750K"]::after {
+            height: 140px !important;
+        }
+        
         .data-point[data-revenue="2.1M"] {
             margin-bottom: 160px !important;
+        }
+        
+        .data-point[data-revenue="2.1M"]::after {
+            height: 180px !important;
+            background: linear-gradient(180deg, #ffd700, rgba(255, 215, 0, 0.3)) !important;
         }
         
         .data-point:hover {
@@ -1217,6 +1247,11 @@
         @keyframes lineGrow {
             0% { transform: scaleX(0); }
             100% { transform: scaleX(1); }
+        }
+        
+        @keyframes columnGrow {
+            0% { transform: scaleY(0); }
+            100% { transform: scaleY(1); }
         }
         
         @keyframes dotPulse {
