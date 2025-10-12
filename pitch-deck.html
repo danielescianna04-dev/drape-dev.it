@@ -1116,13 +1116,9 @@
         
         .chart-connecting-line path {
             fill: none !important;
-            stroke: var(--primary) !important;
-            stroke-width: 3 !important;
-            stroke-linecap: round !important;
-            stroke-linejoin: round !important;
-            stroke-dasharray: 500 !important;
-            stroke-dashoffset: 500 !important;
-            animation: drawLine 3s ease-out 1s forwards !important;
+            stroke: #a855f7 !important;
+            stroke-width: 4 !important;
+            opacity: 1 !important;
         }
         
         .data-point {
@@ -1831,8 +1827,8 @@
                                 
                                 <div class="revenue-chart">
                                     <div class="chart-connecting-line">
-                                        <svg viewBox="0 0 400 200">
-                                            <path d="M 50 170 L 150 130 L 250 80 L 350 40" />
+                                        <svg>
+                                            <path d="M 12% 85% L 37% 65% L 62% 40% L 87% 20%" />
                                         </svg>
                                     </div>
                                     <div class="data-point" data-year="2025" data-revenue="15K" data-users="1K">
