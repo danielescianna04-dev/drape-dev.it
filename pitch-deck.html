@@ -1297,6 +1297,128 @@
             }
         }
 
+        /* Slide 5: Market Opportunity Redesign */
+        .market-opportunity-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            align-items: center;
+            width: 100%;
+            text-align: left;
+        }
+
+        .market-diagram-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 1 / 1;
+            margin: 0 auto;
+        }
+
+        .market-circle {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            border-style: solid;
+        }
+
+        .tam-circle {
+            width: 100%;
+            height: 100%;
+            background: rgba(168, 85, 247, 0.05);
+            border: 2px solid rgba(168, 85, 247, 0.2);
+            top: 0;
+            left: 0;
+        }
+
+        .sam-circle {
+            width: 70%;
+            height: 70%;
+            background: rgba(168, 85, 247, 0.1);
+            border: 2px solid rgba(168, 85, 247, 0.4);
+            top: 15%;
+            left: 15%;
+        }
+
+        .som-circle {
+            width: 40%;
+            height: 40%;
+            background: rgba(168, 85, 247, 0.2);
+            border: 2px solid var(--primary);
+            top: 30%;
+            left: 30%;
+        }
+
+        .market-label {
+            position: absolute;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease 0.5s;
+        }
+
+        .slide.active .market-label {
+            opacity: 1;
+        }
+
+        .market-label h3 {
+            font-size: 1.1rem;
+            margin: 0 0 5px 0;
+            color: #fff;
+        }
+        .market-label .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        .market-label p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.4;
+            max-width: 200px;
+        }
+
+        .tam-label { top: 5%; left: 50%; transform: translateX(-50%); }
+        .sam-label { top: 50%; left: 5%; transform: translateY(-50%); }
+        .som-label { bottom: 10%; right: 5%; text-align: right; }
+        .som-label p { margin-left: auto; }
+
+        .market-trends-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .trend-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+        .trend-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.15);
+        }
+
+        .trend-card .value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+        .trend-card .label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
         /* Slide 8: Traction & Roadmap Redesign */
         .traction-roadmap-grid {
             display: grid;
@@ -1648,47 +1770,51 @@
             <div class="slide-content">
                 <section class="section">
                     <div class="container">
-                        <h2 class="reveal">Il Prodotto</h2>
-                        <div class="market-grid">
-                            <div class="market-card">
-                                <h3>TAM</h3>
-                                <div class="market-value">$8.6B</div>
-                                <p>28.7M developer globali × $100/anno medio</p>
-                                <div class="progress-ring">
-                                    <svg width="120" height="120">
-                                        <circle cx="60" cy="60" r="54" class="progress-ring-circle" style="--percent: 100"></circle>
-                                    </svg>
+                        <h2 class="reveal">Opportunità di Mercato</h2>
+                        <p class="section-subtitle reveal" data-delay="100">Un mercato in rapida crescita guidato dall'adozione dell'AI e dalla necessità di flessibilità.</p>
+                        
+                        <div class="market-opportunity-grid">
+                            <div class="market-diagram-container reveal" data-delay="200">
+                                <div class="market-circle tam-circle">
+                                    <div class="market-label tam-label">
+                                        <h3>TAM</h3>
+                                        <div class="value">$8.6B</div>
+                                        <p>28.7M developer globali</p>
+                                    </div>
+                                </div>
+                                <div class="market-circle sam-circle">
+                                    <div class="market-label sam-label">
+                                        <h3>SAM</h3>
+                                        <div class="value">$860M</div>
+                                        <p>4.3M developer interessati a mobile + AI</p>
+                                    </div>
+                                </div>
+                                <div class="market-circle som-circle">
+                                    <div class="market-label som-label">
+                                        <h3>SOM (Y3)</h3>
+                                        <div class="value">$3.36M</div>
+                                        <p>Nostro target raggiungibile</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="market-card highlight">
-                                <h3>SAM</h3>
-                                <div class="market-value">$860M</div>
-                                <p>4.3M mobile + AI interested developers</p>
-                                <div class="progress-ring">
-                                    <svg width="120" height="120">
-                                        <circle cx="60" cy="60" r="54" class="progress-ring-circle" style="--percent: 70"></circle>
-                                    </svg>
+                            <div class="market-trends-grid">
+                                <div class="trend-card reveal" data-delay="400">
+                                    <div class="value">68%</div>
+                                    <div class="label">Dei developer è interessato a programmare da mobile.</div>
+                                </div>
+                                <div class="trend-card reveal" data-delay="500">
+                                    <div class="value">+150%</div>
+                                    <div class="label">Crescita annua degli strumenti di sviluppo basati su AI.</div>
+                                </div>
+                                <div class="trend-card reveal" data-delay="600">
+                                    <div class="value">$2.3B</div>
+                                    <div class="label">Finanziamenti VC in AI dev tools nel solo 2024.</div>
+                                </div>
+                                <div class="trend-card reveal" data-delay="700">
+                                    <div class="value">92%</div>
+                                    <div class="label">Dei developer usa regolarmente assistenti AI nel proprio workflow.</div>
                                 </div>
                             </div>
-                            <div class="market-card">
-                                <h3>SOM (Year 3)</h3>
-                                <div class="market-value">$3.36M</div>
-                                <p>500K users, 5% conversion rate</p>
-                                <div class="progress-ring">
-                                    <svg width="120" height="120">
-                                        <circle cx="60" cy="60" r="54" class="progress-ring-circle" style="--percent: 40"></circle>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="market-trends">
-                            <h3>Trend Chiave</h3>
-                            <ul>
-                                <li><strong>68%</strong> - Developer interessati a coding da mobile</li>
-                                <li><strong>+150% YoY</strong> - Crescita AI-powered development tools</li>
-                                <li><strong>$2.3B</strong> - Venture funding in AI dev tools (2024)</li>
-                                <li><strong>92%</strong> - Developer che usano AI assistants regolarmente</li>
-                            </ul>
                         </div>
                     </div>
                 </section>
