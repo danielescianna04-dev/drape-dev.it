@@ -1072,28 +1072,9 @@
             position: relative !important;
             height: 200px !important;
             margin: 0 20px !important;
-        }
-        
-        .chart-line {
             display: flex !important;
-            justify-content: space-between !important;
             align-items: end !important;
-            height: 100% !important;
-            position: relative !important;
-        }
-        
-        .chart-line::before {
-            content: '' !important;
-            position: absolute !important;
-            bottom: 0 !important;
-            left: 12.5% !important;
-            right: 12.5% !important;
-            height: 3px !important;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), #ffd700) !important;
-            border-radius: 2px !important;
-            animation: lineGrow 2s ease-out forwards !important;
-            transform-origin: left !important;
-            clip-path: polygon(0% 80%, 33% 60%, 66% 30%, 100% 10%, 100% 100%, 0% 100%) !important;
+            justify-content: space-around !important;
         }
         
         .data-point {
@@ -1103,49 +1084,6 @@
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
-        }
-        
-        .data-point::after {
-            content: '' !important;
-            width: 3px !important;
-            background: linear-gradient(180deg, var(--primary), rgba(168, 85, 247, 0.3)) !important;
-            border-radius: 2px !important;
-            animation: columnGrow 1.5s ease-out 0.5s forwards !important;
-            transform-origin: bottom !important;
-            transform: scaleY(0) !important;
-        }
-        
-        .data-point[data-revenue="15K"] {
-            margin-bottom: 20px !important;
-        }
-        
-        .data-point[data-revenue="15K"]::after {
-            height: 40px !important;
-        }
-        
-        .data-point[data-revenue="180K"] {
-            margin-bottom: 60px !important;
-        }
-        
-        .data-point[data-revenue="180K"]::after {
-            height: 80px !important;
-        }
-        
-        .data-point[data-revenue="750K"] {
-            margin-bottom: 120px !important;
-        }
-        
-        .data-point[data-revenue="750K"]::after {
-            height: 140px !important;
-        }
-        
-        .data-point[data-revenue="2.1M"] {
-            margin-bottom: 160px !important;
-        }
-        
-        .data-point[data-revenue="2.1M"]::after {
-            height: 180px !important;
-            background: linear-gradient(180deg, #ffd700, rgba(255, 215, 0, 0.3)) !important;
         }
         
         .data-point:hover {
@@ -1158,7 +1096,7 @@
             background: var(--primary) !important;
             border: 3px solid #ffffff !important;
             border-radius: 50% !important;
-            margin: 0 auto 15px !important;
+            margin-bottom: 10px !important;
             box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4) !important;
             animation: dotPulse 2s ease-out forwards !important;
         }
@@ -1166,11 +1104,38 @@
         .data-point.highlight .point-dot {
             background: #ffd700 !important;
             box-shadow: 0 4px 20px rgba(255, 215, 0, 0.6) !important;
-            animation: goldPulse 2s ease-out forwards !important;
+        }
+        
+        .data-point::after {
+            content: '' !important;
+            width: 4px !important;
+            background: linear-gradient(180deg, var(--primary), rgba(168, 85, 247, 0.3)) !important;
+            border-radius: 2px !important;
+            animation: columnGrow 1.5s ease-out 0.5s forwards !important;
+            transform-origin: bottom !important;
+            transform: scaleY(0) !important;
+        }
+        
+        .data-point[data-revenue="15K"]::after {
+            height: 40px !important;
+        }
+        
+        .data-point[data-revenue="180K"]::after {
+            height: 80px !important;
+        }
+        
+        .data-point[data-revenue="750K"]::after {
+            height: 120px !important;
+        }
+        
+        .data-point[data-revenue="2.1M"]::after {
+            height: 160px !important;
+            background: linear-gradient(180deg, #ffd700, rgba(255, 215, 0, 0.3)) !important;
         }
         
         .point-label {
             text-align: center !important;
+            margin-top: 15px !important;
         }
         
         .revenue {
@@ -1811,34 +1776,32 @@
                                 </div>
                                 
                                 <div class="revenue-chart">
-                                    <div class="chart-line">
-                                        <div class="data-point" data-year="2025" data-revenue="15K" data-users="1K">
-                                            <div class="point-dot"></div>
-                                            <div class="point-label">
-                                                <div class="revenue">€15K</div>
-                                                <div class="year">2025</div>
-                                            </div>
+                                    <div class="data-point" data-year="2025" data-revenue="15K" data-users="1K">
+                                        <div class="point-dot"></div>
+                                        <div class="point-label">
+                                            <div class="revenue">€15K</div>
+                                            <div class="year">2025</div>
                                         </div>
-                                        <div class="data-point" data-year="2026" data-revenue="180K" data-users="8K">
-                                            <div class="point-dot"></div>
-                                            <div class="point-label">
-                                                <div class="revenue">€180K</div>
-                                                <div class="year">2026</div>
-                                            </div>
+                                    </div>
+                                    <div class="data-point" data-year="2026" data-revenue="180K" data-users="8K">
+                                        <div class="point-dot"></div>
+                                        <div class="point-label">
+                                            <div class="revenue">€180K</div>
+                                            <div class="year">2026</div>
                                         </div>
-                                        <div class="data-point" data-year="2027" data-revenue="750K" data-users="25K">
-                                            <div class="point-dot"></div>
-                                            <div class="point-label">
-                                                <div class="revenue">€750K</div>
-                                                <div class="year">2027</div>
-                                            </div>
+                                    </div>
+                                    <div class="data-point" data-year="2027" data-revenue="750K" data-users="25K">
+                                        <div class="point-dot"></div>
+                                        <div class="point-label">
+                                            <div class="revenue">€750K</div>
+                                            <div class="year">2027</div>
                                         </div>
-                                        <div class="data-point highlight" data-year="2028" data-revenue="2.1M" data-users="60K">
-                                            <div class="point-dot"></div>
-                                            <div class="point-label">
-                                                <div class="revenue">€2.1M</div>
-                                                <div class="year">2028</div>
-                                            </div>
+                                    </div>
+                                    <div class="data-point highlight" data-year="2028" data-revenue="2.1M" data-users="60K">
+                                        <div class="point-dot"></div>
+                                        <div class="point-label">
+                                            <div class="revenue">€2.1M</div>
+                                            <div class="year">2028</div>
                                         </div>
                                     </div>
                                 </div>
