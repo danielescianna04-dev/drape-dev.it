@@ -1016,58 +1016,188 @@
             padding: 0 60px !important;
         }
         
-        /* Chart styles */
-        .chart-container {
+        /* Financial Dashboard */
+        .financial-dashboard {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 40px !important;
             margin: 40px 0 !important;
-            text-align: center !important;
         }
         
-        .bar-chart {
+        .growth-chart {
+            background: rgba(10, 10, 10, 0.8) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            border-radius: 20px !important;
+            padding: 40px !important;
+            backdrop-filter: blur(10px) !important;
+        }
+        
+        .chart-header {
+            text-align: center !important;
+            margin-bottom: 40px !important;
+        }
+        
+        .chart-header h3 {
+            color: #ffffff !important;
+            font-size: 1.8rem !important;
+            margin-bottom: 10px !important;
+        }
+        
+        .growth-indicator {
+            background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+            color: white !important;
+            padding: 8px 20px !important;
+            border-radius: 25px !important;
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+            display: inline-block !important;
+        }
+        
+        .chart-bars {
             display: flex !important;
             align-items: end !important;
-            justify-content: center !important;
-            gap: 30px !important;
-            height: 300px !important;
-            margin: 40px 0 !important;
+            justify-content: space-around !important;
+            height: 250px !important;
+            gap: 20px !important;
         }
         
-        .bar {
+        .chart-bar {
+            flex: 1 !important;
+            max-width: 120px !important;
+            position: relative !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .chart-bar:hover {
+            transform: translateY(-5px) !important;
+        }
+        
+        .chart-bar.highlight .bar-fill {
+            background: linear-gradient(180deg, #ffd700, var(--primary)) !important;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5) !important;
+        }
+        
+        .bar-fill {
             background: linear-gradient(180deg, var(--primary), var(--secondary)) !important;
-            width: 80px !important;
             border-radius: 8px 8px 0 0 !important;
             position: relative !important;
-            transition: all 0.3s ease !important;
-            animation: barGrow 1s ease-out forwards !important;
-            transform-origin: bottom !important;
+            animation: barGrowUp 1.5s ease-out forwards !important;
+            box-shadow: 0 5px 20px rgba(168, 85, 247, 0.3) !important;
         }
         
-        .bar:hover {
-            transform: scale(1.05) !important;
-            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4) !important;
-        }
+        .chart-bar[data-value="15"] .bar-fill { height: 30px !important; }
+        .chart-bar[data-value="180"] .bar-fill { height: 80px !important; }
+        .chart-bar[data-value="750"] .bar-fill { height: 150px !important; }
+        .chart-bar[data-value="2100"] .bar-fill { height: 220px !important; }
         
         .bar-value {
             position: absolute !important;
-            top: -30px !important;
+            top: -35px !important;
             left: 50% !important;
             transform: translateX(-50%) !important;
             color: #ffffff !important;
             font-weight: bold !important;
-            font-size: 1rem !important;
+            font-size: 1.1rem !important;
+            background: rgba(0, 0, 0, 0.7) !important;
+            padding: 5px 10px !important;
+            border-radius: 8px !important;
+            border: 1px solid var(--primary) !important;
         }
         
-        .bar-label {
+        .bar-year {
             position: absolute !important;
             bottom: -25px !important;
             left: 50% !important;
             transform: translateX(-50%) !important;
+            color: var(--primary) !important;
+            font-weight: 600 !important;
+            font-size: 1rem !important;
+        }
+        
+        .bar-details {
+            position: absolute !important;
+            bottom: -45px !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            color: var(--text-muted) !important;
+            font-size: 0.8rem !important;
+        }
+        
+        .key-metrics {
+            display: flex !important;
+            justify-content: space-around !important;
+            gap: 20px !important;
+        }
+        
+        .metric-highlight {
+            background: rgba(168, 85, 247, 0.1) !important;
+            border: 2px solid var(--primary) !important;
+            border-radius: 16px !important;
+            padding: 25px !important;
+            text-align: center !important;
+            flex: 1 !important;
+            transition: all 0.3s ease !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+        
+        .metric-highlight::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: -100% !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent) !important;
+            transition: left 0.5s !important;
+        }
+        
+        .metric-highlight:hover {
+            transform: translateY(-5px) !important;
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3) !important;
+        }
+        
+        .metric-highlight:hover::before {
+            left: 100% !important;
+        }
+        
+        .metric-icon {
+            font-size: 2rem !important;
+            margin-bottom: 10px !important;
+        }
+        
+        .metric-number {
+            color: var(--primary) !important;
+            font-size: 2.2rem !important;
+            font-weight: bold !important;
+            margin-bottom: 5px !important;
+        }
+        
+        .metric-label {
             color: var(--text-muted) !important;
             font-size: 0.9rem !important;
         }
         
-        @keyframes barGrow {
-            0% { height: 0; }
-            100% { height: var(--bar-height, 100px); }
+        @keyframes barGrowUp {
+            0% { 
+                height: 0 !important; 
+                opacity: 0 !important;
+            }
+            100% { 
+                opacity: 1 !important;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .chart-bars {
+                gap: 10px !important;
+            }
+            
+            .key-metrics {
+                flex-direction: column !important;
+                gap: 15px !important;
+            }
         }
 
     </style>
@@ -1556,40 +1686,66 @@
             <div class="slide-content">
                 <section class="section">
                     <div class="container">
-                        <h2 class="reveal">Previsioni Finanziarie</h2>
-                        <div class="chart-container reveal">
-                            <h3 style="color: var(--text); margin-bottom: 30px;">Crescita ARR (Annual Recurring Revenue)</h3>
-                            <div class="bar-chart">
-                                <div class="bar" style="height: 40px;">
-                                    <div class="bar-value">€15K</div>
-                                    <div class="bar-label">2025</div>
+                        <h2 class="reveal">Crescita Finanziaria</h2>
+                        <p class="section-subtitle reveal">Proiezioni ARR 2025-2028</p>
+                        
+                        <div class="financial-dashboard reveal" data-delay="200">
+                            <div class="growth-chart">
+                                <div class="chart-header">
+                                    <h3>Annual Recurring Revenue</h3>
+                                    <div class="growth-indicator">+13,900% crescita in 4 anni</div>
                                 </div>
-                                <div class="bar" style="height: 120px;">
-                                    <div class="bar-value">€180K</div>
-                                    <div class="bar-label">2026</div>
-                                </div>
-                                <div class="bar" style="height: 200px;">
-                                    <div class="bar-value">€750K</div>
-                                    <div class="bar-label">2027</div>
-                                </div>
-                                <div class="bar" style="height: 280px;">
-                                    <div class="bar-value">€2.1M</div>
-                                    <div class="bar-label">2028</div>
+                                
+                                <div class="chart-bars">
+                                    <div class="chart-bar" data-value="15" data-year="2025">
+                                        <div class="bar-fill"></div>
+                                        <div class="bar-value">€15K</div>
+                                        <div class="bar-year">2025</div>
+                                        <div class="bar-details">1K utenti</div>
+                                    </div>
+                                    <div class="chart-bar" data-value="180" data-year="2026">
+                                        <div class="bar-fill"></div>
+                                        <div class="bar-value">€180K</div>
+                                        <div class="bar-year">2026</div>
+                                        <div class="bar-details">8K utenti</div>
+                                    </div>
+                                    <div class="chart-bar" data-value="750" data-year="2027">
+                                        <div class="bar-fill"></div>
+                                        <div class="bar-value">€750K</div>
+                                        <div class="bar-year">2027</div>
+                                        <div class="bar-details">25K utenti</div>
+                                    </div>
+                                    <div class="chart-bar highlight" data-value="2100" data-year="2028">
+                                        <div class="bar-fill"></div>
+                                        <div class="bar-value">€2.1M</div>
+                                        <div class="bar-year">2028</div>
+                                        <div class="bar-details">60K utenti</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="metric-grid reveal" data-delay="200">
-                            <div class="metric-card">
-                                <div class="metric-value">60K</div>
-                                <div class="metric-label">Utenti Paganti 2028</div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-value">€35</div>
-                                <div class="metric-label">ARPU Medio</div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-value">85%+</div>
-                                <div class="metric-label">Margini</div>
+                            
+                            <div class="key-metrics">
+                                <div class="metric-highlight">
+                                    <div class="metric-icon">📈</div>
+                                    <div class="metric-content">
+                                        <div class="metric-number">€2.1M</div>
+                                        <div class="metric-label">ARR Target 2028</div>
+                                    </div>
+                                </div>
+                                <div class="metric-highlight">
+                                    <div class="metric-icon">👥</div>
+                                    <div class="metric-content">
+                                        <div class="metric-number">60K</div>
+                                        <div class="metric-label">Utenti Paganti</div>
+                                    </div>
+                                </div>
+                                <div class="metric-highlight">
+                                    <div class="metric-icon">💰</div>
+                                    <div class="metric-content">
+                                        <div class="metric-number">85%</div>
+                                        <div class="metric-label">Margini Lordi</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
