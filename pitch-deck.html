@@ -1085,20 +1085,37 @@
         .chart-line::before {
             content: '' !important;
             position: absolute !important;
-            bottom: 60px !important;
-            left: 8% !important;
-            right: 8% !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
             height: 2px !important;
             background: linear-gradient(90deg, var(--primary), var(--secondary), #ffd700) !important;
             border-radius: 2px !important;
             animation: lineGrow 2s ease-out forwards !important;
             transform-origin: left !important;
+            clip-path: polygon(8% 80%, 33% 60%, 66% 30%, 92% 10%, 92% 100%, 8% 100%) !important;
         }
         
         .data-point {
             position: relative !important;
             cursor: pointer !important;
             transition: all 0.3s ease !important;
+        }
+        
+        .data-point[data-revenue="15K"] {
+            margin-bottom: 20px !important;
+        }
+        
+        .data-point[data-revenue="180K"] {
+            margin-bottom: 60px !important;
+        }
+        
+        .data-point[data-revenue="750K"] {
+            margin-bottom: 120px !important;
+        }
+        
+        .data-point[data-revenue="2.1M"] {
+            margin-bottom: 160px !important;
         }
         
         .data-point:hover {
