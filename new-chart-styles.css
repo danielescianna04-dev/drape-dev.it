@@ -1,0 +1,85 @@
+
+/* Financial Chart - New Bar Chart */
+.financial-chart {
+    position: relative;
+    height: 250px;
+    margin: 60px 0 40px;
+    width: 100%;
+}
+
+.chart-bars {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+    gap: 20px;
+}
+
+.chart-bar {
+    flex: 1;
+    max-width: 100px;
+    position: relative;
+    text-align: center;
+    height: var(--height);
+    background: linear-gradient(180deg, var(--primary), var(--secondary));
+    border-radius: 12px 12px 0 0;
+    animation: barGrowUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation-delay: var(--delay);
+    transform-origin: bottom;
+    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
+    transition: all 0.3s ease;
+}
+
+.chart-bar:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+.chart-bar.highlight {
+    background: linear-gradient(180deg, #ffd700, #ffed4e);
+    box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4);
+}
+
+.bar-label {
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    right: 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.bar-value {
+    position: absolute;
+    top: -30px;
+    left: 0;
+    right: 0;
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: calc(var(--delay) + 0.8s);
+}
+
+.chart-axis {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: rgba(168, 85, 247, 0.2);
+    z-index: 1;
+}
+
+@keyframes barGrowUp {
+    0% {
+        transform: scaleY(0);
+    }
+    100% {
+        transform: scaleY(1);
+    }
+}

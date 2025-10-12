@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drape - Pitch Deck</title>
     <link rel="stylesheet" href="pitch-styles.css">
+    <link rel="stylesheet" href="new-chart-styles.css">
 
     <style>
         html, body { 
@@ -1788,40 +1789,26 @@
                                     <div class="growth-badge">Crescita 140x in 4 anni</div>
                                 </div>
                                 
-                                <div class="revenue-chart">
-                                    <div class="chart-data-point" style="bottom: 20px;">
-                                        <div class="data-dot"></div>
-                                        <div class="data-label">
-                                            <div class="data-value">€15K</div>
-                                            <div class="data-year">2025</div>
+                                <div class="financial-chart">
+                                    <div class="chart-bars">
+                                        <div class="chart-bar" style="--height: 10%; --delay: 0.1s;">
+                                            <div class="bar-label">2025</div>
+                                            <div class="bar-value">€15K</div>
+                                        </div>
+                                        <div class="chart-bar" style="--height: 30%; --delay: 0.2s;">
+                                            <div class="bar-label">2026</div>
+                                            <div class="bar-value">€180K</div>
+                                        </div>
+                                        <div class="chart-bar" style="--height: 60%; --delay: 0.3s;">
+                                            <div class="bar-label">2027</div>
+                                            <div class="bar-value">€750K</div>
+                                        </div>
+                                        <div class="chart-bar highlight" style="--height: 100%; --delay: 0.4s;">
+                                            <div class="bar-label">2028</div>
+                                            <div class="bar-value">€2.1M</div>
                                         </div>
                                     </div>
-                                    <div class="chart-data-point" style="bottom: 60px;">
-                                        <div class="data-dot"></div>
-                                        <div class="data-label">
-                                            <div class="data-value">€180K</div>
-                                            <div class="data-year">2026</div>
-                                        </div>
-                                    </div>
-                                    <div class="chart-data-point" style="bottom: 120px;">
-                                        <div class="data-dot"></div>
-                                        <div class="data-label">
-                                            <div class="data-value">€750K</div>
-                                            <div class="data-year">2027</div>
-                                        </div>
-                                    </div>
-                                    <div class="chart-data-point highlight" style="bottom: 160px;">
-                                        <div class="data-dot"></div>
-                                        <div class="data-label">
-                                            <div class="data-value">€2.1M</div>
-                                            <div class="data-year">2028</div>
-                                        </div>
-                                    </div>
-                                    <svg class="trend-line">
-                                        <line x1="12%" y1="180" x2="25%" y2="140" stroke="#ffffff" stroke-width="4"/>
-                                        <line x1="25%" y1="140" x2="50%" y2="80" stroke="#ffffff" stroke-width="4"/>
-                                        <line x1="50%" y1="80" x2="88%" y2="40" stroke="#ffffff" stroke-width="4"/>
-                                    </svg>
+                                    <div class="chart-axis"></div>
                                 </div>
                             </div>
                             
