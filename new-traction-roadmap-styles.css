@@ -1,4 +1,3 @@
-
 /* New Traction & Roadmap Section */
 .traction-roadmap-container {
     display: grid;
@@ -88,4 +87,141 @@
     color: var(--text-muted);
     font-size: 1rem;
     line-height: 1.6;
+}
+
+/* Slide 8: Go-to-Market & Roadmap - New Design */
+
+.gtm-roadmap-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.gtm-strategy h3, .roadmap-new h3 {
+    font-size: 1.8rem;
+    color: #ffffff;
+    margin-bottom: 40px;
+    text-align: left;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.gtm-strategy h3::after, .roadmap-new h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 2px;
+}
+
+.gtm-phase {
+    display: flex;
+    align-items: flex-start;
+    gap: 25px;
+    margin-bottom: 30px;
+    position: relative;
+    padding: 15px;
+    border-radius: 12px;
+    transition: background 0.3s ease;
+}
+
+.gtm-phase:hover {
+    background: rgba(168, 85, 247, 0.05);
+}
+
+.gtm-phase-icon {
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gtm-phase-content h4 {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.gtm-phase-content p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.roadmap-new-timeline {
+    position: relative;
+    padding-left: 30px;
+    border-left: 2px solid rgba(168, 85, 247, 0.15);
+}
+
+.roadmap-new-item {
+    position: relative;
+    padding-bottom: 40px;
+}
+.roadmap-new-item:last-child {
+    padding-bottom: 0;
+}
+
+.roadmap-new-dot {
+    position: absolute;
+    left: -39px;
+    top: 5px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #0a0a0a;
+    border: 3px solid rgba(168, 85, 247, 0.4);
+    transition: all 0.3s ease;
+}
+
+.roadmap-new-item.current .roadmap-new-dot {
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.7);
+}
+
+.roadmap-new-item:hover .roadmap-new-dot {
+    transform: scale(1.2);
+}
+
+.roadmap-new-content {
+    position: relative;
+    top: -5px;
+}
+
+.roadmap-new-quarter {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.roadmap-new-content h4 {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.roadmap-new-content p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+@media (max-width: 900px) {
+    .gtm-roadmap-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
 }
