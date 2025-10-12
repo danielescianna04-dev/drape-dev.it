@@ -1265,98 +1265,109 @@
             }
         }
         
-        /* Minimal Professional Traction */
-        .traction-dashboard {
-            display: flex !important;
-            flex-direction: column !important;
+        /* Roadmap & Go-to-Market */
+        .roadmap-gtm-container {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
             gap: 50px !important;
             margin: 50px 0 !important;
         }
         
-        /* Metrics Grid */
-        .metrics-grid {
-            display: grid !important;
-            grid-template-columns: repeat(4, 1fr) !important;
-            gap: 30px !important;
+        .roadmap-section h3, .acquisition-section h3 {
+            color: #ffffff !important;
+            font-size: 1.4rem !important;
+            margin-bottom: 30px !important;
         }
         
-        .metric-card {
+        /* Roadmap Timeline */
+        .roadmap-timeline {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 25px !important;
+        }
+        
+        .roadmap-item {
+            display: flex !important;
+            gap: 20px !important;
+            padding: 20px !important;
             background: rgba(255, 255, 255, 0.02) !important;
             border: 1px solid rgba(168, 85, 247, 0.2) !important;
             border-radius: 8px !important;
-            padding: 30px !important;
-            text-align: center !important;
             transition: all 0.3s ease !important;
         }
         
-        .metric-card:hover {
+        .roadmap-item:hover {
             border-color: var(--primary) !important;
-            transform: translateY(-2px) !important;
+            transform: translateX(5px) !important;
         }
         
-        .metric-number {
+        .roadmap-item.current {
+            border-color: var(--primary) !important;
+            background: rgba(168, 85, 247, 0.1) !important;
+        }
+        
+        .roadmap-quarter {
             color: var(--primary) !important;
-            font-size: 2.5rem !important;
-            font-weight: 700 !important;
-            margin-bottom: 8px !important;
-            line-height: 1 !important;
+            font-weight: 600 !important;
+            font-size: 0.9rem !important;
+            min-width: 80px !important;
+            flex-shrink: 0 !important;
         }
         
-        .metric-label {
+        .roadmap-content h4 {
             color: #ffffff !important;
             font-size: 1rem !important;
-            font-weight: 500 !important;
             margin-bottom: 8px !important;
         }
         
-        .metric-growth {
+        .roadmap-content p {
             color: var(--text-muted) !important;
             font-size: 0.9rem !important;
+            line-height: 1.4 !important;
         }
         
-        /* Validation Section */
-        .validation-section {
-            margin-top: 20px !important;
+        /* Acquisition Channels */
+        .acquisition-channels {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 20px !important;
         }
         
-        .validation-grid {
-            display: grid !important;
-            grid-template-columns: repeat(3, 1fr) !important;
-            gap: 30px !important;
-        }
-        
-        .validation-item {
+        .channel-item {
+            padding: 20px !important;
             background: rgba(255, 255, 255, 0.02) !important;
             border: 1px solid rgba(168, 85, 247, 0.1) !important;
             border-radius: 8px !important;
-            padding: 25px !important;
             transition: all 0.3s ease !important;
         }
         
-        .validation-item:hover {
+        .channel-item:hover {
             border-color: rgba(168, 85, 247, 0.3) !important;
         }
         
-        .validation-item h4 {
+        .channel-item h4 {
             color: #ffffff !important;
-            font-size: 1.1rem !important;
-            font-weight: 600 !important;
-            margin-bottom: 12px !important;
+            font-size: 1rem !important;
+            margin-bottom: 8px !important;
         }
         
-        .validation-item p {
+        .channel-item p {
             color: var(--text-muted) !important;
             font-size: 0.9rem !important;
-            line-height: 1.5 !important;
+            line-height: 1.4 !important;
+            margin-bottom: 10px !important;
+        }
+        
+        .channel-metric {
+            color: var(--primary) !important;
+            font-size: 0.8rem !important;
+            font-weight: 600 !important;
         }
         
         @media (max-width: 1000px) {
-            .metrics-grid {
-                grid-template-columns: repeat(2, 1fr) !important;
-            }
-            
-            .validation-grid {
+            .roadmap-gtm-container {
                 grid-template-columns: 1fr !important;
+                gap: 40px !important;
             }
         }
         
@@ -2006,65 +2017,80 @@
             </div>
         </div>
 
-        <!-- Slide 8: Traction & Momentum -->
+        <!-- Slide 8: Roadmap & Go-to-Market -->
         <div class="slide">
             <div class="slide-number">8/12</div>
             <div class="slide-content">
                 <section class="section">
                     <div class="container">
-                        <h2 class="reveal">Trazione</h2>
-                        <p class="section-subtitle reveal">Validazione di mercato e crescita</p>
+                        <h2 class="reveal">Roadmap & Go-to-Market</h2>
+                        <p class="section-subtitle reveal">Da demo a prodotto di mercato</p>
                         
-                        <div class="traction-dashboard reveal" data-delay="200">
-                            <!-- Key Metrics Grid -->
-                            <div class="metrics-grid">
-                                <div class="metric-card">
-                                    <div class="metric-content">
-                                        <div class="metric-number">2,500</div>
-                                        <div class="metric-label">Beta Users</div>
-                                        <div class="metric-growth">+340% MoM</div>
+                        <div class="roadmap-gtm-container reveal" data-delay="200">
+                            <!-- Roadmap Timeline -->
+                            <div class="roadmap-section">
+                                <h3>Roadmap di Sviluppo</h3>
+                                <div class="roadmap-timeline">
+                                    <div class="roadmap-item current">
+                                        <div class="roadmap-quarter">Q4 2025</div>
+                                        <div class="roadmap-content">
+                                            <h4>Demo & Prototipo</h4>
+                                            <p>Sviluppo demo funzionante con core features: editor mobile, terminal base, integrazione AI</p>
+                                        </div>
                                     </div>
-                                </div>
-                                
-                                <div class="metric-card">
-                                    <div class="metric-content">
-                                        <div class="metric-number">4.8</div>
-                                        <div class="metric-label">User Rating</div>
-                                        <div class="metric-growth">98% Satisfaction</div>
+                                    
+                                    <div class="roadmap-item">
+                                        <div class="roadmap-quarter">Q1 2026</div>
+                                        <div class="roadmap-content">
+                                            <h4>MVP & Beta Testing</h4>
+                                            <p>Lancio MVP con utenti selezionati, raccolta feedback, iterazione rapida del prodotto</p>
+                                        </div>
                                     </div>
-                                </div>
-                                
-                                <div class="metric-card">
-                                    <div class="metric-content">
-                                        <div class="metric-number">€45K</div>
-                                        <div class="metric-label">Pre-Revenue</div>
-                                        <div class="metric-growth">65% Conversion</div>
+                                    
+                                    <div class="roadmap-item">
+                                        <div class="roadmap-quarter">Q2 2026</div>
+                                        <div class="roadmap-content">
+                                            <h4>Lancio Pubblico</h4>
+                                            <p>Release su App Store/Play Store, implementazione sistema di pagamento, onboarding utenti</p>
+                                        </div>
                                     </div>
-                                </div>
-                                
-                                <div class="metric-card">
-                                    <div class="metric-content">
-                                        <div class="metric-number">15,000</div>
-                                        <div class="metric-label">Waitlist</div>
-                                        <div class="metric-growth">+2K Weekly</div>
+                                    
+                                    <div class="roadmap-item">
+                                        <div class="roadmap-quarter">Q3 2026</div>
+                                        <div class="roadmap-content">
+                                            <h4>Scale & Growth</h4>
+                                            <p>Ottimizzazione conversioni, funzionalità avanzate, espansione team di sviluppo</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             
-                            <!-- Validation Points -->
-                            <div class="validation-section">
-                                <div class="validation-grid">
-                                    <div class="validation-item">
-                                        <h4>Product-Market Fit</h4>
-                                        <p>87% degli utenti beta considera Drape essenziale per il proprio workflow</p>
+                            <!-- Customer Acquisition Strategy -->
+                            <div class="acquisition-section">
+                                <h3>Strategia di Acquisizione</h3>
+                                <div class="acquisition-channels">
+                                    <div class="channel-item">
+                                        <h4>Developer Communities</h4>
+                                        <p>GitHub Discussions, Reddit (r/programming, r/webdev), Stack Overflow, Hacker News</p>
+                                        <div class="channel-metric">Organic reach: 50K+ developers</div>
                                     </div>
-                                    <div class="validation-item">
-                                        <h4>Mobile-First Adoption</h4>
-                                        <p>92% preferisce Drape rispetto alle alternative desktop esistenti</p>
+                                    
+                                    <div class="channel-item">
+                                        <h4>Content Marketing</h4>
+                                        <p>Blog tecnico, tutorial YouTube, demo su Twitter/X, case studies di utilizzo</p>
+                                        <div class="channel-metric">Target: 10K visite mensili</div>
                                     </div>
-                                    <div class="validation-item">
-                                        <h4>Crescita Organica</h4>
-                                        <p>K-factor 1.4 indica una crescita virale sostenibile e naturale</p>
+                                    
+                                    <div class="channel-item">
+                                        <h4>Product Hunt & Launch</h4>
+                                        <p>Lancio strategico su Product Hunt, Beta List, indie maker communities</p>
+                                        <div class="channel-metric">Goal: Top 5 del giorno</div>
+                                    </div>
+                                    
+                                    <div class="channel-item">
+                                        <h4>Developer Influencers</h4>
+                                        <p>Partnership con tech YouTubers, developer advocates, coding streamers</p>
+                                        <div class="channel-metric">Reach: 100K+ followers</div>
                                     </div>
                                 </div>
                             </div>
