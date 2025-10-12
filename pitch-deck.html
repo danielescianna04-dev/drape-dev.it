@@ -1118,9 +1118,11 @@
             fill: none !important;
             stroke: var(--primary) !important;
             stroke-width: 3 !important;
-            stroke-dasharray: 300 !important;
-            stroke-dashoffset: 300 !important;
-            animation: drawLine 2s ease-out 0.5s forwards !important;
+            stroke-linecap: round !important;
+            stroke-linejoin: round !important;
+            stroke-dasharray: 500 !important;
+            stroke-dashoffset: 500 !important;
+            animation: drawLine 3s ease-out 1s forwards !important;
         }
         
         .data-point {
@@ -1262,7 +1264,7 @@
         }
         
         @keyframes drawLine {
-            0% { stroke-dashoffset: 300; }
+            0% { stroke-dashoffset: 500; }
             100% { stroke-dashoffset: 0; }
         }
         
@@ -1829,8 +1831,8 @@
                                 
                                 <div class="revenue-chart">
                                     <div class="chart-connecting-line">
-                                        <svg>
-                                            <path d="M 12.5% 170 L 37.5% 130 L 62.5% 80 L 87.5% 40" />
+                                        <svg viewBox="0 0 400 200">
+                                            <path d="M 50 170 L 150 130 L 250 80 L 350 40" />
                                         </svg>
                                     </div>
                                     <div class="data-point" data-year="2025" data-revenue="15K" data-users="1K">
