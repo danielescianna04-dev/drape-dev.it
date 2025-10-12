@@ -1295,6 +1295,136 @@
             }
         }
 
+        /* Slide 8: Traction & Roadmap Redesign */
+        .traction-roadmap-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 60px;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .traction-column h3, .roadmap-column h3 {
+            font-size: 1.8rem;
+            color: #ffffff;
+            margin-bottom: 30px;
+            text-align: left;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .traction-column h3::after, .roadmap-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .traction-cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .traction-card-redesigned {
+            background: rgba(168, 85, 247, 0.05);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 16px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .traction-card-redesigned:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+        }
+
+        .traction-icon {
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .traction-details .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.1;
+        }
+
+        .traction-details .label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .roadmap-timeline-vertical {
+            position: relative;
+            padding-left: 40px;
+            border-left: 2px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .timeline-item-vertical {
+            position: relative;
+            margin-bottom: 40px;
+        }
+        .timeline-item-vertical:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot-vertical {
+            position: absolute;
+            left: -49px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(168, 85, 247, 0.3);
+            border: 2px solid var(--primary);
+        }
+
+        .timeline-item-vertical.current .timeline-dot-vertical {
+            background: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .timeline-content-vertical h4 {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .timeline-content-vertical p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        @media (max-width: 900px) {
+            .traction-roadmap-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -1695,52 +1825,61 @@
             <div class="slide-content">
                 <section class="section">
                     <div class="container">
-                        <h2>Trazione & Roadmap</h2>
-                        <div class="traction-roadmap-container">
-                            <div class="traction-new">
-                                <h3 class="traction-title">Trazione Attuale</h3>
-                                <div class="traction-grid">
-                                    <div class="traction-card">
-                                        <div class="traction-value">100+</div>
-                                        <div class="traction-label">Utenti in attesa</div>
+                        <h2 class="reveal">Trazione e Prossimi Passi</h2>
+                        <div class="traction-roadmap-grid">
+                            <div class="traction-column reveal" data-delay="100">
+                                <h3>Trazione Iniziale</h3>
+                                <div class="traction-cards-container">
+                                    <div class="traction-card-redesigned">
+                                        <div class="traction-icon">✓</div>
+                                        <div class="traction-details">
+                                            <div class="value">100+</div>
+                                            <div class="label">Utenti in lista d'attesa</div>
+                                        </div>
                                     </div>
-                                    <div class="traction-card">
-                                        <div class="traction-value">500+</div>
-                                        <div class="traction-label">Iscritti alla newsletter</div>
+                                    <div class="traction-card-redesigned">
+                                        <div class="traction-icon">✉️</div>
+                                        <div class="traction-details">
+                                            <div class="value">500+</div>
+                                            <div class="label">Iscritti alla newsletter</div>
+                                        </div>
                                     </div>
-                                    <div class="traction-card">
-                                        <div class="traction-value">10k+</div>
-                                        <div class="traction-label">Interesse sui social</div>
+                                    <div class="traction-card-redesigned">
+                                        <div class="traction-icon">🔥</div>
+                                        <div class="traction-details">
+                                            <div class="value">10k+</div>
+                                            <div class="label">Interazioni sui social</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="roadmap-new">
-                                <h3 class="roadmap-title">Roadmap</h3>
-                                <div class="roadmap-timeline">
-                                    <div class="timeline-item current">
-                                        <div class="timeline-dot"></div>
-                                        <div class="timeline-content">
+                            <div class="roadmap-column reveal" data-delay="300">
+                                <h3>Roadmap</h3>
+                                <div class="roadmap-timeline-vertical">
+                                    <div class="timeline-item-vertical current">
+                                        <div class="timeline-dot-vertical"></div>
+                                        <div class="timeline-content-vertical">
                                             <h4>Q4 2025 - Sviluppo Demo (In corso)</h4>
                                             <p>Sviluppo della demo interna, finalizzazione delle funzionalità di base.</p>
                                         </div>
                                     </div>
-                                    <div class="timeline-item">
-                                        <div class="timeline-dot"></div>
-                                        <div class="timeline-content">
+                                    <div class="timeline-item-vertical">
+                                        <div class="timeline-dot-vertical"></div>
+                                        <div class="timeline-content-vertical">
                                             <h4>Q1 2026 - Lancio Beta Privata</h4>
                                             <p>Rilascio della beta privata a un gruppo selezionato di utenti, raccolta feedback.</p>
                                         </div>
                                     </div>
-                                    <div class="timeline-item">
-                                        <div class="timeline-dot"></div>
-                                        <div class="timeline-content">
+                                    <div class="timeline-item-vertical">
+                                        <div class="timeline-dot-vertical"></div>
+                                        <div class="timeline-content-vertical">
                                             <h4>Q2 2026 - Lancio Pubblico</h4>
                                             <p>Lancio pubblico dell'MVP, inizio campagne di marketing.</p>
                                         </div>
                                     </div>
-                                    <div class="timeline-item">
-                                        <div class="timeline-dot"></div>
-                                        <div class="timeline-content">
+                                    <div class="timeline-item-vertical">
+                                        <div class="timeline-dot-vertical"></div>
+                                        <div class="timeline-content-vertical">
                                             <h4>Q3 2026 - Potenziamento AI</h4>
                                             <p>Integrazione di modelli AI avanzati e funzionalità di AI agent.</p>
                                         </div>
