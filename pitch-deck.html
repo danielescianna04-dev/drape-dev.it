@@ -1629,8 +1629,8 @@
         /* Slide 5: Market Opportunity Redesign */
         .market-opportunity-grid {
             display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 60px;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
             align-items: center;
             width: 100%;
             text-align: left;
@@ -1639,7 +1639,7 @@
         .market-diagram-container {
             position: relative;
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
             aspect-ratio: 1 / 1;
             margin: 0 auto;
         }
@@ -1657,35 +1657,42 @@
         .tam-circle {
             width: 100%;
             height: 100%;
-            background: rgba(168, 85, 247, 0.05);
-            border: 2px solid rgba(168, 85, 247, 0.2);
+            background: rgba(168, 85, 247, 0.03);
+            border: 3px solid rgba(168, 85, 247, 0.3);
             top: 0;
             left: 0;
         }
 
         .sam-circle {
-            width: 70%;
-            height: 70%;
-            background: rgba(168, 85, 247, 0.1);
-            border: 2px solid rgba(168, 85, 247, 0.4);
-            top: 15%;
-            left: 15%;
+            width: 65%;
+            height: 65%;
+            background: rgba(168, 85, 247, 0.08);
+            border: 3px solid rgba(168, 85, 247, 0.5);
+            top: 17.5%;
+            left: 17.5%;
         }
 
         .som-circle {
-            width: 40%;
-            height: 40%;
-            background: rgba(168, 85, 247, 0.2);
-            border: 2px solid var(--primary);
-            top: 30%;
-            left: 30%;
+            width: 35%;
+            height: 35%;
+            background: rgba(168, 85, 247, 0.15);
+            border: 3px solid var(--primary);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
+            top: 32.5%;
+            left: 32.5%;
         }
 
         .market-label {
             position: absolute;
-            text-align: center;
+            text-align: left;
             opacity: 0;
             transition: opacity 0.5s ease 0.5s;
+            background: rgba(10, 10, 10, 0.9);
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            backdrop-filter: blur(10px);
+            min-width: 180px;
         }
 
         .slide.active .market-label {
@@ -1693,59 +1700,97 @@
         }
 
         .market-label h3 {
-            font-size: 1.1rem;
-            margin: 0 0 5px 0;
-            color: #fff;
+            font-size: 0.85rem;
+            margin: 0 0 8px 0;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
         }
         .market-label .value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 5px;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 8px;
+            line-height: 1;
         }
         .market-label p {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
             margin: 0;
-            line-height: 1.4;
-            max-width: 200px;
+            line-height: 1.5;
         }
 
-        .tam-label { top: 5%; left: 50%; transform: translateX(-50%); }
-        .sam-label { top: 50%; left: 5%; transform: translateY(-50%); }
-        .som-label { bottom: 10%; right: 5%; text-align: right; }
-        .som-label p { margin-left: auto; }
+        .tam-label { 
+            top: -10%; 
+            left: 50%; 
+            transform: translateX(-50%);
+        }
+        .sam-label { 
+            top: 50%; 
+            left: -25%; 
+            transform: translateY(-50%);
+        }
+        .som-label { 
+            bottom: -10%; 
+            right: -15%;
+        }
 
         .market-trends-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
+            gap: 20px;
         }
 
         .trend-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(168, 85, 247, 0.2);
-            border-radius: 16px;
-            padding: 25px;
-            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(20, 20, 30, 0.95));
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+            overflow: hidden;
         }
+        
+        .trend-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top right, rgba(168, 85, 247, 0.1), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
         .trend-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.02);
             border-color: var(--primary);
-            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.15);
+            box-shadow: 0 15px 40px rgba(168, 85, 247, 0.3);
+        }
+        
+        .trend-card:hover::before {
+            opacity: 1;
         }
 
         .trend-card .value {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 10px;
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
             line-height: 1;
+            position: relative;
+            z-index: 1;
         }
         .trend-card .label {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.5;
+            font-size: 0.95rem;
+            color: #e0e0e0;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
         }
 
         /* Slide 8: Traction & Roadmap Redesign */
