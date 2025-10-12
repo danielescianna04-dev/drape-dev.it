@@ -1016,6 +1016,59 @@
             padding: 0 60px !important;
         }
         
+        /* Chart styles */
+        .chart-container {
+            margin: 40px 0 !important;
+            text-align: center !important;
+        }
+        
+        .bar-chart {
+            display: flex !important;
+            align-items: end !important;
+            justify-content: center !important;
+            gap: 30px !important;
+            height: 300px !important;
+            margin: 40px 0 !important;
+        }
+        
+        .bar {
+            background: linear-gradient(180deg, var(--primary), var(--secondary)) !important;
+            width: 80px !important;
+            border-radius: 8px 8px 0 0 !important;
+            position: relative !important;
+            transition: all 0.3s ease !important;
+            animation: barGrow 1s ease-out forwards !important;
+            transform-origin: bottom !important;
+        }
+        
+        .bar:hover {
+            transform: scale(1.05) !important;
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4) !important;
+        }
+        
+        .bar-value {
+            position: absolute !important;
+            top: -30px !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            color: #ffffff !important;
+            font-weight: bold !important;
+            font-size: 1rem !important;
+        }
+        
+        .bar-label {
+            position: absolute !important;
+            bottom: -25px !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            color: var(--text-muted) !important;
+            font-size: 0.9rem !important;
+        }
+        
+        @keyframes barGrow {
+            0% { height: 0; }
+            100% { height: var(--bar-height, 100px); }
+        }
 
     </style>
 </head>
@@ -1471,24 +1524,25 @@
                 <section class="section">
                     <div class="container">
                         <h2 class="reveal">Il Team</h2>
+                        <p class="section-subtitle reveal">I founder dietro Drape</p>
+                        
                         <div class="team-grid">
-                            <div class="team-member reveal" data-delay="0">
-                                <div class="member-avatar">👨💻</div>
-                                <h3>CEO & Founder</h3>
-                                <h4>Leon Rivas</h4>
-                                <p>10+ anni in mobile development, ex-Google, esperto in AI e developer tools.</p>
+                            <div class="team-card reveal" data-delay="0">
+                                <div class="team-avatar">
+                                    <div class="avatar-placeholder">DS</div>
+                                </div>
+                                <h3>Daniele Scianna</h3>
+                                <div class="team-role">Co-Founder & Developer</div>
+                                <p class="team-bio">Programmatore full-stack con esperienza nello sviluppo mobile e AI integration.</p>
                             </div>
-                            <div class="team-member reveal" data-delay="200">
-                                <div class="member-avatar">👨🔬</div>
-                                <h3>CTO</h3>
-                                <h4>Marco Bianchi</h4>
-                                <p>15+ anni in architetture scalabili, ex-Microsoft Azure.</p>
-                            </div>
-                            <div class="team-member reveal" data-delay="400">
-                                <div class="member-avatar">👩🎨</div>
-                                <h3>Head of Design</h3>
-                                <h4>Sofia Rossi</h4>
-                                <p>8+ anni in UX/UI per developer tools, ex-JetBrains.</p>
+                            
+                            <div class="team-card reveal" data-delay="100">
+                                <div class="team-avatar">
+                                    <div class="avatar-placeholder">LR</div>
+                                </div>
+                                <h3>Leon Rivas</h3>
+                                <div class="team-role">Co-Founder & Developer</div>
+                                <p class="team-bio">Programmatore specializzato in mobile development e architetture scalabili.</p>
                             </div>
                         </div>
                     </div>
@@ -1503,22 +1557,39 @@
                 <section class="section">
                     <div class="container">
                         <h2 class="reveal">Previsioni Finanziarie</h2>
-                        <div class="projection-timeline reveal">
-                            <div class="timeline-item">
-                                <h4>2025: €15K ARR</h4>
-                                <p>1K utenti, lancio MVP</p>
+                        <div class="chart-container reveal">
+                            <h3 style="color: var(--text); margin-bottom: 30px;">Crescita ARR (Annual Recurring Revenue)</h3>
+                            <div class="bar-chart">
+                                <div class="bar" style="height: 40px;">
+                                    <div class="bar-value">€15K</div>
+                                    <div class="bar-label">2025</div>
+                                </div>
+                                <div class="bar" style="height: 120px;">
+                                    <div class="bar-value">€180K</div>
+                                    <div class="bar-label">2026</div>
+                                </div>
+                                <div class="bar" style="height: 200px;">
+                                    <div class="bar-value">€750K</div>
+                                    <div class="bar-label">2027</div>
+                                </div>
+                                <div class="bar" style="height: 280px;">
+                                    <div class="bar-value">€2.1M</div>
+                                    <div class="bar-label">2028</div>
+                                </div>
                             </div>
-                            <div class="timeline-item highlight">
-                                <h4>2026: €180K ARR</h4>
-                                <p>8K utenti, break-even</p>
+                        </div>
+                        <div class="metric-grid reveal" data-delay="200">
+                            <div class="metric-card">
+                                <div class="metric-value">60K</div>
+                                <div class="metric-label">Utenti Paganti 2028</div>
                             </div>
-                            <div class="timeline-item">
-                                <h4>2027: €750K ARR</h4>
-                                <p>25K utenti, profittabilità</p>
+                            <div class="metric-card">
+                                <div class="metric-value">€35</div>
+                                <div class="metric-label">ARPU Medio</div>
                             </div>
-                            <div class="timeline-item">
-                                <h4>2028: €2.1M ARR</h4>
-                                <p>60K utenti, Serie A ready</p>
+                            <div class="metric-card">
+                                <div class="metric-value">85%+</div>
+                                <div class="metric-label">Margini</div>
                             </div>
                         </div>
                     </div>
