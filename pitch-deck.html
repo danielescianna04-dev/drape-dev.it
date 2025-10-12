@@ -1016,149 +1016,229 @@
             padding: 0 60px !important;
         }
         
-        /* Financial Dashboard */
-        .financial-dashboard {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 30px !important;
-            margin: 30px 0 !important;
+        /* Financial Overview - Modern Line Chart */
+        .financial-overview {
+            margin: 50px 0 !important;
         }
         
-        .growth-chart {
-            background: rgba(10, 10, 10, 0.8) !important;
-            border: 1px solid rgba(168, 85, 247, 0.2) !important;
-            border-radius: 16px !important;
-            padding: 25px !important;
-            backdrop-filter: blur(10px) !important;
+        .revenue-projection {
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.9), rgba(20, 20, 30, 0.9)) !important;
+            border: 1px solid rgba(168, 85, 247, 0.3) !important;
+            border-radius: 24px !important;
+            padding: 40px !important;
+            margin-bottom: 40px !important;
+            backdrop-filter: blur(20px) !important;
+            position: relative !important;
+            overflow: hidden !important;
         }
         
-        .chart-header {
+        .revenue-projection::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            background: radial-gradient(circle at 30% 20%, rgba(168, 85, 247, 0.1), transparent 50%) !important;
+            pointer-events: none !important;
+        }
+        
+        .projection-header {
             text-align: center !important;
-            margin-bottom: 25px !important;
+            margin-bottom: 40px !important;
+            position: relative !important;
+            z-index: 2 !important;
         }
         
-        .chart-header h3 {
+        .projection-header h3 {
             color: #ffffff !important;
-            font-size: 1.4rem !important;
-            margin-bottom: 8px !important;
+            font-size: 1.6rem !important;
+            margin-bottom: 12px !important;
+            font-weight: 600 !important;
         }
         
-        .growth-indicator {
+        .growth-badge {
             background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
             color: white !important;
-            padding: 6px 16px !important;
-            border-radius: 20px !important;
-            font-size: 0.8rem !important;
+            padding: 8px 24px !important;
+            border-radius: 30px !important;
+            font-size: 0.85rem !important;
             font-weight: 600 !important;
             display: inline-block !important;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3) !important;
         }
         
-        .chart-bars {
+        .revenue-chart {
+            position: relative !important;
+            height: 200px !important;
+            margin: 0 20px !important;
+        }
+        
+        .chart-line {
             display: flex !important;
+            justify-content: space-between !important;
             align-items: end !important;
-            justify-content: space-around !important;
-            height: 180px !important;
-            gap: 15px !important;
+            height: 100% !important;
+            position: relative !important;
         }
         
-        .chart-bar {
-            flex: 1 !important;
-            max-width: 80px !important;
+        .chart-line::before {
+            content: '' !important;
+            position: absolute !important;
+            bottom: 60px !important;
+            left: 8% !important;
+            right: 8% !important;
+            height: 2px !important;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), #ffd700) !important;
+            border-radius: 2px !important;
+            animation: lineGrow 2s ease-out forwards !important;
+            transform-origin: left !important;
+        }
+        
+        .data-point {
             position: relative !important;
             cursor: pointer !important;
             transition: all 0.3s ease !important;
         }
         
-        .chart-bar:hover {
-            transform: translateY(-3px) !important;
+        .data-point:hover {
+            transform: translateY(-5px) !important;
         }
         
-        .chart-bar.highlight .bar-fill {
-            background: linear-gradient(180deg, #ffd700, var(--primary)) !important;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4) !important;
+        .point-dot {
+            width: 16px !important;
+            height: 16px !important;
+            background: var(--primary) !important;
+            border: 3px solid #ffffff !important;
+            border-radius: 50% !important;
+            margin: 0 auto 15px !important;
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4) !important;
+            animation: dotPulse 2s ease-out forwards !important;
         }
         
-        .bar-fill {
-            background: linear-gradient(180deg, var(--primary), var(--secondary)) !important;
-            border-radius: 6px 6px 0 0 !important;
-            position: relative !important;
-            animation: barGrowUp 1.5s ease-out forwards !important;
-            box-shadow: 0 3px 15px rgba(168, 85, 247, 0.3) !important;
+        .data-point.highlight .point-dot {
+            background: #ffd700 !important;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.6) !important;
+            animation: goldPulse 2s ease-out forwards !important;
         }
         
-        .chart-bar[data-value="15"] .bar-fill { height: 25px !important; }
-        .chart-bar[data-value="180"] .bar-fill { height: 60px !important; }
-        .chart-bar[data-value="750"] .bar-fill { height: 110px !important; }
-        .chart-bar[data-value="2100"] .bar-fill { height: 160px !important; }
-        
-        .bar-value {
-            position: absolute !important;
-            top: -28px !important;
-            left: 50% !important;
-            transform: translateX(-50%) !important;
-            color: #ffffff !important;
-            font-weight: bold !important;
-            font-size: 0.9rem !important;
-            background: rgba(0, 0, 0, 0.7) !important;
-            padding: 3px 8px !important;
-            border-radius: 6px !important;
-            border: 1px solid var(--primary) !important;
-        }
-        
-        .bar-year {
-            position: absolute !important;
-            bottom: -22px !important;
-            left: 50% !important;
-            transform: translateX(-50%) !important;
-            color: var(--primary) !important;
-            font-weight: 600 !important;
-            font-size: 0.9rem !important;
-        }
-        
-        .bar-details {
-            position: absolute !important;
-            bottom: -45px !important;
-            left: 50% !important;
-            transform: translateX(-50%) !important;
-            color: var(--text-muted) !important;
-            font-size: 0.7rem !important;
-        }
-        
-        .key-metrics {
-            display: flex !important;
-            justify-content: center !important;
-            gap: 40px !important;
-            margin-top: 30px !important;
-        }
-        
-        .metric-highlight {
-            background: transparent !important;
-            border: none !important;
-            padding: 0 !important;
+        .point-label {
             text-align: center !important;
-            transition: all 0.3s ease !important;
         }
         
-        .metric-highlight:hover {
-            transform: translateY(-2px) !important;
-        }
-        
-        .metric-icon {
-            display: none !important;
-        }
-        
-        .metric-number {
-            color: var(--primary) !important;
-            font-size: 2.5rem !important;
+        .revenue {
+            color: #ffffff !important;
+            font-size: 1.1rem !important;
             font-weight: 700 !important;
-            margin-bottom: 5px !important;
+            margin-bottom: 4px !important;
+        }
+        
+        .year {
+            color: var(--primary) !important;
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+        }
+        
+        .key-insights {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 30px !important;
+        }
+        
+        .insight-item {
+            text-align: center !important;
+            padding: 25px 20px !important;
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            border-radius: 16px !important;
+            transition: all 0.3s ease !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+        
+        .insight-item::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: -100% !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.1), transparent) !important;
+            transition: left 0.6s !important;
+        }
+        
+        .insight-item:hover {
+            transform: translateY(-3px) !important;
+            border-color: var(--primary) !important;
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2) !important;
+        }
+        
+        .insight-item:hover::before {
+            left: 100% !important;
+        }
+        
+        .insight-number {
+            color: var(--primary) !important;
+            font-size: 2.2rem !important;
+            font-weight: 800 !important;
+            margin-bottom: 8px !important;
             line-height: 1 !important;
         }
         
-        .metric-label {
+        .insight-label {
+            color: #ffffff !important;
+            font-size: 1rem !important;
+            font-weight: 600 !important;
+            margin-bottom: 4px !important;
+        }
+        
+        .insight-detail {
             color: var(--text-muted) !important;
-            font-size: 0.9rem !important;
-            font-weight: 500 !important;
+            font-size: 0.8rem !important;
+        }
+        
+        @keyframes lineGrow {
+            0% { transform: scaleX(0); }
+            100% { transform: scaleX(1); }
+        }
+        
+        @keyframes dotPulse {
+            0% { 
+                transform: scale(0); 
+                opacity: 0; 
+            }
+            50% { 
+                transform: scale(1.2); 
+            }
+            100% { 
+                transform: scale(1); 
+                opacity: 1; 
+            }
+        }
+        
+        @keyframes goldPulse {
+            0% { 
+                transform: scale(0); 
+                opacity: 0; 
+            }
+            50% { 
+                transform: scale(1.3); 
+            }
+            100% { 
+                transform: scale(1); 
+                opacity: 1; 
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .key-insights {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+            }
+            
+            .revenue-projection {
+                padding: 25px !important;
+            }
         }
         
         @keyframes barGrowUp {
@@ -1668,65 +1748,65 @@
             <div class="slide-content">
                 <section class="section">
                     <div class="container">
-                        <h2 class="reveal">Crescita Finanziaria</h2>
-                        <p class="section-subtitle reveal">Proiezioni ARR 2025-2028</p>
+                        <h2 class="reveal">Proiezioni Finanziarie</h2>
+                        <p class="section-subtitle reveal">Crescita sostenibile verso €2.1M ARR</p>
                         
-                        <div class="financial-dashboard reveal" data-delay="200">
-                            <div class="growth-chart">
-                                <div class="chart-header">
+                        <div class="financial-overview reveal" data-delay="200">
+                            <div class="revenue-projection">
+                                <div class="projection-header">
                                     <h3>Annual Recurring Revenue</h3>
-                                    <div class="growth-indicator">+13,900% crescita in 4 anni</div>
+                                    <div class="growth-badge">Crescita 140x in 4 anni</div>
                                 </div>
                                 
-                                <div class="chart-bars">
-                                    <div class="chart-bar" data-value="15" data-year="2025">
-                                        <div class="bar-fill"></div>
-                                        <div class="bar-value">€15K</div>
-                                        <div class="bar-year">2025</div>
-                                        <div class="bar-details">1K utenti</div>
-                                    </div>
-                                    <div class="chart-bar" data-value="180" data-year="2026">
-                                        <div class="bar-fill"></div>
-                                        <div class="bar-value">€180K</div>
-                                        <div class="bar-year">2026</div>
-                                        <div class="bar-details">8K utenti</div>
-                                    </div>
-                                    <div class="chart-bar" data-value="750" data-year="2027">
-                                        <div class="bar-fill"></div>
-                                        <div class="bar-value">€750K</div>
-                                        <div class="bar-year">2027</div>
-                                        <div class="bar-details">25K utenti</div>
-                                    </div>
-                                    <div class="chart-bar highlight" data-value="2100" data-year="2028">
-                                        <div class="bar-fill"></div>
-                                        <div class="bar-value">€2.1M</div>
-                                        <div class="bar-year">2028</div>
-                                        <div class="bar-details">60K utenti</div>
+                                <div class="revenue-chart">
+                                    <div class="chart-line">
+                                        <div class="data-point" data-year="2025" data-revenue="15K" data-users="1K">
+                                            <div class="point-dot"></div>
+                                            <div class="point-label">
+                                                <div class="revenue">€15K</div>
+                                                <div class="year">2025</div>
+                                            </div>
+                                        </div>
+                                        <div class="data-point" data-year="2026" data-revenue="180K" data-users="8K">
+                                            <div class="point-dot"></div>
+                                            <div class="point-label">
+                                                <div class="revenue">€180K</div>
+                                                <div class="year">2026</div>
+                                            </div>
+                                        </div>
+                                        <div class="data-point" data-year="2027" data-revenue="750K" data-users="25K">
+                                            <div class="point-dot"></div>
+                                            <div class="point-label">
+                                                <div class="revenue">€750K</div>
+                                                <div class="year">2027</div>
+                                            </div>
+                                        </div>
+                                        <div class="data-point highlight" data-year="2028" data-revenue="2.1M" data-users="60K">
+                                            <div class="point-dot"></div>
+                                            <div class="point-label">
+                                                <div class="revenue">€2.1M</div>
+                                                <div class="year">2028</div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             
-                            <div class="key-metrics">
-                                <div class="metric-highlight">
-                                    <div class="metric-icon">📈</div>
-                                    <div class="metric-content">
-                                        <div class="metric-number">€2.1M</div>
-                                        <div class="metric-label">ARR Target 2028</div>
-                                    </div>
+                            <div class="key-insights">
+                                <div class="insight-item">
+                                    <div class="insight-number">60K</div>
+                                    <div class="insight-label">Utenti Paganti</div>
+                                    <div class="insight-detail">Target 2028</div>
                                 </div>
-                                <div class="metric-highlight">
-                                    <div class="metric-icon">👥</div>
-                                    <div class="metric-content">
-                                        <div class="metric-number">60K</div>
-                                        <div class="metric-label">Utenti Paganti</div>
-                                    </div>
+                                <div class="insight-item">
+                                    <div class="insight-number">€35</div>
+                                    <div class="insight-label">ARPU Medio</div>
+                                    <div class="insight-detail">Per utente/mese</div>
                                 </div>
-                                <div class="metric-highlight">
-                                    <div class="metric-icon">💰</div>
-                                    <div class="metric-content">
-                                        <div class="metric-number">85%</div>
-                                        <div class="metric-label">Margini Lordi</div>
-                                    </div>
+                                <div class="insight-item">
+                                    <div class="insight-number">85%</div>
+                                    <div class="insight-label">Margini Lordi</div>
+                                    <div class="insight-detail">Software scalabile</div>
                                 </div>
                             </div>
                         </div>
