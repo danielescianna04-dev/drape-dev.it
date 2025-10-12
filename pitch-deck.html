@@ -1434,10 +1434,171 @@
             font-weight: 600 !important;
         }
         
+        /* Investment Opportunity Slide */
+        .investment-container {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 40px !important;
+            margin: 40px 0 !important;
+        }
+        
+        /* Investment Summary */
+        .investment-summary {
+            display: grid !important;
+            grid-template-columns: 1fr 2fr !important;
+            gap: 40px !important;
+            align-items: center !important;
+        }
+        
+        .investment-amount {
+            text-align: center !important;
+            padding: 40px !important;
+            background: rgba(168, 85, 247, 0.1) !important;
+            border: 2px solid var(--primary) !important;
+            border-radius: 16px !important;
+        }
+        
+        .amount-value {
+            color: var(--primary) !important;
+            font-size: 4rem !important;
+            font-weight: 800 !important;
+            margin-bottom: 15px !important;
+            line-height: 1 !important;
+        }
+        
+        .amount-details {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 8px !important;
+        }
+        
+        .amount-details span {
+            color: #ffffff !important;
+            font-size: 1rem !important;
+            font-weight: 500 !important;
+        }
+        
+        .investment-highlights {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 20px !important;
+        }
+        
+        .highlight-item {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            border-radius: 8px !important;
+            padding: 20px !important;
+            text-align: center !important;
+        }
+        
+        .highlight-item h4 {
+            color: var(--primary) !important;
+            font-size: 1rem !important;
+            margin-bottom: 8px !important;
+        }
+        
+        .highlight-item p {
+            color: #ffffff !important;
+            font-size: 0.9rem !important;
+        }
+        
+        /* Funds Allocation */
+        .funds-allocation h3, .milestones-section h3 {
+            color: #ffffff !important;
+            font-size: 1.4rem !important;
+            margin-bottom: 25px !important;
+        }
+        
+        .allocation-chart {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 15px !important;
+        }
+        
+        .allocation-item {
+            display: flex !important;
+            align-items: center !important;
+            gap: 20px !important;
+        }
+        
+        .allocation-bar {
+            height: 12px !important;
+            border-radius: 6px !important;
+            min-width: 60px !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .allocation-info {
+            display: flex !important;
+            justify-content: space-between !important;
+            flex: 1 !important;
+        }
+        
+        .allocation-label {
+            color: #ffffff !important;
+            font-weight: 500 !important;
+        }
+        
+        .allocation-amount {
+            color: var(--text-muted) !important;
+            font-size: 0.9rem !important;
+        }
+        
+        /* Milestones */
+        .milestones-grid {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 25px !important;
+        }
+        
+        .milestone-card {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            border-radius: 8px !important;
+            padding: 25px !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .milestone-card:hover {
+            border-color: var(--primary) !important;
+            transform: translateY(-3px) !important;
+        }
+        
+        .milestone-timeline {
+            background: var(--primary) !important;
+            color: white !important;
+            padding: 6px 12px !important;
+            border-radius: 20px !important;
+            font-size: 0.8rem !important;
+            font-weight: 600 !important;
+            display: inline-block !important;
+            margin-bottom: 15px !important;
+        }
+        
+        .milestone-card h4 {
+            color: #ffffff !important;
+            font-size: 1.1rem !important;
+            margin-bottom: 10px !important;
+        }
+        
+        .milestone-card p {
+            color: var(--text-muted) !important;
+            font-size: 0.9rem !important;
+            line-height: 1.4 !important;
+        }
+        
         @media (max-width: 1000px) {
-            .roadmap-gtm-container {
+            .investment-summary {
                 grid-template-columns: 1fr !important;
-                gap: 40px !important;
+            }
+            
+            .investment-highlights {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .milestones-grid {
+                grid-template-columns: 1fr !important;
             }
         }
         
@@ -2286,41 +2447,103 @@
             </div>
         </div>
 
-        <!-- Slide 11: Richiesta Finanziamento -->
+        <!-- Slide 11: Investment Opportunity -->
         <div class="slide">
             <div class="slide-number">11/12</div>
             <div class="slide-content">
                 <section class="section">
                     <div class="container">
-                        <h2 class="reveal">Richiesta di Finanziamento</h2>
+                        <h2 class="reveal">Opportunità di Investimento</h2>
+                        <p class="section-subtitle reveal">Unisciti alla rivoluzione del mobile development</p>
                         
-                        <div class="funding-hero">
-                            <div class="funding-amount-card reveal" data-delay="100">
-                                <h1>€500K</h1>
-                                <p>Seed Round • 15% Equity</p>
+                        <div class="investment-container reveal" data-delay="200">
+                            <!-- Investment Summary -->
+                            <div class="investment-summary">
+                                <div class="investment-amount">
+                                    <div class="amount-value">€500K</div>
+                                    <div class="amount-details">
+                                        <span>Seed Round</span>
+                                        <span>15% Equity</span>
+                                        <span>18 mesi runway</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="investment-highlights">
+                                    <div class="highlight-item">
+                                        <h4>Mercato TAM</h4>
+                                        <p>€8.6B developer tools market</p>
+                                    </div>
+                                    <div class="highlight-item">
+                                        <h4>Proiezione 2028</h4>
+                                        <p>€2.1M ARR, 60K utenti paganti</p>
+                                    </div>
+                                    <div class="highlight-item">
+                                        <h4>ROI Potenziale</h4>
+                                        <p>15x-25x in 3-4 anni</p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="funding-breakdown">
-                            <div class="breakdown-card reveal" data-delay="200">
-                                <div class="percentage">40%</div>
-                                <div class="category">Sviluppo Prodotto</div>
-                                <div class="amount">€200K</div>
+                            
+                            <!-- Use of Funds -->
+                            <div class="funds-allocation">
+                                <h3>Utilizzo dei Fondi</h3>
+                                <div class="allocation-chart">
+                                    <div class="allocation-item">
+                                        <div class="allocation-bar" style="width: 40%; background: var(--primary);"></div>
+                                        <div class="allocation-info">
+                                            <span class="allocation-label">Sviluppo Prodotto</span>
+                                            <span class="allocation-amount">€200K (40%)</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="allocation-item">
+                                        <div class="allocation-bar" style="width: 30%; background: var(--secondary);"></div>
+                                        <div class="allocation-info">
+                                            <span class="allocation-label">Team & Hiring</span>
+                                            <span class="allocation-amount">€150K (30%)</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="allocation-item">
+                                        <div class="allocation-bar" style="width: 20%; background: #10b981;"></div>
+                                        <div class="allocation-info">
+                                            <span class="allocation-label">Marketing & Growth</span>
+                                            <span class="allocation-amount">€100K (20%)</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="allocation-item">
+                                        <div class="allocation-bar" style="width: 10%; background: #f59e0b;"></div>
+                                        <div class="allocation-info">
+                                            <span class="allocation-label">Operations</span>
+                                            <span class="allocation-amount">€50K (10%)</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="breakdown-card reveal" data-delay="300">
-                                <div class="percentage">30%</div>
-                                <div class="category">Team Expansion</div>
-                                <div class="amount">€150K</div>
-                            </div>
-                            <div class="breakdown-card reveal" data-delay="400">
-                                <div class="percentage">20%</div>
-                                <div class="category">Marketing & Sales</div>
-                                <div class="amount">€100K</div>
-                            </div>
-                            <div class="breakdown-card reveal" data-delay="500">
-                                <div class="percentage">10%</div>
-                                <div class="category">Operations</div>
-                                <div class="amount">€50K</div>
+                            
+                            <!-- Key Milestones -->
+                            <div class="milestones-section">
+                                <h3>Milestone con Investimento</h3>
+                                <div class="milestones-grid">
+                                    <div class="milestone-card">
+                                        <div class="milestone-timeline">6 mesi</div>
+                                        <h4>MVP Launch</h4>
+                                        <p>Prodotto funzionante su App Store con prime 1K installazioni</p>
+                                    </div>
+                                    
+                                    <div class="milestone-card">
+                                        <div class="milestone-timeline">12 mesi</div>
+                                        <h4>Product-Market Fit</h4>
+                                        <p>10K utenti attivi, primi ricavi, validazione del modello di business</p>
+                                    </div>
+                                    
+                                    <div class="milestone-card">
+                                        <div class="milestone-timeline">18 mesi</div>
+                                        <h4>Serie A Ready</h4>
+                                        <p>€500K ARR, team di 15 persone, preparazione per round successivo</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
