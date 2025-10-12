@@ -1101,24 +1101,12 @@
         
         .chart-connecting-line {
             position: absolute !important;
-            bottom: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            height: 100% !important;
-            pointer-events: none !important;
+            bottom: 30px !important;
+            left: 12% !important;
+            width: 76% !important;
+            height: 140px !important;
+            background: linear-gradient(to top right, transparent 49%, #ffffff 49%, #ffffff 51%, transparent 51%) !important;
             z-index: 2 !important;
-        }
-        
-        .chart-connecting-line svg {
-            width: 100% !important;
-            height: 100% !important;
-        }
-        
-        .chart-connecting-line path {
-            fill: none !important;
-            stroke: #ffffff !important;
-            stroke-width: 6 !important;
-            opacity: 0.9 !important;
         }
         
         .data-point {
@@ -1826,11 +1814,7 @@
                                 </div>
                                 
                                 <div class="revenue-chart">
-                                    <div class="chart-connecting-line">
-                                        <svg>
-                                            <path d="M 10% 80% L 90% 20%" />
-                                        </svg>
-                                    </div>
+                                    <div class="chart-connecting-line"></div>
                                     <div class="data-point" data-year="2025" data-revenue="15K" data-users="1K">
                                         <div class="point-dot"></div>
                                         <div class="point-label">
