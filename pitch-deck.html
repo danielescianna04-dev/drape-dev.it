@@ -1068,6 +1068,7 @@
             box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3) !important;
         }
         
+        /* New Chart Design */
         .revenue-chart {
             position: relative !important;
             height: 200px !important;
@@ -1075,102 +1076,106 @@
             display: flex !important;
             align-items: end !important;
             justify-content: space-around !important;
+            background: linear-gradient(to right, rgba(168, 85, 247, 0.1) 0%, rgba(168, 85, 247, 0.05) 100%) !important;
+            border-radius: 12px !important;
+            padding: 20px !important;
         }
         
-        .revenue-chart::before {
-            content: '' !important;
-            position: absolute !important;
-            bottom: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            height: 2px !important;
-            background: rgba(168, 85, 247, 0.3) !important;
-            z-index: 1 !important;
-        }
-        
-        .revenue-chart::after {
-            content: '' !important;
-            position: absolute !important;
-            bottom: 0 !important;
-            left: 0 !important;
-            width: 2px !important;
-            height: 100% !important;
-            background: rgba(168, 85, 247, 0.3) !important;
-            z-index: 1 !important;
-        }
-        
-        .chart-connecting-line {
-            position: absolute !important;
-            bottom: 30px !important;
-            left: 12% !important;
-            width: 76% !important;
-            height: 4px !important;
-            background: #ffffff !important;
-            transform-origin: left bottom !important;
-            transform: rotate(20deg) !important;
-            z-index: 2 !important;
-        }
-        
-        .data-point {
+        .chart-bar {
             position: relative !important;
-            cursor: pointer !important;
-            transition: all 0.3s ease !important;
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
             z-index: 3 !important;
         }
         
-        .data-point:hover {
-            transform: translateY(-5px) !important;
+        .bar-line {
+            width: 3px !important;
+            background: rgba(168, 85, 247, 0.3) !important;
+            border-radius: 2px !important;
+            animation: barGrow 1.5s ease-out forwards !important;
+            transform-origin: bottom !important;
+            transform: scaleY(0) !important;
         }
         
-        .point-dot {
+        .chart-bar[data-height="20"] .bar-line { height: 20px !important; }
+        .chart-bar[data-height="60"] .bar-line { height: 60px !important; }
+        .chart-bar[data-height="120"] .bar-line { height: 120px !important; }
+        .chart-bar[data-height="160"] .bar-line { height: 160px !important; }
+        
+        .chart-bar.highlight .bar-line {
+            background: rgba(255, 215, 0, 0.6) !important;
+        }
+        
+        .bar-dot {
             width: 12px !important;
             height: 12px !important;
             background: var(--primary) !important;
             border: 2px solid #ffffff !important;
             border-radius: 50% !important;
-            margin-bottom: 8px !important;
+            margin: 8px 0 !important;
             box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4) !important;
-            animation: dotPulse 2s ease-out forwards !important;
+            animation: dotPulse 2s ease-out 0.5s forwards !important;
+            opacity: 0 !important;
         }
         
-        .data-point.highlight .point-dot {
+        .chart-bar.highlight .bar-dot {
             background: #ffd700 !important;
             box-shadow: 0 4px 20px rgba(255, 215, 0, 0.6) !important;
         }
         
-        .data-point::after {
-            content: '' !important;
-            width: 2px !important;
-            background: rgba(168, 85, 247, 0.2) !important;
-            border-radius: 1px !important;
-            animation: columnGrow 1.5s ease-out 0.5s forwards !important;
-            transform-origin: bottom !important;
-            transform: scaleY(0) !important;
-        }
-        
-        .data-point[data-revenue="15K"]::after {
-            height: 30px !important;
-        }
-        
-        .data-point[data-revenue="180K"]::after {
-            height: 70px !important;
-        }
-        
-        .data-point[data-revenue="750K"]::after {
-            height: 120px !important;
-        }
-        
-        .data-point[data-revenue="2.1M"]::after {
-            height: 160px !important;
-            background: rgba(255, 215, 0, 0.3) !important;
-        }
-        
-        .point-label {
+        .bar-label {
             text-align: center !important;
             margin-top: 10px !important;
+        }
+        
+        .bar-value {
+            color: #ffffff !important;
+            font-size: 1.1rem !important;
+            font-weight: 700 !important;
+            margin-bottom: 4px !important;
+        }
+        
+        .bar-year {
+            color: var(--primary) !important;
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+        }
+        
+        .connecting-line {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            pointer-events: none !important;
+            z-index: 2 !important;
+        }
+        
+        .connecting-line polyline {
+            fill: none !important;
+            stroke: #ffffff !important;
+            stroke-width: 3 !important;
+            stroke-linecap: round !important;
+            stroke-dasharray: 400 !important;
+            stroke-dashoffset: 400 !important;
+            animation: drawLine 2s ease-out 1s forwards !important;
+        }
+        
+        @keyframes barGrow {
+            0% { transform: scaleY(0); opacity: 0; }
+            100% { transform: scaleY(1); opacity: 1; }
+        }
+        
+        @keyframes dotPulse {
+            0% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes drawLine {
+            0% { stroke-dashoffset: 400; }
+            100% { stroke-dashoffset: 0; }
         }
         
         .revenue {
@@ -1816,35 +1821,41 @@
                                 </div>
                                 
                                 <div class="revenue-chart">
-                                    <div class="chart-connecting-line"></div>
-                                    <div class="data-point" data-year="2025" data-revenue="15K" data-users="1K">
-                                        <div class="point-dot"></div>
-                                        <div class="point-label">
-                                            <div class="revenue">€15K</div>
-                                            <div class="year">2025</div>
+                                    <div class="chart-bar" data-height="20">
+                                        <div class="bar-line"></div>
+                                        <div class="bar-dot"></div>
+                                        <div class="bar-label">
+                                            <div class="bar-value">€15K</div>
+                                            <div class="bar-year">2025</div>
                                         </div>
                                     </div>
-                                    <div class="data-point" data-year="2026" data-revenue="180K" data-users="8K">
-                                        <div class="point-dot"></div>
-                                        <div class="point-label">
-                                            <div class="revenue">€180K</div>
-                                            <div class="year">2026</div>
+                                    <div class="chart-bar" data-height="60">
+                                        <div class="bar-line"></div>
+                                        <div class="bar-dot"></div>
+                                        <div class="bar-label">
+                                            <div class="bar-value">€180K</div>
+                                            <div class="bar-year">2026</div>
                                         </div>
                                     </div>
-                                    <div class="data-point" data-year="2027" data-revenue="750K" data-users="25K">
-                                        <div class="point-dot"></div>
-                                        <div class="point-label">
-                                            <div class="revenue">€750K</div>
-                                            <div class="year">2027</div>
+                                    <div class="chart-bar" data-height="120">
+                                        <div class="bar-line"></div>
+                                        <div class="bar-dot"></div>
+                                        <div class="bar-label">
+                                            <div class="bar-value">€750K</div>
+                                            <div class="bar-year">2027</div>
                                         </div>
                                     </div>
-                                    <div class="data-point highlight" data-year="2028" data-revenue="2.1M" data-users="60K">
-                                        <div class="point-dot"></div>
-                                        <div class="point-label">
-                                            <div class="revenue">€2.1M</div>
-                                            <div class="year">2028</div>
+                                    <div class="chart-bar highlight" data-height="160">
+                                        <div class="bar-line"></div>
+                                        <div class="bar-dot"></div>
+                                        <div class="bar-label">
+                                            <div class="bar-value">€2.1M</div>
+                                            <div class="bar-year">2028</div>
                                         </div>
                                     </div>
+                                    <svg class="connecting-line">
+                                        <polyline points="12.5,180 37.5,140 62.5,80 87.5,40" />
+                                    </svg>
                                 </div>
                             </div>
                             
