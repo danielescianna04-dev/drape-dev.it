@@ -1,78 +1,106 @@
-/* Timing Slide Styles */
-.timing-reasons {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+/* Timing Slide - Minimal & Elegant */
+.timing-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
     margin: 2rem 0;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.timing-item {
-    display: flex;
-    gap: 1.5rem;
-    padding: 2rem;
-    border: 1px solid #333;
+.timing-card {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.02);
     transition: all 0.3s ease;
 }
 
-.timing-item:hover {
-    border-color: var(--primary);
+.timing-card:hover {
+    border-color: rgba(168, 85, 247, 0.3);
     transform: translateY(-2px);
 }
 
-.timing-icon {
-    font-size: 2rem;
-    flex-shrink: 0;
-    color: #10b981;
-}
-
-.timing-content {
-    flex: 1;
-}
-
-.timing-content h3 {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: var(--primary);
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     margin-bottom: 1rem;
 }
 
-.timing-points {
+.check-icon {
+    width: 24px;
+    height: 24px;
+    background: #10b981;
+    color: white;
+    border-radius: 50%;
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    flex-shrink: 0;
 }
 
-.timing-point {
-    font-size: 0.95rem;
-    color: #ccc;
-    line-height: 1.4;
+.card-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+}
+
+.card-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+}
+
+.stat {
+    font-size: 0.85rem;
+    color: #aaa;
+    line-height: 1.3;
+}
+
+.card-insight {
+    font-size: 0.9rem;
+    color: var(--primary);
+    font-weight: 500;
+    font-style: italic;
 }
 
 .timing-conclusion {
-    font-size: 1rem;
-    color: var(--primary);
-    font-weight: bold;
-    margin-top: 0.5rem;
-}
-
-.timing-cta {
     text-align: center;
-    margin-top: 3rem;
-    padding: 2rem;
+    margin-top: 2rem;
+    padding: 1.5rem;
     background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(59, 130, 246, 0.1));
-    border: 2px solid var(--primary);
-    border-radius: 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(168, 85, 247, 0.2);
 }
 
-.timing-cta h2 {
-    font-size: 2.5rem;
-    font-weight: 900;
+.timing-conclusion h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin: 0;
+}
+
+@media (max-width: 768px) {
+    .timing-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .timing-card {
+        padding: 1.25rem;
+    }
+    
+    .timing-conclusion h2 {
+        font-size: 1.4rem;
+    }
 }
 
 /* Navigation Override */
