@@ -2196,13 +2196,23 @@
         }
 
         .timing-card-interactive:hover {
-            transform: translateY(-8px) scale(1.02);
+            transform: translateY(-8px) scale(1.02) !important;
             border-color: rgba(168, 85, 247, 0.6) !important;
-            box-shadow: 0 8px 32px rgba(168, 85, 247, 0.3);
+            box-shadow: 0 8px 32px rgba(168, 85, 247, 0.3) !important;
+        }
+
+        .timing-card-interactive:active {
+            transform: translateY(-8px) scale(1.02) !important;
+            border-color: rgba(168, 85, 247, 0.6) !important;
+            box-shadow: 0 8px 32px rgba(168, 85, 247, 0.3) !important;
         }
 
         .timing-card-interactive:hover .timing-icon {
-            transform: scale(1.2) rotate(5deg);
+            transform: scale(1.2) rotate(5deg) !important;
+        }
+
+        .timing-card-interactive:active .timing-icon {
+            transform: scale(1.2) rotate(5deg) !important;
         }
 
         @keyframes floatMockup {
