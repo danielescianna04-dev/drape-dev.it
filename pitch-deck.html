@@ -1588,16 +1588,109 @@
             line-height: 1.4 !important;
         }
         
-        @media (max-width: 1000px) {
-            .investment-summary {
+        /* Problem Story Slide */
+        .problem-story {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 40px !important;
+        }
+        
+        .story-scenario {
+            text-align: center !important;
+            padding: 30px !important;
+            background: rgba(220, 38, 38, 0.1) !important;
+            border: 1px solid rgba(220, 38, 38, 0.3) !important;
+            border-radius: 12px !important;
+        }
+        
+        .problem-steps {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 15px !important;
+            margin: 20px 0 !important;
+        }
+        
+        .step-item {
+            background: rgba(168, 85, 247, 0.1) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            padding: 15px !important;
+            border-radius: 8px !important;
+            color: #ffffff !important;
+            text-align: center !important;
+            font-size: 0.9rem !important;
+        }
+        
+        .problem-impact {
+            display: flex !important;
+            justify-content: center !important;
+            gap: 30px !important;
+            margin: 30px 0 !important;
+        }
+        
+        .impact-item {
+            background: rgba(220, 38, 38, 0.2) !important;
+            color: #fca5a5 !important;
+            padding: 12px 20px !important;
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+            font-size: 1rem !important;
+        }
+        
+        .competitor-fails {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 10px !important;
+            margin: 20px 0 !important;
+        }
+        
+        .fail-item {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(220, 38, 38, 0.2) !important;
+            padding: 12px 20px !important;
+            border-radius: 8px !important;
+            color: #fca5a5 !important;
+            font-size: 1rem !important;
+        }
+        
+        /* Solution Features Updates */
+        .feature-icon {
+            font-size: 2.5rem !important;
+            margin-bottom: 15px !important;
+            display: block !important;
+        }
+        
+        .use-cases {
+            margin-top: 40px !important;
+        }
+        
+        .use-case-grid {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 15px !important;
+            margin: 20px 0 !important;
+        }
+        
+        .use-case-item {
+            background: rgba(16, 185, 129, 0.1) !important;
+            border: 1px solid rgba(16, 185, 129, 0.3) !important;
+            padding: 15px !important;
+            border-radius: 8px !important;
+            color: #10b981 !important;
+            font-size: 1rem !important;
+            font-weight: 500 !important;
+        }
+        
+        @media (max-width: 900px) {
+            .problem-steps {
                 grid-template-columns: 1fr !important;
             }
             
-            .investment-highlights {
-                grid-template-columns: 1fr !important;
+            .problem-impact {
+                flex-direction: column !important;
+                gap: 15px !important;
             }
             
-            .milestones-grid {
+            .use-case-grid {
                 grid-template-columns: 1fr !important;
             }
         }
@@ -1870,8 +1963,18 @@
                     <div class="container">
                         <div class="hero-content">
                             <h1 class="glitch" data-text="DRAPE">DRAPE</h1>
-                            <p class="hero-subtitle" style="font-size: 2rem; margin: 40px 0;">Il primo IDE mobile dedicato ai professionisti</p>
-                            <p style="font-size: 1.4rem; color: var(--text-muted); margin-bottom: 60px;">Terminal completo, AI multimodello e GitHub integration</p>
+                            <p class="hero-subtitle" style="font-size: 2rem; margin: 40px 0;">Il primo IDE mobile con AI multimodello</p>
+                            <p style="font-size: 1.4rem; color: var(--text-muted); margin-bottom: 40px;">Daniele Scianna & Leon</p>
+                            <div style="display: flex; justify-content: center; gap: 40px; margin: 40px 0;">
+                                <div style="text-align: center;">
+                                    <div style="color: var(--primary); font-size: 1.2rem; font-weight: 600;">Pre-Seed</div>
+                                    <div style="color: var(--text-muted); font-size: 1rem;">€200K</div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <div style="color: var(--primary); font-size: 1.2rem; font-weight: 600;">Ottobre 2025</div>
+                                    <div style="color: var(--text-muted); font-size: 1rem;">Versione Finale</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -1882,77 +1985,48 @@
         <div class="slide">
             <div class="slide-number">2/12</div>
             <div class="slide-content">
-                <section id="problema" class="section">
+                <section class="section">
                     <div class="container">
-                        <h2 class="reveal">Il Problema</h2>
-                        <div class="problem-grid">
-                            <div class="problem-card reveal" data-delay="0">
-                                <div class="icon-wrapper">
-                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                                        <line x1="8" y1="21" x2="16" y2="21"></line>
-                                        <line x1="12" y1="17" x2="12" y2="21"></line>
-                                    </svg>
-                                </div>
-                                <h3>Desktop Dependency</h3>
-                                <p>Gli IDE attuali (VS Code, Cursor, Warp) sono progettati per desktop. Il mobile manca di un'esperienza fluida per lo sviluppo professionale.</p>
-                                <div class="card-glow"></div>
+                        <h2 class="reveal">"Domenica sera, ore 22:00"</h2>
+                        
+                        <div class="problem-story reveal" data-delay="200">
+                            <div class="story-scenario">
+                                <p style="font-size: 1.4rem; color: #ffffff; margin-bottom: 30px;">Il server di produzione è down.<br>3.000 utenti offline.<br>Bug critico nel backend.</p>
+                                <p style="font-size: 1.6rem; color: var(--primary); margin-bottom: 40px;">Il fix? <strong>5 righe di codice.</strong></p>
                             </div>
-                            <div class="problem-card reveal" data-delay="100">
-                                <div class="icon-wrapper">
-                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                                    </svg>
+                            
+                            <div class="problem-flow">
+                                <p style="color: #ffffff; font-size: 1.2rem; margin-bottom: 20px;">Ma sei a cena fuori. Devi:</p>
+                                <div class="problem-steps">
+                                    <div class="step-item">1. Correre a casa</div>
+                                    <div class="step-item">2. Accendere il laptop</div>
+                                    <div class="step-item">3. Connetterti alla VPN</div>
+                                    <div class="step-item">4. Aprire il progetto</div>
+                                    <div class="step-item">5. Fare il fix</div>
+                                    <div class="step-item">6. Deploy</div>
                                 </div>
-                                <h3>AI Frammentata</h3>
-                                <p>Developer devono usare tool separati per GPT-5, Claude 4.5, Gemini Pro 2.5. Nessuna integrazione nativa in ambiente mobile.</p>
-                                <div class="card-glow"></div>
+                                
+                                <div class="problem-impact">
+                                    <div class="impact-item">45 minuti persi</div>
+                                    <div class="impact-item">€2,000 di revenue persi</div>
+                                    <div class="impact-item">Reputazione danneggiata</div>
+                                </div>
                             </div>
-                            <div class="problem-card reveal" data-delay="200">
-                                <div class="icon-wrapper">
-                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-                                        <line x1="12" y1="18" x2="12.01" y2="18"></line>
-                                    </svg>
+                            
+                            <div class="mobile-gap">
+                                <h3 style="color: var(--primary); margin: 40px 0 20px;">Su mobile? Impossibile.</h3>
+                                <div class="competitor-fails">
+                                    <div class="fail-item">❌ Termux: troppo complesso, non user-friendly</div>
+                                    <div class="fail-item">❌ GitHub Codespaces mobile: lento, pensato per desktop</div>
+                                    <div class="fail-item">❌ VS Code, Cursor, Windsurf: solo desktop</div>
+                                    <div class="fail-item">❌ Replit mobile: esperienza pessima</div>
                                 </div>
-                                <h3>Produttività Persa</h3>
-                                <p>68% dei developer lavorano remote/hybrid ma non possono essere produttivi su mobile durante spostamenti.</p>
-                                <div class="card-glow"></div>
-                            </div>
-                            <div class="problem-card reveal" data-delay="300">
-                                <div class="icon-wrapper">
-                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <line x1="12" y1="8" x2="12" y2="12"></line>
-                                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                                    </svg>
+                                
+                                <p style="color: #ffffff; font-size: 1.2rem; margin: 30px 0; text-align: center;">I developer mobile testano app tutto il giorno su device.<br>Ma non possono sviluppare professionalmente.</p>
+                                
+                                <div style="text-align: center; margin-top: 40px;">
+                                    <p style="color: var(--primary); font-size: 1.4rem; font-weight: 600;">Il gap esiste. Nessuno l'ha risolto.</p>
                                 </div>
-                                <h3>Emergenze Bloccanti</h3>
-                                <p>Production down mentre sei fuori ufficio? Devi correre al PC. Le app mobile non hanno terminal né accesso GitHub per hotfix urgenti.</p>
-                                <div class="card-glow"></div>
-                            </div>
-                            <div class="problem-card reveal" data-delay="400">
-                                <div class="icon-wrapper">
-                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                                        <line x1="8" y1="21" x2="16" y2="21"></line>
-                                    </svg>
-                                </div>
-                                <h3>Nessun Real-Time Preview</h3>
-                                <p>Impossibile vedere risultati in tempo reale su mobile. Developer devono immaginare l'output senza feedback visivo immediato.</p>
-                                <div class="card-glow"></div>
-                            </div>
-                            <div class="problem-card reveal" data-delay="500">
-                                <div class="icon-wrapper">
-                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                                    </svg>
-                                </div>
-                                <h3>Continuità Progetti Spezzata</h3>
-                                <p>Hai iniziato a sviluppare su PC? Su mobile non puoi continuare. Manca integrazione Git per progetti esistenti.</p>
-                                <div class="card-glow"></div>
                             </div>
                         </div>
                     </div>
@@ -1966,47 +2040,47 @@
             <div class="slide-content">
                 <section class="section">
                     <div class="container">
-                        <h2 class="reveal">La Nostra Soluzione</h2>
-                        <p class="section-subtitle reveal">Il primo IDE mobile completo con AI multimodello</p>
+                        <h2 class="reveal">DRAPE</h2>
+                        <p class="section-subtitle reveal">IDE mobile-native con AI multimodello</p>
                         
                         <div class="solution-features">
                             <div class="feature reveal" data-delay="0">
-                                <div class="feature-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="4 17 10 11 4 5"></polyline>
-                                        <line x1="12" y1="19" x2="20" y2="19"></line>
-                                    </svg>
-                                </div>
-                                <h3>Terminal Desktop-Grade</h3>
-                                <p>Terminal completo come da desktop con supporto comandi bash, zsh. Esegui script, gestisci processi e lavora come su un vero terminale.</p>
+                                <div class="feature-icon">🔥</div>
+                                <h3>Container Runtime</h3>
+                                <p><strong>App HTML/JS già funzionanti</strong><br>Preview in tempo reale<br>Testing Python, Node in corso</p>
                             </div>
+                            
                             <div class="feature reveal" data-delay="100">
-                                <div class="feature-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                                    </svg>
-                                </div>
-                                <h3>AI Agent Autonomo</h3>
-                                <p>Agent AI che può creare, modificare e gestire progetti in autonomia. Pianifica task complessi e li esegue step-by-step.</p>
-                            </div>
-                            <div class="feature reveal" data-delay="200">
-                                <div class="feature-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                                    </svg>
-                                </div>
-                                <h3>GitHub Integration</h3>
-                                <p>Connessione diretta alle repository GitHub. Clone, commit, push, pull e gestisci branch direttamente dall'app.</p>
-                            </div>
-                            <div class="feature reveal" data-delay="300">
-                                <div class="feature-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="3"></circle>
-                                        <path d="M12 1v6m0 6v6m5.2-13.2l-4.2 4.2m0 6l4.2 4.2M23 12h-6m-6 0H1m18.2 5.2l-4.2-4.2m0-6l4.2-4.2"></path>
-                                    </svg>
-                                </div>
+                                <div class="feature-icon">🤖</div>
                                 <h3>AI Multimodello</h3>
-                                <p>GPT-5, Claude 4.5 Sonnet, Gemini Pro 2.5 integrati. Switching trasparente tra modelli per task specifici.</p>
+                                <p><strong>GPT-5, Claude 4.5 Sonnet, Gemini 2.5 Pro</strong><br>L'utente sceglie quale AI per ogni task<br>AI Agent che scrive codice autonomamente (in sviluppo)</p>
+                            </div>
+                            
+                            <div class="feature reveal" data-delay="200">
+                                <div class="feature-icon">✅</div>
+                                <h3>GitHub Integration (completa!)</h3>
+                                <p><strong>Clone, commit, push, PR</strong><br>Sync con progetti esistenti<br>Funziona già oggi</p>
+                            </div>
+                            
+                            <div class="feature reveal" data-delay="300">
+                                <div class="feature-icon">⚡</div>
+                                <h3>Terminal (in testing)</h3>
+                                <p><strong>Bash/Zsh commands</strong><br>Process management</p>
+                            </div>
+                        </div>
+                        
+                        <div class="use-cases reveal" data-delay="400">
+                            <h3 style="color: var(--primary); margin: 40px 0 20px; text-align: center;">Use Case Chiave:</h3>
+                            <div class="use-case-grid">
+                                <div class="use-case-item">✓ Emergency hotfix da mobile (5 min vs 45 min)</div>
+                                <div class="use-case-item">✓ Quick PR reviews on the go</div>
+                                <div class="use-case-item">✓ Small code changes mentre testi app</div>
+                                <div class="use-case-item">✓ Continue working durante commute</div>
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 40px; padding: 20px; background: rgba(168, 85, 247, 0.1); border-radius: 12px;">
+                                <p style="color: #ffffff; font-size: 1.2rem; margin-bottom: 10px;">Non sostituiamo il laptop.</p>
+                                <p style="color: var(--primary); font-size: 1.4rem; font-weight: 600;">Risolviamo il 20% del tempo in cui non ce l'hai.</p>
                             </div>
                         </div>
                     </div>
