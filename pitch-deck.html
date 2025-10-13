@@ -2134,45 +2134,65 @@
             }
         }
 
-        @keyframes slideInFromRight {
-            from {
-                opacity: 0;
-                transform: translateX(100px) scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0) scale(1);
-            }
-        }
-        
-        @keyframes slideOutToLeft {
-            from {
-                opacity: 1;
-                transform: translateX(0) scale(1);
-            }
-            to {
-                opacity: 0;
-                transform: translateX(-100px) scale(0.95);
-            }
-        }
-        
-        @keyframes problemReveal {
+        @keyframes slideExplode {
             0% {
-                opacity: 0;
-                transform: translateY(30px);
+                opacity: 1;
+                transform: translateX(0) scale(1) rotateY(0deg);
             }
             50% {
-                opacity: 0.5;
-                transform: translateY(15px);
+                opacity: 0.7;
+                transform: translateX(-30px) scale(0.9) rotateY(-15deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-200px) scale(0.7) rotateY(-45deg);
+            }
+        }
+        
+        @keyframes problemSlam {
+            0% {
+                opacity: 0;
+                transform: translateX(300px) scale(1.2) rotateY(45deg);
+            }
+            60% {
+                opacity: 0.8;
+                transform: translateX(-10px) scale(0.95) rotateY(-5deg);
             }
             100% {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateX(0) scale(1) rotateY(0deg);
             }
         }
         
-        .slide-transition-1-to-2 {
-            animation: problemReveal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        @keyframes elementFlyIn {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) translateX(-30px) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) translateX(0) scale(1);
+            }
+        }
+        
+        @keyframes elementFlyOut {
+            0% {
+                opacity: 1;
+                transform: translateY(0) translateX(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-30px) translateX(20px) scale(0.9);
+            }
+        }
+        
+        @keyframes mockupGlitch {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-2px) rotateZ(-1deg); }
+            40% { transform: translateX(2px) rotateZ(1deg); }
+            60% { transform: translateX(-1px) rotateZ(-0.5deg); }
+            80% { transform: translateX(1px) rotateZ(0.5deg); }
+            100% { transform: translateX(0) rotateZ(0deg); }
         }
 
     </style>
@@ -3338,19 +3358,54 @@
             
             // Custom transition from slide 1 to slide 2
             if (currentSlide === 0 && newSlideIndex === 1) {
-                // Slide 1 to 2 transition
-                oldSlide.style.animation = 'slideOutToLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
+                // Animate out slide 1 elements
+                const slide1Elements = oldSlide.querySelectorAll('h1, p, div[style*="background"]');
+                slide1Elements.forEach((el, i) => {
+                    setTimeout(() => {
+                        el.style.animation = `elementFlyOut 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards`;
+                    }, i * 50);
+                });
+                
+                // Slide 1 explodes out
+                setTimeout(() => {
+                    oldSlide.style.animation = 'slideExplode 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards';
+                }, 200);
                 
                 setTimeout(() => {
                     oldSlide.classList.remove('active');
                     oldSlide.style.animation = '';
+                    slide1Elements.forEach(el => el.style.animation = '');
+                    
+                    // Slide 2 slams in
                     newSlide.classList.add('active');
-                    newSlide.style.animation = 'problemReveal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
+                    newSlide.style.animation = 'problemSlam 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards';
+                    
+                    // Animate in slide 2 elements
+                    const slide2Elements = newSlide.querySelectorAll('h1, p, div[style*="background"], div[style*="position: relative"]');
+                    slide2Elements.forEach((el, i) => {
+                        el.style.opacity = '0';
+                        setTimeout(() => {
+                            el.style.animation = `elementFlyIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards`;
+                        }, 300 + (i * 80));
+                    });
+                    
+                    // Glitch effect on mockup
+                    const mockup = newSlide.querySelector('div[style*="position: relative"]');
+                    if (mockup) {
+                        setTimeout(() => {
+                            mockup.style.animation = 'mockupGlitch 0.3s ease-in-out';
+                        }, 800);
+                    }
                     
                     setTimeout(() => {
                         newSlide.style.animation = '';
+                        slide2Elements.forEach(el => {
+                            el.style.animation = '';
+                            el.style.opacity = '';
+                        });
+                        if (mockup) mockup.style.animation = '';
                     }, 1200);
-                }, 400);
+                }, 500);
             } else {
                 // Standard transition for other slides
                 oldSlide.classList.remove('active');
