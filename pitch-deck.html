@@ -3359,17 +3359,19 @@
             // Custom transition from slide 1 to slide 2
             if (currentSlide === 0 && newSlideIndex === 1) {
                 // Animate out slide 1 elements
-                const slide1Elements = oldSlide.querySelectorAll('h1, p, div[style*="background"]');
+                const slide1Elements = oldSlide.querySelectorAll('*');
                 slide1Elements.forEach((el, i) => {
-                    setTimeout(() => {
-                        el.style.animation = `elementFlyOut 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards`;
-                    }, i * 50);
+                    if (i < 5) { // Only first 5 elements
+                        setTimeout(() => {
+                            el.style.animation = `elementFlyOut 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards`;
+                        }, i * 30);
+                    }
                 });
                 
                 // Slide 1 explodes out
                 setTimeout(() => {
-                    oldSlide.style.animation = 'slideExplode 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards';
-                }, 200);
+                    oldSlide.style.animation = 'slideExplode 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards';
+                }, 100);
                 
                 setTimeout(() => {
                     oldSlide.classList.remove('active');
@@ -3378,24 +3380,18 @@
                     
                     // Slide 2 slams in
                     newSlide.classList.add('active');
-                    newSlide.style.animation = 'problemSlam 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards';
+                    newSlide.style.animation = 'problemSlam 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards';
                     
                     // Animate in slide 2 elements
-                    const slide2Elements = newSlide.querySelectorAll('h1, p, div[style*="background"], div[style*="position: relative"]');
+                    const slide2Elements = newSlide.querySelectorAll('*');
                     slide2Elements.forEach((el, i) => {
-                        el.style.opacity = '0';
-                        setTimeout(() => {
-                            el.style.animation = `elementFlyIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards`;
-                        }, 300 + (i * 80));
+                        if (i < 8) { // Only first 8 elements
+                            el.style.opacity = '0';
+                            setTimeout(() => {
+                                el.style.animation = `elementFlyIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards`;
+                            }, 200 + (i * 40));
+                        }
                     });
-                    
-                    // Glitch effect on mockup
-                    const mockup = newSlide.querySelector('div[style*="position: relative"]');
-                    if (mockup) {
-                        setTimeout(() => {
-                            mockup.style.animation = 'mockupGlitch 0.3s ease-in-out';
-                        }, 800);
-                    }
                     
                     setTimeout(() => {
                         newSlide.style.animation = '';
@@ -3403,9 +3399,8 @@
                             el.style.animation = '';
                             el.style.opacity = '';
                         });
-                        if (mockup) mockup.style.animation = '';
-                    }, 1200);
-                }, 500);
+                    }, 800);
+                }, 300);
             } else {
                 // Standard transition for other slides
                 oldSlide.classList.remove('active');
