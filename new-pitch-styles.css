@@ -1,3 +1,95 @@
+/* Comparison Table */
+.comparison-table {
+    margin: 2rem 0;
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 2fr repeat(4, 1fr);
+    background: rgba(168, 85, 247, 0.1);
+    border-bottom: 1px solid #333;
+}
+
+.header-cell {
+    padding: 1rem;
+    font-weight: bold;
+    text-align: center;
+    border-right: 1px solid #333;
+    color: white;
+}
+
+.header-cell:last-child {
+    border-right: none;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 2fr repeat(4, 1fr);
+    border-bottom: 1px solid #333;
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.table-row.highlight {
+    background: rgba(168, 85, 247, 0.05);
+}
+
+.cell {
+    padding: 1rem;
+    text-align: center;
+    border-right: 1px solid #333;
+    color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cell:last-child {
+    border-right: none;
+}
+
+.tool-name {
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.unique-value, .positioning {
+    margin-top: 2rem;
+}
+
+.unique-value h3, .positioning h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.value-points, .positioning-points {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.value-point, .positioning-point {
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+@media (max-width: 768px) {
+    .table-header, .table-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .header-cell, .cell {
+        border-right: none;
+        border-bottom: 1px solid #333;
+    }
+}
+
 /* Timing Slide - Minimal & Elegant */
 .timing-grid {
     display: grid;
