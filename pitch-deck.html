@@ -2427,34 +2427,98 @@
 
         <!-- Slide 4: Demo -->
         <div class="slide">
+            <div class="slide-number">4/18</div>
             <div class="slide-content">
-                <h2 class="slide-title">Demo</h2>
-                <p class="slide-subtitle">Drape in azione: un'anteprima di ciò che è possibile fare.</p>
-                <div class="demo-grid">
-                    <div class="demo-video-card">
-                        <div class="video-placeholder">
-                            <p>Video Demo (60s)</p>
+                <!-- Title -->
+                <h1 style="position: absolute; top: 3rem; left: 50%; transform: translateX(-50%); font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 800; background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; z-index: 10;">DEMO</h1>
+                
+                <div style="display: flex; height: 100vh; align-items: center; justify-content: center; padding-top: 4rem;">
+                    
+                    <!-- Left Side - Video Demo -->
+                    <div style="flex: 1.2; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem;">
+                        <div style="position: relative; width: 300px; height: 400px; background: #1a1a1a; border: 4px solid #333; border-radius: 24px; margin-bottom: 2rem;">
+                            <!-- Phone screen -->
+                            <div style="width: 280px; height: 380px; background: #000; border-radius: 20px; margin: 6px auto; position: relative; overflow: hidden;">
+                                <!-- Status bar -->
+                                <div style="height: 30px; background: #111; display: flex; justify-content: space-between; align-items: center; padding: 0 15px; font-size: 12px; color: #fff;">
+                                    <span>9:41</span>
+                                    <span>100%</span>
+                                </div>
+                                <!-- IDE Interface -->
+                                <div style="height: 350px; background: #0a0a0a; position: relative;">
+                                    <!-- Header -->
+                                    <div style="height: 40px; background: #1a1a1a; border-bottom: 1px solid #333; display: flex; align-items: center; padding: 0 10px;">
+                                        <div style="width: 8px; height: 8px; background: #ff5f56; border-radius: 50%; margin-right: 6px;"></div>
+                                        <div style="width: 8px; height: 8px; background: #ffbd2e; border-radius: 50%; margin-right: 6px;"></div>
+                                        <div style="width: 8px; height: 8px; background: #27ca3f; border-radius: 50%; margin-right: 10px;"></div>
+                                        <span style="color: #a855f7; font-size: 11px; font-weight: 600;">index.html</span>
+                                    </div>
+                                    <!-- Code area -->
+                                    <div style="padding: 10px; font-family: 'Courier New', monospace; font-size: 10px; color: #10b981;">
+                                        <div>&lt;html&gt;</div>
+                                        <div style="margin-left: 10px;">&lt;body&gt;</div>
+                                        <div style="margin-left: 20px; color: #a855f7;">&lt;h1&gt;Hello World&lt;/h1&gt;</div>
+                                        <div style="margin-left: 10px;">&lt;/body&gt;</div>
+                                        <div>&lt;/html&gt;</div>
+                                    </div>
+                                    <!-- Preview button -->
+                                    <div style="position: absolute; bottom: 20px; right: 20px; width: 60px; height: 30px; background: #10b981; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #000; font-size: 10px; font-weight: 600;">PREVIEW</div>
+                                </div>
+                            </div>
+                            <!-- Notch -->
+                            <div style="position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 60px; height: 20px; background: #1a1a1a; border-radius: 0 0 12px 12px;"></div>
+                        </div>
+                        
+                        <div style="text-align: center;">
+                            <h3 style="color: #10b981; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.75rem;">Live Demo</h3>
+                            <p style="color: #a1a1aa; font-size: 1rem; max-width: 350px; line-height: 1.5;">"Da zero a un'app HTML funzionante in 3 tap"</p>
                         </div>
                     </div>
-                    <div class="demo-features-card">
-                        <h3>Stato Attuale (Ottobre 2025)</h3>
-                        <ul>
-                            <li><span class="check-icon">✅</span> Editor Flutter funzionante e responsive.</li>
-                            <li><span class="check-icon">✅</span> Container runtime per app HTML/JS con preview.</li>
-                            <li><span class="check-icon">✅</span> Integrazione GitHub completa (clone, commit, push, PR).</li>
-                            <li><span class="check-icon">✅</span> UI ottimizzata per interazioni touch.</li>
-                        </ul>
-                        <h3>In Sviluppo (prossime 8 settimane)</h3>
-                        <ul>
-                            <li><span class="progress-icon">🔄</span> Container per Python, Node.js, e Go.</li>
-                            <li><span class="progress-icon">🔄</span> Integrazione AI multimodello (GPT-5, Claude 4.5, Gemini 2.5).</li>
-                            <li><span class="progress-icon">🔄</span> AI Agent per la scrittura di codice autonomo.</li>
-                            <li><span class="progress-icon">🔄</span> Terminale Bash/Zsh completo.</li>
-                        </ul>
+                    
+                    <!-- Right Side - Features Status -->
+                    <div style="flex: 0.8; padding: 2rem; max-width: 450px;">
+                        <h1 style="font-size: 2.5rem; font-weight: 900; color: #ffffff; margin-bottom: 2rem; line-height: 1.1;">Stato Attuale</h1>
+                        
+                        <div style="margin-bottom: 2.5rem;">
+                            <h3 style="color: #10b981; font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;">✅ Già Funzionante</h3>
+                            <div style="space-y: 0.75rem;">
+                                <div style="display: flex; align-items: center; margin-bottom: 0.75rem;">
+                                    <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; margin-right: 12px;"></div>
+                                    <span style="color: #a1a1aa; font-size: 0.9rem;">Editor Flutter responsive</span>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 0.75rem;">
+                                    <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; margin-right: 12px;"></div>
+                                    <span style="color: #a1a1aa; font-size: 0.9rem;">Container HTML/JS con preview</span>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 0.75rem;">
+                                    <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; margin-right: 12px;"></div>
+                                    <span style="color: #a1a1aa; font-size: 0.9rem;">GitHub integration completa</span>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 0.75rem;">
+                                    <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; margin-right: 12px;"></div>
+                                    <span style="color: #a1a1aa; font-size: 0.9rem;">UI ottimizzata per touch</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(168, 85, 247, 0.1)); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; padding: 1.5rem;">
+                            <h3 style="color: #a855f7; font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem;">🔄 Prossime 8 settimane</h3>
+                            <div style="space-y: 0.5rem;">
+                                <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                                    <div style="width: 6px; height: 6px; background: #a855f7; border-radius: 50%; margin-right: 10px;"></div>
+                                    <span style="color: #a1a1aa; font-size: 0.85rem;">Python, Node.js, Go containers</span>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                                    <div style="width: 6px; height: 6px; background: #a855f7; border-radius: 50%; margin-right: 10px;"></div>
+                                    <span style="color: #a1a1aa; font-size: 0.85rem;">AI multimodello integration</span>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                                    <div style="width: 6px; height: 6px; background: #a855f7; border-radius: 50%; margin-right: 10px;"></div>
+                                    <span style="color: #a1a1aa; font-size: 0.85rem;">Terminal Bash/Zsh completo</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="demo-footer">
-                    <p>"Da zero a un'app HTML funzionante sul tuo telefono, in soli 3 tap."</p>
                 </div>
             </div>
         </div>
