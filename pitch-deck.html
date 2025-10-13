@@ -2188,42 +2188,84 @@
                 <section class="section">
                     <div class="container">
                         <h2 class="reveal">Il Problema</h2>
-                        
-                        <div class="problem-story reveal" data-delay="200">
-                            <div class="story-scenario">
-                                <p style="font-size: 1.4rem; color: #ffffff; margin-bottom: 20px;">Domenica sera, ore 22:00</p>
-                                <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px;">Server di produzione down. 3.000 utenti offline.<br>Il fix? 5 righe di codice.</p>
+                        <div class="problem-grid-2-col">
+                            <div class="problem-col">
+                                <div class="problem-story-card">
+                                    <div class="story-header">
+                                        <div class="story-icon">🚨</div>
+                                        <h3>Server Down, Domenica Sera</h3>
+                                    </div>
+                                    <p class="story-time">Domenica sera, ore 22:00</p>
+                                    <p>Un bug critico manda il server di produzione offline. 3.000 utenti non possono accedere al servizio.</p>
+                                    <p>Il fix richiede solo 5 righe di codice, ma sei fuori casa, lontano dal tuo laptop.</p>
+                                </div>
+                                <div class="problem-steps-card">
+                                    <h3>La Corsa Contro il Tempo</h3>
+                                    <div class="steps-timeline">
+                                        <div class="step">
+                                            <div class="step-icon">🏠</div>
+                                            <p>Correre a casa</p>
+                                        </div>
+                                        <div class="step">
+                                            <div class="step-icon">💻</div>
+                                            <p>Accendere il laptop</p>
+                                        </div>
+                                        <div class="step">
+                                            <div class="step-icon">🌐</div>
+                                            <p>Connettersi alla VPN</p>
+                                        </div>
+                                        <div class="step">
+                                            <div class="step-icon">📂</div>
+                                            <p>Aprire il progetto</p>
+                                        </div>
+                                        <div class="step">
+                                            <div class="step-icon">🔧</div>
+                                            <p>Fare il fix</p>
+                                        </div>
+                                        <div class="step">
+                                            <div class="step-icon">🚀</div>
+                                            <p>Deploy</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            
-                            <div class="problem-flow">
-                                <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 20px;">Ma sei fuori casa. Devi:</p>
-                                <div class="problem-steps">
-                                    <div class="step-item">Correre a casa</div>
-                                    <div class="step-item">Accendere il laptop</div>
-                                    <div class="step-item">Connetterti alla VPN</div>
-                                    <div class="step-item">Aprire il progetto</div>
-                                    <div class="step-item">Fare il fix</div>
-                                    <div class="step-item">Deploy</div>
+                            <div class="problem-col">
+                                <div class="problem-impact-card">
+                                    <h3>Le Conseguenze</h3>
+                                    <div class="impact-item">
+                                        <div class="impact-icon">⏱️</div>
+                                        <div class="impact-text">
+                                            <h4>45 Minuti Persi</h4>
+                                            <p>Tempo prezioso sprecato in un'emergenza.</p>
+                                        </div>
+                                    </div>
+                                    <div class="impact-item">
+                                        <div class="impact-icon">💸</div>
+                                        <div class="impact-text">
+                                            <h4>€2.000 di Revenue Persi</h4>
+                                            <p>Un'ora di downtime può costare caro.</p>
+                                        </div>
+                                    </div>
+                                    <div class="impact-item">
+                                        <div class="impact-icon">📉</div>
+                                        <div class="impact-text">
+                                            <h4>Reputazione Danneggiata</h4>
+                                            <p>La fiducia degli utenti è difficile da riconquistare.</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                
-                                <div class="problem-impact">
-                                    <div class="impact-item">45 minuti persi</div>
-                                    <div class="impact-item">2.000€ di revenue persi</div>
-                                    <div class="impact-item">Reputazione danneggiata</div>
-                                </div>
-                            </div>
-                            
-                            <div class="mobile-gap">
-                                <h3 style="color: #ffffff; margin: 40px 0 20px; text-align: center;">Su mobile? Impossibile.</h3>
-                                <div class="competitor-fails">
-                                    <div class="fail-item">Termux: troppo complesso</div>
-                                    <div class="fail-item">GitHub Codespaces: lento, pensato per desktop</div>
-                                    <div class="fail-item">VS Code, Cursor: solo desktop</div>
-                                    <div class="fail-item">Replit mobile: esperienza pessima</div>
-                                </div>
-                                
-                                <div style="text-align: center; margin-top: 40px; padding: 20px; border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 8px;">
-                                    <p style="color: var(--primary); font-size: 1.2rem; font-weight: 600;">Il gap esiste. Nessuno l'ha risolto.</p>
+                                <div class="mobile-gap-card">
+                                    <h3>Il Gap Mobile</h3>
+                                    <p>Sviluppare da mobile è un'esperienza frustrante e inefficiente. Le soluzioni attuali sono inadeguate:</p>
+                                    <ul>
+                                        <li><strong>Termux:</strong> Troppo complesso e non user-friendly.</li>
+                                        <li><strong>GitHub Codespaces:</strong> Lento e ottimizzato solo per desktop.</li>
+                                        <li><strong>VS Code, Cursor:</strong> Non disponibili su mobile.</li>
+                                        <li><strong>Replit Mobile:</strong> Esperienza utente pessima.</li>
+                                    </ul>
+                                    <div class="gap-conclusion">
+                                        <p>Esiste un'enorme opportunità per un'esperienza di sviluppo mobile-native.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

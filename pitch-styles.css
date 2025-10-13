@@ -2000,6 +2000,108 @@ tbody tr:hover {
     text-align: center;
 }
 
+.problem-grid-2-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.problem-col {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.problem-story-card,
+.problem-steps-card,
+.problem-impact-card,
+.mobile-gap-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 16px;
+    padding: 30px;
+}
+
+.story-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.story-icon {
+    font-size: 2rem;
+}
+
+.problem-story-card h3 {
+    font-size: 1.4rem;
+    color: var(--primary);
+}
+
+.story-time {
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+}
+
+.problem-steps-card h3 {
+    font-size: 1.4rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+.steps-timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 20px;
+}
+
+.step {
+    text-align: center;
+}
+
+.step-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.problem-impact-card h3,
+.mobile-gap-card h3 {
+    font-size: 1.4rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+.impact-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.impact-icon {
+    font-size: 2rem;
+}
+
+.impact-text h4 {
+    font-size: 1.1rem;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.mobile-gap-card ul {
+    padding-left: 20px;
+}
+
+.gap-conclusion {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(168, 85, 247, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+}
+
 .phases-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
