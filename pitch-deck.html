@@ -2192,52 +2192,62 @@
         <div class="slide">
             <div class="slide-number">2/18</div>
             <div class="slide-content">
-                <section class="section">
-                    <div class="container">
-                        <h2 class="reveal">Il Problema</h2>
-                        <div class="problem-grid-2-col">
-                            <div class="problem-col">
-                                <div class="problem-story-card">
-                                    <div class="story-header">
-                                        <div class="story-icon">🚨</div>
-                                        <h3>Server Down, Domenica Sera</h3>
-                                    </div>
-                                    <p class="story-time">Domenica sera, ore 22:00</p>
-                                    <p>Un bug critico manda il server di produzione offline. 3.000 utenti non possono accedere al servizio.</p>
-                                    <p>Il fix richiede solo 5 righe di codice, ma sei fuori casa, lontano dal tuo laptop.</p>
-                                </div>
-                                <div class="problem-steps-card">
-                                    <h3>La Corsa Contro il Tempo</h3>
-                                    <div class="steps-timeline">
-                                        <div class="step">
-                                            <div class="step-icon">🏠</div>
-                                            <p>Correre a casa</p>
-                                        </div>
-                                        <div class="step">
-                                            <div class="step-icon">💻</div>
-                                            <p>Accendere il laptop</p>
-                                        </div>
-                                        <div class="step">
-                                            <div class="step-icon">🌐</div>
-                                            <p>Connettersi alla VPN</p>
-                                        </div>
-                                        <div class="step">
-                                            <div class="step-icon">📂</div>
-                                            <p>Aprire il progetto</p>
-                                        </div>
-                                        <div class="step">
-                                            <div class="step-icon">🔧</div>
-                                            <p>Fare il fix</p>
-                                        </div>
-                                        <div class="step">
-                                            <div class="step-icon">🚀</div>
-                                            <p>Deploy</p>
-                                        </div>
-                                    </div>
-                                </div>
+                <div style="display: flex; flex-direction: column; justify-content: center; height: 100vh; padding: 2rem; position: relative;">
+                    <!-- Title -->
+                    <h1 style="font-size: 3rem; font-weight: 800; text-align: center; margin-bottom: 3rem; background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">IL PROBLEMA</h1>
+                    
+                    <!-- Story Card -->
+                    <div style="background: #0a0a0a; border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 20px 60px rgba(168, 85, 247, 0.3);">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🚨</div>
+                            <div>
+                                <h3 style="color: #ffffff; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">"Domenica sera, ore 22:00"</h3>
+                                <p style="color: #a1a1aa; font-size: 1rem;">Il server di produzione è down. 3.000 utenti offline. Bug critico nel backend.</p>
                             </div>
-                            <div class="problem-col">
-                                <div class="problem-impact-card">
+                        </div>
+                        <p style="color: #ffffff; font-size: 1.2rem; text-align: center; margin-bottom: 1rem;">Il fix? <span style="color: #a855f7; font-weight: bold;">5 righe di codice.</span></p>
+                        <p style="color: #a1a1aa; text-align: center;">Ma sei a cena fuori. Devi:</p>
+                    </div>
+                    
+                    <!-- Steps Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                        <div style="background: #0a0a0a; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 1rem; text-align: center;">
+                            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🏠</div>
+                            <p style="color: #ffffff; font-size: 0.9rem;">1. Correre a casa</p>
+                        </div>
+                        <div style="background: #0a0a0a; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 1rem; text-align: center;">
+                            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">💻</div>
+                            <p style="color: #ffffff; font-size: 0.9rem;">2. Accendere il laptop</p>
+                        </div>
+                        <div style="background: #0a0a0a; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 1rem; text-align: center;">
+                            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🌐</div>
+                            <p style="color: #ffffff; font-size: 0.9rem;">3. Connettersi alla VPN</p>
+                        </div>
+                        <div style="background: #0a0a0a; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 1rem; text-align: center;">
+                            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📂</div>
+                            <p style="color: #ffffff; font-size: 0.9rem;">4. Aprire il progetto</p>
+                        </div>
+                        <div style="background: #0a0a0a; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 1rem; text-align: center;">
+                            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🔧</div>
+                            <p style="color: #ffffff; font-size: 0.9rem;">5. Fare il fix</p>
+                        </div>
+                        <div style="background: #0a0a0a; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 1rem; text-align: center;">
+                            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🚀</div>
+                            <p style="color: #ffffff; font-size: 0.9rem;">6. Deploy</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Impact -->
+                    <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1)); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 1.5rem; text-align: center;">
+                        <p style="color: #ffffff; font-size: 1.1rem; margin-bottom: 1rem;"><strong>45 minuti persi. €2,000 di revenue persi. Reputazione danneggiata.</strong></p>
+                        <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1rem; margin-top: 1rem;">
+                            <p style="color: #a1a1aa; margin-bottom: 0.5rem;">Su mobile? <span style="color: #ef4444; font-weight: bold;">Impossibile.</span></p>
+                            <p style="color: #a1a1aa; font-size: 0.9rem;">❌ Termux: troppo complesso • ❌ GitHub Codespaces mobile: lento • ❌ VS Code, Cursor: solo desktop</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
                                     <h3>Le Conseguenze</h3>
                                     <div class="impact-item">
                                         <div class="impact-icon">⏱️</div>
