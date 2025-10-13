@@ -6,23 +6,9 @@
     <!-- Pitch deck meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drape - Pitch Deck</title>
-    <link rel="stylesheet" href="pitch-styles.css">
-    <link rel="stylesheet" href="new-chart-styles.css">
-    <link rel="stylesheet" href="new-team-cards-styles.css">
-    <link rel="stylesheet" href="new-traction-roadmap-styles.css">
-    <link rel="stylesheet" href="new-pitch-styles.css">
+    <link rel="stylesheet" href="redesign.css">
 
     <style>
-        html, body { 
-            overflow: hidden; 
-            margin: 0;
-            padding: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #0a0a0a;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            color: #ffffff;
-        }
         
         * {
             box-sizing: border-box;
@@ -2157,27 +2143,30 @@
     <div class="pitch-container">
         <!-- Slide 1: Cover -->
         <div class="slide active">
-            <div class="slide-number">1/18</div>
             <div class="slide-content">
-                <section class="hero">
-                    <div class="container">
-                        <div class="hero-content">
-                            <h1 class="glitch" data-text="DRAPE">DRAPE</h1>
-                            <p class="hero-subtitle" style="font-size: 2rem; margin: 40px 0;">Il primo IDE mobile con AI multimodello</p>
-                            <p style="font-size: 1.4rem; color: var(--text-muted); margin-bottom: 40px;">Daniele Scianna & Leon</p>
-                            <div style="display: flex; justify-content: center; gap: 40px; margin: 40px 0;">
-                                <div style="text-align: center;">
-                                    <div style="color: var(--primary); font-size: 1.2rem; font-weight: 600;">Pre-Seed</div>
-                                    <div style="color: var(--text-muted); font-size: 1rem;">€200K</div>
-                                </div>
-                                <div style="text-align: center;">
-                                    <div style="color: var(--primary); font-size: 1.2rem; font-weight: 600;">Ottobre 2025</div>
-                                    <div style="color: var(--text-muted); font-size: 1rem;">Versione Finale</div>
-                                </div>
+                <div class="hero-grid">
+                    <div class="hero-left">
+                        <h1 class="hero-title-redesign">DRAPE</h1>
+                        <p class="hero-subtitle-redesign">Il primo IDE mobile con AI multimodello</p>
+                        <p class="hero-author">Daniele Scianna & Leon</p>
+                    </div>
+                    <div class="hero-right">
+                        <div class="hero-info-card">
+                            <div class="info-item">
+                                <span class="info-title">Round</span>
+                                <span class="info-value">Pre-Seed</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-title">Ask</span>
+                                <span class="info-value">€200K</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-title">Data</span>
+                                <span class="info-value">Ottobre 2025</span>
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
             </div>
         </div>
 
@@ -2276,618 +2265,418 @@
 
         <!-- Slide 3: Soluzione -->
         <div class="slide">
-            <div class="slide-number">3/18</div>
             <div class="slide-content">
-                <section class="section">
-                    <div class="container">
-                        <h2 class="reveal">La Soluzione</h2>
-                        <p class="section-subtitle reveal">IDE mobile-native con AI multimodello</p>
-                        
-                        <div class="solution-features">
-                            <div class="feature reveal" data-delay="0">
-                                <h3>Container Runtime</h3>
-                                <p>App HTML/JS già funzionanti<br>Preview in tempo reale<br>Testing Python, Node in corso</p>
-                            </div>
-                            
-                            <div class="feature reveal" data-delay="100">
-                                <h3>AI Multimodello</h3>
-                                <p>GPT-5, Claude 4.5 Sonnet, Gemini 2.5 Pro<br>L'utente sceglie quale AI per ogni task<br>AI Agent autonomo in sviluppo</p>
-                            </div>
-                            
-                            <div class="feature reveal" data-delay="200">
-                                <h3>GitHub Integration</h3>
-                                <p>Clone, commit, push, PR<br>Sync con progetti esistenti<br>Funziona già oggi</p>
-                            </div>
-                            
-                            <div class="feature reveal" data-delay="300">
-                                <h3>Terminal</h3>
-                                <p>Bash/Zsh commands<br>Process management<br>In testing</p>
-                            </div>
-                        </div>
-                        
-                        <div class="use-cases reveal" data-delay="400">
-                            <div class="use-case-grid">
-                                <div class="use-case-item">Emergency hotfix da mobile</div>
-                                <div class="use-case-item">Quick PR reviews</div>
-                                <div class="use-case-item">Small code changes</div>
-                                <div class="use-case-item">Continue working durante commute</div>
-                            </div>
-                            
-                            <div style="text-align: center; margin-top: 40px; padding: 20px; border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 8px;">
-                                <p style="color: var(--primary); font-size: 1.2rem; font-weight: 600;">Non sostituiamo il laptop. Risolviamo il 20% del tempo in cui non ce l'hai.</p>
-                            </div>
-                        </div>
+                <h2 class="slide-title">La Soluzione</h2>
+                <p class="slide-subtitle">Un IDE mobile-native con AI multimodello, pensato per la produttività in mobilità.</p>
+                <div class="solution-grid">
+                    <div class="solution-card">
+                        <div class="solution-icon">📦</div>
+                        <h3>Container Runtime</h3>
+                        <p>Ambienti di sviluppo containerizzati per app HTML/JS, con preview in tempo reale. Supporto per Python e Node.js in arrivo.</p>
                     </div>
-                </section>
+                    <div class="solution-card">
+                        <div class="solution-icon">🤖</div>
+                        <h3>AI Multimodello</h3>
+                        <p>Accesso diretto a GPT-5, Claude 4.5 e Gemini 2.5 Pro. Scegli l'AI più adatta per ogni task, dal codice al testo.</p>
+                    </div>
+                    <div class="solution-card">
+                        <div class="solution-icon">🐙</div>
+                        <h3>GitHub Integration</h3>
+                        <p>Clona, modifica, committa e pusha i tuoi progetti GitHub direttamente dal tuo dispositivo mobile. Massima produttività, zero compromessi.</p>
+                    </div>
+                    <div class="solution-card">
+                        <div class="solution-icon">💲</div>
+                        <h3>Terminal Integrato</h3>
+                        <p>Un terminale Bash/Zsh completo per gestire i tuoi progetti, eseguire comandi e automatizzare task, tutto in un unico posto.</p>
+                    </div>
+                </div>
+                <div class="solution-footer">
+                    <p><strong>Il nostro obiettivo:</strong> non sostituire il laptop, ma rendere produttivo il 20% del tempo in cui non è a portata di mano.</p>
+                </div>
             </div>
         </div>
 
         <!-- Slide 4: Demo -->
         <div class="slide">
-            <div class="slide-number">4/18</div>
             <div class="slide-content">
-                <section class="section">
-                    <div class="container">
-                        <h2 class="reveal">Demo</h2>
-                        <p class="section-subtitle reveal">Drape in azione</p>
-                        
-                        <div class="demo-container reveal" data-delay="200">
-                            <div class="demo-placeholder">
-                                <div class="video-placeholder">
-                                    <p>Video Demo - 60 secondi</p>
-                                    <div class="placeholder-screens">
-                                        <div class="screen-item">Editor con codice</div>
-                                        <div class="screen-item">Container runtime HTML app</div>
-                                        <div class="screen-item">GitHub integration</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="demo-status">
-                                <div class="status-section">
-                                    <h3>Cosa funziona oggi (Ottobre 2025)</h3>
-                                    <div class="status-grid">
-                                        <div class="status-item completed">Editor Flutter funzionante</div>
-                                        <div class="status-item completed">App HTML/JS girano in-app con preview</div>
-                                        <div class="status-item completed">GitHub clone, commit, push, PR</div>
-                                        <div class="status-item completed">UI ottimizzata per mobile touch</div>
-                                        <div class="status-item completed">Syntax highlighting multi-language</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="status-section">
-                                    <h3>In sviluppo (prossime 8 settimane)</h3>
-                                    <div class="status-grid">
-                                        <div class="status-item in-progress">Container Python, Node, Go</div>
-                                        <div class="status-item in-progress">AI multimodello integration</div>
-                                        <div class="status-item in-progress">AI Agent autonomo</div>
-                                        <div class="status-item in-progress">Terminal completo bash/zsh</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="demo-tagline">
-                                <p>"Da zero a app HTML funzionante su mobile in 3 tap"</p>
-                            </div>
+                <h2 class="slide-title">Demo</h2>
+                <p class="slide-subtitle">Drape in azione: un'anteprima di ciò che è possibile fare.</p>
+                <div class="demo-grid">
+                    <div class="demo-video-card">
+                        <div class="video-placeholder">
+                            <p>Video Demo (60s)</p>
                         </div>
                     </div>
-                </section>
+                    <div class="demo-features-card">
+                        <h3>Stato Attuale (Ottobre 2025)</h3>
+                        <ul>
+                            <li><span class="check-icon">✅</span> Editor Flutter funzionante e responsive.</li>
+                            <li><span class="check-icon">✅</span> Container runtime per app HTML/JS con preview.</li>
+                            <li><span class="check-icon">✅</span> Integrazione GitHub completa (clone, commit, push, PR).</li>
+                            <li><span class="check-icon">✅</span> UI ottimizzata per interazioni touch.</li>
+                        </ul>
+                        <h3>In Sviluppo (prossime 8 settimane)</h3>
+                        <ul>
+                            <li><span class="progress-icon">🔄</span> Container per Python, Node.js, e Go.</li>
+                            <li><span class="progress-icon">🔄</span> Integrazione AI multimodello (GPT-5, Claude 4.5, Gemini 2.5).</li>
+                            <li><span class="progress-icon">🔄</span> AI Agent per la scrittura di codice autonomo.</li>
+                            <li><span class="progress-icon">🔄</span> Terminale Bash/Zsh completo.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="demo-footer">
+                    <p>"Da zero a un'app HTML funzionante sul tuo telefono, in soli 3 tap."</p>
+                </div>
             </div>
         </div>
+        <!-- Slide 5: Perché Ora? -->
         <div class="slide">
-            <div class="slide-number">5/18</div>
             <div class="slide-content">
-                <section class="section">
-                    <div class="container">
-                        <div class="hero-content">
-                            <h1 class="hero-title">PERCHÉ ORA?</h1>
-                            <h2 class="hero-subtitle">IL TIMING È PERFETTO</h2>
-                            
-                            <div class="timing-grid">
-                                <div class="timing-card">
-                                    <div class="card-header">
-                                        <span class="check-icon">✓</span>
-                                        <h3>AI CODING BOOM</h3>
-                                    </div>
-                                    <div class="card-stats">
-                                        <div class="stat">Cursor: $400M valuation</div>
-                                        <div class="stat">GitHub Copilot: 2M+ users</div>
-                                        <div class="stat">Windsurf: boom virale 2024</div>
-                                    </div>
-                                    <div class="card-insight">Developer vogliono AI nel workflow</div>
-                                </div>
-                                
-                                <div class="timing-card">
-                                    <div class="card-header">
-                                        <span class="check-icon">✓</span>
-                                        <h3>MOBILE-FIRST</h3>
-                                    </div>
-                                    <div class="card-stats">
-                                        <div class="stat">68% developer remote/hybrid</div>
-                                        <div class="stat">iPad Pro M4: potenza laptop</div>
-                                        <div class="stat">Ore su device per testing</div>
-                                    </div>
-                                    <div class="card-insight">Mobile è mainstream</div>
-                                </div>
-                                
-                                <div class="timing-card">
-                                    <div class="card-header">
-                                        <span class="check-icon">✓</span>
-                                        <h3>TECH READY</h3>
-                                    </div>
-                                    <div class="card-stats">
-                                        <div class="stat">WebContainers maturo</div>
-                                        <div class="stat">WASM performance OK</div>
-                                        <div class="stat">API AI accessibili</div>
-                                    </div>
-                                    <div class="card-insight">Tecnologia disponibile</div>
-                                </div>
-                                
-                                <div class="timing-card">
-                                    <div class="card-header">
-                                        <span class="check-icon">✓</span>
-                                        <h3>COMPETITOR GAP</h3>
-                                    </div>
-                                    <div class="card-stats">
-                                        <div class="stat">Cursor, VS Code: desktop only</div>
-                                        <div class="stat">Nessuno su mobile</div>
-                                        <div class="stat">Window: 12-18 mesi</div>
-                                    </div>
-                                    <div class="card-insight">First-mover advantage</div>
-                                </div>
-                            </div>
-                            
-                            <div class="timing-conclusion">
-                                <h2>FIRST-MOVER ADVANTAGE = ORA</h2>
-                            </div>
-                        </div>
+                <h2 class="slide-title">Perché Ora?</h2>
+                <p class="slide-subtitle">Il mercato è pronto per una soluzione come Drape. Il timing è perfetto.</p>
+                <div class="timing-grid-new">
+                    <div class="timing-card-new">
+                        <div class="timing-icon">🚀</div>
+                        <h3>AI Coding Boom</h3>
+                        <p>L'adozione di strumenti di AI coding è in crescita esponenziale. Cursor ha raggiunto una valutazione di $400M e GitHub Copilot ha superato i 2 milioni di utenti.</p>
                     </div>
-                </section>
+                    <div class="timing-card-new">
+                        <div class="timing-icon">📱</div>
+                        <h3>Mobile-First World</h3>
+                        <p>Il 68% degli sviluppatori lavora in modalità remota o ibrida. I dispositivi mobili, come l'iPad Pro M4, hanno ormai la potenza di un laptop.</p>
+                    </div>
+                    <div class="timing-card-new">
+                        <div class="timing-icon">🛠️</div>
+                        <h3>Tecnologia Matura</h3>
+                        <p>Le tecnologie chiave come WebContainers e WASM sono mature e performanti. Le API dei modelli AI sono accessibili e potenti.</p>
+                    </div>
+                    <div class="timing-card-new">
+                        <div class="timing-icon">🎯</div>
+                        <h3>Competitor Gap</h3>
+                        <p>I principali player come Cursor e VS Code sono solo per desktop. C'è un'enorme opportunità per una soluzione mobile-native, con una finestra di 12-18 mesi di vantaggio.</p>
+                    </div>
+                </div>
+                <div class="timing-footer">
+                    <p>First-Mover Advantage = <strong>Ora</strong>.</p>
+                </div>
             </div>
         </div>
 
-        <!-- Slide 6: Concorrenza -->
+        <!-- Slide 6: Mercato -->
         <div class="slide">
-            <div class="slide-number">6/18</div>
             <div class="slide-content">
-                <section class="section">
-                    <div class="container">
-                        <div class="hero-content">
-                            <h1 class="hero-title">IL MERCATO</h1>
-                            <h2 class="hero-subtitle">UN MERCATO ENORME E IN CRESCITA</h2>
-                            
-                            <div class="market-stats">
-                                <div class="market-stat-large">
-                                    <div class="stat-number">$12.3B</div>
-                                    <div class="stat-label">Developer Tools Market Globale (2025)</div>
-                                </div>
-                                
-                                <div class="market-funnel">
-                                    <div class="funnel-item">
-                                        <div class="funnel-number">29.4M</div>
-                                        <div class="funnel-text">developer globali (Stack Overflow 2025)</div>
-                                    </div>
-                                    <div class="funnel-arrow">↓</div>
-                                    <div class="funnel-item">
-                                        <div class="funnel-number">13M</div>
-                                        <div class="funnel-text">lavorano remote/hybrid (44%)</div>
-                                    </div>
-                                    <div class="funnel-arrow">↓</div>
-                                    <div class="funnel-item">
-                                        <div class="funnel-number">5.2M</div>
-                                        <div class="funnel-text">usano AI coding tools (39%, GitHub Survey 2025)</div>
-                                    </div>
-                                    <div class="funnel-arrow">↓</div>
-                                    <div class="funnel-item highlight">
-                                        <div class="funnel-text">TARGET: Mobile developers + Remote workers</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="market-breakdown">
-                                    <div class="market-item">
-                                        <div class="market-label">TAM (Total Addressable Market):</div>
-                                        <div class="market-value">$1.5B</div>
-                                        <div class="market-calc">5M developer × $25/mese × 12 mesi</div>
-                                    </div>
-                                    
-                                    <div class="market-item">
-                                        <div class="market-label">SAM (Serviceable Available):</div>
-                                        <div class="market-value">$312M</div>
-                                        <div class="market-calc">1.3M mobile-first developers × $240/anno</div>
-                                    </div>
-                                    
-                                    <div class="market-item highlight">
-                                        <div class="market-label">SOM (Target Year 3):</div>
-                                        <div class="market-value">$3M ARR</div>
-                                        <div class="market-calc">12.5K paying users × $20/mese × 12 mesi</div>
-                                        <div class="market-note">Solo 1% del SAM → molto conservativo</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="growth-stat">
-                                    <div class="growth-label">CRESCITA:</div>
-                                    <div class="growth-value">+18% year-over-year</div>
-                                    <div class="growth-note">AI coding tools = categoria in più rapida crescita</div>
-                                </div>
-                            </div>
-                        </div>
+                <h2 class="slide-title">Il Mercato</h2>
+                <p class="slide-subtitle">Un'opportunità enorme in un mercato in rapida crescita.</p>
+                <div class="market-grid-new">
+                    <div class="market-card-new">
+                        <div class="market-icon">📈</div>
+                        <h3>Mercato Globale</h3>
+                        <p class="market-value">$12.3B</p>
+                        <p>Valore del mercato dei developer tools nel 2025.</p>
                     </div>
-                </section>
+                    <div class="market-card-new">
+                        <div class="market-icon">👨‍💻</div>
+                        <h3>Developer Globali</h3>
+                        <p class="market-value">29.4M</p>
+                        <p>Numero di sviluppatori a livello globale (Stack Overflow 2025).</p>
+                    </div>
+                    <div class="market-card-new">
+                        <div class="market-icon">🎯</div>
+                        <h3>Il Nostro Target</h3>
+                        <p class="market-value">5.2M</p>
+                        <p>Sviluppatori che usano AI coding tools e lavorano in modalità remota o ibrida.</p>
+                    </div>
+                </div>
+                <div class="market-funnel-new">
+                    <div class="funnel-stage">
+                        <h4>TAM</h4>
+                        <p class="funnel-value">$1.5B</p>
+                        <p>5M dev x $25/mese x 12</p>
+                    </div>
+                    <div class="funnel-arrow-new">→</div>
+                    <div class="funnel-stage">
+                        <h4>SAM</h4>
+                        <p class="funnel-value">$312M</p>
+                        <p>1.3M mobile dev x $240/anno</p>
+                    </div>
+                    <div class="funnel-arrow-new">→</div>
+                    <div class="funnel-stage">
+                        <h4>SOM</h4>
+                        <p class="funnel-value">$3M</p>
+                        <p>12.5K users x $20/mese x 12</p>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Slide 7: Business Model -->
         <div class="slide">
-            <div class="slide-number">7/18</div>
             <div class="slide-content">
-                <section class="section">
-                    <div class="container">
-                        <div class="hero-content">
-                            <h1 class="hero-title">BUSINESS MODEL</h1>
-                            <h2 class="hero-subtitle">FREEMIUM SUBSCRIPTION</h2>
-                            
-                            <div class="pricing-tiers">
-                                <div class="pricing-tier free">
-                                    <div class="tier-icon">🆓</div>
-                                    <div class="tier-name">FREE</div>
-                                    <div class="tier-price">€0</div>
-                                    <div class="tier-features">
-                                        <div class="feature">1 progetto | 50 AI queries/mese</div>
-                                        <div class="feature">GPT-5, Claude 4.5, Gemini 2.5 Pro</div>
-                                        <div class="feature">GitHub read-only</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="pricing-tier starter">
-                                    <div class="tier-icon">💎</div>
-                                    <div class="tier-name">STARTER</div>
-                                    <div class="tier-price">€9.99/mese</div>
-                                    <div class="tier-subtitle">(€99/anno)</div>
-                                    <div class="tier-features">
-                                        <div class="feature">5 progetti | 200 AI queries/mese</div>
-                                        <div class="feature">Tutti i modelli AI + switching illimitato</div>
-                                        <div class="feature">GitHub completo (commit, push, PR)</div>
-                                        <div class="feature">Email support (48h)</div>
-                                    </div>
-                                    <div class="tier-target">→ Target: Studenti, indie developers</div>
-                                </div>
-                                
-                                <div class="pricing-tier pro">
-                                    <div class="tier-icon">🚀</div>
-                                    <div class="tier-name">PRO</div>
-                                    <div class="tier-price">€29.99/mese</div>
-                                    <div class="tier-subtitle">(€299/anno)</div>
-                                    <div class="tier-features">
-                                        <div class="feature">Progetti illimitati | 1,000 AI queries/mese</div>
-                                        <div class="feature">Tutti i modelli AI</div>
-                                        <div class="feature">Terminal completo + AI Agent avanzato</div>
-                                        <div class="feature">Priority support (24h)</div>
-                                        <div class="feature">Advanced features (themes, extensions)</div>
-                                    </div>
-                                    <div class="tier-target">→ Target: Professionisti, freelancer</div>
-                                </div>
-                                
-                                <div class="pricing-tier ultimate">
-                                    <div class="tier-icon">⭐</div>
-                                    <div class="tier-name">ULTIMATE</div>
-                                    <div class="tier-price">€199.99/mese</div>
-                                    <div class="tier-subtitle">(€1,999/anno)</div>
-                                    <div class="tier-features">
-                                        <div class="feature">AI queries illimitate</div>
-                                        <div class="feature">BYOK (Bring Your Own API Keys)</div>
-                                        <div class="feature">Advanced AI Agent + context illimitato</div>
-                                        <div class="feature">Private cloud deployment option</div>
-                                        <div class="feature">White-label customization</div>
-                                        <div class="feature">Dedicated support (4h)</div>
-                                    </div>
-                                    <div class="tier-target">→ Target: Power users, consultant, agency</div>
-                                </div>
-                                
-                                <div class="pricing-tier enterprise">
-                                    <div class="tier-icon">🏢</div>
-                                    <div class="tier-name">ENTERPRISE</div>
-                                    <div class="tier-price">€29.99/user/mese</div>
-                                    <div class="tier-subtitle">(min 5 users)</div>
-                                    <div class="tier-features">
-                                        <div class="feature">Everything in Ultimate per ogni membro</div>
-                                        <div class="feature">Team workspaces & collaboration</div>
-                                        <div class="feature">SSO & Advanced security (SAML, 2FA)</div>
-                                        <div class="feature">Admin dashboard & analytics</div>
-                                        <div class="feature">Audit logs & compliance (SOC 2 ready)</div>
-                                        <div class="feature">Dedicated account manager</div>
-                                        <div class="feature">Custom SLA (99.9% uptime)</div>
-                                    </div>
-                                    <div class="tier-target">→ Target: Startup, aziende, team 5-50+ dev</div>
-                                </div>
-                            </div>
-                            
-                            <div class="pricing-notes">
-                                <div class="pricing-note">
-                                    <strong>TRIAL:</strong> 14 giorni Pro gratis (no credit card)
-                                </div>
-                                <div class="pricing-note">
-                                    <strong>YEARLY DISCOUNT:</strong> 17% off su tutti i piani
-                                </div>
-                            </div>
+                <h2 class="slide-title">Business Model</h2>
+                <p class="slide-subtitle">Un modello freemium pensato per la crescita virale e la monetizzazione a lungo termine.</p>
+                <div class="pricing-grid-new">
+                    <div class="pricing-card-new">
+                        <div class="pricing-header">
+                            <h3>Free</h3>
+                            <p class="price-new">€0</p>
                         </div>
+                        <ul class="features-list-new">
+                            <li>1 progetto</li>
+                            <li>50 AI queries/mese</li>
+                            <li>Accesso a tutti i modelli AI</li>
+                            <li>GitHub read-only</li>
+                        </ul>
                     </div>
-                </section>
+                    <div class="pricing-card-new featured-new">
+                        <div class="pricing-header">
+                            <h3>Pro</h3>
+                            <p class="price-new">€29.99<span class="price-unit">/mese</span></p>
+                        </div>
+                        <ul class="features-list-new">
+                            <li>Progetti illimitati</li>
+                            <li>1,000 AI queries/mese</li>
+                            <li>Terminal completo</li>
+                            <li>AI Agent avanzato</li>
+                            <li>Priority support</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card-new">
+                        <div class="pricing-header">
+                            <h3>Enterprise</h3>
+                            <p class="price-new">Custom</p>
+                        </div>
+                        <ul class="features-list-new">
+                            <li>Team workspaces</li>
+                            <li>SSO & security avanzata</li>
+                            <li>Dashboard admin</li>
+                            <li>Supporto dedicato</li>
+                            <li>Custom SLA</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pricing-footer">
+                    <p><strong>Trial:</strong> 14 giorni di Pro, senza carta di credito. <strong>Sconto annuale:</strong> 17% su tutti i piani.</p>
+                </div>
             </div>
         </div>
 
-        <!-- Slide 8: Pricing Comparison -->
+        <!-- Slide 8: Vantaggio Competitivo -->
         <div class="slide">
-            <div class="slide-number">8/18</div>
             <div class="slide-content">
-                <section class="section">
-                    <div class="container">
-                        <div class="hero-content">
-                            <h1 class="hero-title">COMPETITIVO E SOSTENIBILE</h1>
-                            
-                            <div class="comparison-table-modern">
-                                <div class="table-header">
-                                    <div class="header-cell feature-col">Tool</div>
-                                    <div class="header-cell">Free</div>
-                                    <div class="header-cell">Base</div>
-                                    <div class="header-cell">Pro</div>
-                                    <div class="header-cell">Enterprise/User</div>
-                                </div>
-                                <div class="table-row">
-                                    <div class="cell feature-col">Drape</div>
-                                    <div class="cell">✅</div>
-                                    <div class="cell">€9.99</div>
-                                    <div class="cell">€29.99</div>
-                                    <div class="cell">€29.99</div>
-                                </div>
-                                <div class="table-row">
-                                    <div class="cell feature-col">Cursor</div>
-                                    <div class="cell">2w</div>
-                                    <div class="cell">€20</div>
-                                    <div class="cell">-</div>
-                                    <div class="cell">Custom</div>
-                                </div>
-                                <div class="table-row">
-                                    <div class="cell feature-col">Windsurf</div>
-                                    <div class="cell">✅</div>
-                                    <div class="cell">€15</div>
-                                    <div class="cell">-</div>
-                                    <div class="cell">Custom</div>
-                                </div>
-                                <div class="table-row">
-                                    <div class="cell feature-col">GitHub Copilot</div>
-                                    <div class="cell">❌</div>
-                                    <div class="cell">€10</div>
-                                    <div class="cell">€19</div>
-                                    <div class="cell">€39</div>
-                                </div>
-                                <div class="table-row">
-                                    <div class="cell feature-col">Replit</div>
-                                    <div class="cell">✅</div>
-                                    <div class="cell">€20</div>
-                                    <div class="cell">-</div>
-                                    <div class="cell">€33</div>
-                                </div>
+                <h2 class="slide-title">Vantaggio Competitivo</h2>
+                <p class="slide-subtitle">Il nostro posizionamento unico nel mercato.</p>
+                <div class="competitive-grid">
+                    <div class="comparison-table-wrapper">
+                        <table class="comparison-table-new">
+                            <thead>
+                                <tr>
+                                    <th>Tool</th>
+                                    <th>Free</th>
+                                    <th>Base</th>
+                                    <th>Pro</th>
+                                    <th>Enterprise/User</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="drape-row">
+                                    <td>Drape</td>
+                                    <td>✅</td>
+                                    <td>€9.99</td>
+                                    <td>€29.99</td>
+                                    <td>€29.99</td>
+                                </tr>
+                                <tr>
+                                    <td>Cursor</td>
+                                    <td>2w</td>
+                                    <td>€20</td>
+                                    <td>-</td>
+                                    <td>Custom</td>
+                                </tr>
+                                <tr>
+                                    <td>Windsurf</td>
+                                    <td>✅</td>
+                                    <td>€15</td>
+                                    <td>-</td>
+                                    <td>Custom</td>
+                                </tr>
+                                <tr>
+                                    <td>GitHub Copilot</td>
+                                    <td>❌</td>
+                                    <td>€10</td>
+                                    <td>€19</td>
+                                    <td>€39</td>
+                                </tr>
+                                <tr>
+                                    <td>Replit</td>
+                                    <td>✅</td>
+                                    <td>€20</td>
+                                    <td>-</td>
+                                    <td>€33</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="differentiators-new">
+                        <div class="differentiator-item-new">
+                            <div class="differentiator-icon">🏆</div>
+                            <div class="differentiator-text">
+                                <h4>Valore Unico</h4>
+                                <p>3 modelli AI di punta in tutti i piani, incluso quello gratuito. Il free tier più generoso del mercato.</p>
                             </div>
-                            
-                            <div class="unique-value" style="margin-top: 2rem;">
-                                <h3>DRAPE UNIQUE VALUE:</h3>
-                                <div class="value-points" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
-                                    <div class="value-point">✓ UNICO con 3 top AI in TUTTI i tier (anche Free!)</div>
-                                    <div class="value-point">✓ Free tier più generoso del mercato</div>
-                                    <div class="value-point">✓ Ultimate con BYOK (risparmio enorme per heavy users)</div>
-                                    <div class="value-point">✓ Enterprise per-user trasparente (più economico di Copilot)</div>
-                                    <div class="value-point">✓ Mobile-native (tutti gli altri sono desktop-only)</div>
-                                </div>
+                        </div>
+                        <div class="differentiator-item-new">
+                            <div class="differentiator-icon">💰</div>
+                            <div class="differentiator-text">
+                                <h4>Prezzo Trasparente</h4>
+                                <p>Prezzi chiari e competitivi per i team, più economici di GitHub Copilot. Piano Ultimate con BYOK per un enorme risparmio.</p>
                             </div>
-                            
-                            <div class="positioning" style="margin-top: 2rem;">
-                                <h3>POSITIONING:</h3>
-                                <div class="positioning-points" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
-                                    <div class="positioning-point">- Starter: Entry point accessibile (€9.99)</div>
-                                    <div class="positioning-point">- Pro: Sweet spot professionisti (competitive)</div>
-                                    <div class="positioning-point">- Ultimate: Power users con BYOK (high margin)</div>
-                                    <div class="positioning-point">- Enterprise: Team pricing chiaro e competitivo</div>
-                                </div>
+                        </div>
+                        <div class="differentiator-item-new">
+                            <div class="differentiator-icon">📱</div>
+                            <div class="differentiator-text">
+                                <h4>Mobile-Native</h4>
+                                <p>A differenza della concorrenza, Drape è progettato e costruito per un'esperienza mobile-first senza compromessi.</p>
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
             </div>
         </div>
 
-        <!-- Slide 9: Competizione -->
+        <!-- Slide 9: Analisi Competitiva -->
         <div class="slide">
-            <div class="slide-number">9/18</div>
             <div class="slide-content">
-                <section class="section">
-                    <div class="container">
-                        <div class="hero-content">
-                            <h1 class="hero-title">COMPETIZIONE</h1>
-                            <h2 class="hero-subtitle">COMPETITIVE LANDSCAPE (Ottobre 2025)</h2>
-                            
-                            <div class="competition-table">
-                                <div class="comp-table-header">
-                                    <div class="comp-header-cell"></div>
-                                    <div class="comp-header-cell">Drape</div>
-                                    <div class="comp-header-cell">Cursor</div>
-                                    <div class="comp-header-cell">Windsurf</div>
-                                    <div class="comp-header-cell">Codespaces</div>
-                                    <div class="comp-header-cell">Replit</div>
-                                </div>
-                                
-                                <div class="comp-table-row">
-                                    <div class="comp-feature-name">Mobile Native</div>
-                                    <div class="comp-cell success">✅</div>
-                                    <div class="comp-cell fail">❌</div>
-                                    <div class="comp-cell fail">❌</div>
-                                    <div class="comp-cell warning">⚠️</div>
-                                    <div class="comp-cell warning">⚠️</div>
-                                </div>
-                                
-                                <div class="comp-table-row">
-                                    <div class="comp-feature-name">AI Multimodello</div>
-                                    <div class="comp-cell success">✅</div>
-                                    <div class="comp-cell fail">❌</div>
-                                    <div class="comp-cell fail">❌</div>
-                                    <div class="comp-cell fail">❌</div>
-                                    <div class="comp-cell fail">❌</div>
-                                </div>
-                                
-                                <div class="comp-table-row">
-                                    <div class="comp-feature-name">Container Runtime</div>
-                                    <div class="comp-cell success">✅</div>
-                                    <div class="comp-cell fail">❌</div>
-                                    <div class="comp-cell fail">❌</div>
-                                    <div class="comp-cell success">✅</div>
-                                    <div class="comp-cell success">✅</div>
-                                </div>
-                                
-                                <div class="comp-table-row">
-                                    <div class="comp-feature-name">GitHub Native</div>
-                                    <div class="comp-cell success">✅</div>
-                                    <div class="comp-cell success">✅</div>
-                                    <div class="comp-cell success">✅</div>
-                                    <div class="comp-cell success">✅</div>
-                                    <div class="comp-cell success">✅</div>
-                                </div>
-                                
-                                <div class="comp-table-row">
-                                    <div class="comp-feature-name">AI Agent Autonomo</div>
-                                    <div class="comp-cell progress">🔄</div>
-                                    <div class="comp-cell success">✅</div>
-                                    <div class="comp-cell success">✅</div>
-                                    <div class="comp-cell fail">❌</div>
-                                    <div class="comp-cell warning">⚠️</div>
-                                </div>
-                                
-                                <div class="comp-table-row">
-                                    <div class="comp-feature-name">Terminal</div>
-                                    <div class="comp-cell progress">🔄</div>
-                                    <div class="comp-cell success">✅</div>
-                                    <div class="comp-cell success">✅</div>
-                                    <div class="comp-cell success">✅</div>
-                                    <div class="comp-cell fail">❌</div>
-                                </div>
-                                
-                                <div class="comp-table-row">
-                                    <div class="comp-feature-name">Offline Mode</div>
-                                    <div class="comp-cell success">✅</div>
-                                    <div class="comp-cell fail">❌</div>
-                                    <div class="comp-cell fail">❌</div>
-                                    <div class="comp-cell fail">❌</div>
-                                    <div class="comp-cell fail">❌</div>
-                                </div>
-                            </div>
-                            
-                            <div class="competitive-analysis">
-                                <div class="analysis-section">
-                                    <h3>LORO FORZA:</h3>
-                                    <div class="analysis-points">
-                                        <div class="analysis-point">- Cursor/Windsurf: AI agent maturo, user base consolidata</div>
-                                        <div class="analysis-point">- Codespaces: integrazione GitHub perfetta, infra Microsoft</div>
-                                        <div class="analysis-point">- Replit: community enorme, collaboration features</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="analysis-section">
-                                    <h3>NOSTRO VANTAGGIO:</h3>
-                                    <div class="analysis-points">
-                                        <div class="analysis-point">✓ UNICO mobile-native (non port da desktop)</div>
-                                        <div class="analysis-point">✓ UNICO con AI multimodello (GPT-5 + Claude + Gemini)</div>
-                                        <div class="analysis-point">✓ Focus su quick wins, non full development</div>
-                                        <div class="analysis-point">✓ Offline-first (lavori senza connessione)</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="analysis-section">
-                                    <h3>PERCHÉ NON CI COPIANO SUBITO:</h3>
-                                    <div class="analysis-points">
-                                        <div class="analysis-point">- Cursor/Windsurf: team piccoli, focus su desktop</div>
-                                        <div class="analysis-point">- Microsoft/GitHub: corporate slow, 18+ mesi per mobile</div>
-                                        <div class="analysis-point">- Replit: ha già provato mobile, esperienza pessima</div>
-                                        <div class="analysis-point">→ Window: 12-18 mesi di vantaggio</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="worst-case">
-                                    <strong>WORST CASE:</strong> Diventiamo acquisition target (exit €20-50M)
-                                </div>
-                            </div>
-                        </div>
+                <h2 class="slide-title">Analisi Competitiva</h2>
+                <p class="slide-subtitle">Come ci posizioniamo rispetto alla concorrenza.</p>
+                <div class="competition-grid-new">
+                    <div class="competitor-card-new">
+                        <h4>Loro Forza</h4>
+                        <ul>
+                            <li><strong>Cursor/Windsurf:</strong> AI agent maturo, user base consolidata.</li>
+                            <li><strong>Codespaces:</strong> Integrazione GitHub perfetta, infrastruttura Microsoft.</li>
+                            <li><strong>Replit:</strong> Community enorme, collaboration features.</li>
+                        </ul>
                     </div>
-                </section>
+                    <div class="competitor-card-new our-advantage">
+                        <h4>Nostro Vantaggio</h4>
+                        <ul>
+                            <li><strong>Mobile-Native:</strong> Unico player con un'esperienza pensata per il mobile.</li>
+                            <li><strong>AI Multimodello:</strong> Accesso a GPT-5, Claude 4.5 e Gemini 2.5.</li>
+                            <li><strong>Focus su Quick Wins:</strong> Ottimizzato per fix rapidi e modifiche al volo.</li>
+                            <li><strong>Offline-First:</strong> Lavora anche senza connessione.</li>
+                        </ul>
+                    </div>
+                    <div class="competitor-card-new">
+                        <h4>La Nostra Difesa</h4>
+                        <ul>
+                            <li><strong>First-Mover Advantage:</strong> 12-18 mesi di vantaggio sulla concorrenza.</li>
+                            <li><strong>Mobile UX è difficile:</strong> Replit ha già fallito nel creare un'esperienza mobile valida.</li>
+                            <li><strong>Community Loyalty:</strong> Costruiremo una community forte e fedele.</li>
+                            <li><strong>Worst Case:</strong> Diventiamo un target di acquisizione (exit €20-50M).</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Slide 10: Go-to-Market -->
         <div class="slide">
-            <div class="slide-number">10/18</div>
             <div class="slide-content">
-                <section class="section">
-                    <div class="container">
-                        <h2 class="reveal">GO-TO-MARKET</h2>
-                        <p class="section-subtitle reveal">STRATEGIA DI LANCIO</p>
-                        
-                        <div class="phases-grid">
-                            <div class="phase-card">
-                                <h3>PHASE 1: VALIDATION (Nov 2025 - Gen 2026)</h3>
-                                <ul>
-                                    <li>Landing page drape.dev con waitlist</li>
-                                    <li>Survey a 100 developer per validare problema</li>
-                                    <li>Post su Reddit, Hacker News, Dev.to</li>
-                                    <li>10 beta tester closed (developer selezionati)</li>
-                                    <li>Goal: 200 email waitlist + feedback qualitativo</li>
-                                </ul>
-                            </div>
-                            <div class="phase-card">
-                                <h3>PHASE 2: PRIVATE BETA (Feb - Apr 2026)</h3>
-                                <ul>
-                                    <li>TestFlight con 100 developer selezionati</li>
-                                    <li>Focus communities:
-                                        <ul>
-                                            <li>Reddit: r/iOSProgramming, r/androiddev</li>
-                                            <li>Discord: developer communities</li>
-                                            <li>Twitter/X: tech twitter</li>
-                                        </ul>
-                                    </li>
-                                    <li>Iteration veloce basata su feedback</li>
-                                    <li>Goal: 40%+ retention D7, 100 active users</li>
-                                </ul>
-                            </div>
-                            <div class="phase-card">
-                                <h3>PHASE 3: PUBLIC BETA (Mag - Ago 2026)</h3>
-                                <ul>
-                                    <li>Product Hunt launch</li>
-                                    <li>Content marketing: blog tecnico, YouTube tutorials</li>
-                                    <li>Case studies: "Ho fixato production da metro"</li>
-                                    <li>Partnership con tech YouTubers italiani</li>
-                                    <li>Google Play Beta + TestFlight public</li>
-                                    <li>Goal: 2,000 users, 100 paganti (5% conversion)</li>
-                                </ul>
-                            </div>
-                            <div class="phase-card">
-                                <h3>PHASE 4: PUBLIC LAUNCH (Set 2026)</h3>
-                                <ul>
-                                    <li>App Store & Play Store release ufficiale</li>
-                                    <li>Paid marketing: Reddit ads, YouTube pre-roll</li>
-                                    <li>Referral program (30 giorni free per invito)</li>
-                                    <li>PR push: TechCrunch, Product Hunt, Hacker News</li>
-                                    <li>Goal: 10,000 users, 500 paganti (€10K MRR)</li>
-                                </ul>
-                            </div>
+                <h2 class="slide-title">Go-to-Market</h2>
+                <p class="slide-subtitle">La nostra strategia per conquistare il mercato.</p>
+                <div class="gtm-grid">
+                    <div class="gtm-phase">
+                        <div class="phase-header">
+                            <span class="phase-number">1</span>
+                            <h4>Validation</h4>
+                            <p class="phase-date">Nov 2025 - Gen 2026</p>
                         </div>
+                        <ul class="phase-goals">
+                            <li>200 email nella waitlist</li>
+                            <li>Feedback qualitativo da 10 beta tester</li>
+                        </ul>
+                    </div>
+                    <div class="gtm-phase">
+                        <div class="phase-header">
+                            <span class="phase-number">2</span>
+                            <h4>Private Beta</h4>
+                            <p class="phase-date">Feb - Apr 2026</p>
+                        </div>
+                        <ul class="phase-goals">
+                            <li>100 active users</li>
+                            <li>40%+ retention D7</li>
+                        </ul>
+                    </div>
+                    <div class="gtm-phase">
+                        <div class="phase-header">
+                            <span class="phase-number">3</span>
+                            <h4>Public Beta</h4>
+                            <p class="phase-date">Mag - Ago 2026</p>
+                        </div>
+                        <ul class="phase-goals">
+                            <li>2,000 users</li>
+                            <li>100 utenti paganti</li>
+                        </ul>
+                    </div>
+                    <div class="gtm-phase">
+                        <div class="phase-header">
+                            <span class="phase-number">4</span>
+                            <h4>Public Launch</h4>
+                            <p class="phase-date">Set 2026</p>
+                        </div>
+                        <ul class="phase-goals">
+                            <li>10,000 users</li>
+                            <li>€10K MRR</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="acquisition-channels-new">
+                    <div class="channel-card">
+                        <h5>Organic (70%)</h5>
+                        <p>Content marketing, community building, e word-of-mouth.</p>
+                    </div>
+                    <div class="channel-card">
+                        <h5>Paid (30%)</h5>
+                        <p>Target CAC di €40-60 attraverso ads su Reddit e YouTube.</p>
+                    </div>
+                    <div class="channel-card">
+                        <h5>Virality</h5>
+                        <p>Incentivare la condivisione di screenshot e demo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                        <div class="acquisition-strategy" style="margin-top: 2rem;">
-                            <h3>ACQUISITION STRATEGY:</h3>
-                            <ul>
-                                <li>Organic (70%): content, community, word-of-mouth</li>
-                                <li>Paid (30%): €40-60 CAC target</li>
-                                <li>Virality: developers share screenshots/demos</li>
-                                <li>LTV: €240 (12 mesi × €20 avg) → LTV/CAC: 4-6x</li>
-                            </ul>
+        <!-- Slide 11: Richiesta di Finanziamento -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="slide-title">Richiesta di Finanziamento</h2>
+                <p class="slide-subtitle">Stiamo cercando un finanziamento pre-seed di €200.000 per accelerare lo sviluppo e il lancio.</p>
+                <div class="funding-summary">
+                    <div class="funding-amount-new">
+                        <p class="amount-label">Round</p>
+                        <p class="amount-value">Pre-Seed</p>
+                        <p class="amount-label">Richiesta</p>
+                        <p class="amount-value">€200.000</p>
+                    </div>
+                    <div class="funding-breakdown-new">
+                        <div class="breakdown-item-new">
+                            <div class="breakdown-percentage">50%</div>
+                            <div class="breakdown-category">Team & Hiring</div>
+                            <div class="breakdown-value">€100K</div>
+                        </div>
+                        <div class="breakdown-item-new">
+                            <div class="breakdown-percentage">30%</div>
+                            <div class="breakdown-category">Infrastructure</div>
+                            <div class="breakdown-value">€60K</div>
+                        </div>
+                        <div class="breakdown-item-new">
+                            <div class="breakdown-percentage">20%</div>
+                            <div class="breakdown-category">Go-to-Market</div>
+                            <div class="breakdown-value">€40K</div>
                         </div>
                     </div>
-                </section>
+                </div>
             </div>
         </div>
 
