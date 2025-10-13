@@ -2134,6 +2134,47 @@
             }
         }
 
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+        
+        @keyframes slideOutToLeft {
+            from {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-100px) scale(0.95);
+            }
+        }
+        
+        @keyframes problemReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            50% {
+                opacity: 0.5;
+                transform: translateY(15px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .slide-transition-1-to-2 {
+            animation: problemReveal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
     </style>
 </head>
 <body>
@@ -3291,9 +3332,32 @@
         const totalSlides = 18;
 
         function showSlide(n) {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (n + totalSlides) % totalSlides;
-            slides[currentSlide].classList.add('active');
+            const oldSlide = slides[currentSlide];
+            const newSlideIndex = (n + totalSlides) % totalSlides;
+            const newSlide = slides[newSlideIndex];
+            
+            // Custom transition from slide 1 to slide 2
+            if (currentSlide === 0 && newSlideIndex === 1) {
+                // Slide 1 to 2 transition
+                oldSlide.style.animation = 'slideOutToLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
+                
+                setTimeout(() => {
+                    oldSlide.classList.remove('active');
+                    oldSlide.style.animation = '';
+                    newSlide.classList.add('active');
+                    newSlide.style.animation = 'problemReveal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
+                    
+                    setTimeout(() => {
+                        newSlide.style.animation = '';
+                    }, 1200);
+                }, 400);
+            } else {
+                // Standard transition for other slides
+                oldSlide.classList.remove('active');
+                newSlide.classList.add('active');
+            }
+            
+            currentSlide = newSlideIndex;
             
             // Update progress bar
             const progress = ((currentSlide + 1) / totalSlides) * 100;
