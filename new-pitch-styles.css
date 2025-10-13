@@ -1,3 +1,80 @@
+/* Timing Slide Styles */
+.timing-reasons {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.timing-item {
+    display: flex;
+    gap: 1.5rem;
+    padding: 2rem;
+    border: 1px solid #333;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    transition: all 0.3s ease;
+}
+
+.timing-item:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.timing-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+    color: #10b981;
+}
+
+.timing-content {
+    flex: 1;
+}
+
+.timing-content h3 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.timing-points {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.timing-point {
+    font-size: 0.95rem;
+    color: #ccc;
+    line-height: 1.4;
+}
+
+.timing-conclusion {
+    font-size: 1rem;
+    color: var(--primary);
+    font-weight: bold;
+    margin-top: 0.5rem;
+}
+
+.timing-cta {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(59, 130, 246, 0.1));
+    border: 2px solid var(--primary);
+    border-radius: 16px;
+}
+
+.timing-cta h2 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+}
+
 /* Navigation Override */
 .navigation {
     position: fixed !important;
