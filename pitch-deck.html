@@ -2242,33 +2242,70 @@
         </div>
         <!-- Slide 3: Soluzione -->
         <div class="slide">
+            <div class="slide-number">3/18</div>
             <div class="slide-content">
-                <h2 class="slide-title">La Soluzione</h2>
-                <p class="slide-subtitle">Un IDE mobile-native con AI multimodello, pensato per la produttività in mobilità.</p>
-                <div class="solution-grid">
-                    <div class="solution-card">
-                        <div class="solution-icon">📦</div>
-                        <h3>Container Runtime</h3>
-                        <p>Ambienti di sviluppo containerizzati per app HTML/JS, con preview in tempo reale. Supporto per Python e Node.js in arrivo.</p>
+                <div style="display: flex; flex-direction: column; justify-content: center; min-height: 100vh; padding: 1rem; max-width: 100vw; overflow: hidden;">
+                    <!-- Title -->
+                    <h1 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; text-align: center; margin-bottom: 1rem; background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">LA SOLUZIONE</h1>
+                    <p style="color: #a1a1aa; text-align: center; margin-bottom: 2rem; font-size: clamp(0.9rem, 2.5vw, 1.1rem);">IDE mobile-native con AI multimodello</p>
+                    
+                    <!-- Features Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 2rem; max-width: 100%;">
+                        <!-- Container Runtime -->
+                        <div style="background: #0a0a0a; border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease;">
+                            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #a855f7, #c084fc); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 1.5rem;">🔥</div>
+                            <h3 style="color: #ffffff; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.75rem;">CONTAINER RUNTIME</h3>
+                            <div style="color: #a1a1aa; font-size: 0.9rem; line-height: 1.5;">
+                                <p style="margin-bottom: 0.5rem;">• App HTML/JS già funzionanti</p>
+                                <p style="margin-bottom: 0.5rem;">• Preview in tempo reale</p>
+                                <p>• Testing Python, Node in corso</p>
+                            </div>
+                        </div>
+                        
+                        <!-- AI Multimodello -->
+                        <div style="background: #0a0a0a; border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease;">
+                            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #c084fc, #a855f7); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 1.5rem;">🤖</div>
+                            <h3 style="color: #ffffff; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.75rem;">AI MULTIMODELLO</h3>
+                            <div style="color: #a1a1aa; font-size: 0.9rem; line-height: 1.5;">
+                                <p style="margin-bottom: 0.5rem;">• GPT-5, Claude 4.5 Sonnet, Gemini 2.5 Pro</p>
+                                <p style="margin-bottom: 0.5rem;">• L'utente sceglie quale AI per ogni task</p>
+                                <p>• AI Agent che scrive codice autonomamente (in sviluppo)</p>
+                            </div>
+                        </div>
+                        
+                        <!-- GitHub Integration -->
+                        <div style="background: #0a0a0a; border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease;">
+                            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 1.5rem;">✅</div>
+                            <h3 style="color: #ffffff; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.75rem;">GITHUB INTEGRATION (completa!)</h3>
+                            <div style="color: #a1a1aa; font-size: 0.9rem; line-height: 1.5;">
+                                <p style="margin-bottom: 0.5rem;">• Clone, commit, push, PR</p>
+                                <p style="margin-bottom: 0.5rem;">• Sync con progetti esistenti</p>
+                                <p>• Funziona già oggi</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Terminal -->
+                        <div style="background: #0a0a0a; border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease;">
+                            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 1.5rem;">⚡</div>
+                            <h3 style="color: #ffffff; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.75rem;">TERMINAL (in testing)</h3>
+                            <div style="color: #a1a1aa; font-size: 0.9rem; line-height: 1.5;">
+                                <p style="margin-bottom: 0.5rem;">• Bash/Zsh commands</p>
+                                <p>• Process management</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="solution-card">
-                        <div class="solution-icon">🤖</div>
-                        <h3>AI Multimodello</h3>
-                        <p>Accesso diretto a GPT-5, Claude 4.5 e Gemini 2.5 Pro. Scegli l'AI più adatta per ogni task, dal codice al testo.</p>
+                    
+                    <!-- Use Cases -->
+                    <div style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(59, 130, 246, 0.1)); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.5rem; text-align: center; max-width: 100%;">
+                        <h3 style="color: #a855f7; font-size: clamp(1rem, 2.5vw, 1.2rem); margin-bottom: 1rem;">🎯 USE CASE CHIAVE:</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; color: #ffffff; font-size: clamp(0.8rem, 2vw, 0.9rem);">
+                            <p>✓ Emergency hotfix da mobile (5 min vs 45 min)</p>
+                            <p>✓ Quick PR reviews on the go</p>
+                            <p>✓ Small code changes mentre testi app</p>
+                            <p>✓ Continue working durante commute</p>
+                        </div>
+                        <p style="color: #a1a1aa; margin-top: 1rem; font-size: clamp(0.8rem, 2vw, 0.9rem); font-style: italic;">Non sostituiamo il laptop. Risolviamo il 20% del tempo in cui non ce l'hai.</p>
                     </div>
-                    <div class="solution-card">
-                        <div class="solution-icon">🐙</div>
-                        <h3>GitHub Integration</h3>
-                        <p>Clona, modifica, committa e pusha i tuoi progetti GitHub direttamente dal tuo dispositivo mobile. Massima produttività, zero compromessi.</p>
-                    </div>
-                    <div class="solution-card">
-                        <div class="solution-icon">💲</div>
-                        <h3>Terminal Integrato</h3>
-                        <p>Un terminale Bash/Zsh completo per gestire i tuoi progetti, eseguire comandi e automatizzare task, tutto in un unico posto.</p>
-                    </div>
-                </div>
-                <div class="solution-footer">
-                    <p><strong>Il nostro obiettivo:</strong> non sostituire il laptop, ma rendere produttivo il 20% del tempo in cui non è a portata di mano.</p>
                 </div>
             </div>
         </div>
