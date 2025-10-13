@@ -2225,25 +2225,10 @@
             animation: pulse 2s ease-in-out infinite;
         }
 
-        .slide:nth-child(2) [style*="border-left: 3px solid"],
-        .slide:nth-child(3) [style*="border-left: 3px solid"] {
-            transition: all 0.3s ease;
-        }
-
-        .slide:nth-child(2) [style*="border-left: 3px solid"]:hover,
-        .slide:nth-child(3) [style*="border-left: 3px solid"]:hover {
-            padding-left: 2rem;
-            border-left-width: 5px;
-        }
-
-        .slide:nth-child(4) [style*="display: flex; align-items: start"] {
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .slide:nth-child(4) [style*="display: flex; align-items: start"]:hover {
-            transform: translateX(5px);
-            background: rgba(168, 85, 247, 0.1) !important;
+        .slide:nth-child(2) span[style*="color: #ef4444"],
+        .slide:nth-child(3) span[style*="color: #10b981"] {
+            font-size: 1.05em !important;
+            font-weight: 700 !important;
         }
 
         @media (max-width: 900px) {
