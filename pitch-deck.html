@@ -1688,6 +1688,185 @@
             text-align: center !important;
         }
         
+        /* Demo Slide */
+        .demo-container {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 30px !important;
+        }
+        
+        .video-placeholder {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 2px dashed rgba(168, 85, 247, 0.3) !important;
+            border-radius: 8px !important;
+            padding: 40px !important;
+            text-align: center !important;
+        }
+        
+        .video-placeholder p {
+            color: var(--primary) !important;
+            font-size: 1.2rem !important;
+            margin-bottom: 20px !important;
+        }
+        
+        .placeholder-screens {
+            display: flex !important;
+            justify-content: center !important;
+            gap: 15px !important;
+        }
+        
+        .screen-item {
+            background: rgba(168, 85, 247, 0.1) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            padding: 8px 12px !important;
+            border-radius: 6px !important;
+            color: var(--text-muted) !important;
+            font-size: 0.8rem !important;
+        }
+        
+        .demo-status {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 30px !important;
+        }
+        
+        .status-section h3 {
+            color: #ffffff !important;
+            font-size: 1.1rem !important;
+            margin-bottom: 15px !important;
+        }
+        
+        .status-grid {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 8px !important;
+        }
+        
+        .status-item {
+            padding: 10px 15px !important;
+            border-radius: 6px !important;
+            font-size: 0.9rem !important;
+        }
+        
+        .status-item.completed {
+            background: rgba(16, 185, 129, 0.1) !important;
+            border: 1px solid rgba(16, 185, 129, 0.3) !important;
+            color: #10b981 !important;
+        }
+        
+        .status-item.in-progress {
+            background: rgba(251, 191, 36, 0.1) !important;
+            border: 1px solid rgba(251, 191, 36, 0.3) !important;
+            color: #fbbf24 !important;
+        }
+        
+        .demo-tagline {
+            text-align: center !important;
+            padding: 20px !important;
+            border: 1px solid rgba(168, 85, 247, 0.3) !important;
+            border-radius: 8px !important;
+        }
+        
+        .demo-tagline p {
+            color: var(--primary) !important;
+            font-size: 1.2rem !important;
+            font-weight: 600 !important;
+            font-style: italic !important;
+        }
+        
+        /* Market Slide */
+        .market-overview {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 40px !important;
+        }
+        
+        .market-size {
+            text-align: center !important;
+        }
+        
+        .market-stat {
+            margin-bottom: 30px !important;
+        }
+        
+        .stat-value {
+            color: var(--primary) !important;
+            font-size: 3rem !important;
+            font-weight: 800 !important;
+            margin-bottom: 10px !important;
+        }
+        
+        .stat-label {
+            color: #ffffff !important;
+            font-size: 1.1rem !important;
+        }
+        
+        .market-funnel {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 10px !important;
+        }
+        
+        .funnel-item {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+        }
+        
+        .funnel-number {
+            color: var(--primary) !important;
+            font-weight: 700 !important;
+            font-size: 1.1rem !important;
+        }
+        
+        .funnel-text {
+            color: var(--text-muted) !important;
+            font-size: 0.9rem !important;
+        }
+        
+        .funnel-arrow {
+            color: var(--primary) !important;
+            font-size: 1.2rem !important;
+        }
+        
+        .market-sizing {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 20px !important;
+        }
+        
+        .sizing-card {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            border-radius: 8px !important;
+            padding: 20px !important;
+            text-align: center !important;
+        }
+        
+        .sizing-card.highlight {
+            border-color: var(--primary) !important;
+            background: rgba(168, 85, 247, 0.1) !important;
+        }
+        
+        .sizing-card h3 {
+            color: var(--primary) !important;
+            font-size: 1rem !important;
+            margin-bottom: 10px !important;
+        }
+        
+        .sizing-value {
+            color: #ffffff !important;
+            font-size: 1.8rem !important;
+            font-weight: 700 !important;
+            margin-bottom: 10px !important;
+        }
+        
+        .sizing-card p {
+            color: var(--text-muted) !important;
+            font-size: 0.8rem !important;
+        }
+        
         @media (max-width: 900px) {
             .problem-steps {
                 grid-template-columns: 1fr !important;
@@ -1700,6 +1879,18 @@
             
             .use-case-grid {
                 grid-template-columns: 1fr !important;
+            }
+            
+            .demo-status {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .market-sizing {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .placeholder-screens {
+                flex-direction: column !important;
             }
         }
         
@@ -2088,57 +2279,52 @@
             </div>
         </div>
 
-        <!-- Slide 5: Prodotto -->
+        <!-- Slide 4: Demo -->
         <div class="slide">
             <div class="slide-number">4/12</div>
             <div class="slide-content">
                 <section class="section">
                     <div class="container">
-                        <h2 class="reveal">Il Prodotto</h2>
+                        <h2 class="reveal">Demo</h2>
+                        <p class="section-subtitle reveal">Drape in azione</p>
                         
-                        <!-- Interactive AI Demo -->
-                        <div class="ai-demo reveal" data-delay="0">
-                            <div class="demo-description">
-                                <h3 class="reveal" data-delay="100">Il Primo IDE Mobile Completo</h3>
-                                <p class="demo-intro reveal" data-delay="200">Drape porta l'esperienza di sviluppo desktop direttamente su mobile, con funzionalità che nessun competitor offre.</p>
-                                
-                                <div class="demo-features">
-                                    <div class="demo-feature reveal" data-delay="300">
-                                        <div class="demo-icon">→</div>
-                                        <div>
-                                            <h4>Terminal Bash/Zsh Completo</h4>
-                                            <p>Esegui comandi, script e gestisci processi come su desktop. Nessuna limitazione.</p>
-                                        </div>
-                                    </div>
-                                    <div class="demo-feature reveal" data-delay="400">
-                                        <div class="demo-icon">→</div>
-                                        <div>
-                                            <h4>AI Agent Autonomo</h4>
-                                            <p>L'AI crea e modifica progetti esistenti in autonomia, non solo genera template.</p>
-                                        </div>
-                                    </div>
-                                    <div class="demo-feature reveal" data-delay="500">
-                                        <div class="demo-icon">→</div>
-                                        <div>
-                                            <h4>GitHub Repository Integration</h4>
-                                            <p>Clone, commit, push e gestisci PR direttamente dalle tue repo esistenti.</p>
-                                        </div>
-                                    </div>
-                                    <div class="demo-feature reveal" data-delay="600">
-                                        <div class="demo-icon">→</div>
-                                        <div>
-                                            <h4>Multi-Model AI</h4>
-                                            <p>Scegli tra GPT-5, Claude 4.5 e Gemini Pro 2.5 per ogni task specifico.</p>
-                                        </div>
+                        <div class="demo-container reveal" data-delay="200">
+                            <div class="demo-placeholder">
+                                <div class="video-placeholder">
+                                    <p>Video Demo - 60 secondi</p>
+                                    <div class="placeholder-screens">
+                                        <div class="screen-item">Editor con codice</div>
+                                        <div class="screen-item">Container runtime HTML app</div>
+                                        <div class="screen-item">GitHub integration</div>
                                     </div>
                                 </div>
                             </div>
                             
-                            <div class="phone-mockup-image reveal" data-delay="700">
-                                <div class="mockup-container">
-                                    <img src="Progetto senza titolo (3).png" alt="Drape App Mockup" class="mockup-full">
-                                    <div class="mockup-glow"></div>
+                            <div class="demo-status">
+                                <div class="status-section">
+                                    <h3>Cosa funziona oggi (Ottobre 2025)</h3>
+                                    <div class="status-grid">
+                                        <div class="status-item completed">Editor Flutter funzionante</div>
+                                        <div class="status-item completed">App HTML/JS girano in-app con preview</div>
+                                        <div class="status-item completed">GitHub clone, commit, push, PR</div>
+                                        <div class="status-item completed">UI ottimizzata per mobile touch</div>
+                                        <div class="status-item completed">Syntax highlighting multi-language</div>
+                                    </div>
                                 </div>
+                                
+                                <div class="status-section">
+                                    <h3>In sviluppo (prossime 8 settimane)</h3>
+                                    <div class="status-grid">
+                                        <div class="status-item in-progress">Container Python, Node, Go</div>
+                                        <div class="status-item in-progress">AI multimodello integration</div>
+                                        <div class="status-item in-progress">AI Agent autonomo</div>
+                                        <div class="status-item in-progress">Terminal completo bash/zsh</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="demo-tagline">
+                                <p>"Da zero a app HTML funzionante su mobile in 3 tap"</p>
                             </div>
                         </div>
                     </div>
