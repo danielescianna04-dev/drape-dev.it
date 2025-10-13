@@ -1588,34 +1588,33 @@
             line-height: 1.4 !important;
         }
         
-        /* Problem Story Slide */
+        /* Minimal Problem Story */
         .problem-story {
             display: flex !important;
             flex-direction: column !important;
-            gap: 40px !important;
+            gap: 30px !important;
         }
         
         .story-scenario {
             text-align: center !important;
-            padding: 30px !important;
-            background: rgba(220, 38, 38, 0.1) !important;
-            border: 1px solid rgba(220, 38, 38, 0.3) !important;
-            border-radius: 12px !important;
+            padding: 25px !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            border-radius: 8px !important;
         }
         
         .problem-steps {
             display: grid !important;
             grid-template-columns: repeat(3, 1fr) !important;
-            gap: 15px !important;
+            gap: 12px !important;
             margin: 20px 0 !important;
         }
         
         .step-item {
-            background: rgba(168, 85, 247, 0.1) !important;
+            background: rgba(255, 255, 255, 0.02) !important;
             border: 1px solid rgba(168, 85, 247, 0.2) !important;
-            padding: 15px !important;
-            border-radius: 8px !important;
-            color: #ffffff !important;
+            padding: 12px !important;
+            border-radius: 6px !important;
+            color: var(--text-muted) !important;
             text-align: center !important;
             font-size: 0.9rem !important;
         }
@@ -1623,61 +1622,70 @@
         .problem-impact {
             display: flex !important;
             justify-content: center !important;
-            gap: 30px !important;
-            margin: 30px 0 !important;
+            gap: 25px !important;
+            margin: 25px 0 !important;
         }
         
         .impact-item {
-            background: rgba(220, 38, 38, 0.2) !important;
-            color: #fca5a5 !important;
-            padding: 12px 20px !important;
-            border-radius: 8px !important;
-            font-weight: 600 !important;
-            font-size: 1rem !important;
+            background: rgba(255, 255, 255, 0.02) !important;
+            color: var(--text-muted) !important;
+            padding: 10px 18px !important;
+            border-radius: 6px !important;
+            font-size: 0.9rem !important;
+            border: 1px solid rgba(168, 85, 247, 0.1) !important;
         }
         
         .competitor-fails {
             display: flex !important;
             flex-direction: column !important;
-            gap: 10px !important;
+            gap: 8px !important;
             margin: 20px 0 !important;
         }
         
         .fail-item {
             background: rgba(255, 255, 255, 0.02) !important;
-            border: 1px solid rgba(220, 38, 38, 0.2) !important;
-            padding: 12px 20px !important;
+            border: 1px solid rgba(168, 85, 247, 0.1) !important;
+            padding: 10px 16px !important;
+            border-radius: 6px !important;
+            color: var(--text-muted) !important;
+            font-size: 0.9rem !important;
+        }
+        
+        /* Minimal Solution Features */
+        .feature {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
             border-radius: 8px !important;
-            color: #fca5a5 !important;
-            font-size: 1rem !important;
+            padding: 25px !important;
         }
         
-        /* Solution Features Updates */
-        .feature-icon {
-            font-size: 2.5rem !important;
-            margin-bottom: 15px !important;
-            display: block !important;
+        .feature h3 {
+            color: #ffffff !important;
+            font-size: 1.1rem !important;
+            margin-bottom: 12px !important;
         }
         
-        .use-cases {
-            margin-top: 40px !important;
+        .feature p {
+            color: var(--text-muted) !important;
+            font-size: 0.9rem !important;
+            line-height: 1.5 !important;
         }
         
         .use-case-grid {
             display: grid !important;
             grid-template-columns: repeat(2, 1fr) !important;
-            gap: 15px !important;
+            gap: 12px !important;
             margin: 20px 0 !important;
         }
         
         .use-case-item {
-            background: rgba(16, 185, 129, 0.1) !important;
-            border: 1px solid rgba(16, 185, 129, 0.3) !important;
-            padding: 15px !important;
-            border-radius: 8px !important;
-            color: #10b981 !important;
-            font-size: 1rem !important;
-            font-weight: 500 !important;
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            padding: 12px !important;
+            border-radius: 6px !important;
+            color: var(--text-muted) !important;
+            font-size: 0.9rem !important;
+            text-align: center !important;
         }
         
         @media (max-width: 900px) {
@@ -1687,7 +1695,7 @@
             
             .problem-impact {
                 flex-direction: column !important;
-                gap: 15px !important;
+                gap: 12px !important;
             }
             
             .use-case-grid {
@@ -1987,45 +1995,43 @@
             <div class="slide-content">
                 <section class="section">
                     <div class="container">
-                        <h2 class="reveal">"Domenica sera, ore 22:00"</h2>
+                        <h2 class="reveal">Il Problema</h2>
                         
                         <div class="problem-story reveal" data-delay="200">
                             <div class="story-scenario">
-                                <p style="font-size: 1.4rem; color: #ffffff; margin-bottom: 30px;">Il server di produzione è down.<br>3.000 utenti offline.<br>Bug critico nel backend.</p>
-                                <p style="font-size: 1.6rem; color: var(--primary); margin-bottom: 40px;">Il fix? <strong>5 righe di codice.</strong></p>
+                                <p style="font-size: 1.4rem; color: #ffffff; margin-bottom: 20px;">Domenica sera, ore 22:00</p>
+                                <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px;">Server di produzione down. 3.000 utenti offline.<br>Il fix? 5 righe di codice.</p>
                             </div>
                             
                             <div class="problem-flow">
-                                <p style="color: #ffffff; font-size: 1.2rem; margin-bottom: 20px;">Ma sei a cena fuori. Devi:</p>
+                                <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 20px;">Ma sei fuori casa. Devi:</p>
                                 <div class="problem-steps">
-                                    <div class="step-item">1. Correre a casa</div>
-                                    <div class="step-item">2. Accendere il laptop</div>
-                                    <div class="step-item">3. Connetterti alla VPN</div>
-                                    <div class="step-item">4. Aprire il progetto</div>
-                                    <div class="step-item">5. Fare il fix</div>
-                                    <div class="step-item">6. Deploy</div>
+                                    <div class="step-item">Correre a casa</div>
+                                    <div class="step-item">Accendere il laptop</div>
+                                    <div class="step-item">Connetterti alla VPN</div>
+                                    <div class="step-item">Aprire il progetto</div>
+                                    <div class="step-item">Fare il fix</div>
+                                    <div class="step-item">Deploy</div>
                                 </div>
                                 
                                 <div class="problem-impact">
                                     <div class="impact-item">45 minuti persi</div>
-                                    <div class="impact-item">€2,000 di revenue persi</div>
+                                    <div class="impact-item">2.000€ di revenue persi</div>
                                     <div class="impact-item">Reputazione danneggiata</div>
                                 </div>
                             </div>
                             
                             <div class="mobile-gap">
-                                <h3 style="color: var(--primary); margin: 40px 0 20px;">Su mobile? Impossibile.</h3>
+                                <h3 style="color: #ffffff; margin: 40px 0 20px; text-align: center;">Su mobile? Impossibile.</h3>
                                 <div class="competitor-fails">
-                                    <div class="fail-item">❌ Termux: troppo complesso, non user-friendly</div>
-                                    <div class="fail-item">❌ GitHub Codespaces mobile: lento, pensato per desktop</div>
-                                    <div class="fail-item">❌ VS Code, Cursor, Windsurf: solo desktop</div>
-                                    <div class="fail-item">❌ Replit mobile: esperienza pessima</div>
+                                    <div class="fail-item">Termux: troppo complesso</div>
+                                    <div class="fail-item">GitHub Codespaces: lento, pensato per desktop</div>
+                                    <div class="fail-item">VS Code, Cursor: solo desktop</div>
+                                    <div class="fail-item">Replit mobile: esperienza pessima</div>
                                 </div>
                                 
-                                <p style="color: #ffffff; font-size: 1.2rem; margin: 30px 0; text-align: center;">I developer mobile testano app tutto il giorno su device.<br>Ma non possono sviluppare professionalmente.</p>
-                                
-                                <div style="text-align: center; margin-top: 40px;">
-                                    <p style="color: var(--primary); font-size: 1.4rem; font-weight: 600;">Il gap esiste. Nessuno l'ha risolto.</p>
+                                <div style="text-align: center; margin-top: 40px; padding: 20px; border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 8px;">
+                                    <p style="color: var(--primary); font-size: 1.2rem; font-weight: 600;">Il gap esiste. Nessuno l'ha risolto.</p>
                                 </div>
                             </div>
                         </div>
@@ -2040,47 +2046,41 @@
             <div class="slide-content">
                 <section class="section">
                     <div class="container">
-                        <h2 class="reveal">DRAPE</h2>
+                        <h2 class="reveal">La Soluzione</h2>
                         <p class="section-subtitle reveal">IDE mobile-native con AI multimodello</p>
                         
                         <div class="solution-features">
                             <div class="feature reveal" data-delay="0">
-                                <div class="feature-icon">🔥</div>
                                 <h3>Container Runtime</h3>
-                                <p><strong>App HTML/JS già funzionanti</strong><br>Preview in tempo reale<br>Testing Python, Node in corso</p>
+                                <p>App HTML/JS già funzionanti<br>Preview in tempo reale<br>Testing Python, Node in corso</p>
                             </div>
                             
                             <div class="feature reveal" data-delay="100">
-                                <div class="feature-icon">🤖</div>
                                 <h3>AI Multimodello</h3>
-                                <p><strong>GPT-5, Claude 4.5 Sonnet, Gemini 2.5 Pro</strong><br>L'utente sceglie quale AI per ogni task<br>AI Agent che scrive codice autonomamente (in sviluppo)</p>
+                                <p>GPT-5, Claude 4.5 Sonnet, Gemini 2.5 Pro<br>L'utente sceglie quale AI per ogni task<br>AI Agent autonomo in sviluppo</p>
                             </div>
                             
                             <div class="feature reveal" data-delay="200">
-                                <div class="feature-icon">✅</div>
-                                <h3>GitHub Integration (completa!)</h3>
-                                <p><strong>Clone, commit, push, PR</strong><br>Sync con progetti esistenti<br>Funziona già oggi</p>
+                                <h3>GitHub Integration</h3>
+                                <p>Clone, commit, push, PR<br>Sync con progetti esistenti<br>Funziona già oggi</p>
                             </div>
                             
                             <div class="feature reveal" data-delay="300">
-                                <div class="feature-icon">⚡</div>
-                                <h3>Terminal (in testing)</h3>
-                                <p><strong>Bash/Zsh commands</strong><br>Process management</p>
+                                <h3>Terminal</h3>
+                                <p>Bash/Zsh commands<br>Process management<br>In testing</p>
                             </div>
                         </div>
                         
                         <div class="use-cases reveal" data-delay="400">
-                            <h3 style="color: var(--primary); margin: 40px 0 20px; text-align: center;">Use Case Chiave:</h3>
                             <div class="use-case-grid">
-                                <div class="use-case-item">✓ Emergency hotfix da mobile (5 min vs 45 min)</div>
-                                <div class="use-case-item">✓ Quick PR reviews on the go</div>
-                                <div class="use-case-item">✓ Small code changes mentre testi app</div>
-                                <div class="use-case-item">✓ Continue working durante commute</div>
+                                <div class="use-case-item">Emergency hotfix da mobile</div>
+                                <div class="use-case-item">Quick PR reviews</div>
+                                <div class="use-case-item">Small code changes</div>
+                                <div class="use-case-item">Continue working durante commute</div>
                             </div>
                             
-                            <div style="text-align: center; margin-top: 40px; padding: 20px; background: rgba(168, 85, 247, 0.1); border-radius: 12px;">
-                                <p style="color: #ffffff; font-size: 1.2rem; margin-bottom: 10px;">Non sostituiamo il laptop.</p>
-                                <p style="color: var(--primary); font-size: 1.4rem; font-weight: 600;">Risolviamo il 20% del tempo in cui non ce l'hai.</p>
+                            <div style="text-align: center; margin-top: 40px; padding: 20px; border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 8px;">
+                                <p style="color: var(--primary); font-size: 1.2rem; font-weight: 600;">Non sostituiamo il laptop. Risolviamo il 20% del tempo in cui non ce l'hai.</p>
                             </div>
                         </div>
                     </div>
