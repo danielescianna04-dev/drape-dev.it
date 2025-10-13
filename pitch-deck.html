@@ -2195,66 +2195,69 @@
         <div class="slide">
             <div class="slide-number">2/18</div>
             <div class="slide-content">
-                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; padding: 2rem; text-align: center;">
+                <div style="display: flex; height: 100vh; align-items: center; justify-content: center;">
                     
-                    <!-- Title -->
-                    <h1 style="font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 800; margin-bottom: 2rem; background: linear-gradient(135deg, #ffffff 0%, #ef4444 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">IL PROBLEMA</h1>
-                    
-                    <!-- Main Story -->
-                    <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 16px; padding: 2.5rem; margin-bottom: 2rem; max-width: 700px;">
-                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: white; font-weight: bold;">!</div>
+                    <!-- Left Side - Visual -->
+                    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem;">
+                        <div style="position: relative; width: 300px; height: 200px; background: #0a0a0a; border: 2px solid #333; border-radius: 12px; margin-bottom: 2rem;">
+                            <!-- Phone mockup -->
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 100px; background: #1a1a1a; border: 2px solid #444; border-radius: 8px;">
+                                <div style="width: 40px; height: 6px; background: #333; border-radius: 3px; margin: 8px auto 4px;"></div>
+                                <div style="width: 50px; height: 70px; background: #000; border-radius: 4px; margin: 0 auto; display: flex; align-items: center; justify-content: center; color: #666; font-size: 10px;">No IDE</div>
+                            </div>
+                            <!-- Laptop mockup -->
+                            <div style="position: absolute; bottom: 20px; right: 20px; width: 80px; height: 50px; background: #2a2a2a; border: 1px solid #555; border-radius: 4px;">
+                                <div style="width: 70px; height: 35px; background: #000; border-radius: 2px; margin: 2px auto; display: flex; align-items: center; justify-content: center; color: #a855f7; font-size: 8px;">VS Code</div>
+                            </div>
+                            <!-- Distance line -->
+                            <div style="position: absolute; top: 50%; left: 50%; width: 120px; height: 1px; background: #ef4444; transform: translate(-50%, -50%) rotate(25deg);"></div>
+                            <div style="position: absolute; top: 45%; left: 60%; color: #ef4444; font-size: 12px; font-weight: bold;">GAP</div>
+                        </div>
                         
-                        <h2 style="color: #ef4444; font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 700; margin-bottom: 1rem;">Emergenza Production</h2>
-                        <p style="color: #ffffff; font-size: clamp(1rem, 2.5vw, 1.2rem); margin-bottom: 1rem; line-height: 1.5;">Sistema offline. Migliaia di utenti bloccati. La soluzione richiede una modifica minima al codice.</p>
-                        <p style="color: #a1a1aa; font-size: clamp(0.9rem, 2vw, 1rem); font-style: italic;">Ma tu non sei in ufficio...</p>
-                    </div>
-                    
-                    <!-- Process Flow -->
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-bottom: 2rem; max-width: 800px; width: 100%;">
-                        <div style="background: rgba(10, 10, 10, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 1rem;">
-                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 8px; margin: 0 auto 0.75rem; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">1</div>
-                            <p style="color: #ffffff; font-size: 0.85rem; font-weight: 500;">Raggiungere il computer</p>
-                        </div>
-                        <div style="background: rgba(10, 10, 10, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 1rem;">
-                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 8px; margin: 0 auto 0.75rem; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">2</div>
-                            <p style="color: #ffffff; font-size: 0.85rem; font-weight: 500;">Setup ambiente</p>
-                        </div>
-                        <div style="background: rgba(10, 10, 10, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 1rem;">
-                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 8px; margin: 0 auto 0.75rem; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">3</div>
-                            <p style="color: #ffffff; font-size: 0.85rem; font-weight: 500;">Accesso remoto</p>
-                        </div>
-                        <div style="background: rgba(10, 10, 10, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 1rem;">
-                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 8px; margin: 0 auto 0.75rem; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">4</div>
-                            <p style="color: #ffffff; font-size: 0.85rem; font-weight: 500;">Caricamento progetto</p>
-                        </div>
-                        <div style="background: rgba(10, 10, 10, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 1rem;">
-                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 8px; margin: 0 auto 0.75rem; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">5</div>
-                            <p style="color: #ffffff; font-size: 0.85rem; font-weight: 500;">Implementazione fix</p>
-                        </div>
-                        <div style="background: rgba(10, 10, 10, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 1rem;">
-                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 8px; margin: 0 auto 0.75rem; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">6</div>
-                            <p style="color: #ffffff; font-size: 0.85rem; font-weight: 500;">Rilascio produzione</p>
+                        <div style="text-align: center;">
+                            <h3 style="color: #ef4444; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem;">Il Gap Critico</h3>
+                            <p style="color: #a1a1aa; font-size: 0.9rem; max-width: 250px;">Potenti strumenti desktop, ma nulla di professionale su mobile</p>
                         </div>
                     </div>
                     
-                    <!-- Impact -->
-                    <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05)); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 16px; padding: 2rem; max-width: 600px;">
-                        <h3 style="color: #ef4444; font-size: clamp(1.1rem, 2.5vw, 1.3rem); font-weight: 700; margin-bottom: 1rem;">Costo dell'Inefficienza</h3>
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem;">
-                            <div style="text-align: center;">
-                                <p style="color: #ffffff; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; margin-bottom: 0.25rem;">45min</p>
-                                <p style="color: #a1a1aa; font-size: 0.8rem;">Tempo perso</p>
+                    <!-- Right Side - Content -->
+                    <div style="flex: 1; padding: 2rem; max-width: 500px;">
+                        <h1 style="font-size: 3rem; font-weight: 900; color: #ffffff; margin-bottom: 1rem; line-height: 1.1;">Developer bloccati fuori ufficio</h1>
+                        
+                        <div style="margin-bottom: 2rem;">
+                            <div style="display: flex; align-items: center; margin-bottom: 1rem; padding: 1rem; background: rgba(239, 68, 68, 0.1); border-left: 3px solid #ef4444; border-radius: 0 8px 8px 0;">
+                                <div style="color: #ef4444; font-size: 1.5rem; margin-right: 1rem;">⚡</div>
+                                <div>
+                                    <p style="color: #ffffff; font-weight: 600; margin-bottom: 0.25rem;">Emergenza in produzione</p>
+                                    <p style="color: #a1a1aa; font-size: 0.85rem;">Fix urgente necessario, ma sei lontano dal computer</p>
+                                </div>
                             </div>
-                            <div style="text-align: center;">
-                                <p style="color: #ffffff; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; margin-bottom: 0.25rem;">€2K</p>
-                                <p style="color: #a1a1aa; font-size: 0.8rem;">Revenue loss</p>
+                            
+                            <div style="display: flex; align-items: center; margin-bottom: 1rem; padding: 1rem; background: rgba(245, 158, 11, 0.1); border-left: 3px solid #f59e0b; border-radius: 0 8px 8px 0;">
+                                <div style="color: #f59e0b; font-size: 1.5rem; margin-right: 1rem;">⏱️</div>
+                                <div>
+                                    <p style="color: #ffffff; font-weight: 600; margin-bottom: 0.25rem;">Tempo critico</p>
+                                    <p style="color: #a1a1aa; font-size: 0.85rem;">Ogni minuto costa denaro e reputazione</p>
+                                </div>
                             </div>
-                            <div style="text-align: center;">
-                                <p style="color: #ffffff; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; margin-bottom: 0.25rem;">3K</p>
-                                <p style="color: #a1a1aa; font-size: 0.8rem;">Utenti impattati</p>
+                            
+                            <div style="display: flex; align-items: center; padding: 1rem; background: rgba(168, 85, 247, 0.1); border-left: 3px solid #a855f7; border-radius: 0 8px 8px 0;">
+                                <div style="color: #a855f7; font-size: 1.5rem; margin-right: 1rem;">📱</div>
+                                <div>
+                                    <p style="color: #ffffff; font-weight: 600; margin-bottom: 0.25rem;">Mobile inadeguato</p>
+                                    <p style="color: #a1a1aa; font-size: 0.85rem;">Nessuna soluzione professionale per sviluppatori</p>
+                                </div>
                             </div>
                         </div>
-                        <p style="color: #a1a1aa; font-size: clamp(0.8rem, 1.8vw, 0.9rem); text-align: center; font-style: italic;">Le soluzioni mobile attuali sono inadeguate per sviluppatori professionali</p>
+                        
+                        <div style="background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(239, 68, 68, 0.1)); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 1.5rem; text-align: center;">
+                            <p style="color: #ffffff; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;">Il costo dell'attesa</p>
+                            <div style="display: flex; justify-content: space-around;">
+                                <div><span style="color: #ef4444; font-size: 1.5rem; font-weight: 800;">45min</span><br><span style="color: #a1a1aa; font-size: 0.8rem;">persi</span></div>
+                                <div><span style="color: #ef4444; font-size: 1.5rem; font-weight: 800;">€2K</span><br><span style="color: #a1a1aa; font-size: 0.8rem;">loss</span></div>
+                                <div><span style="color: #ef4444; font-size: 1.5rem; font-weight: 800;">3K</span><br><span style="color: #a1a1aa; font-size: 0.8rem;">utenti</span></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
