@@ -1998,6 +1998,62 @@ tbody tr:hover {
     border-radius: 16px;
     border: 1px solid rgba(168, 85, 247, 0.2);
     text-align: center;
+}
+
+.phases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.phase-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 8px;
+    padding: 25px;
+}
+
+.phase-card h3 {
+    color: var(--primary);
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.phase-card ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.phase-card li {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.phase-card li ul {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.acquisition-strategy h3 {
+    color: #ffffff;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+}
+
+.acquisition-strategy ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.acquisition-strategy li {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
     transition: all 0.4s ease;
 }
 
