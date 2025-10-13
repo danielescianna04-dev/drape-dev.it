@@ -1,0 +1,709 @@
+Versione Finale - Ottobre 2025
+
+SLIDE 1: COVER
+DRAPE
+Il primo IDE mobile con AI multimodello
+
+Daniele Scianna & Leon
+Pre-Seed | €200K
+
+Ottobre 2025
+
+SLIDE 2: IL PROBLEMA
+"Domenica sera, ore 22:00"
+
+Il server di produzione è down.
+3.000 utenti offline. 
+Bug critico nel backend.
+
+Il fix? 5 righe di codice.
+
+Ma sei a cena fuori. Devi:
+1. Correre a casa
+2. Accendere il laptop  
+3. Connetterti alla VPN
+4. Aprire il progetto
+5. Fare il fix
+6. Deploy
+
+45 minuti persi.
+€2,000 di revenue persi.
+Reputazione danneggiata.
+
+────────────────────────────
+
+Su mobile? Impossibile.
+
+❌ Termux: troppo complesso, non user-friendly
+❌ GitHub Codespaces mobile: lento, pensato per desktop
+❌ VS Code, Cursor, Windsurf: solo desktop
+❌ Replit mobile: esperienza pessima
+
+I developer mobile testano app tutto il giorno su device.
+Ma non possono sviluppare professionalmente.
+
+Il gap esiste. 
+Nessuno l'ha risolto.
+
+SLIDE 3: LA SOLUZIONE
+DRAPE
+IDE mobile-native con AI multimodello
+
+🔥 CONTAINER RUNTIME
+  • App HTML/JS già funzionanti
+  • Preview in tempo reale
+  • Testing Python, Node in corso
+  
+🤖 AI MULTIMODELLO
+  • GPT-5, Claude 4.5 Sonnet, Gemini 2.5 Pro
+  • L'utente sceglie quale AI per ogni task
+  • AI Agent che scrive codice autonomamente (in sviluppo)
+
+✅ GITHUB INTEGRATION (completa!)
+  • Clone, commit, push, PR
+  • Sync con progetti esistenti
+  • Funziona già oggi
+
+⚡ TERMINAL (in testing)
+  • Bash/Zsh commands
+  • Process management
+  
+────────────────────────────
+
+🎯 USE CASE CHIAVE:
+
+✓ Emergency hotfix da mobile (5 min vs 45 min)
+✓ Quick PR reviews on the go
+✓ Small code changes mentre testi app
+✓ Continue working durante commute
+
+Non sostituiamo il laptop.
+Risolviamo il 20% del tempo in cui non ce l'hai.
+
+SLIDE 4: DEMO
+DRAPE IN AZIONE
+
+[PLACEHOLDER: Video demo 60 secondi]
+[PLACEHOLDER: Screenshot - Editor con codice]
+[PLACEHOLDER: Screenshot - Container runtime HTML app]
+[PLACEHOLDER: Screenshot - GitHub integration]
+
+────────────────────────────
+
+COSA FUNZIONA OGGI (Ottobre 2025):
+✅ Editor Flutter funzionante
+✅ App HTML/JS girano in-app con preview
+✅ GitHub clone, commit, push, PR
+✅ UI ottimizzata per mobile touch
+✅ Syntax highlighting multi-language
+
+IN SVILUPPO (prossime 8 settimane):
+🔄 Container Python, Node, Go
+🔄 AI multimodello integration (GPT-5, Claude, Gemini)
+🔄 AI Agent autonomo
+🔄 Terminal completo bash/zsh
+
+────────────────────────────
+
+"Da zero a app HTML funzionante su mobile in 3 tap"
+
+SLIDE 5: PERCHÉ ORA?
+IL TIMING È PERFETTO
+
+✅ AI CODING BOOM (2024-2025)
+  • Cursor: $400M valuation, 50K+ paying users
+  • Windsurf (Codeium): boom virale ottobre 2024
+  • GitHub Copilot: 2M+ users
+  • Claude Code: lanciato 2025
+  → Developer VOGLIONO AI nel workflow
+
+✅ MOBILE-FIRST È MAINSTREAM
+  • 68% developer lavorano remote/hybrid
+  • iPad Pro M4: potenza da laptop
+  • Developer passano ore su device per testing
+
+✅ TECHNOLOGY READY
+  • WebContainers maturo (Stackblitz, Replit)
+  • WASM performance mobile ok
+  • API AI accessibili e veloci
+
+✅ COMPETITOR STUCK SU DESKTOP
+  • Cursor, Windsurf, VS Code → desktop only
+  • Nessuno ha conquistato mobile
+  • Window di opportunità: 12-18 mesi
+
+────────────────────────────
+
+FIRST-MOVER ADVANTAGE = ORA
+
+SLIDE 6: IL MERCATO
+UN MERCATO ENORME E IN CRESCITA
+
+$12.3B
+Developer Tools Market Globale (2025)
+
+29.4M developer globali (Stack Overflow 2025)
+    ↓
+13M lavorano remote/hybrid (44%)
+    ↓
+5.2M usano AI coding tools (39%, GitHub Survey 2025)
+    ↓
+TARGET: Mobile developers + Remote workers
+
+────────────────────────────
+
+TAM (Total Addressable Market): $1.5B
+  5M developer × $25/mese × 12 mesi
+
+SAM (Serviceable Available): $312M
+  1.3M mobile-first developers × $240/anno
+
+SOM (Target Year 3): $3M ARR
+  12.5K paying users × $20/mese × 12 mesi
+  Solo 1% del SAM → molto conservativo
+
+────────────────────────────
+
+CRESCITA: +18% year-over-year
+AI coding tools = categoria in più rapida crescita
+
+SLIDE 7: BUSINESS MODEL
+FREEMIUM SUBSCRIPTION
+
+🆓 FREE - €0
+  • 1 progetto | 50 AI queries/mese
+  • GPT-5, Claude 4.5, Gemini 2.5 Pro
+  • GitHub read-only
+
+💎 STARTER - €9.99/mese (€99/anno)
+  • 5 progetti | 200 AI queries/mese
+  • Tutti i modelli AI + switching illimitato
+  • GitHub completo (commit, push, PR)
+  • Email support (48h)
+  → Target: Studenti, indie developers
+
+🚀 PRO - €29.99/mese (€299/anno)
+  • Progetti illimitati | 1,000 AI queries/mese
+  • Tutti i modelli AI
+  • Terminal completo + AI Agent avanzato
+  • Priority support (24h)
+  • Advanced features (themes, extensions)
+  → Target: Professionisti, freelancer
+
+⭐ ULTIMATE - €199.99/mese (€1,999/anno)
+  • AI queries illimitate
+  • BYOK (Bring Your Own API Keys)
+  • Advanced AI Agent + context illimitato
+  • Private cloud deployment option
+  • White-label customization
+  • Dedicated support (4h)
+  → Target: Power users, consultant, agency
+
+🏢 ENTERPRISE - €29.99/user/mese (min 5 users)
+  • Everything in Ultimate per ogni membro
+  • Team workspaces & collaboration
+  • SSO & Advanced security (SAML, 2FA)
+  • Admin dashboard & analytics
+  • Audit logs & compliance (SOC 2 ready)
+  • Dedicated account manager
+  • Custom SLA (99.9% uptime)
+  → Target: Startup, aziende, team 5-50+ dev
+
+────────────────────────────
+
+TRIAL: 14 giorni Pro gratis (no credit card)
+YEARLY DISCOUNT: 17% off su tutti i piani
+
+SLIDE 8: PRICING COMPARISON
+COMPETITIVO E SOSTENIBILE
+
+Tool          | Free  | Base   | Pro    | Enterprise/User
+--------------|-------|--------|--------|----------------
+Drape         | ✅    | €9.99  | €29.99 | €29.99
+Cursor        | 2w    | €20    | -      | Custom
+Windsurf      | ✅    | €15    | -      | Custom
+GitHub Copilot| ❌    | €10    | €19    | €39
+Replit        | ✅    | €20    | -      | €33
+
+────────────────────────────
+
+DRAPE UNIQUE VALUE:
+
+✓ UNICO con 3 top AI in TUTTI i tier (anche Free!)
+✓ Free tier più generoso del mercato
+✓ Ultimate con BYOK (risparmio enorme per heavy users)
+✓ Enterprise per-user trasparente (più economico di Copilot)
+✓ Mobile-native (tutti gli altri sono desktop-only)
+
+────────────────────────────
+
+POSITIONING:
+- Starter: Entry point accessibile (€9.99)
+- Pro: Sweet spot professionisti (competitive)
+- Ultimate: Power users con BYOK (high margin)
+- Enterprise: Team pricing chiaro e competitivo
+
+SLIDE 9: COMPETIZIONE
+COMPETITIVE LANDSCAPE (Ottobre 2025)
+
+                  | Drape | Cursor | Windsurf | Codespaces | Replit
+------------------|-------|--------|----------|------------|--------
+Mobile Native     |  ✅   |   ❌   |    ❌    |     ⚠️     |   ⚠️
+AI Multimodello   |  ✅   |   ❌   |    ❌    |     ❌     |   ❌
+Container Runtime |  ✅   |   ❌   |    ❌    |     ✅     |   ✅
+GitHub Native     |  ✅   |   ✅   |    ✅    |     ✅     |   ✅
+AI Agent Autonomo |  🔄   |   ✅   |    ✅    |     ❌     |   ⚠️
+Terminal          |  🔄   |   ✅   |    ✅    |     ✅     |   ❌
+Offline Mode      |  ✅   |   ❌   |    ❌    |     ❌     |   ❌
+
+────────────────────────────
+
+LORO FORZA:
+- Cursor/Windsurf: AI agent maturo, user base consolidata
+- Codespaces: integrazione GitHub perfetta, infra Microsoft
+- Replit: community enorme, collaboration features
+
+NOSTRO VANTAGGIO:
+✓ UNICO mobile-native (non port da desktop)
+✓ UNICO con AI multimodello (GPT-5 + Claude + Gemini)
+✓ Focus su quick wins, non full development
+✓ Offline-first (lavori senza connessione)
+
+────────────────────────────
+
+PERCHÉ NON CI COPIANO SUBITO:
+- Cursor/Windsurf: team piccoli, focus su desktop
+- Microsoft/GitHub: corporate slow, 18+ mesi per mobile
+- Replit: ha già provato mobile, esperienza pessima
+→ Window: 12-18 mesi di vantaggio
+
+WORST CASE: 
+Diventiamo acquisition target (exit €20-50M)
+
+SLIDE 10: GO-TO-MARKET
+STRATEGIA DI LANCIO
+
+PHASE 1: VALIDATION (Nov 2025 - Gen 2026)
+- Landing page drape.dev con waitlist
+- Survey a 100 developer per validare problema
+- Post su Reddit, Hacker News, Dev.to
+- 10 beta tester closed (developer selezionati)
+- Goal: 200 email waitlist + feedback qualitativo
+
+PHASE 2: PRIVATE BETA (Feb - Apr 2026)
+- TestFlight con 100 developer selezionati
+- Focus communities:
+  - Reddit: r/iOSProgramming, r/androiddev
+  - Discord: developer communities
+  - Twitter/X: tech twitter
+- Iteration veloce basata su feedback
+- Goal: 40%+ retention D7, 100 active users
+
+PHASE 3: PUBLIC BETA (Mag - Ago 2026)
+- Product Hunt launch
+- Content marketing: blog tecnico, YouTube tutorials
+- Case studies: "Ho fixato production da metro"
+- Partnership con tech YouTubers italiani
+- Google Play Beta + TestFlight public
+- Goal: 2,000 users, 100 paganti (5% conversion)
+
+PHASE 4: PUBLIC LAUNCH (Set 2026)
+- App Store & Play Store release ufficiale
+- Paid marketing: Reddit ads, YouTube pre-roll
+- Referral program (30 giorni free per invito)
+- PR push: TechCrunch, Product Hunt, Hacker News
+- Goal: 10,000 users, 500 paganti (€10K MRR)
+
+────────────────────────────
+
+ACQUISITION STRATEGY:
+- Organic (70%): content, community, word-of-mouth
+- Paid (30%): €40-60 CAC target
+- Virality: developers share screenshots/demos
+- LTV: €240 (12 mesi × €20 avg) → LTV/CAC: 4-6x
+
+SLIDE 11: TEAM
+I FOUNDERS
+
+DANIELE SCIANNA
+Co-Founder & Lead Developer
+
+- ITIS Informatico Galilei Galileo
+- Studente Università Informatica
+- Full-stack developer: Flutter, React
+- Ha costruito frontend e architettura core
+- 19 anni, 100% committed
+
+────────────────────────────
+
+LEON
+Co-Founder & Lead Developer
+
+- ITIS Informatico Galilei Galileo
+- Professional React & Flutter Developer
+- Lavora come developer, conosce workflow reali
+- Ha implementato GitHub integration e container runtime
+- 19 anni, technical problem solver
+
+────────────────────────────
+
+PERCHÉ SIAMO IL TEAM GIUSTO:
+
+✓ Developer veri che costruiscono per developer
+✓ Viviamo il problema: sviluppiamo mobile ogni giorno
+✓ Veloci: prototipo funzionante in 1 mese
+✓ Giovani, fame, zero bullshit
+✓ Technical skills dimostrati dal prodotto
+
+────────────────────────────
+
+COSA CI MANCA (useremo funding per assumere):
+
+- Senior Mobile Developer (iOS/Android optimization)
+- UI/UX Designer (polish esperienza mobile)
+- DevOps Engineer (infrastruttura scalabile)
+- Growth/Marketing specialist (go-to-market execution)
+
+→ Da 2 a 6 persone in 12 mesi
+
+SLIDE 12: STATO ATTUALE & ROADMAP
+PROGRESS & MILESTONES
+
+────────────────────────────
+
+OGGI (Ottobre 2025) - 1 MESE DI SVILUPPO
+
+✅ COMPLETATO:
+- Frontend Flutter funzionante e responsive
+- GitHub integration: clone, commit, push, PR
+- Container runtime: app HTML/JS girano in-app
+- Editor con syntax highlighting
+- Preview in tempo reale
+- UI base ottimizzata per touch
+
+🔄 IN SVILUPPO (prossime 8 settimane):
+- Container Python, Node.js, Go
+- Integration GPT-5, Claude 4.5, Gemini 2.5
+- AI Agent che scrive codice autonomamente
+- Terminal bash/zsh funzionante
+- Sistema di projects e workspace
+
+────────────────────────────
+
+ROADMAP
+
+8 SETTIMANE (Dicembre 2025):
+→ MVP feature-complete
+→ 10 beta tester interni
+→ Feedback loop veloce, bug fixing
+
+3 MESI (Gennaio 2026):
+→ Landing page + waitlist attivo
+→ Private beta 100 developer
+→ Validazione problema/soluzione
+→ Metriche: retention D7, time in app
+
+6 MESI (Aprile 2026):
+→ Public beta TestFlight
+→ 1,000 users, primi 50 paganti
+→ Team: +2 persone (senior dev + designer)
+→ Product-market fit iniziale
+
+12 MESI (Ottobre 2026):
+→ Public launch App Store + Play Store
+→ 5,000 users, 300-500 paganti
+→ €72-120K ARR
+→ Team: 6 persone
+→ Ready per Series A (€500K-1M)
+
+18 MESI (Aprile 2027):
+→ 15,000 users, 1,500 paganti
+→ €360K ARR
+→ Enterprise features complete
+→ Series A chiuso, scaling aggressivo
+
+SLIDE 13: RISCHI & MITIGAZIONI
+SIAMO ONESTI SUI RISCHI
+
+⚠️ RISK: iOS/Android limitano esecuzione codice
+✅ MITIGATION:
+   • WebContainers via WASM (già testato, funziona)
+   • Sandbox sicuro, Apple/Google compliant
+   • Fallback: remote containers se needed
+   • Stessa tech di CodeSandbox, Stackblitz (già su store)
+
+⚠️ RISK: Costi API AI troppo alti
+✅ MITIGATION:
+   • Free tier: 50 queries = €4/user (sostenibile loss leader)
+   • Starter/Pro: costo AI coperto da subscription
+   • Ultimate: BYOK = zero costo per noi
+   • Unit economics: LTV €240 > AI cost €24/anno = 10x
+
+⚠️ RISK: "Nessuno vuole codare su mobile"
+✅ MITIGATION:
+   • Non vendiamo "full development"
+   • Vendiamo "emergency fixes + quick edits"
+   • Beta testing per validare uso reale (primi 3 mesi)
+   • Decision point: se retention <30% → pivot a DevOps tools
+   • Pivot options: monitoring, logs, incident response
+
+⚠️ RISK: Cursor/GitHub/Microsoft ci copiano
+✅ MITIGATION:
+   • First-mover: 12-18 mesi di vantaggio
+   • Mobile UX è HARD (Replit ci ha provato, ha fallito)
+   • Community loyalty da early adopters
+   • Worst case: acquisition target (€20-50M exit)
+
+⚠️ RISK: Team giovane/inesperto
+✅ MITIGATION:
+   • Cerchiamo advisors senior (parte del deal)
+   • Assumeremo senior developers con funding
+   • Siamo coachable, impariamo veloce
+   • Track record: prototipo in 1 mese = execution ability
+
+────────────────────────────
+
+TRANSPARENCY = CREDIBILITY
+
+SLIDE 14: FINANCIALS
+PATH TO €2M ARR
+
+────────────────────────────
+
+ANNO 1 - 2026 (Con €200K Pre-Seed)
+
+- 5,000 users totali
+- 1,250 paying users (25% conversion)
+  - 750 Starter (€9.99)
+  - 450 Pro (€29.99)
+  - 30 Ultimate (€199.99)
+  - 2 Enterprise teams (10 users)
+
+- MRR: €24K | ARR: €288K
+- Blended ARPU: €19.20/paying user
+- Burn rate: €15K/mese
+- Runway: 13 mesi → Series A needed
+
+────────────────────────────
+
+ANNO 2 - 2027 (Con Series A €500K)
+
+- 25,000 users totali
+- 6,250 paying users (25% conversion)
+  - 3,750 Starter
+  - 2,250 Pro
+  - 188 Ultimate
+  - 15 Enterprise teams (62 users)
+
+- MRR: €144K | ARR: €1.73M
+- Blended ARPU: €23.04/paying user
+- Break-even: mese 22
+- Team: 12 persone
+
+────────────────────────────
+
+ANNO 3 - 2028
+
+- 80,000 users totali
+- 24,000 paying users (30% conversion)
+- MRR: €553K | ARR: €6.6M
+- Profitable: +€50K/mese
+- Team: 20 persone
+- Series B ready o profitable growth
+
+────────────────────────────
+
+UNIT ECONOMICS (Target):
+- CAC blended: €45
+- LTV: €240 (12 mesi avg lifetime)
+- Gross Margin: 78% (SaaS standard)
+- LTV/CAC: 5.3x → healthy
+- Payback period: 2.5 mesi
+- Monthly churn: 8% (industry standard)
+
+SLIDE 15: THE ASK
+CERCHIAMO: €200,000 PRE-SEED
+
+────────────────────────────
+
+VALUATION: €1.8M pre-money
+EQUITY OFFERTA: 10-11%
+POST-MONEY VALUATION: €2M
+
+────────────────────────────
+
+USE OF FUNDS (18 mesi runway)
+
+💰 50% → TEAM (€100K)
+  • Senior Mobile Developer: €55K/anno
+  • UI/UX Designer: €35K/anno (part→full time)
+  • Growth/Marketing: €10K (freelance)
+
+💰 30% → INFRASTRUTTURA (€60K)
+  • Cloud hosting: €18K/anno (AWS/GCP)
+  • API AI costs: €30K/anno (3,000 users)
+  • Testing devices: €8K (iPhone, Android)
+  • Tools & licenses: €4K
+
+💰 20% → GO-TO-MARKET (€40K)
+  • Paid ads: €20K (Reddit, YouTube, Google)
+  • Content creation: €8K (video, blog, tutorials)
+  • Community building: €6K (events, incentives)
+  • Legal & accounting: €6K
+
+────────────────────────────
+
+MILESTONE PER SERIES A (12-15 mesi):
+✓ 5,000 active users
+✓ 300-500 paying users
+✓ €65-100K ARR
+✓ 40%+ retention D30
+✓ 6%+ free-to-paid conversion
+✓ Product-market fit validato
+
+────────────────────────────
+
+COMPARABLE VALUATIONS (Pre-Seed):
+- Replit (2018): €1.5M
+- Cursor (2022): €3M (seed)
+- Typical pre-revenue SaaS: €1.5-2.5M
+
+Noi: €1.8M (prototipo funzionante, 1 mese di progress)
+
+────────────────────────────
+
+TERMS PREFERRED:
+- SAFE o Convertible Note
+- Discount: 20% on Series A
+- Valuation cap: €2M
+- Founder-friendly terms
+
+SLIDE 16: WHY INVEST IN DRAPE?
+6 RAGIONI PER INVESTIRE ORA
+
+────────────────────────────
+
+1️⃣ TIMING PERFETTO
+   AI coding = megatrend 2024-2025
+   Mobile gap = ancora non risolto
+   12-18 mesi window prima che big tech reagiscano
+   Cursor/Windsurf dimostrano la demand
+
+2️⃣ FOUNDERS ECCEZIONALI
+   Developer veri, non solo "idea people"
+   Prototipo in 1 mese = fast execution
+   Giovani, fame, 100% dedicated
+   Coachable, technical, user-centric
+
+3️⃣ TRACTION REALE (pre-launch)
+   Prototipo funzionante (non solo slide)
+   GitHub integration completa
+   Container tech validata
+   1 mese di progress = ottimo segnale
+
+4️⃣ HUGE MARKET
+   €12.3B developer tools market
+   5.2M developer usano AI coding (+39% YoY)
+   Mobile development growing +15%/anno
+   Greenfield: nessun leader mobile-native
+
+5️⃣ DIFENDIBILITÀ
+   First-mover advantage (12-18 mesi)
+   Mobile UX è HARD (Replit ha fallito)
+   Community loyalty da early adopters
+   Tech complexity: container + AI + mobile
+
+6️⃣ EXIT ATTRAENTE
+   Comparables: Cursor ($400M), Replit ($1.16B)
+   Acquisition targets: GitHub, JetBrains, Cursor
+   Tabnine exit: 8x ARR
+   Conservative: €30-50M in 4-5 anni
+   Upside: €100M+ se category leader
+
+────────────────────────────
+
+NON VI CHIEDIAMO DI CREDERE IN PROIEZIONI FANTASIOSE.
+VI CHIEDIAMO DI CREDERE CHE QUESTO TEAM PUÒ VALIDARE
+QUESTA OPPORTUNITÀ NEI PROSSIMI 12 MESI.
+
+SLIDE 17: NEXT STEPS
+PROSSIMI PASSI
+
+────────────────────────────
+
+COSA FAREMO NEI PROSSIMI 30 GIORNI:
+
+✓ Landing page drape.dev live
+✓ Waitlist attivo con prime 100 email
+✓ Survey validazione a 50 developer
+✓ Video demo polished (60-90 sec)
+✓ Post su Reddit/HN per early feedback
+✓ 10 beta tester selezionati e onboarded
+
+────────────────────────────
+
+COSA VOGLIAMO DA VOI:
+
+1️⃣ MEETING per approfondire (30-45 min)
+2️⃣ DEMO LIVE del prodotto funzionante
+3️⃣ Q&A tecnico e business
+4️⃣ DUE DILIGENCE veloce (1-2 settimane)
+5️⃣ TERM SHEET e chiusura round
+
+────────────────────────────
+
+TIMELINE:
+- Oggi: First meeting
+- +1 settimana: Deep dive + demo
+- +2 settimane: Due diligence
+- +3-4 settimane: Closing
+
+OBIETTIVO: Chiudere round entro Dicembre 2025
+
+────────────────────────────
+
+CERCHIAMO:
+- Investor con tech background
+- Esperienza early-stage SaaS
+- Hands-on, founder-friendly
+- Network in developer community
+- Can help con: hiring, GTM, next fundraising
+
+SLIDE 18: CLOSING
+DRAPE
+Il coding non si ferma quando esci dall'ufficio
+
+────────────────────────────
+
+✅ Prototipo funzionante in 1 mese
+✅ Team tecnico che esegue velocemente  
+✅ Market timing perfetto (AI coding boom)
+✅ Piano chiaro da 0 a €100K ARR in 12 mesi
+
+────────────────────────────
+
+Non vi chiediamo di credere in proiezioni fantasiose.
+
+Vi chiediamo di credere che questo team 
+può validare questa opportunità 
+nei prossimi 12 mesi con il vostro capitale.
+
+Se funziona, è una categoria nuova.
+Se non funziona, pivoteremo velocemente.
+
+────────────────────────────
+
+CONTATTI:
+
+Daniele Scianna
+daniele@drape.dev
+
+Leon  
+leon@drape.dev
+
+drape.dev
+
+────────────────────────────
+
+Pronti a costruire il futuro 
+del mobile development?

@@ -1,22 +1,14 @@
 <!DOCTYPE html>
+<!-- Updated pitch deck -->
 <html lang="it">
 <head>
     <meta charset="UTF-8">
+    <!-- Pitch deck meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drape - Pitch Deck</title>
-    <link rel="stylesheet" href="pitch-styles.css">
+    <link rel="stylesheet" href="redesign.css">
 
     <style>
-        html, body { 
-            overflow: hidden; 
-            margin: 0;
-            padding: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #0a0a0a;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            color: #ffffff;
-        }
         
         * {
             box-sizing: border-box;
@@ -260,27 +252,97 @@
             margin-bottom: 10px !important;
         }
         
-        .funding-request {
-            text-align: center !important;
-            margin: 40px 0 !important;
+        /* Slide 11: Funding Request - Clean Card Layout */
+        .funding-hero {
+            text-align: center;
+            margin-bottom: 50px;
         }
-        
-        .funding-amount {
-            margin-bottom: 40px !important;
+
+        .funding-amount-card {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15));
+            border: 2px solid var(--primary);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 500px;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 40px rgba(168, 85, 247, 0.3);
         }
-        
-        .usage-list {
-            max-width: 600px !important;
-            margin: 20px auto !important;
+
+        .funding-amount-card h1 {
+            font-size: 5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0 0 15px 0;
+            line-height: 1;
         }
-        
-        .usage-item {
-            background: rgba(168, 85, 247, 0.1) !important;
-            border: 1px solid rgba(168, 85, 247, 0.2) !important;
-            border-radius: 8px !important;
-            padding: 15px !important;
-            margin: 10px 0 !important;
-            color: #ffffff !important;
+
+        .funding-amount-card p {
+            font-size: 1.3rem;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .funding-breakdown {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .breakdown-card {
+            background: rgba(10, 10, 10, 0.8);
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .breakdown-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+        }
+
+        .breakdown-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
+        }
+
+        .breakdown-card .percentage {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .breakdown-card .category {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .breakdown-card .amount {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        @media (max-width: 800px) {
+            .funding-breakdown {
+                grid-template-columns: 1fr;
+            }
         }
         
         .contact-grid {
@@ -1016,445 +1078,1902 @@
             padding: 0 60px !important;
         }
         
+        /* Financial Overview - Modern Line Chart */
+        .financial-overview {
+            margin: 50px 0 !important;
+        }
+        
+        .revenue-projection {
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.9), rgba(20, 20, 30, 0.9)) !important;
+            border: 1px solid rgba(168, 85, 247, 0.3) !important;
+            border-radius: 24px !important;
+            padding: 40px !important;
+            margin-bottom: 40px !important;
+            backdrop-filter: blur(20px) !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+        
+        .revenue-projection::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            background: radial-gradient(circle at 30% 20%, rgba(168, 85, 247, 0.1), transparent 50%) !important;
+            pointer-events: none !important;
+        }
+        
+        .projection-header {
+            text-align: center !important;
+            margin-bottom: 40px !important;
+            position: relative !important;
+            z-index: 2 !important;
+        }
+        
+        .projection-header h3 {
+            color: #ffffff !important;
+            font-size: 1.6rem !important;
+            margin-bottom: 12px !important;
+            font-weight: 600 !important;
+        }
+        
+        .growth-badge {
+            background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+            color: white !important;
+            padding: 8px 24px !important;
+            border-radius: 30px !important;
+            font-size: 0.85rem !important;
+            font-weight: 600 !important;
+            display: inline-block !important;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3) !important;
+        }
+        
+        /* Chart matching original screenshot */
+        .revenue-chart {
+            position: relative !important;
+            height: 200px !important;
+            margin: 20px !important;
+            background: transparent !important;
+            border-radius: 0 !important;
+            padding: 20px !important;
+        }
+        
+        .chart-data-point {
+            position: absolute !important;
+            left: 12% !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 15px !important;
+        }
+        
+        .chart-data-point:nth-child(2) { left: 25% !important; }
+        .chart-data-point:nth-child(3) { left: 50% !important; }
+        .chart-data-point:nth-child(4) { left: 88% !important; }
+        
+        .data-dot {
+            width: 12px !important;
+            height: 12px !important;
+            background: var(--primary) !important;
+            border: 2px solid #ffffff !important;
+            border-radius: 50% !important;
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4) !important;
+        }
+        
+        .chart-data-point.highlight .data-dot {
+            background: #ffd700 !important;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.6) !important;
+        }
+        
+        .data-label {
+            text-align: left !important;
+        }
+        
+        .data-value {
+            color: #ffffff !important;
+            font-size: 1.2rem !important;
+            font-weight: 700 !important;
+            margin-bottom: 2px !important;
+        }
+        
+        .data-year {
+            color: var(--primary) !important;
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+        }
+        
+        .trend-line {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            pointer-events: none !important;
+        }
+        
+        @keyframes barGrow {
+            0% { transform: scaleY(0); opacity: 0; }
+            100% { transform: scaleY(1); opacity: 1; }
+        }
+        
+        @keyframes dotPulse {
+            0% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes drawLine {
+            0% { stroke-dashoffset: 400; }
+            100% { stroke-dashoffset: 0; }
+        }
+        
+        .revenue {
+            color: #ffffff !important;
+            font-size: 1.1rem !important;
+            font-weight: 700 !important;
+            margin-bottom: 4px !important;
+        }
+        
+        .year {
+            color: var(--primary) !important;
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+        }
+        
+        .key-insights {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 30px !important;
+        }
+        
+        .insight-item {
+            text-align: center !important;
+            padding: 25px 20px !important;
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            border-radius: 16px !important;
+            transition: all 0.3s ease !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+        
+        .insight-item::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: -100% !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.1), transparent) !important;
+            transition: left 0.6s !important;
+        }
+        
+        .insight-item:hover {
+            transform: translateY(-3px) !important;
+            border-color: var(--primary) !important;
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2) !important;
+        }
+        
+        .insight-item:hover::before {
+            left: 100% !important;
+        }
+        
+        .insight-number {
+            color: var(--primary) !important;
+            font-size: 2.2rem !important;
+            font-weight: 800 !important;
+            margin-bottom: 8px !important;
+            line-height: 1 !important;
+        }
+        
+        .insight-label {
+            color: #ffffff !important;
+            font-size: 1rem !important;
+            font-weight: 600 !important;
+            margin-bottom: 4px !important;
+        }
+        
+        .insight-detail {
+            color: var(--text-muted) !important;
+            font-size: 0.8rem !important;
+        }
+        
+        @keyframes lineGrow {
+            0% { transform: scaleX(0); }
+            100% { transform: scaleX(1); }
+        }
+        
+        @keyframes drawLine {
+            0% { stroke-dashoffset: 500; }
+            100% { stroke-dashoffset: 0; }
+        }
+        
+        @keyframes columnGrow {
+            0% { transform: scaleY(0); }
+            100% { transform: scaleY(1); }
+        }
+        
+        @keyframes dotPulse {
+            0% { 
+                transform: scale(0); 
+                opacity: 0; 
+            }
+            50% { 
+                transform: scale(1.2); 
+            }
+            100% { 
+                transform: scale(1); 
+                opacity: 1; 
+            }
+        }
+        
+        @keyframes goldPulse {
+            0% { 
+                transform: scale(0); 
+                opacity: 0; 
+            }
+            50% { 
+                transform: scale(1.3); 
+            }
+            100% { 
+                transform: scale(1); 
+                opacity: 1; 
+            }
+        }
+        
+        /* Roadmap & Go-to-Market */
+        .roadmap-gtm-container {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 50px !important;
+            margin: 50px 0 !important;
+        }
+        
+        .roadmap-section h3, .acquisition-section h3 {
+            color: #ffffff !important;
+            font-size: 1.4rem !important;
+            margin-bottom: 30px !important;
+        }
+        
+        /* Roadmap Timeline */
+        .roadmap-timeline {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 25px !important;
+        }
+        
+        .roadmap-item {
+            display: flex !important;
+            gap: 20px !important;
+            padding: 20px !important;
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            border-radius: 8px !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .roadmap-item:hover {
+            border-color: var(--primary) !important;
+            transform: translateX(5px) !important;
+        }
+        
+        .roadmap-item.current {
+            border-color: var(--primary) !important;
+            background: rgba(168, 85, 247, 0.1) !important;
+        }
+        
+        .roadmap-quarter {
+            color: var(--primary) !important;
+            font-weight: 600 !important;
+            font-size: 0.9rem !important;
+            min-width: 80px !important;
+            flex-shrink: 0 !important;
+        }
+        
+        .roadmap-content h4 {
+            color: #ffffff !important;
+            font-size: 1rem !important;
+            margin-bottom: 8px !important;
+        }
+        
+        .roadmap-content p {
+            color: var(--text-muted) !important;
+            font-size: 0.9rem !important;
+            line-height: 1.4 !important;
+        }
+        
+        /* Acquisition Channels */
+        .acquisition-channels {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 20px !important;
+        }
+        
+        .channel-item {
+            padding: 20px !important;
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(168, 85, 247, 0.1) !important;
+            border-radius: 8px !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .channel-item:hover {
+            border-color: rgba(168, 85, 247, 0.3) !important;
+        }
+        
+        .channel-item h4 {
+            color: #ffffff !important;
+            font-size: 1rem !important;
+            margin-bottom: 8px !important;
+        }
+        
+        .channel-item p {
+            color: var(--text-muted) !important;
+            font-size: 0.9rem !important;
+            line-height: 1.4 !important;
+            margin-bottom: 10px !important;
+        }
+        
+        .channel-metric {
+            color: var(--primary) !important;
+            font-size: 0.8rem !important;
+            font-weight: 600 !important;
+        }
+        
+        /* Investment Opportunity Slide */
+        .investment-container {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 40px !important;
+            margin: 40px 0 !important;
+        }
+        
+        /* Investment Summary */
+        .investment-summary {
+            display: grid !important;
+            grid-template-columns: 1fr 2fr !important;
+            gap: 40px !important;
+            align-items: center !important;
+        }
+        
+        .investment-amount {
+            text-align: center !important;
+            padding: 40px !important;
+            background: rgba(168, 85, 247, 0.1) !important;
+            border: 2px solid var(--primary) !important;
+            border-radius: 16px !important;
+        }
+        
+        .amount-value {
+            color: var(--primary) !important;
+            font-size: 4rem !important;
+            font-weight: 800 !important;
+            margin-bottom: 15px !important;
+            line-height: 1 !important;
+        }
+        
+        .amount-details {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 8px !important;
+        }
+        
+        .amount-details span {
+            color: #ffffff !important;
+            font-size: 1rem !important;
+            font-weight: 500 !important;
+        }
+        
+        .investment-highlights {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 20px !important;
+        }
+        
+        .highlight-item {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            border-radius: 8px !important;
+            padding: 20px !important;
+            text-align: center !important;
+        }
+        
+        .highlight-item h4 {
+            color: var(--primary) !important;
+            font-size: 1rem !important;
+            margin-bottom: 8px !important;
+        }
+        
+        .highlight-item p {
+            color: #ffffff !important;
+            font-size: 0.9rem !important;
+        }
+        
+        /* Funds Allocation */
+        .funds-allocation h3, .milestones-section h3 {
+            color: #ffffff !important;
+            font-size: 1.4rem !important;
+            margin-bottom: 25px !important;
+        }
+        
+        .allocation-chart {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 15px !important;
+        }
+        
+        .allocation-item {
+            display: flex !important;
+            align-items: center !important;
+            gap: 20px !important;
+        }
+        
+        .allocation-bar {
+            height: 12px !important;
+            border-radius: 6px !important;
+            min-width: 60px !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .allocation-info {
+            display: flex !important;
+            justify-content: space-between !important;
+            flex: 1 !important;
+        }
+        
+        .allocation-label {
+            color: #ffffff !important;
+            font-weight: 500 !important;
+        }
+        
+        .allocation-amount {
+            color: var(--text-muted) !important;
+            font-size: 0.9rem !important;
+        }
+        
+        /* Milestones */
+        .milestones-grid {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 25px !important;
+        }
+        
+        .milestone-card {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            border-radius: 8px !important;
+            padding: 25px !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .milestone-card:hover {
+            border-color: var(--primary) !important;
+            transform: translateY(-3px) !important;
+        }
+        
+        .milestone-timeline {
+            background: var(--primary) !important;
+            color: white !important;
+            padding: 6px 12px !important;
+            border-radius: 20px !important;
+            font-size: 0.8rem !important;
+            font-weight: 600 !important;
+            display: inline-block !important;
+            margin-bottom: 15px !important;
+        }
+        
+        .milestone-card h4 {
+            color: #ffffff !important;
+            font-size: 1.1rem !important;
+            margin-bottom: 10px !important;
+        }
+        
+        .milestone-card p {
+            color: var(--text-muted) !important;
+            font-size: 0.9rem !important;
+            line-height: 1.4 !important;
+        }
+        
+        /* Minimal Problem Story */
+        .problem-story {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 30px !important;
+        }
+        
+        .story-scenario {
+            text-align: center !important;
+            padding: 25px !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            border-radius: 8px !important;
+        }
+        
+        .problem-steps {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 12px !important;
+            margin: 20px 0 !important;
+        }
+        
+        .step-item {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            padding: 12px !important;
+            border-radius: 6px !important;
+            color: var(--text-muted) !important;
+            text-align: center !important;
+            font-size: 0.9rem !important;
+        }
+        
+        .problem-impact {
+            display: flex !important;
+            justify-content: center !important;
+            gap: 25px !important;
+            margin: 25px 0 !important;
+        }
+        
+        .impact-item {
+            background: rgba(255, 255, 255, 0.02) !important;
+            color: var(--text-muted) !important;
+            padding: 10px 18px !important;
+            border-radius: 6px !important;
+            font-size: 0.9rem !important;
+            border: 1px solid rgba(168, 85, 247, 0.1) !important;
+        }
+        
+        .competitor-fails {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 8px !important;
+            margin: 20px 0 !important;
+        }
+        
+        .fail-item {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(168, 85, 247, 0.1) !important;
+            padding: 10px 16px !important;
+            border-radius: 6px !important;
+            color: var(--text-muted) !important;
+            font-size: 0.9rem !important;
+        }
+        
+        /* Minimal Solution Features */
+        .feature {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            border-radius: 8px !important;
+            padding: 25px !important;
+        }
+        
+        .feature h3 {
+            color: #ffffff !important;
+            font-size: 1.1rem !important;
+            margin-bottom: 12px !important;
+        }
+        
+        .feature p {
+            color: var(--text-muted) !important;
+            font-size: 0.9rem !important;
+            line-height: 1.5 !important;
+        }
+        
+        .use-case-grid {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 12px !important;
+            margin: 20px 0 !important;
+        }
+        
+        .use-case-item {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            padding: 12px !important;
+            border-radius: 6px !important;
+            color: var(--text-muted) !important;
+            font-size: 0.9rem !important;
+            text-align: center !important;
+        }
+        
+        /* Demo Slide */
+        .demo-container {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 30px !important;
+        }
+        
+        .video-placeholder {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 2px dashed rgba(168, 85, 247, 0.3) !important;
+            border-radius: 8px !important;
+            padding: 40px !important;
+            text-align: center !important;
+        }
+        
+        .video-placeholder p {
+            color: var(--primary) !important;
+            font-size: 1.2rem !important;
+            margin-bottom: 20px !important;
+        }
+        
+        .placeholder-screens {
+            display: flex !important;
+            justify-content: center !important;
+            gap: 15px !important;
+        }
+        
+        .screen-item {
+            background: rgba(168, 85, 247, 0.1) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            padding: 8px 12px !important;
+            border-radius: 6px !important;
+            color: var(--text-muted) !important;
+            font-size: 0.8rem !important;
+        }
+        
+        .demo-status {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 30px !important;
+        }
+        
+        .status-section h3 {
+            color: #ffffff !important;
+            font-size: 1.1rem !important;
+            margin-bottom: 15px !important;
+        }
+        
+        .status-grid {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 8px !important;
+        }
+        
+        .status-item {
+            padding: 10px 15px !important;
+            border-radius: 6px !important;
+            font-size: 0.9rem !important;
+        }
+        
+        .status-item.completed {
+            background: rgba(16, 185, 129, 0.1) !important;
+            border: 1px solid rgba(16, 185, 129, 0.3) !important;
+            color: #10b981 !important;
+        }
+        
+        .status-item.in-progress {
+            background: rgba(251, 191, 36, 0.1) !important;
+            border: 1px solid rgba(251, 191, 36, 0.3) !important;
+            color: #fbbf24 !important;
+        }
+        
+        .demo-tagline {
+            text-align: center !important;
+            padding: 20px !important;
+            border: 1px solid rgba(168, 85, 247, 0.3) !important;
+            border-radius: 8px !important;
+        }
+        
+        .demo-tagline p {
+            color: var(--primary) !important;
+            font-size: 1.2rem !important;
+            font-weight: 600 !important;
+            font-style: italic !important;
+        }
+        
+        /* Market Slide */
+        .market-overview {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 40px !important;
+        }
+        
+        .market-size {
+            text-align: center !important;
+        }
+        
+        .market-stat {
+            margin-bottom: 30px !important;
+        }
+        
+        .stat-value {
+            color: var(--primary) !important;
+            font-size: 3rem !important;
+            font-weight: 800 !important;
+            margin-bottom: 10px !important;
+        }
+        
+        .stat-label {
+            color: #ffffff !important;
+            font-size: 1.1rem !important;
+        }
+        
+        .market-funnel {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 10px !important;
+        }
+        
+        .funnel-item {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+        }
+        
+        .funnel-number {
+            color: var(--primary) !important;
+            font-weight: 700 !important;
+            font-size: 1.1rem !important;
+        }
+        
+        .funnel-text {
+            color: var(--text-muted) !important;
+            font-size: 0.9rem !important;
+        }
+        
+        .funnel-arrow {
+            color: var(--primary) !important;
+            font-size: 1.2rem !important;
+        }
+        
+        .market-sizing {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 20px !important;
+        }
+        
+        .sizing-card {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(168, 85, 247, 0.2) !important;
+            border-radius: 8px !important;
+            padding: 20px !important;
+            text-align: center !important;
+        }
+        
+        .sizing-card.highlight {
+            border-color: var(--primary) !important;
+            background: rgba(168, 85, 247, 0.1) !important;
+        }
+        
+        .sizing-card h3 {
+            color: var(--primary) !important;
+            font-size: 1rem !important;
+            margin-bottom: 10px !important;
+        }
+        
+        .sizing-value {
+            color: #ffffff !important;
+            font-size: 1.8rem !important;
+            font-weight: 700 !important;
+            margin-bottom: 10px !important;
+        }
+        
+        .sizing-card p {
+            color: var(--text-muted) !important;
+            font-size: 0.8rem !important;
+        }
+        
+        @media (max-width: 900px) {
+            .problem-steps {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .problem-impact {
+                flex-direction: column !important;
+                gap: 12px !important;
+            }
+            
+            .use-case-grid {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .demo-status {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .market-sizing {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .placeholder-screens {
+                flex-direction: column !important;
+            }
+        }
+        
+        @keyframes barGrowUp {
+            0% { 
+                height: 0 !important; 
+                opacity: 0 !important;
+            }
+            100% { 
+                opacity: 1 !important;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .chart-bars {
+                gap: 10px !important;
+            }
+            
+            .key-metrics {
+                flex-direction: column !important;
+                gap: 15px !important;
+            }
+        }
 
+        /* Slide 5: Market Opportunity - Clean Layout */
+        .market-opportunity-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            width: 100%;
+        }
+
+        .market-size-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .market-size-card {
+            background: rgba(10, 10, 10, 0.8);
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            border-radius: 20px;
+            padding: 35px 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .market-size-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
+        }
+
+        .market-size-card.highlight {
+            border-color: var(--primary);
+            background: rgba(168, 85, 247, 0.1);
+        }
+
+        .market-size-card h3 {
+            font-size: 0.9rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .market-size-card .value {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 15px;
+            line-height: 1;
+        }
+
+        .market-size-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .market-trends-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .trend-card {
+            background: rgba(10, 10, 10, 0.6);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 16px;
+            padding: 25px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .trend-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2);
+        }
+
+        .trend-card .value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+        
+        .trend-card .label {
+            font-size: 0.85rem;
+            color: #d0d0d0;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 1000px) {
+            .market-size-cards {
+                grid-template-columns: 1fr;
+            }
+            .market-trends-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Slide 8: Traction & Roadmap Redesign */
+        .traction-roadmap-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 60px;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .traction-column h3, .roadmap-column h3 {
+            font-size: 1.8rem;
+            color: #ffffff;
+            margin-bottom: 30px;
+            text-align: left;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .traction-column h3::after, .roadmap-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .traction-cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .traction-card-redesigned {
+            background: rgba(168, 85, 247, 0.05);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 16px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .traction-card-redesigned:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+        }
+
+        .traction-icon {
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .traction-details .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.1;
+        }
+
+        .traction-details .label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .roadmap-timeline-vertical {
+            position: relative;
+            padding-left: 40px;
+            border-left: 2px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .timeline-item-vertical {
+            position: relative;
+            margin-bottom: 40px;
+        }
+        .timeline-item-vertical:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot-vertical {
+            position: absolute;
+            left: -49px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(168, 85, 247, 0.3);
+            border: 2px solid var(--primary);
+        }
+
+        .timeline-item-vertical.current .timeline-dot-vertical {
+            background: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .timeline-content-vertical h4 {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .timeline-content-vertical p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        @media (max-width: 900px) {
+            .traction-roadmap-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+        }
+
+        @keyframes slideExplode {
+            0% {
+                opacity: 1;
+                transform: translateX(0) scale(1) rotateY(0deg);
+            }
+            50% {
+                opacity: 0.7;
+                transform: translateX(-30px) scale(0.9) rotateY(-15deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-200px) scale(0.7) rotateY(-45deg);
+            }
+        }
+        
+        @keyframes problemSlam {
+            0% {
+                opacity: 0;
+                transform: translateX(300px) scale(1.2) rotateY(45deg);
+            }
+            60% {
+                opacity: 0.8;
+                transform: translateX(-10px) scale(0.95) rotateY(-5deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1) rotateY(0deg);
+            }
+        }
+        
+        @keyframes elementFlyIn {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) translateX(-30px) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) translateX(0) scale(1);
+            }
+        }
+        
+        @keyframes elementFlyOut {
+            0% {
+                opacity: 1;
+                transform: translateY(0) translateX(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-30px) translateX(20px) scale(0.9);
+            }
+        }
+        
+        @keyframes mockupGlitch {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-2px) rotateZ(-1deg); }
+            40% { transform: translateX(2px) rotateZ(1deg); }
+            60% { transform: translateX(-1px) rotateZ(-0.5deg); }
+            80% { transform: translateX(1px) rotateZ(0.5deg); }
+            100% { transform: translateX(0) rotateZ(0deg); }
+        }
+
+        /* Rimuovi scrollbar */
+        * { scrollbar-width: none; -ms-overflow-style: none; }
+        *::-webkit-scrollbar { display: none; }
+        html, body { overflow: hidden !important; }
+        .slide { overflow: hidden !important; }
     </style>
 </head>
 <body>
     <div class="progress-bar" id="progressBar"></div>
-    <a href="index.html" class="back-home">← Home</a>
+    <a href="index.html" class="back-home" style="position: fixed; top: 2rem; left: 2rem; z-index: 10000; background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; padding: 0.75rem 1.5rem; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem;">
+        <span style="font-size: 1.2rem;">←</span>
+        Home
+    </a>
     
     <div class="pitch-container">
         <!-- Slide 1: Cover -->
         <div class="slide active">
-            <div class="slide-number">1/12</div>
+            <div class="slide-number">1/18</div>
             <div class="slide-content">
-                <section class="hero">
-                    <div class="container">
-                        <div class="hero-content">
-                            <h1 class="glitch" data-text="DRAPE">DRAPE</h1>
-                            <p class="hero-subtitle" style="font-size: 2rem; margin: 40px 0;">Il primo IDE mobile dedicato ai professionisti</p>
-                            <p style="font-size: 1.4rem; color: var(--text-muted); margin-bottom: 60px;">Terminal completo, AI multimodello e GitHub integration</p>
+                <!-- Glow Effect -->
+                <div style="position: absolute; width: 800px; height: 800px; background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%); top: -300px; right: -300px; animation: pulse-glow 4s ease-in-out infinite; pointer-events: none;"></div>
+                
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center; position: relative; z-index: 1; padding: 2rem;">
+                    <!-- Main Title -->
+                    <h1 style="font-size: 5rem; font-weight: 800; margin-bottom: 1.5rem; background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.1;">DRAPE</h1>
+                    
+                    <!-- Subtitle -->
+                    <p style="font-size: 1.5rem; color: #a1a1aa; margin-bottom: 3rem; max-width: 600px;">Il primo IDE mobile con AI multimodello</p>
+                    
+                    <!-- Info Card -->
+                    <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; min-width: 400px;">
+                        <div style="text-align: center;">
+                            <p style="color: #a1a1aa; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Round</p>
+                            <p style="color: #ffffff; font-size: 1.1rem; font-weight: 700;">Pre-Seed</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <p style="color: #a1a1aa; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Ask</p>
+                            <p style="color: #a855f7; font-size: 1.1rem; font-weight: 700;">€200K</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <p style="color: #a1a1aa; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Data</p>
+                            <p style="color: #ffffff; font-size: 1.1rem; font-weight: 700;">Ottobre 2025</p>
                         </div>
                     </div>
-                </section>
+                </div>
             </div>
         </div>
 
         <!-- Slide 2: Problema -->
         <div class="slide">
-            <div class="slide-number">2/12</div>
+            <div class="slide-number">2/18</div>
             <div class="slide-content">
-                <section id="problema" class="section">
-                    <div class="container">
-                        <h2 class="reveal">Il Problema</h2>
-                        <div class="problem-grid">
-                            <div class="problem-card reveal" data-delay="0">
-                                <div class="icon-wrapper">
-                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                                        <line x1="8" y1="21" x2="16" y2="21"></line>
-                                        <line x1="12" y1="17" x2="12" y2="21"></line>
-                                    </svg>
-                                </div>
-                                <h3>Desktop Dependency</h3>
-                                <p>Gli IDE attuali (VS Code, Cursor, Warp) sono progettati per desktop. Il mobile manca di un'esperienza fluida per lo sviluppo professionale.</p>
-                                <div class="card-glow"></div>
+                <!-- Title -->
+                <h1 style="position: absolute; top: 3rem; left: 50%; transform: translateX(-50%); font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 800; background: linear-gradient(135deg, #ffffff 0%, #ef4444 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; z-index: 10;">IL PROBLEMA</h1>
+                
+                <div style="display: flex; height: 100vh; align-items: center; justify-content: center; padding-top: 4rem;">
+                    
+                    <!-- Left Side - Visual -->
+                    <div style="flex: 1.2; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem;">
+                        <div style="position: relative; width: 450px; height: 300px; background: #0a0a0a; border: 2px solid #333; border-radius: 16px; margin-bottom: 2rem;">
+                            <!-- Phone mockup -->
+                            <div style="position: absolute; top: 50%; left: 40%; transform: translate(-50%, -50%); width: 90px; height: 150px; background: #1a1a1a; border: 3px solid #444; border-radius: 12px;">
+                                <div style="width: 60px; height: 8px; background: #333; border-radius: 4px; margin: 12px auto 6px;"></div>
+                                <div style="width: 75px; height: 110px; background: #000; border-radius: 6px; margin: 0 auto; display: flex; align-items: center; justify-content: center; color: #666; font-size: 14px; font-weight: 600;">No IDE</div>
+                                <div style="width: 30px; height: 4px; background: #333; border-radius: 2px; margin: 8px auto;"></div>
                             </div>
-                            <div class="problem-card reveal" data-delay="100">
-                                <div class="icon-wrapper">
-                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                                    </svg>
+                            <!-- Laptop mockup -->
+                            <div style="position: absolute; bottom: 40px; right: 40px; width: 120px; height: 80px;">
+                                <!-- Screen -->
+                                <div style="width: 100px; height: 65px; background: #1a1a1a; border: 2px solid #444; border-radius: 6px; margin: 0 auto; position: relative; transform: perspective(300px) rotateX(-10deg);">
+                                    <div style="width: 90px; height: 55px; background: #000; border-radius: 3px; margin: 3px auto; display: flex; align-items: center; justify-content: center; color: #a855f7; font-size: 11px; font-weight: 600;">VS Code</div>
                                 </div>
-                                <h3>AI Frammentata</h3>
-                                <p>Developer devono usare tool separati per GPT-5, Claude 4.5, Gemini Pro 2.5. Nessuna integrazione nativa in ambiente mobile.</p>
-                                <div class="card-glow"></div>
+                                <!-- Base -->
+                                <div style="width: 120px; height: 20px; background: linear-gradient(to bottom, #333, #222); border-radius: 0 0 8px 8px; margin-top: -2px; position: relative;">
+                                    <!-- Keyboard -->
+                                    <div style="position: absolute; top: 3px; left: 50%; transform: translateX(-50%); display: flex; gap: 2px;">
+                                        <div style="width: 3px; height: 2px; background: #555; border-radius: 1px;"></div>
+                                        <div style="width: 3px; height: 2px; background: #555; border-radius: 1px;"></div>
+                                        <div style="width: 3px; height: 2px; background: #555; border-radius: 1px;"></div>
+                                        <div style="width: 3px; height: 2px; background: #555; border-radius: 1px;"></div>
+                                        <div style="width: 3px; height: 2px; background: #555; border-radius: 1px;"></div>
+                                        <div style="width: 3px; height: 2px; background: #555; border-radius: 1px;"></div>
+                                    </div>
+                                    <!-- Trackpad -->
+                                    <div style="position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 15px; height: 8px; background: #111; border: 1px solid #333; border-radius: 2px;"></div>
+                                </div>
                             </div>
-                            <div class="problem-card reveal" data-delay="200">
-                                <div class="icon-wrapper">
-                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-                                        <line x1="12" y1="18" x2="12.01" y2="18"></line>
-                                    </svg>
-                                </div>
-                                <h3>Produttività Persa</h3>
-                                <p>68% dei developer lavorano remote/hybrid ma non possono essere produttivi su mobile durante spostamenti.</p>
-                                <div class="card-glow"></div>
+                            <!-- Distance line -->
+                            <div style="position: absolute; top: 50%; left: 40%; width: 180px; height: 2px; background: #ef4444; transform: translate(-50%, -50%) rotate(25deg);"></div>
+                            <div style="position: absolute; top: 45%; left: 50%; color: #ef4444; font-size: 16px; font-weight: bold;">GAP</div>
+                        </div>
+                        
+                        <div style="text-align: center;">
+                            <h3 style="color: #ef4444; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.75rem;">Il Gap Critico</h3>
+                            <p style="color: #a1a1aa; font-size: 1rem; max-width: 350px; line-height: 1.5;">Potenti strumenti desktop, ma nulla di professionale su mobile</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Side - Content -->
+                    <div style="flex: 0.8; padding: 2rem; max-width: 450px;">
+                        <h1 style="font-size: 2.5rem; font-weight: 900; color: #ffffff; margin-bottom: 2rem; line-height: 1.1;">Developer bloccati fuori ufficio</h1>
+                        
+                        <div style="margin-bottom: 2.5rem;">
+                            <p style="color: #a1a1aa; font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">
+                                Emergenza in produzione. Fix urgente necessario, ma sei lontano dal computer. 
+                                Ogni minuto costa denaro e reputazione. 
+                                <span style="color: #ef4444; font-weight: 600;">Nessuna soluzione mobile professionale per sviluppatori.</span>
+                            </p>
+                            
+                            <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
+                                <p style="color: #ffffff; font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">Il problema è reale</p>
+                                <p style="color: #a1a1aa; font-size: 0.9rem;">Gli strumenti desktop sono potenti, ma su mobile non esiste nulla di professionale.</p>
                             </div>
-                            <div class="problem-card reveal" data-delay="300">
-                                <div class="icon-wrapper">
-                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <line x1="12" y1="8" x2="12" y2="12"></line>
-                                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                                    </svg>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(239, 68, 68, 0.1)); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 1.5rem; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                            <p style="color: #ffffff; font-size: 1rem; font-weight: 600; margin: 0 0 1rem 0;">Il costo dell'attesa</p>
+                            <div style="display: flex; justify-content: space-around; width: 100%; align-items: center;">
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <span style="color: #ef4444; font-size: 1.4rem; font-weight: 800; line-height: 1;">45min</span>
+                                    <span style="color: #a1a1aa; font-size: 0.8rem; margin-top: 0.25rem;">persi</span>
                                 </div>
-                                <h3>Emergenze Bloccanti</h3>
-                                <p>Production down mentre sei fuori ufficio? Devi correre al PC. Le app mobile non hanno terminal né accesso GitHub per hotfix urgenti.</p>
-                                <div class="card-glow"></div>
-                            </div>
-                            <div class="problem-card reveal" data-delay="400">
-                                <div class="icon-wrapper">
-                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                                        <line x1="8" y1="21" x2="16" y2="21"></line>
-                                    </svg>
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <span style="color: #ef4444; font-size: 1.4rem; font-weight: 800; line-height: 1;">€2K</span>
+                                    <span style="color: #a1a1aa; font-size: 0.8rem; margin-top: 0.25rem;">loss</span>
                                 </div>
-                                <h3>Nessun Real-Time Preview</h3>
-                                <p>Impossibile vedere risultati in tempo reale su mobile. Developer devono immaginare l'output senza feedback visivo immediato.</p>
-                                <div class="card-glow"></div>
-                            </div>
-                            <div class="problem-card reveal" data-delay="500">
-                                <div class="icon-wrapper">
-                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                                    </svg>
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <span style="color: #ef4444; font-size: 1.4rem; font-weight: 800; line-height: 1;">3K</span>
+                                    <span style="color: #a1a1aa; font-size: 0.8rem; margin-top: 0.25rem;">utenti</span>
                                 </div>
-                                <h3>Continuità Progetti Spezzata</h3>
-                                <p>Hai iniziato a sviluppare su PC? Su mobile non puoi continuare. Manca integrazione Git per progetti esistenti.</p>
-                                <div class="card-glow"></div>
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
             </div>
         </div>
-
         <!-- Slide 3: Soluzione -->
         <div class="slide">
-            <div class="slide-number">3/12</div>
+            <div class="slide-number">3/18</div>
             <div class="slide-content">
-                <section class="section">
-                    <div class="container">
-                        <h2 class="reveal">La Nostra Soluzione</h2>
-                        <p class="section-subtitle reveal">Il primo IDE mobile completo con AI multimodello</p>
+                <!-- Title -->
+                <h1 style="position: absolute; top: 3rem; left: 50%; transform: translateX(-50%); font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 800; background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; z-index: 10;">LA SOLUZIONE</h1>
+                
+                <div style="display: flex; height: 100vh; align-items: center; justify-content: center; padding-top: 4rem;">
+                    
+                    <!-- Left Side - Visual -->
+                    <div style="flex: 1.2; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem;">
+                        <div style="position: relative; width: 450px; height: 300px; background: #0a0a0a; border: 2px solid #333; border-radius: 16px; margin-bottom: 2rem;">
+                            <!-- Phone mockup with IDE -->
+                            <div style="position: absolute; top: 50%; left: 40%; transform: translate(-50%, -50%); width: 90px; height: 150px; background: #1a1a1a; border: 3px solid #444; border-radius: 12px;">
+                                <div style="width: 60px; height: 8px; background: #333; border-radius: 4px; margin: 12px auto 6px;"></div>
+                                <div style="width: 75px; height: 110px; background: #000; border-radius: 6px; margin: 0 auto; display: flex; align-items: center; justify-content: center; color: #a855f7; font-size: 12px; font-weight: 600;">DRAPE IDE</div>
+                                <div style="width: 30px; height: 4px; background: #333; border-radius: 2px; margin: 8px auto;"></div>
+                            </div>
+                            <!-- Laptop mockup -->
+                            <div style="position: absolute; bottom: 40px; right: 40px; width: 120px; height: 80px;">
+                                <div style="width: 100px; height: 65px; background: #1a1a1a; border: 2px solid #444; border-radius: 6px; margin: 0 auto; position: relative; transform: perspective(300px) rotateX(-10deg);">
+                                    <div style="width: 90px; height: 55px; background: #000; border-radius: 3px; margin: 3px auto; display: flex; align-items: center; justify-content: center; color: #a855f7; font-size: 11px; font-weight: 600;">VS Code</div>
+                                </div>
+                                <div style="width: 120px; height: 20px; background: linear-gradient(to bottom, #333, #222); border-radius: 0 0 8px 8px; margin-top: -2px; position: relative;">
+                                    <div style="position: absolute; top: 3px; left: 50%; transform: translateX(-50%); display: flex; gap: 2px;">
+                                        <div style="width: 3px; height: 2px; background: #555; border-radius: 1px;"></div>
+                                        <div style="width: 3px; height: 2px; background: #555; border-radius: 1px;"></div>
+                                        <div style="width: 3px; height: 2px; background: #555; border-radius: 1px;"></div>
+                                        <div style="width: 3px; height: 2px; background: #555; border-radius: 1px;"></div>
+                                        <div style="width: 3px; height: 2px; background: #555; border-radius: 1px;"></div>
+                                        <div style="width: 3px; height: 2px; background: #555; border-radius: 1px;"></div>
+                                    </div>
+                                    <div style="position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 15px; height: 8px; background: #111; border: 1px solid #333; border-radius: 2px;"></div>
+                                </div>
+                            </div>
+                            <!-- Connection line -->
+                            <div style="position: absolute; top: 50%; left: 40%; width: 180px; height: 2px; background: #10b981; transform: translate(-50%, -50%) rotate(25deg);"></div>
+                            <div style="position: absolute; top: 45%; left: 50%; color: #10b981; font-size: 16px; font-weight: bold;">CONNECTED</div>
+                        </div>
                         
-                        <div class="solution-features">
-                            <div class="feature reveal" data-delay="0">
-                                <div class="feature-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="4 17 10 11 4 5"></polyline>
-                                        <line x1="12" y1="19" x2="20" y2="19"></line>
-                                    </svg>
-                                </div>
-                                <h3>Terminal Desktop-Grade</h3>
-                                <p>Terminal completo come da desktop con supporto comandi bash, zsh. Esegui script, gestisci processi e lavora come su un vero terminale.</p>
+                        <div style="text-align: center;">
+                            <h3 style="color: #10b981; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.75rem;">Il Gap Risolto</h3>
+                            <p style="color: #a1a1aa; font-size: 1rem; max-width: 350px; line-height: 1.5;">IDE professionale mobile-native con tutte le funzionalità desktop</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Side - Content -->
+                    <div style="flex: 0.8; padding: 2rem; max-width: 450px;">
+                        <h1 style="font-size: 2.5rem; font-weight: 900; color: #ffffff; margin-bottom: 2rem; line-height: 1.1;">DRAPE risolve tutto</h1>
+                        
+                        <div style="margin-bottom: 2.5rem;">
+                            <p style="color: #a1a1aa; font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">
+                                IDE mobile-native con AI multimodello. Container runtime per eseguire codice. 
+                                GitHub integration completa. Terminal integrato. 
+                                <span style="color: #10b981; font-weight: 600;">Tutto quello che serve per sviluppare professionalmente su mobile.</span>
+                            </p>
+                            
+                            <div style="border-left: 3px solid #10b981; padding-left: 1.5rem;">
+                                <p style="color: #ffffff; font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">Emergency fix in 5 minuti</p>
+                                <p style="color: #a1a1aa; font-size: 0.9rem;">Non sostituiamo il laptop. Risolviamo il 20% del tempo in cui non ce l'hai.</p>
                             </div>
-                            <div class="feature reveal" data-delay="100">
-                                <div class="feature-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                                    </svg>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(16, 185, 129, 0.1)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 1.5rem; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                            <p style="color: #ffffff; font-size: 1rem; font-weight: 600; margin: 0 0 1rem 0;">Le nostre funzionalità</p>
+                            <div style="display: flex; justify-content: space-around; width: 100%; align-items: center;">
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <span style="color: #10b981; font-size: 1.4rem; font-weight: 800; line-height: 1;">AI</span>
+                                    <span style="color: #a1a1aa; font-size: 0.8rem; margin-top: 0.25rem;">multimodello</span>
                                 </div>
-                                <h3>AI Agent Autonomo</h3>
-                                <p>Agent AI che può creare, modificare e gestire progetti in autonomia. Pianifica task complessi e li esegue step-by-step.</p>
-                            </div>
-                            <div class="feature reveal" data-delay="200">
-                                <div class="feature-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                                    </svg>
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <span style="color: #10b981; font-size: 1.4rem; font-weight: 800; line-height: 1;">GitHub</span>
+                                    <span style="color: #a1a1aa; font-size: 0.8rem; margin-top: 0.25rem;">native</span>
                                 </div>
-                                <h3>GitHub Integration</h3>
-                                <p>Connessione diretta alle repository GitHub. Clone, commit, push, pull e gestisci branch direttamente dall'app.</p>
-                            </div>
-                            <div class="feature reveal" data-delay="300">
-                                <div class="feature-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="3"></circle>
-                                        <path d="M12 1v6m0 6v6m5.2-13.2l-4.2 4.2m0 6l4.2 4.2M23 12h-6m-6 0H1m18.2 5.2l-4.2-4.2m0-6l4.2-4.2"></path>
-                                    </svg>
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <span style="color: #10b981; font-size: 1.4rem; font-weight: 800; line-height: 1;">Terminal</span>
+                                    <span style="color: #a1a1aa; font-size: 0.8rem; margin-top: 0.25rem;">completo</span>
                                 </div>
-                                <h3>AI Multimodello</h3>
-                                <p>GPT-5, Claude 4.5 Sonnet, Gemini Pro 2.5 integrati. Switching trasparente tra modelli per task specifici.</p>
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
             </div>
         </div>
 
-        <!-- Slide 5: Prodotto -->
+        <!-- Slide 4: Demo -->
         <div class="slide">
-            <div class="slide-number">4/12</div>
+            <div class="slide-number">4/18</div>
             <div class="slide-content">
-                <section class="section">
-                    <div class="container">
-                        <h2 class="reveal">Il Prodotto</h2>
+                <!-- Title -->
+                <h1 style="position: absolute; top: 3rem; left: 50%; transform: translateX(-50%); font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 800; background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; z-index: 10;">IL PRODOTTO FUNZIONA</h1>
+                
+                <div style="display: flex; height: 100vh; align-items: center; justify-content: center; padding-top: 6rem; gap: 4rem;">
+                    
+                    <!-- Phone Mockup - MVP -->
+                    <div style="position: relative;">
+                        <!-- Glow effect -->
+                        <div style="position: absolute; width: 350px; height: 350px; background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, rgba(99, 102, 241, 0.15) 50%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); animation: pulse-glow 3s ease-in-out infinite;"></div>
                         
-                        <!-- Interactive AI Demo -->
-                        <div class="ai-demo reveal" data-delay="0">
-                            <div class="demo-description">
-                                <h3 class="reveal" data-delay="100">Il Primo IDE Mobile Completo</h3>
-                                <p class="demo-intro reveal" data-delay="200">Drape porta l'esperienza di sviluppo desktop direttamente su mobile, con funzionalità che nessun competitor offre.</p>
+                        <!-- Phone -->
+                        <div style="position: relative; width: 280px; height: 560px; background: linear-gradient(135deg, #1a1a1a 0%, #2a2a3e 100%); border: 8px solid #333; border-radius: 40px; box-shadow: 0 25px 70px rgba(168, 85, 247, 0.3), 0 10px 30px rgba(0, 0, 0, 0.8); z-index: 1;">
+                            <!-- Notch -->
+                            <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100px; height: 24px; background: #1a1a1a; border-radius: 0 0 18px 18px; z-index: 2;"></div>
+                            
+                            <!-- Screen -->
+                            <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%); border-radius: 32px; overflow: hidden; padding: 35px 15px 15px;">
                                 
-                                <div class="demo-features">
-                                    <div class="demo-feature reveal" data-delay="300">
-                                        <div class="demo-icon">→</div>
-                                        <div>
-                                            <h4>Terminal Bash/Zsh Completo</h4>
-                                            <p>Esegui comandi, script e gestisci processi come su desktop. Nessuna limitazione.</p>
-                                        </div>
+                                <!-- App Header -->
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid rgba(168, 85, 247, 0.2);">
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <div style="width: 28px; height: 28px; background: linear-gradient(135deg, #a855f7, #6366f1); border-radius: 7px; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);"></div>
+                                        <span style="color: #ffffff; font-weight: 700; font-size: 14px;">DRAPE</span>
                                     </div>
-                                    <div class="demo-feature reveal" data-delay="400">
-                                        <div class="demo-icon">→</div>
-                                        <div>
-                                            <h4>AI Agent Autonomo</h4>
-                                            <p>L'AI crea e modifica progetti esistenti in autonomia, non solo genera template.</p>
-                                        </div>
+                                    <div style="width: 20px; height: 20px; border: 2px solid #a855f7; border-radius: 50%; position: relative;">
+                                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 8px; height: 8px; background: #a855f7; border-radius: 50%;"></div>
                                     </div>
-                                    <div class="demo-feature reveal" data-delay="500">
-                                        <div class="demo-icon">→</div>
-                                        <div>
-                                            <h4>GitHub Repository Integration</h4>
-                                            <p>Clone, commit, push e gestisci PR direttamente dalle tue repo esistenti.</p>
-                                        </div>
+                                </div>
+                                
+                                <!-- Code Editor -->
+                                <div style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 10px; padding: 10px; margin-bottom: 10px; font-family: 'Courier New', monospace; font-size: 9px; box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);">
+                                    <div style="color: #a855f7; margin-bottom: 3px;">function <span style="color: #60a5fa;">createApp</span>() {</div>
+                                    <div style="color: #d4d4d8; margin-left: 12px;">return <span style="color: #34d399;">"Hello World"</span>;</div>
+                                    <div style="color: #a855f7;">}</div>
+                                </div>
+                                
+                                <!-- Preview Live -->
+                                <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 10px; padding: 10px; margin-bottom: 10px; font-size: 8px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);">
+                                    <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 6px;">
+                                        <div style="width: 16px; height: 16px; background: linear-gradient(135deg, #10b981, #34d399); border-radius: 50%; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);"></div>
+                                        <span style="color: #10b981; font-weight: 700;">Preview Live</span>
                                     </div>
-                                    <div class="demo-feature reveal" data-delay="600">
-                                        <div class="demo-icon">→</div>
-                                        <div>
-                                            <h4>Multi-Model AI</h4>
-                                            <p>Scegli tra GPT-5, Claude 4.5 e Gemini Pro 2.5 per ogni task specifico.</p>
-                                        </div>
-                                    </div>
+                                    <div style="background: #ffffff; border-radius: 6px; padding: 8px; color: #000; font-weight: 600; text-align: center; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">Hello World</div>
+                                </div>
+                                
+                                <!-- Action Buttons -->
+                                <div style="display: flex; gap: 6px;">
+                                    <div style="flex: 1; background: linear-gradient(135deg, #a855f7, #8b5cf6); color: #ffffff; padding: 8px; border-radius: 7px; text-align: center; font-size: 9px; font-weight: 700; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);">▶ Run</div>
+                                    <div style="flex: 1; background: rgba(168, 85, 247, 0.2); border: 1px solid rgba(168, 85, 247, 0.4); color: #a855f7; padding: 8px; border-radius: 7px; text-align: center; font-size: 9px; font-weight: 700;">Deploy</div>
                                 </div>
                             </div>
                             
-                            <div class="phone-mockup-image reveal" data-delay="700">
-                                <div class="mockup-container">
-                                    <img src="Progetto senza titolo (3).png" alt="Drape App Mockup" class="mockup-full">
-                                    <div class="mockup-glow"></div>
+                            <!-- Home Indicator -->
+                            <div style="position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); width: 100px; height: 3px; background: #333; border-radius: 2px;"></div>
+                        </div>
+                        
+                        <!-- Badge sotto il telefono -->
+                        <div style="text-align: center; margin-top: 1.5rem;">
+                            <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.5rem 1.5rem; border-radius: 50px;">
+                                <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s ease-in-out infinite;"></div>
+                                <span style="color: #10b981; font-weight: 600; font-size: 0.9rem;">Da zero a app in 3 tap</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Features List -->
+                    <div style="max-width: 450px; display: flex; flex-direction: column; gap: 1.5rem;">
+                        <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.02) 100%); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 16px rgba(16, 185, 129, 0.1);">
+                            <h3 style="color: #10b981; font-size: 1.3rem; font-weight: 800; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-size: 1.5rem;">✅</span> FUNZIONA OGGI
+                            </h3>
+                            <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+                                <div style="display: flex; align-items: center; gap: 0.6rem; background: rgba(16, 185, 129, 0.05); padding: 0.6rem; border-radius: 8px;">
+                                    <div style="width: 6px; height: 6px; background: #10b981; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);"></div>
+                                    <span style="color: #d4d4d8; font-size: 0.95rem; font-weight: 500;">Editor Flutter funzionante</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.6rem; background: rgba(16, 185, 129, 0.05); padding: 0.6rem; border-radius: 8px;">
+                                    <div style="width: 6px; height: 6px; background: #10b981; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);"></div>
+                                    <span style="color: #d4d4d8; font-size: 0.95rem; font-weight: 500;">App HTML/JS con preview live</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.6rem; background: rgba(16, 185, 129, 0.05); padding: 0.6rem; border-radius: 8px;">
+                                    <div style="width: 6px; height: 6px; background: #10b981; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);"></div>
+                                    <span style="color: #d4d4d8; font-size: 0.95rem; font-weight: 500;">GitHub: clone, commit, push, PR</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.6rem; background: rgba(16, 185, 129, 0.05); padding: 0.6rem; border-radius: 8px;">
+                                    <div style="width: 6px; height: 6px; background: #10b981; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);"></div>
+                                    <span style="color: #d4d4d8; font-size: 0.95rem; font-weight: 500;">UI ottimizzata per mobile</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.05) 0%, rgba(168, 85, 247, 0.02) 100%); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 16px rgba(168, 85, 247, 0.1);">
+                            <h3 style="color: #a855f7; font-size: 1.3rem; font-weight: 800; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-size: 1.5rem;">🔄</span> IN SVILUPPO (8 sett.)
+                            </h3>
+                            <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+                                <div style="display: flex; align-items: center; gap: 0.6rem; background: rgba(168, 85, 247, 0.05); padding: 0.6rem; border-radius: 8px;">
+                                    <div style="width: 6px; height: 6px; background: #a855f7; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 6px rgba(168, 85, 247, 0.6);"></div>
+                                    <span style="color: #a1a1aa; font-size: 0.95rem; font-weight: 500;">Container Python, Node, Go</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.6rem; background: rgba(168, 85, 247, 0.05); padding: 0.6rem; border-radius: 8px;">
+                                    <div style="width: 6px; height: 6px; background: #a855f7; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 6px rgba(168, 85, 247, 0.6);"></div>
+                                    <span style="color: #a1a1aa; font-size: 0.95rem; font-weight: 500;">AI multimodello</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.6rem; background: rgba(168, 85, 247, 0.05); padding: 0.6rem; border-radius: 8px;">
+                                    <div style="width: 6px; height: 6px; background: #a855f7; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 6px rgba(168, 85, 247, 0.6);"></div>
+                                    <span style="color: #a1a1aa; font-size: 0.95rem; font-weight: 500;">AI Agent autonomo</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
             </div>
         </div>
+        <!-- Slide 5: Perché Ora? -->
         <div class="slide">
-            <div class="slide-number">5/12</div>
             <div class="slide-content">
-                <section class="section">
-                    <div class="container">
-                        <h2 class="reveal">Il Prodotto</h2>
-                        <div class="market-grid">
-                            <div class="market-card">
-                                <h3>TAM</h3>
-                                <div class="market-value">$8.6B</div>
-                                <p>28.7M developer globali × $100/anno medio</p>
-                                <div class="progress-ring">
-                                    <svg width="120" height="120">
-                                        <circle cx="60" cy="60" r="54" class="progress-ring-circle" style="--percent: 100"></circle>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="market-card highlight">
-                                <h3>SAM</h3>
-                                <div class="market-value">$860M</div>
-                                <p>4.3M mobile + AI interested developers</p>
-                                <div class="progress-ring">
-                                    <svg width="120" height="120">
-                                        <circle cx="60" cy="60" r="54" class="progress-ring-circle" style="--percent: 70"></circle>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="market-card">
-                                <h3>SOM (Year 3)</h3>
-                                <div class="market-value">$3.36M</div>
-                                <p>500K users, 5% conversion rate</p>
-                                <div class="progress-ring">
-                                    <svg width="120" height="120">
-                                        <circle cx="60" cy="60" r="54" class="progress-ring-circle" style="--percent: 40"></circle>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="market-trends">
-                            <h3>Trend Chiave</h3>
-                            <ul>
-                                <li><strong>68%</strong> - Developer interessati a coding da mobile</li>
-                                <li><strong>+150% YoY</strong> - Crescita AI-powered development tools</li>
-                                <li><strong>$2.3B</strong> - Venture funding in AI dev tools (2024)</li>
-                                <li><strong>92%</strong> - Developer che usano AI assistants regolarmente</li>
-                            </ul>
-                        </div>
+                <h2 class="slide-title">Perché Ora?</h2>
+                <p class="slide-subtitle">Il mercato è pronto per una soluzione come Drape. Il timing è perfetto.</p>
+                <div class="timing-grid-new">
+                    <div class="timing-card-new">
+                        <div class="timing-icon">🚀</div>
+                        <h3>AI Coding Boom</h3>
+                        <p>L'adozione di strumenti di AI coding è in crescita esponenziale. Cursor ha raggiunto una valutazione di $400M e GitHub Copilot ha superato i 2 milioni di utenti.</p>
                     </div>
-                </section>
+                    <div class="timing-card-new">
+                        <div class="timing-icon">📱</div>
+                        <h3>Mobile-First World</h3>
+                        <p>Il 68% degli sviluppatori lavora in modalità remota o ibrida. I dispositivi mobili, come l'iPad Pro M4, hanno ormai la potenza di un laptop.</p>
+                    </div>
+                    <div class="timing-card-new">
+                        <div class="timing-icon">🛠️</div>
+                        <h3>Tecnologia Matura</h3>
+                        <p>Le tecnologie chiave come WebContainers e WASM sono mature e performanti. Le API dei modelli AI sono accessibili e potenti.</p>
+                    </div>
+                    <div class="timing-card-new">
+                        <div class="timing-icon">🎯</div>
+                        <h3>Competitor Gap</h3>
+                        <p>I principali player come Cursor e VS Code sono solo per desktop. C'è un'enorme opportunità per una soluzione mobile-native, con una finestra di 12-18 mesi di vantaggio.</p>
+                    </div>
+                </div>
+                <div class="timing-footer">
+                    <p>First-Mover Advantage = <strong>Ora</strong>.</p>
+                </div>
             </div>
         </div>
 
-        <!-- Slide 6: Concorrenza -->
+        <!-- Slide 6: Mercato -->
         <div class="slide">
-            <div class="slide-number">6/12</div>
             <div class="slide-content">
-                <section class="section">
-                    <div class="container">
-                        <h2>Vantaggio Competitivo</h2>
-                        <p class="section-subtitle">Drape è l'unico IDE mobile con terminal completo e AI agent autonomo</p>
-                        
-                        <!-- Comparison Table -->
-                        <div class="comparison-table-modern">
-                            <div class="table-header">
-                                <div class="header-cell">Feature</div>
-                                <div class="header-cell">Vibe code</div>
-                                <div class="header-cell">Replit Mobile</div>
-                                <div class="header-cell">Steercode</div>
-                                <div class="header-cell">Warp</div>
-                                <div class="header-cell drape-header">
-                                    <div class="logo-badge">D</div>
-                                    <span>Drape</span>
-                                </div>
-                            </div>
-                            
-                            <div class="table-row">
-                                <div class="feature-name">Terminale</div>
-                                <div class="cell fail">✗</div>
-                                <div class="cell success">✓</div>
-                                <div class="cell fail">✗</div>
-                                <div class="cell success">✓</div>
-                                <div class="cell success">✓</div>
-                            </div>
-                            
-                            <div class="table-row">
-                                <div class="feature-name">Multi-AI Routing</div>
-                                <div class="cell success">✓</div>
-                                <div class="cell fail">✗</div>
-                                <div class="cell success">✓</div>
-                                <div class="cell success">✓</div>
-                                <div class="cell success">✓</div>
-                            </div>
-                            
-                            <div class="table-row">
-                                <div class="feature-name">GitHub Integration</div>
-                                <div class="cell fail">✗</div>
-                                <div class="cell success">✓</div>
-                                <div class="cell fail">✗</div>
-                                <div class="cell warning">⚠️</div>
-                                <div class="cell success">✓</div>
-                            </div>
-                            
-                            <div class="table-footer">
-                                <div class="footer-cell"></div>
-                                <div class="footer-cell">
-                                    <div class="score-small">2/6</div>
-                                </div>
-                                <div class="footer-cell">
-                                    <div class="score-small">4/6</div>
-                                </div>
-                                <div class="footer-cell">
-                                    <div class="score-small">2/6</div>
-                                </div>
-                                <div class="footer-cell">
-                                    <div class="score-small">2.5/6</div>
-                                </div>
-                                <div class="footer-cell drape-score">
-                                    <div class="score-big">6/6</div>
-                                    <div class="score-label">Leader</div>
-                                </div>
-                            </div>
-                        </div>
+                <h2 class="slide-title">Il Mercato</h2>
+                <p class="slide-subtitle">Un'opportunità enorme in un mercato in rapida crescita.</p>
+                <div class="market-grid-new">
+                    <div class="market-card-new">
+                        <div class="market-icon">📈</div>
+                        <h3>Mercato Globale</h3>
+                        <p class="market-value">$12.3B</p>
+                        <p>Valore del mercato dei developer tools nel 2025.</p>
                     </div>
-                </section>
+                    <div class="market-card-new">
+                        <div class="market-icon">👨‍💻</div>
+                        <h3>Developer Globali</h3>
+                        <p class="market-value">29.4M</p>
+                        <p>Numero di sviluppatori a livello globale (Stack Overflow 2025).</p>
+                    </div>
+                    <div class="market-card-new">
+                        <div class="market-icon">🎯</div>
+                        <h3>Il Nostro Target</h3>
+                        <p class="market-value">5.2M</p>
+                        <p>Sviluppatori che usano AI coding tools e lavorano in modalità remota o ibrida.</p>
+                    </div>
+                </div>
+                <div class="market-funnel-new">
+                    <div class="funnel-stage">
+                        <h4>TAM</h4>
+                        <p class="funnel-value">$1.5B</p>
+                        <p>5M dev x $25/mese x 12</p>
+                    </div>
+                    <div class="funnel-arrow-new">→</div>
+                    <div class="funnel-stage">
+                        <h4>SAM</h4>
+                        <p class="funnel-value">$312M</p>
+                        <p>1.3M mobile dev x $240/anno</p>
+                    </div>
+                    <div class="funnel-arrow-new">→</div>
+                    <div class="funnel-stage">
+                        <h4>SOM</h4>
+                        <p class="funnel-value">$3M</p>
+                        <p>12.5K users x $20/mese x 12</p>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Slide 7: Business Model -->
         <div class="slide">
-            <div class="slide-number">7/12</div>
             <div class="slide-content">
-                <section class="section">
-                    <div class="container">
-                        <h2>Modello di Business</h2>
-                        <div class="pricing-grid">
-                            <div class="pricing-card">
-                                <h3>Free</h3>
-                                <div class="price">$0</div>
-                                <ul>
-                                    <li>Editor Base</li>
-                                    <li>100 AI requests/mese</li>
-                                    <li>GitHub Basic</li>
-                                    <li>1 Progetto attivo</li>
-                                    <li>Community Support</li>
-                                </ul>
-                            </div>
-                            <div class="pricing-card featured">
-                                <div class="popular-badge">Popolare</div>
-                                <h3>Plus</h3>
-                                <div class="price">$20<span>/mese</span></div>
-                                <ul>
-                                    <li>2.500 AI requests/mese</li>
-                                    <li>Hot Reload & Testing</li>
-                                    <li>Progetti Illimitati</li>
-                                    <li>Cloud Sync</li>
-                                    <li>Priority Support</li>
-                                    <li>Advanced Debugging</li>
-                                </ul>
-                            </div>
-                            <div class="pricing-card">
-                                <h3>Pro</h3>
-                                <div class="price">$50<span>/mese</span></div>
-                                <ul>
-                                    <li>10.000 AI requests/mese</li>
-                                    <li>Fino a 10 membri</li>
-                                    <li>Admin Dashboard</li>
-                                    <li>Team Analytics</li>
-                                    <li>Shared Workspaces</li>
-                                    <li>Custom AI Models</li>
-                                    <li>API Access</li>
-                                </ul>
-                            </div>
+                <h2 class="slide-title">Business Model</h2>
+                <p class="slide-subtitle">Un modello freemium pensato per la crescita virale e la monetizzazione a lungo termine.</p>
+                <div class="pricing-grid-new">
+                    <div class="pricing-card-new">
+                        <div class="pricing-header">
+                            <h3>Free</h3>
+                            <p class="price-new">€0</p>
                         </div>
+                        <ul class="features-list-new">
+                            <li>1 progetto</li>
+                            <li>50 AI queries/mese</li>
+                            <li>Accesso a tutti i modelli AI</li>
+                            <li>GitHub read-only</li>
+                        </ul>
                     </div>
-                </section>
+                    <div class="pricing-card-new featured-new">
+                        <div class="pricing-header">
+                            <h3>Pro</h3>
+                            <p class="price-new">€29.99<span class="price-unit">/mese</span></p>
+                        </div>
+                        <ul class="features-list-new">
+                            <li>Progetti illimitati</li>
+                            <li>1,000 AI queries/mese</li>
+                            <li>Terminal completo</li>
+                            <li>AI Agent avanzato</li>
+                            <li>Priority support</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card-new">
+                        <div class="pricing-header">
+                            <h3>Enterprise</h3>
+                            <p class="price-new">Custom</p>
+                        </div>
+                        <ul class="features-list-new">
+                            <li>Team workspaces</li>
+                            <li>SSO & security avanzata</li>
+                            <li>Dashboard admin</li>
+                            <li>Supporto dedicato</li>
+                            <li>Custom SLA</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pricing-footer">
+                    <p><strong>Trial:</strong> 14 giorni di Pro, senza carta di credito. <strong>Sconto annuale:</strong> 17% su tutti i piani.</p>
+                </div>
             </div>
         </div>
 
-        <!-- Slide 8: Go-To-Market / Traction -->
+        <!-- Slide 8: Vantaggio Competitivo -->
         <div class="slide">
-            <div class="slide-number">8/12</div>
+            <div class="slide-content">
+                <h2 class="slide-title">Vantaggio Competitivo</h2>
+                <p class="slide-subtitle">Il nostro posizionamento unico nel mercato.</p>
+                <div class="competitive-grid">
+                    <div class="comparison-table-wrapper">
+                        <table class="comparison-table-new">
+                            <thead>
+                                <tr>
+                                    <th>Tool</th>
+                                    <th>Free</th>
+                                    <th>Base</th>
+                                    <th>Pro</th>
+                                    <th>Enterprise/User</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="drape-row">
+                                    <td>Drape</td>
+                                    <td>✅</td>
+                                    <td>€9.99</td>
+                                    <td>€29.99</td>
+                                    <td>€29.99</td>
+                                </tr>
+                                <tr>
+                                    <td>Cursor</td>
+                                    <td>2w</td>
+                                    <td>€20</td>
+                                    <td>-</td>
+                                    <td>Custom</td>
+                                </tr>
+                                <tr>
+                                    <td>Windsurf</td>
+                                    <td>✅</td>
+                                    <td>€15</td>
+                                    <td>-</td>
+                                    <td>Custom</td>
+                                </tr>
+                                <tr>
+                                    <td>GitHub Copilot</td>
+                                    <td>❌</td>
+                                    <td>€10</td>
+                                    <td>€19</td>
+                                    <td>€39</td>
+                                </tr>
+                                <tr>
+                                    <td>Replit</td>
+                                    <td>✅</td>
+                                    <td>€20</td>
+                                    <td>-</td>
+                                    <td>€33</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="differentiators-new">
+                        <div class="differentiator-item-new">
+                            <div class="differentiator-icon">🏆</div>
+                            <div class="differentiator-text">
+                                <h4>Valore Unico</h4>
+                                <p>3 modelli AI di punta in tutti i piani, incluso quello gratuito. Il free tier più generoso del mercato.</p>
+                            </div>
+                        </div>
+                        <div class="differentiator-item-new">
+                            <div class="differentiator-icon">💰</div>
+                            <div class="differentiator-text">
+                                <h4>Prezzo Trasparente</h4>
+                                <p>Prezzi chiari e competitivi per i team, più economici di GitHub Copilot. Piano Ultimate con BYOK per un enorme risparmio.</p>
+                            </div>
+                        </div>
+                        <div class="differentiator-item-new">
+                            <div class="differentiator-icon">📱</div>
+                            <div class="differentiator-text">
+                                <h4>Mobile-Native</h4>
+                                <p>A differenza della concorrenza, Drape è progettato e costruito per un'esperienza mobile-first senza compromessi.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Analisi Competitiva -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="slide-title">Analisi Competitiva</h2>
+                <p class="slide-subtitle">Come ci posizioniamo rispetto alla concorrenza.</p>
+                <div class="competition-grid-new">
+                    <div class="competitor-card-new">
+                        <h4>Loro Forza</h4>
+                        <ul>
+                            <li><strong>Cursor/Windsurf:</strong> AI agent maturo, user base consolidata.</li>
+                            <li><strong>Codespaces:</strong> Integrazione GitHub perfetta, infrastruttura Microsoft.</li>
+                            <li><strong>Replit:</strong> Community enorme, collaboration features.</li>
+                        </ul>
+                    </div>
+                    <div class="competitor-card-new our-advantage">
+                        <h4>Nostro Vantaggio</h4>
+                        <ul>
+                            <li><strong>Mobile-Native:</strong> Unico player con un'esperienza pensata per il mobile.</li>
+                            <li><strong>AI Multimodello:</strong> Accesso a GPT-5, Claude 4.5 e Gemini 2.5.</li>
+                            <li><strong>Focus su Quick Wins:</strong> Ottimizzato per fix rapidi e modifiche al volo.</li>
+                            <li><strong>Offline-First:</strong> Lavora anche senza connessione.</li>
+                        </ul>
+                    </div>
+                    <div class="competitor-card-new">
+                        <h4>La Nostra Difesa</h4>
+                        <ul>
+                            <li><strong>First-Mover Advantage:</strong> 12-18 mesi di vantaggio sulla concorrenza.</li>
+                            <li><strong>Mobile UX è difficile:</strong> Replit ha già fallito nel creare un'esperienza mobile valida.</li>
+                            <li><strong>Community Loyalty:</strong> Costruiremo una community forte e fedele.</li>
+                            <li><strong>Worst Case:</strong> Diventiamo un target di acquisizione (exit €20-50M).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Go-to-Market -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="slide-title">Go-to-Market</h2>
+                <p class="slide-subtitle">La nostra strategia per conquistare il mercato.</p>
+                <div class="gtm-grid">
+                    <div class="gtm-phase">
+                        <div class="phase-header">
+                            <span class="phase-number">1</span>
+                            <h4>Validation</h4>
+                            <p class="phase-date">Nov 2025 - Gen 2026</p>
+                        </div>
+                        <ul class="phase-goals">
+                            <li>200 email nella waitlist</li>
+                            <li>Feedback qualitativo da 10 beta tester</li>
+                        </ul>
+                    </div>
+                    <div class="gtm-phase">
+                        <div class="phase-header">
+                            <span class="phase-number">2</span>
+                            <h4>Private Beta</h4>
+                            <p class="phase-date">Feb - Apr 2026</p>
+                        </div>
+                        <ul class="phase-goals">
+                            <li>100 active users</li>
+                            <li>40%+ retention D7</li>
+                        </ul>
+                    </div>
+                    <div class="gtm-phase">
+                        <div class="phase-header">
+                            <span class="phase-number">3</span>
+                            <h4>Public Beta</h4>
+                            <p class="phase-date">Mag - Ago 2026</p>
+                        </div>
+                        <ul class="phase-goals">
+                            <li>2,000 users</li>
+                            <li>100 utenti paganti</li>
+                        </ul>
+                    </div>
+                    <div class="gtm-phase">
+                        <div class="phase-header">
+                            <span class="phase-number">4</span>
+                            <h4>Public Launch</h4>
+                            <p class="phase-date">Set 2026</p>
+                        </div>
+                        <ul class="phase-goals">
+                            <li>10,000 users</li>
+                            <li>€10K MRR</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="acquisition-channels-new">
+                    <div class="channel-card">
+                        <h5>Organic (70%)</h5>
+                        <p>Content marketing, community building, e word-of-mouth.</p>
+                    </div>
+                    <div class="channel-card">
+                        <h5>Paid (30%)</h5>
+                        <p>Target CAC di €40-60 attraverso ads su Reddit e YouTube.</p>
+                    </div>
+                    <div class="channel-card">
+                        <h5>Virality</h5>
+                        <p>Incentivare la condivisione di screenshot e demo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Richiesta di Finanziamento -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2 class="slide-title">Richiesta di Finanziamento</h2>
+                <p class="slide-subtitle">Stiamo cercando un finanziamento pre-seed di €200.000 per accelerare lo sviluppo e il lancio.</p>
+                <div class="funding-summary">
+                    <div class="funding-amount-new">
+                        <p class="amount-label">Round</p>
+                        <p class="amount-value">Pre-Seed</p>
+                        <p class="amount-label">Richiesta</p>
+                        <p class="amount-value">€200.000</p>
+                    </div>
+                    <div class="funding-breakdown-new">
+                        <div class="breakdown-item-new">
+                            <div class="breakdown-percentage">50%</div>
+                            <div class="breakdown-category">Team & Hiring</div>
+                            <div class="breakdown-value">€100K</div>
+                        </div>
+                        <div class="breakdown-item-new">
+                            <div class="breakdown-percentage">30%</div>
+                            <div class="breakdown-category">Infrastructure</div>
+                            <div class="breakdown-value">€60K</div>
+                        </div>
+                        <div class="breakdown-item-new">
+                            <div class="breakdown-percentage">20%</div>
+                            <div class="breakdown-category">Go-to-Market</div>
+                            <div class="breakdown-value">€40K</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Stato Attuale & Roadmap -->
+        <div class="slide">
+            <div class="slide-number">12/18</div>
             <div class="slide-content">
                 <section class="section">
                     <div class="container">
-                        <h2>Trazione & Roadmap</h2>
-                        <div class="traction-content">
+                        <div class="hero-content">
+                            <h1 class="hero-title">STATO ATTUALE & ROADMAP</h1>
+                            <h2 class="hero-subtitle">PROGRESS & MILESTONES</h2>
+                            
+                            <div class="current-status">
+                                <h3>OGGI (Ottobre 2025) - 1 MESE DI SVILUPPO</h3>
+                                
+                                <div class="status-section">
+                                    <h4>✅ COMPLETATO:</h4>
+                                    <div class="status-items">
+                                        <div class="status-item">- Frontend Flutter funzionante e responsive</div>
+                                        <div class="status-item">- GitHub integration: clone, commit, push, PR</div>
+                                        <div class="status-item">- Container runtime: app HTML/JS girano in-app</div>
+                                        <div class="status-item">- Editor con syntax highlighting</div>
+                                        <div class="status-item">- Preview in tempo reale</div>
+                                        <div class="status-item">- UI base ottimizzata per touch</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="status-section">
+                                    <h4>🔄 IN SVILUPPO (prossime 8 settimane):</h4>
+                                    <div class="status-items">
+                                        <div class="status-item">- Container Python, Node.js, Go</div>
+                                        <div class="status-item">- Integration GPT-5, Claude 4.5, Gemini 2.5</div>
+                                        <div class="status-item">- AI Agent che scrive codice autonomamente</div>
+                                        <div class="status-item">- Terminal bash/zsh funzionante</div>
+                                        <div class="status-item">- Sistema di projects e workspace</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <div class="roadmap">
-                                <div class="roadmap-item completed">
-                                    <h4>Q1-Q3 2025 - Fondamenta</h4>
-                                    <p>Prototipo iniziale, validazione concept, primi test con utenti beta</p>
-                                </div>
-                                <div class="roadmap-item">
-                                    <h4>Q4 2025 - Lancio MVP</h4>
-                                    <p>Editor base, Terminal integrato, AI GPT-5, Integrazione GitHub, UI ottimizzata per mobile</p>
-                                </div>
-                                <div class="roadmap-item">
-                                    <h4>Q1 2026 - Potenziamento AI</h4>
-                                    <p>AI Multi-modello (Claude 4.5, Gemini Pro 2.5), AI Agent autonomo, Debugging intelligente avanzato</p>
-                                </div>
-                                <div class="roadmap-item">
-                                    <h4>Q2 2026 - Funzionalità Avanzate</h4>
-                                    <p>Modifica progetti esistenti, Visualizzatore diff, Gestione PR, Collaborazione team, Target 3K+ utenti</p>
-                                </div>
-                            </div>
-                            <div class="projections">
-                                <h3>Proiezioni Ricavi</h3>
-                                <div class="projection-grid">
-                                    <div class="projection">
-                                        <h4>Fine 2026</h4>
-                                        <p>3K utenti gratuiti</p>
-                                        <p>200 Plus ($20)</p>
-                                        <p>20 Pro ($50)</p>
-                                        <p>5 Business ($200)</p>
-                                        <p class="revenue">$62K ARR</p>
+                                <h3>ROADMAP</h3>
+                                
+                                <div class="roadmap-timeline">
+                                    <div class="timeline-item">
+                                        <div class="timeline-date">8 SETTIMANE (Dicembre 2025):</div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-point">→ MVP feature-complete</div>
+                                            <div class="timeline-point">→ 10 beta tester interni</div>
+                                            <div class="timeline-point">→ Feedback loop veloce, bug fixing</div>
+                                        </div>
                                     </div>
-                                    <div class="projection highlight">
-                                        <h4>Fine 2027</h4>
-                                        <p>15K utenti gratuiti</p>
-                                        <p>1.2K Plus ($20)</p>
-                                        <p>80 Pro ($50)</p>
-                                        <p>20 Business ($200)</p>
-                                        <p class="revenue">$340K ARR</p>
+                                    
+                                    <div class="timeline-item">
+                                        <div class="timeline-date">3 MESI (Gennaio 2026):</div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-point">→ Landing page + waitlist attivo</div>
+                                            <div class="timeline-point">→ Private beta 100 developer</div>
+                                            <div class="timeline-point">→ Validazione problema/soluzione</div>
+                                            <div class="timeline-point">→ Metriche: retention D7, time in app</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="timeline-item">
+                                        <div class="timeline-date">6 MESI (Aprile 2026):</div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-point">→ Public beta TestFlight</div>
+                                            <div class="timeline-point">→ 1,000 users, primi 50 paganti</div>
+                                            <div class="timeline-point">→ Team: +2 persone (senior dev + designer)</div>
+                                            <div class="timeline-point">→ Product-market fit iniziale</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="timeline-item">
+                                        <div class="timeline-date">12 MESI (Ottobre 2026):</div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-point">→ Public launch App Store + Play Store</div>
+                                            <div class="timeline-point">→ 5,000 users, 300-500 paganti</div>
+                                            <div class="timeline-point">→ €72-120K ARR</div>
+                                            <div class="timeline-point">→ Team: 6 persone</div>
+                                            <div class="timeline-point">→ Ready per Series A (€500K-1M)</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="timeline-item">
+                                        <div class="timeline-date">18 MESI (Aprile 2027):</div>
+                                        <div class="timeline-content">
+                                            <div class="timeline-point">→ 15,000 users, 1,500 paganti</div>
+                                            <div class="timeline-point">→ €360K ARR</div>
+                                            <div class="timeline-point">→ Enterprise features complete</div>
+                                            <div class="timeline-point">→ Series A chiuso, scaling aggressivo</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1464,296 +2983,575 @@
             </div>
         </div>
 
-        <!-- Slide 8: Proiezioni -->
+        <!-- Slide 13: Rischi & Mitigazioni -->
         <div class="slide">
-            <div class="slide-number">8/12</div>
+            <div class="slide-number">13/18</div>
             <div class="slide-content">
-                <h2>Proiezioni Finanziarie</h2>
-                <div class="chart-container">
-                    <h3 style="color: var(--text); margin-bottom: 30px;">Crescita ARR (Annual Recurring Revenue)</h3>
-                    <div class="bar-chart">
-                        <div class="bar" style="height: 40px;">
-                            <div class="bar-value">€50K</div>
-                            <div class="bar-label">Anno 1</div>
-                        </div>
-                        <div class="bar" style="height: 120px;">
-                            <div class="bar-value">€400K</div>
-                            <div class="bar-label">Anno 2</div>
-                        </div>
-                        <div class="bar" style="height: 200px;">
-                            <div class="bar-value">€2.1M</div>
-                            <div class="bar-label">Anno 3</div>
-                        </div>
-                        <div class="bar" style="height: 280px;">
-                            <div class="bar-value">€8.5M</div>
-                            <div class="bar-label">Anno 4</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="metric-grid">
-                    <div class="metric-card">
-                        <div class="metric-value">15K</div>
-                        <div class="metric-label">Utenti Paganti Anno 3</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">€140</div>
-                        <div class="metric-label">ARPU Medio</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">80%+</div>
-                        <div class="metric-label">Margini</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 9: Team -->
-        <div class="slide">
-            <div class="slide-number">9/12</div>
-            <div class="slide-content">
-                <h2>Il Team</h2>
-                <div class="feature-list">
-                    <li>Founder con esperienza in mobile development</li>
-                    <li>Background in AI e machine learning</li>
-                    <li>Track record in product development</li>
-                    <li>Network nel settore developer tools</li>
-                    <li>Visione chiara del mercato mobile</li>
-                </div>
-                <p>Team tecnico con le competenze giuste per eseguire</p>
-            </div>
-        </div>
-
-        <!-- Slide 10: Roadmap -->
-        <div class="slide">
-            <div class="slide-number">10/12</div>
-            <div class="slide-content">
-                <h2>Roadmap</h2>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <h4 style="color: var(--primary); margin-bottom: 10px;">Q1 2025</h4>
-                        <p style="font-size: 1rem;">Launch pubblico<br>1K utenti</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4 style="color: var(--primary); margin-bottom: 10px;">Q2 2025</h4>
-                        <p style="font-size: 1rem;">Team features<br>Collaboration</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4 style="color: var(--primary); margin-bottom: 10px;">Q3 2025</h4>
-                        <p style="font-size: 1rem;">Cloud providers<br>Integration</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4 style="color: var(--primary); margin-bottom: 10px;">Q4 2025</h4>
-                        <p style="font-size: 1rem;">International<br>Expansion</p>
-                    </div>
-                </div>
-                <div style="margin-top: 60px;">
-                    <div class="metric-card" style="display: inline-block; margin: 0 20px;">
-                        <div class="metric-value">2026</div>
-                        <div class="metric-label">Enterprise & Partnerships</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 11: Investimento -->
-        <div class="slide">
-            <div class="slide-number">11/12</div>
-            <div class="slide-content">
-                <h2>Investimento Richiesto</h2>
-                <div class="metric-grid">
-                    <div class="metric-card">
-                        <div class="metric-value">€500K</div>
-                        <div class="metric-label">Seed Round</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">18 mesi</div>
-                        <div class="metric-label">Runway</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">15%</div>
-                        <div class="metric-label">Equity Offerta</div>
-                    </div>
-                </div>
-                <p>Fondi per sviluppo prodotto, team expansion e go-to-market</p>
-            </div>
-        </div>
-
-        <!-- Slide 12: Call to Action -->
-        <div class="slide hero-slide">
-            <div class="floating-elements"></div>
-            <div class="slide-number">12/12</div>
-            <div class="slide-content">
-                <h1 style="font-size: 4rem;">Unisciti alla Rivoluzione</h1>
-                <p style="font-size: 2rem; margin: 40px 0;">Il futuro dello sviluppo software è mobile</p>
-                
-                <div class="metric-grid" style="margin: 60px 0;">
-                    <div class="metric-card">
-                        <div class="metric-value">€500K</div>
-                        <div class="metric-label">Investimento Richiesto</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">15%</div>
-                        <div class="metric-label">Equity Offerta</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">∞</div>
-                        <div class="metric-label">Potenziale ROI</div>
-                    </div>
-                </div>
-                
-                <p style="color: var(--primary); font-size: 2.2rem; margin: 60px 0;">
-                    Drape è pronto a guidare questa trasformazione
-                </p>
-                
-                <div style="background: rgba(168, 85, 247, 0.1); padding: 30px; border-radius: 20px; border: 2px solid var(--primary); margin-top: 40px;">
-                    <a href="mailto:hello@drape.dev" style="color: var(--primary); font-size: 1.8rem; text-decoration: none; font-weight: 600;">
-                        📧 hello@drape.dev
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 9: Team -->
-    <div class="slide">
-        <div class="slide-number">9/12</div>
-        <div class="slide-content">
-            <section class="section">
-                <div class="container">
-                    <h2 class="reveal">Il Team</h2>
-                    <div class="team-grid">
-                        <div class="team-member reveal" data-delay="0">
-                            <div class="member-avatar">👨‍💻</div>
-                            <h3>CEO & Founder</h3>
-                            <h4>Leon Rivas</h4>
-                            <p>10+ anni in mobile development, ex-Google, esperto in AI e developer tools.</p>
-                        </div>
-                        <div class="team-member reveal" data-delay="200">
-                            <div class="member-avatar">👨‍🔬</div>
-                            <h3>CTO</h3>
-                            <h4>Marco Bianchi</h4>
-                            <p>15+ anni in architetture scalabili, ex-Microsoft Azure.</p>
-                        </div>
-                        <div class="team-member reveal" data-delay="400">
-                            <div class="member-avatar">👩‍🎨</div>
-                            <h3>Head of Design</h3>
-                            <h4>Sofia Rossi</h4>
-                            <p>8+ anni in UX/UI per developer tools, ex-JetBrains.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-
-    <!-- Slide 10: Previsioni Finanziarie -->
-    <div class="slide">
-        <div class="slide-number">10/12</div>
-        <div class="slide-content">
-            <section class="section">
-                <div class="container">
-                    <h2 class="reveal">Previsioni Finanziarie</h2>
-                    <div class="projection-timeline reveal">
-                        <div class="timeline-item">
-                            <h4>2025: €15K ARR</h4>
-                            <p>1K utenti, lancio MVP</p>
-                        </div>
-                        <div class="timeline-item highlight">
-                            <h4>2026: €180K ARR</h4>
-                            <p>8K utenti, break-even</p>
-                        </div>
-                        <div class="timeline-item">
-                            <h4>2027: €750K ARR</h4>
-                            <p>25K utenti, profittabilità</p>
-                        </div>
-                        <div class="timeline-item">
-                            <h4>2028: €2.1M ARR</h4>
-                            <p>60K utenti, Serie A ready</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-
-    <!-- Slide 11: Richiesta Finanziamento -->
-    <div class="slide">
-        <div class="slide-number">11/12</div>
-        <div class="slide-content">
-            <section class="section">
-                <div class="container">
-                    <h2 class="reveal">Richiesta di Finanziamento</h2>
-                    <div class="funding-request">
-                        <div class="funding-amount reveal">
-                            <h1 style="color: var(--primary); font-size: 4rem;">€500K</h1>
-                            <p style="font-size: 1.5rem;">Seed Round - 15% equity</p>
-                        </div>
-                        <div class="fund-usage reveal" data-delay="200">
-                            <h3>Utilizzo Fondi</h3>
-                            <div class="usage-list">
-                                <div class="usage-item">40% Sviluppo Prodotto (€200K)</div>
-                                <div class="usage-item">30% Team Expansion (€150K)</div>
-                                <div class="usage-item">20% Marketing & Sales (€100K)</div>
-                                <div class="usage-item">10% Operations (€50K)</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-
-    <!-- Slide 12: Contatti -->
-    <div class="slide">
-        <div class="slide-number">12/12</div>
-        <div class="slide-content">
-            <section class="section">
-                <div class="container">
-                    <h2 class="reveal">Grazie</h2>
-                    <div class="contact-info">
-                        <h1 class="reveal" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 4rem;">DRAPE</h1>
-                        <p class="reveal" style="font-size: 1.5rem; margin: 20px 0;">Il primo IDE mobile dedicato ai professionisti</p>
-                        
-                        <div class="contact-grid reveal" data-delay="200">
-                            <div class="contact-item">
-                                <span>📧</span>
-                                <div>
-                                    <h4>Email</h4>
-                                    <p>hello@drape.dev</p>
+                <section class="section">
+                    <div class="container">
+                        <div class="hero-content">
+                            <h1 class="hero-title">RISCHI & MITIGAZIONI</h1>
+                            <h2 class="hero-subtitle">SIAMO ONESTI SUI RISCHI</h2>
+                            
+                            <div class="risks-grid">
+                                <div class="risk-item">
+                                    <div class="risk-header">
+                                        <div class="risk-icon">⚠️</div>
+                                        <div class="risk-title">RISK: iOS/Android limitano esecuzione codice</div>
+                                    </div>
+                                    <div class="mitigation">
+                                        <div class="mitigation-header">✅ MITIGATION:</div>
+                                        <div class="mitigation-points">
+                                            <div class="mitigation-point">• WebContainers via WASM (già testato, funziona)</div>
+                                            <div class="mitigation-point">• Sandbox sicuro, Apple/Google compliant</div>
+                                            <div class="mitigation-point">• Fallback: remote containers se needed</div>
+                                            <div class="mitigation-point">• Stessa tech di CodeSandbox, Stackblitz (già su store)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="risk-item">
+                                    <div class="risk-header">
+                                        <div class="risk-icon">⚠️</div>
+                                        <div class="risk-title">RISK: Costi API AI troppo alti</div>
+                                    </div>
+                                    <div class="mitigation">
+                                        <div class="mitigation-header">✅ MITIGATION:</div>
+                                        <div class="mitigation-points">
+                                            <div class="mitigation-point">• Free tier: 50 queries = €4/user (sostenibile loss leader)</div>
+                                            <div class="mitigation-point">• Starter/Pro: costo AI coperto da subscription</div>
+                                            <div class="mitigation-point">• Ultimate: BYOK = zero costo per noi</div>
+                                            <div class="mitigation-point">• Unit economics: LTV €240 > AI cost €24/anno = 10x</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="risk-item">
+                                    <div class="risk-header">
+                                        <div class="risk-icon">⚠️</div>
+                                        <div class="risk-title">RISK: "Nessuno vuole codare su mobile"</div>
+                                    </div>
+                                    <div class="mitigation">
+                                        <div class="mitigation-header">✅ MITIGATION:</div>
+                                        <div class="mitigation-points">
+                                            <div class="mitigation-point">• Non vendiamo "full development"</div>
+                                            <div class="mitigation-point">• Vendiamo "emergency fixes + quick edits"</div>
+                                            <div class="mitigation-point">• Beta testing per validare uso reale (primi 3 mesi)</div>
+                                            <div class="mitigation-point">• Decision point: se retention <30% → pivot a DevOps tools</div>
+                                            <div class="mitigation-point">• Pivot options: monitoring, logs, incident response</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="risk-item">
+                                    <div class="risk-header">
+                                        <div class="risk-icon">⚠️</div>
+                                        <div class="risk-title">RISK: Cursor/GitHub/Microsoft ci copiano</div>
+                                    </div>
+                                    <div class="mitigation">
+                                        <div class="mitigation-header">✅ MITIGATION:</div>
+                                        <div class="mitigation-points">
+                                            <div class="mitigation-point">• First-mover: 12-18 mesi di vantaggio</div>
+                                            <div class="mitigation-point">• Mobile UX è HARD (Replit ci ha provato, ha fallito)</div>
+                                            <div class="mitigation-point">• Community loyalty da early adopters</div>
+                                            <div class="mitigation-point">• Worst case: acquisition target (€20-50M exit)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="risk-item">
+                                    <div class="risk-header">
+                                        <div class="risk-icon">⚠️</div>
+                                        <div class="risk-title">RISK: Team giovane/inesperto</div>
+                                    </div>
+                                    <div class="mitigation">
+                                        <div class="mitigation-header">✅ MITIGATION:</div>
+                                        <div class="mitigation-points">
+                                            <div class="mitigation-point">• Cerchiamo advisors senior (parte del deal)</div>
+                                            <div class="mitigation-point">• Assumeremo senior developers con funding</div>
+                                            <div class="mitigation-point">• Siamo coachable, impariamo veloce</div>
+                                            <div class="mitigation-point">• Track record: prototipo in 1 mese = execution ability</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="contact-item">
-                                <span>🌐</span>
-                                <div>
-                                    <h4>Website</h4>
-                                    <p>drape.dev</p>
+                            
+                            <div class="transparency-note">
+                                <p>TRANSPARENCY = CREDIBILITY</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Slide 14: Financials -->
+        <div class="slide">
+            <div class="slide-number">14/18</div>
+            <div class="slide-content">
+                <section class="section">
+                    <div class="container">
+                        <div class="hero-content">
+                            <h1 class="hero-title">FINANCIALS</h1>
+                            <h2 class="hero-subtitle">PATH TO €2M ARR</h2>
+                            
+                            <div class="financials-timeline">
+                                <div class="financial-year">
+                                    <div class="year-header">
+                                        <h3>ANNO 1 - 2026 (Con €200K Pre-Seed)</h3>
+                                    </div>
+                                    <div class="year-content">
+                                        <div class="financial-metrics">
+                                            <div class="metric-item">- 5,000 users totali</div>
+                                            <div class="metric-item">- 1,250 paying users (25% conversion)</div>
+                                            <div class="metric-breakdown">
+                                                <div class="breakdown-item">- 750 Starter (€9.99)</div>
+                                                <div class="breakdown-item">- 450 Pro (€29.99)</div>
+                                                <div class="breakdown-item">- 30 Ultimate (€199.99)</div>
+                                                <div class="breakdown-item">- 2 Enterprise teams (10 users)</div>
+                                            </div>
+                                        </div>
+                                        <div class="financial-results">
+                                            <div class="result-item">- MRR: €24K | ARR: €288K</div>
+                                            <div class="result-item">- Blended ARPU: €19.20/paying user</div>
+                                            <div class="result-item">- Burn rate: €15K/mese</div>
+                                            <div class="result-item">- Runway: 13 mesi → Series A needed</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="financial-year">
+                                    <div class="year-header">
+                                        <h3>ANNO 2 - 2027 (Con Series A €500K)</h3>
+                                    </div>
+                                    <div class="year-content">
+                                        <div class="financial-metrics">
+                                            <div class="metric-item">- 25,000 users totali</div>
+                                            <div class="metric-item">- 6,250 paying users (25% conversion)</div>
+                                            <div class="metric-breakdown">
+                                                <div class="breakdown-item">- 3,750 Starter</div>
+                                                <div class="breakdown-item">- 2,250 Pro</div>
+                                                <div class="breakdown-item">- 188 Ultimate</div>
+                                                <div class="breakdown-item">- 15 Enterprise teams (62 users)</div>
+                                            </div>
+                                        </div>
+                                        <div class="financial-results">
+                                            <div class="result-item">- MRR: €144K | ARR: €1.73M</div>
+                                            <div class="result-item">- Blended ARPU: €23.04/paying user</div>
+                                            <div class="result-item">- Break-even: mese 22</div>
+                                            <div class="result-item">- Team: 12 persone</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="financial-year">
+                                    <div class="year-header">
+                                        <h3>ANNO 3 - 2028</h3>
+                                    </div>
+                                    <div class="year-content">
+                                        <div class="financial-metrics">
+                                            <div class="metric-item">- 80,000 users totali</div>
+                                            <div class="metric-item">- 24,000 paying users (30% conversion)</div>
+                                        </div>
+                                        <div class="financial-results">
+                                            <div class="result-item">- MRR: €553K | ARR: €6.6M</div>
+                                            <div class="result-item">- Profitable: +€50K/mese</div>
+                                            <div class="result-item">- Team: 20 persone</div>
+                                            <div class="result-item">- Series B ready o profitable growth</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="unit-economics">
+                                <h3>UNIT ECONOMICS (Target):</h3>
+                                <div class="economics-grid">
+                                    <div class="economics-item">- CAC blended: €45</div>
+                                    <div class="economics-item">- LTV: €240 (12 mesi avg lifetime)</div>
+                                    <div class="economics-item">- Gross Margin: 78% (SaaS standard)</div>
+                                    <div class="economics-item">- LTV/CAC: 5.3x → healthy</div>
+                                    <div class="economics-item">- Payback period: 2.5 mesi</div>
+                                    <div class="economics-item">- Monthly churn: 8% (industry standard)</div>
                                 </div>
                             </div>
                         </div>
-                        
-                        <p class="reveal" data-delay="400" style="font-size: 1.2rem; color: var(--primary); margin-top: 40px;">
-                            Pronti a rivoluzionare lo sviluppo mobile?
-                        </p>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
+        </div>
+
+        <!-- Slide 15: The Ask -->
+        <div class="slide">
+            <div class="slide-number">15/18</div>
+            <div class="slide-content">
+                <section class="section">
+                    <div class="container">
+                        <div class="hero-content">
+                            <h1 class="hero-title">THE ASK</h1>
+                            <h2 class="hero-subtitle">CERCHIAMO: €200,000 PRE-SEED</h2>
+                            
+                            <div class="ask-details">
+                                <div class="valuation-section">
+                                    <div class="valuation-item">VALUATION: €1.8M pre-money</div>
+                                    <div class="valuation-item">EQUITY OFFERTA: 10-11%</div>
+                                    <div class="valuation-item">POST-MONEY VALUATION: €2M</div>
+                                </div>
+                                
+                                <div class="use-of-funds">
+                                    <h3>USE OF FUNDS (18 mesi runway)</h3>
+                                    
+                                    <div class="fund-category">
+                                        <div class="fund-header">💰 50% → TEAM (€100K)</div>
+                                        <div class="fund-items">
+                                            <div class="fund-item">• Senior Mobile Developer: €55K/anno</div>
+                                            <div class="fund-item">• UI/UX Designer: €35K/anno (part→full time)</div>
+                                            <div class="fund-item">• Growth/Marketing: €10K (freelance)</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="fund-category">
+                                        <div class="fund-header">💰 30% → INFRASTRUTTURA (€60K)</div>
+                                        <div class="fund-items">
+                                            <div class="fund-item">• Cloud hosting: €18K/anno (AWS/GCP)</div>
+                                            <div class="fund-item">• API AI costs: €30K/anno (3,000 users)</div>
+                                            <div class="fund-item">• Testing devices: €8K (iPhone, Android)</div>
+                                            <div class="fund-item">• Tools & licenses: €4K</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="fund-category">
+                                        <div class="fund-header">💰 20% → GO-TO-MARKET (€40K)</div>
+                                        <div class="fund-items">
+                                            <div class="fund-item">• Paid ads: €20K (Reddit, YouTube, Google)</div>
+                                            <div class="fund-item">• Content creation: €8K (video, blog, tutorials)</div>
+                                            <div class="fund-item">• Community building: €6K (events, incentives)</div>
+                                            <div class="fund-item">• Legal & accounting: €6K</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="milestones">
+                                    <h3>MILESTONE PER SERIES A (12-15 mesi):</h3>
+                                    <div class="milestone-items">
+                                        <div class="milestone-item">✓ 5,000 active users</div>
+                                        <div class="milestone-item">✓ 300-500 paying users</div>
+                                        <div class="milestone-item">✓ €65-100K ARR</div>
+                                        <div class="milestone-item">✓ 40%+ retention D30</div>
+                                        <div class="milestone-item">✓ 6%+ free-to-paid conversion</div>
+                                        <div class="milestone-item">✓ Product-market fit validato</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="comparables">
+                                    <h3>COMPARABLE VALUATIONS (Pre-Seed):</h3>
+                                    <div class="comparable-items">
+                                        <div class="comparable-item">- Replit (2018): €1.5M</div>
+                                        <div class="comparable-item">- Cursor (2022): €3M (seed)</div>
+                                        <div class="comparable-item">- Typical pre-revenue SaaS: €1.5-2.5M</div>
+                                    </div>
+                                    <div class="our-valuation">Noi: €1.8M (prototipo funzionante, 1 mese di progress)</div>
+                                </div>
+                                
+                                <div class="terms">
+                                    <h3>TERMS PREFERRED:</h3>
+                                    <div class="terms-items">
+                                        <div class="terms-item">- SAFE o Convertible Note</div>
+                                        <div class="terms-item">- Discount: 20% on Series A</div>
+                                        <div class="terms-item">- Valuation cap: €2M</div>
+                                        <div class="terms-item">- Founder-friendly terms</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Slide 16: Why Invest -->
+        <div class="slide">
+            <div class="slide-number">16/18</div>
+            <div class="slide-content">
+                <section class="section">
+                    <div class="container">
+                        <div class="hero-content">
+                            <h1 class="hero-title">WHY INVEST IN DRAPE?</h1>
+                            <h2 class="hero-subtitle">6 RAGIONI PER INVESTIRE ORA</h2>
+                            
+                            <div class="investment-reasons">
+                                <div class="reason-item">
+                                    <div class="reason-number">1️⃣</div>
+                                    <div class="reason-content">
+                                        <div class="reason-title">TIMING PERFETTO</div>
+                                        <div class="reason-details">
+                                            <div class="reason-point">AI coding = megatrend 2024-2025</div>
+                                            <div class="reason-point">Mobile gap = ancora non risolto</div>
+                                            <div class="reason-point">12-18 mesi window prima che big tech reagiscano</div>
+                                            <div class="reason-point">Cursor/Windsurf dimostrano la demand</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="reason-item">
+                                    <div class="reason-number">2️⃣</div>
+                                    <div class="reason-content">
+                                        <div class="reason-title">FOUNDERS ECCEZIONALI</div>
+                                        <div class="reason-details">
+                                            <div class="reason-point">Developer veri, non solo "idea people"</div>
+                                            <div class="reason-point">Prototipo in 1 mese = fast execution</div>
+                                            <div class="reason-point">Giovani, fame, 100% dedicated</div>
+                                            <div class="reason-point">Coachable, technical, user-centric</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="reason-item">
+                                    <div class="reason-number">3️⃣</div>
+                                    <div class="reason-content">
+                                        <div class="reason-title">TRACTION REALE (pre-launch)</div>
+                                        <div class="reason-details">
+                                            <div class="reason-point">Prototipo funzionante (non solo slide)</div>
+                                            <div class="reason-point">GitHub integration completa</div>
+                                            <div class="reason-point">Container tech validata</div>
+                                            <div class="reason-point">1 mese di progress = ottimo segnale</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="reason-item">
+                                    <div class="reason-number">4️⃣</div>
+                                    <div class="reason-content">
+                                        <div class="reason-title">HUGE MARKET</div>
+                                        <div class="reason-details">
+                                            <div class="reason-point">€12.3B developer tools market</div>
+                                            <div class="reason-point">5.2M developer usano AI coding (+39% YoY)</div>
+                                            <div class="reason-point">Mobile development growing +15%/anno</div>
+                                            <div class="reason-point">Greenfield: nessun leader mobile-native</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="reason-item">
+                                    <div class="reason-number">5️⃣</div>
+                                    <div class="reason-content">
+                                        <div class="reason-title">DIFENDIBILITÀ</div>
+                                        <div class="reason-details">
+                                            <div class="reason-point">First-mover advantage (12-18 mesi)</div>
+                                            <div class="reason-point">Mobile UX è HARD (Replit ha fallito)</div>
+                                            <div class="reason-point">Community loyalty da early adopters</div>
+                                            <div class="reason-point">Tech complexity: container + AI + mobile</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="reason-item">
+                                    <div class="reason-number">6️⃣</div>
+                                    <div class="reason-content">
+                                        <div class="reason-title">EXIT ATTRAENTE</div>
+                                        <div class="reason-details">
+                                            <div class="reason-point">Comparables: Cursor ($400M), Replit ($1.16B)</div>
+                                            <div class="reason-point">Acquisition targets: GitHub, JetBrains, Cursor</div>
+                                            <div class="reason-point">Tabnine exit: 8x ARR</div>
+                                            <div class="reason-point">Conservative: €30-50M in 4-5 anni</div>
+                                            <div class="reason-point">Upside: €100M+ se category leader</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="investment-message">
+                                <p>NON VI CHIEDIAMO DI CREDERE IN PROIEZIONI FANTASIOSE.</p>
+                                <p>VI CHIEDIAMO DI CREDERE CHE QUESTO TEAM PUÒ VALIDARE QUESTA OPPORTUNITÀ NEI PROSSIMI 12 MESI.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Slide 17: Next Steps -->
+        <div class="slide">
+            <div class="slide-number">17/18</div>
+            <div class="slide-content">
+                <section class="section">
+                    <div class="container">
+                        <div class="hero-content">
+                            <h1 class="hero-title">NEXT STEPS</h1>
+                            <h2 class="hero-subtitle">PROSSIMI PASSI</h2>
+                            
+                            <div class="next-steps-section">
+                                <h3>COSA FAREMO NEI PROSSIMI 30 GIORNI:</h3>
+                                <div class="steps-grid">
+                                    <div class="step-item">✓ Landing page drape.dev live</div>
+                                    <div class="step-item">✓ Waitlist attivo con prime 100 email</div>
+                                    <div class="step-item">✓ Survey validazione a 50 developer</div>
+                                    <div class="step-item">✓ Video demo polished (60-90 sec)</div>
+                                    <div class="step-item">✓ Post su Reddit/HN per early feedback</div>
+                                    <div class="step-item">✓ 10 beta tester selezionati e onboarded</div>
+                                </div>
+                            </div>
+                            
+                            <div class="what-we-want">
+                                <h3>COSA VOGLIAMO DA VOI:</h3>
+                                <div class="want-steps">
+                                    <div class="want-step">1️⃣ MEETING per approfondire (30-45 min)</div>
+                                    <div class="want-step">2️⃣ DEMO LIVE del prodotto funzionante</div>
+                                    <div class="want-step">3️⃣ Q&A tecnico e business</div>
+                                    <div class="want-step">4️⃣ DUE DILIGENCE veloce (1-2 settimane)</div>
+                                    <div class="want-step">5️⃣ TERM SHEET e chiusura round</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-section">
+                                <h3>TIMELINE:</h3>
+                                <div class="timeline-steps">
+                                    <div class="timeline-step">- Oggi: First meeting</div>
+                                    <div class="timeline-step">- +1 settimana: Deep dive + demo</div>
+                                    <div class="timeline-step">- +2 settimane: Due diligence</div>
+                                    <div class="timeline-step">- +3-4 settimane: Closing</div>
+                                </div>
+                                <div class="timeline-goal">OBIETTIVO: Chiudere round entro Dicembre 2025</div>
+                            </div>
+                            
+                            <div class="looking-for">
+                                <h3>CERCHIAMO:</h3>
+                                <div class="looking-items">
+                                    <div class="looking-item">- Investor con tech background</div>
+                                    <div class="looking-item">- Esperienza early-stage SaaS</div>
+                                    <div class="looking-item">- Hands-on, founder-friendly</div>
+                                    <div class="looking-item">- Network in developer community</div>
+                                    <div class="looking-item">- Can help con: hiring, GTM, next fundraising</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Slide 18: Closing -->
+        <div class="slide">
+            <div class="slide-number">18/18</div>
+            <div class="slide-content">
+                <section class="section">
+                    <div class="container">
+                        <div class="hero-content">
+                            <h1 class="hero-title">DRAPE</h1>
+                            <h2 class="hero-subtitle">Il coding non si ferma quando esci dall'ufficio</h2>
+                            
+                            <div class="closing-points">
+                                <div class="closing-point">✅ Prototipo funzionante in 1 mese</div>
+                                <div class="closing-point">✅ Team tecnico che esegue velocemente</div>
+                                <div class="closing-point">✅ Market timing perfetto (AI coding boom)</div>
+                                <div class="closing-point">✅ Piano chiaro da 0 a €100K ARR in 12 mesi</div>
+                            </div>
+                            
+                            <div class="closing-message">
+                                <p>Non vi chiediamo di credere in proiezioni fantasiose.</p>
+                                <p>Vi chiediamo di credere che questo team può validare questa opportunità nei prossimi 12 mesi con il vostro capitale.</p>
+                                <p>Se funziona, è una categoria nuova. Se non funziona, pivoteremo velocemente.</p>
+                            </div>
+                            
+                            <div class="contact-info">
+                                <h3>CONTATTI:</h3>
+                                <div class="contact-grid">
+                                    <div class="contact-item">
+                                        <div class="contact-name">Daniele Scianna</div>
+                                        <div class="contact-email">daniele@drape.dev</div>
+                                    </div>
+                                    <div class="contact-item">
+                                        <div class="contact-name">Leon</div>
+                                        <div class="contact-email">leon@drape.dev</div>
+                                    </div>
+                                </div>
+                                <div class="website">drape.dev</div>
+                            </div>
+                            
+                            <div class="final-cta">
+                                <p>Pronti a costruire il futuro del mobile development?</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
     </div>
 
-    <div class="navigation">
-        <button class="nav-btn" onclick="previousSlide()">← Precedente</button>
-        <button class="nav-btn" onclick="nextSlide()">Successiva →</button>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="navigation" style="position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; gap: 1rem; z-index: 10000;">
+        <button class="nav-btn" onclick="previousSlide()" style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; padding: 0.75rem 1.5rem; color: #ffffff; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem;">
+            <span style="font-size: 1.2rem;">←</span>
+            Precedente
+        </button>
+        <button class="nav-btn" onclick="nextSlide()" style="background: linear-gradient(135deg, #a855f7, #3b82f6); border: none; border-radius: 12px; padding: 0.75rem 1.5rem; color: #ffffff; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);">
+            Successiva
+            <span style="font-size: 1.2rem;">→</span>
+        </button>
     </div>
 
     <script>
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
-        const totalSlides = 12;
+        const totalSlides = 18;
 
         function showSlide(n) {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (n + totalSlides) % totalSlides;
-            slides[currentSlide].classList.add('active');
+            const oldSlide = slides[currentSlide];
+            const newSlideIndex = (n + totalSlides) % totalSlides;
+            const newSlide = slides[newSlideIndex];
+            
+            // Custom transition from slide 1 to slide 2
+            if (currentSlide === 0 && newSlideIndex === 1) {
+                // Animate out slide 1 elements
+                const slide1Elements = oldSlide.querySelectorAll('*');
+                slide1Elements.forEach((el, i) => {
+                    if (i < 5) { // Only first 5 elements
+                        setTimeout(() => {
+                            el.style.animation = `elementFlyOut 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards`;
+                        }, i * 30);
+                    }
+                });
+                
+                // Slide 1 explodes out
+                setTimeout(() => {
+                    oldSlide.style.animation = 'slideExplode 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards';
+                }, 100);
+                
+                setTimeout(() => {
+                    oldSlide.classList.remove('active');
+                    oldSlide.style.animation = '';
+                    slide1Elements.forEach(el => el.style.animation = '');
+                    
+                    // Slide 2 slams in
+                    newSlide.classList.add('active');
+                    newSlide.style.animation = 'problemSlam 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards';
+                    
+                    // Animate in slide 2 elements
+                    const slide2Elements = newSlide.querySelectorAll('*');
+                    slide2Elements.forEach((el, i) => {
+                        if (i < 8) { // Only first 8 elements
+                            el.style.opacity = '0';
+                            setTimeout(() => {
+                                el.style.animation = `elementFlyIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards`;
+                            }, 200 + (i * 40));
+                        }
+                    });
+                    
+                    setTimeout(() => {
+                        newSlide.style.animation = '';
+                        slide2Elements.forEach(el => {
+                            el.style.animation = '';
+                            el.style.opacity = '';
+                        });
+                    }, 800);
+                }, 300);
+            } else {
+                // Standard transition for other slides
+                oldSlide.classList.remove('active');
+                newSlide.classList.add('active');
+            }
+            
+            currentSlide = newSlideIndex;
             
             // Update progress bar
             const progress = ((currentSlide + 1) / totalSlides) * 100;

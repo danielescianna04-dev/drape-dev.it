@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRAPE in Azione - Demo Prodotto</title>
+    <link rel="stylesheet" href="redesign.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
+            animation: pulse-glow 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 800;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Video Section */
+        .video-section {
+            padding: 6rem 0;
+        }
+
+        .video-container {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .video-placeholder {
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a1a1aa;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Screenshots */
+        .screenshots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 6rem;
+        }
+
+        .screenshot-card {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .screenshot-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.3);
+        }
+
+        .screenshot-img {
+            aspect-ratio: 9/16;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a3e 100%);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 3rem;
+        }
+
+        .screenshot-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .screenshot-desc {
+            color: #a1a1aa;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Features Lists */
+        .features-section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .features-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-item {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.05) 0%, rgba(168, 85, 247, 0.02) 100%);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .feature-text {
+            color: #d4d4d8;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Key Phrase */
+        .key-phrase {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+            border-radius: 20px;
+            margin: 4rem 0;
+        }
+
+        .key-phrase p {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .cta-title {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, #a855f7, #6366f1);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 8px 24px rgba(168, 85, 247, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(168, 85, 247, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .screenshots {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>DRAPE in Azione</h1>
+        </div>
+    </section>
+
+    <!-- Video Demo -->
+    <section class="video-section">
+        <div class="container">
+            <div class="video-container">
+                <div class="video-placeholder">
+                    📹 Demo video 60 sec
+                </div>
+            </div>
+
+            <!-- Screenshots -->
+            <div class="screenshots">
+                <div class="screenshot-card">
+                    <div class="screenshot-img">💻</div>
+                    <h3 class="screenshot-title">Editor con Codice</h3>
+                    <p class="screenshot-desc">Syntax highlighting, autocomplete e AI suggestions in tempo reale</p>
+                </div>
+
+                <div class="screenshot-card">
+                    <div class="screenshot-img">🌐</div>
+                    <h3 class="screenshot-title">Container HTML</h3>
+                    <p class="screenshot-desc">App HTML/JS in esecuzione con preview live integrata</p>
+                </div>
+
+                <div class="screenshot-card">
+                    <div class="screenshot-img">🔗</div>
+                    <h3 class="screenshot-title">GitHub Integration</h3>
+                    <p class="screenshot-desc">Clone, commit, push e PR direttamente da mobile</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">Cosa Funziona Oggi</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="feature-icon">✅</span>
+                    <p class="feature-text">Editor Flutter funzionante</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✅</span>
+                    <p class="feature-text">App HTML/JS con preview in tempo reale</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✅</span>
+                    <p class="feature-text">GitHub: clone, commit, push, PR</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✅</span>
+                    <p class="feature-text">UI ottimizzata per mobile touch</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✅</span>
+                    <p class="feature-text">Syntax highlighting multi-language</p>
+                </div>
+            </div>
+
+            <h2 class="section-title">In Sviluppo (8 settimane)</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="feature-icon">🔄</span>
+                    <p class="feature-text">Container Python, Node, Go</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🔄</span>
+                    <p class="feature-text">AI multimodello (GPT-5, Claude, Gemini)</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🔄</span>
+                    <p class="feature-text">AI Agent autonomo</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🔄</span>
+                    <p class="feature-text">Terminal completo bash/zsh</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Phrase -->
+    <section class="container">
+        <div class="key-phrase">
+            <p><strong>"Da zero a app HTML funzionante su mobile in 3 tap"</strong></p>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">Vuoi provare la beta?</h2>
+            <a href="#" class="cta-button">→ Unisciti alla waitlist</a>
+        </div>
+    </section>
+</body>
+</html>

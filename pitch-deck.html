@@ -2195,6 +2195,11 @@
             100% { transform: translateX(0) rotateZ(0deg); }
         }
 
+        /* Rimuovi scrollbar */
+        * { scrollbar-width: none; -ms-overflow-style: none; }
+        *::-webkit-scrollbar { display: none; }
+        html, body { overflow: hidden !important; }
+        .slide { overflow: hidden !important; }
     </style>
 </head>
 <body>
@@ -2415,58 +2420,114 @@
         <div class="slide">
             <div class="slide-number">4/18</div>
             <div class="slide-content">
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 3rem 2rem; overflow-y: auto;">
-                    <h1 style="font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">DEMO</h1>
-                    <p style="font-size: 1.3rem; color: #a1a1aa; margin-bottom: 2rem;">DRAPE IN AZIONE</p>
+                <!-- Title -->
+                <h1 style="position: absolute; top: 3rem; left: 50%; transform: translateX(-50%); font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 800; background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; z-index: 10;">IL PRODOTTO FUNZIONA</h1>
+                
+                <div style="display: flex; height: 100vh; align-items: center; justify-content: center; padding-top: 6rem; gap: 4rem;">
                     
-                    <div style="background: #0a0a0a; border: 2px solid #333; border-radius: 12px; padding: 2rem; max-width: 800px; width: 100%; margin-bottom: 2rem;">
-                        <div style="color: #666; font-size: 1rem; text-align: center; padding: 3rem;">[PLACEHOLDER: Video demo 60 secondi]</div>
+                    <!-- Phone Mockup - MVP -->
+                    <div style="position: relative;">
+                        <!-- Glow effect -->
+                        <div style="position: absolute; width: 350px; height: 350px; background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, rgba(99, 102, 241, 0.15) 50%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); animation: pulse-glow 3s ease-in-out infinite;"></div>
+                        
+                        <!-- Phone -->
+                        <div style="position: relative; width: 280px; height: 560px; background: linear-gradient(135deg, #1a1a1a 0%, #2a2a3e 100%); border: 8px solid #333; border-radius: 40px; box-shadow: 0 25px 70px rgba(168, 85, 247, 0.3), 0 10px 30px rgba(0, 0, 0, 0.8); z-index: 1;">
+                            <!-- Notch -->
+                            <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100px; height: 24px; background: #1a1a1a; border-radius: 0 0 18px 18px; z-index: 2;"></div>
+                            
+                            <!-- Screen -->
+                            <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%); border-radius: 32px; overflow: hidden; padding: 35px 15px 15px;">
+                                
+                                <!-- App Header -->
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid rgba(168, 85, 247, 0.2);">
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <div style="width: 28px; height: 28px; background: linear-gradient(135deg, #a855f7, #6366f1); border-radius: 7px; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);"></div>
+                                        <span style="color: #ffffff; font-weight: 700; font-size: 14px;">DRAPE</span>
+                                    </div>
+                                    <div style="width: 20px; height: 20px; border: 2px solid #a855f7; border-radius: 50%; position: relative;">
+                                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 8px; height: 8px; background: #a855f7; border-radius: 50%;"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Code Editor -->
+                                <div style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 10px; padding: 10px; margin-bottom: 10px; font-family: 'Courier New', monospace; font-size: 9px; box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);">
+                                    <div style="color: #a855f7; margin-bottom: 3px;">function <span style="color: #60a5fa;">createApp</span>() {</div>
+                                    <div style="color: #d4d4d8; margin-left: 12px;">return <span style="color: #34d399;">"Hello World"</span>;</div>
+                                    <div style="color: #a855f7;">}</div>
+                                </div>
+                                
+                                <!-- Preview Live -->
+                                <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 10px; padding: 10px; margin-bottom: 10px; font-size: 8px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);">
+                                    <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 6px;">
+                                        <div style="width: 16px; height: 16px; background: linear-gradient(135deg, #10b981, #34d399); border-radius: 50%; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);"></div>
+                                        <span style="color: #10b981; font-weight: 700;">Preview Live</span>
+                                    </div>
+                                    <div style="background: #ffffff; border-radius: 6px; padding: 8px; color: #000; font-weight: 600; text-align: center; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">Hello World</div>
+                                </div>
+                                
+                                <!-- Action Buttons -->
+                                <div style="display: flex; gap: 6px;">
+                                    <div style="flex: 1; background: linear-gradient(135deg, #a855f7, #8b5cf6); color: #ffffff; padding: 8px; border-radius: 7px; text-align: center; font-size: 9px; font-weight: 700; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);">▶ Run</div>
+                                    <div style="flex: 1; background: rgba(168, 85, 247, 0.2); border: 1px solid rgba(168, 85, 247, 0.4); color: #a855f7; padding: 8px; border-radius: 7px; text-align: center; font-size: 9px; font-weight: 700;">Deploy</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Home Indicator -->
+                            <div style="position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); width: 100px; height: 3px; background: #333; border-radius: 2px;"></div>
+                        </div>
+                        
+                        <!-- Badge sotto il telefono -->
+                        <div style="text-align: center; margin-top: 1.5rem;">
+                            <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.5rem 1.5rem; border-radius: 50px;">
+                                <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s ease-in-out infinite;"></div>
+                                <span style="color: #10b981; font-weight: 600; font-size: 0.9rem;">Da zero a app in 3 tap</span>
+                            </div>
+                        </div>
                     </div>
                     
-                    <p style="font-size: 1rem; color: #10b981; font-weight: 600; margin-bottom: 2rem; font-style: italic;">"Da zero a app HTML funzionante su mobile in 3 tap"</p>
-                    
-                    <div style="max-width: 900px; width: 100%;">
-                        <h3 style="color: #ffffff; font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; border-bottom: 2px solid #333; padding-bottom: 0.5rem;">COSA FUNZIONA OGGI (Ottobre 2025):</h3>
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem;">
-                            <div style="display: flex; align-items: start; gap: 0.5rem;">
-                                <span style="color: #10b981; font-size: 1.2rem;">✅</span>
-                                <span style="color: #a1a1aa; font-size: 0.95rem;">Editor Flutter funzionante</span>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 0.5rem;">
-                                <span style="color: #10b981; font-size: 1.2rem;">✅</span>
-                                <span style="color: #a1a1aa; font-size: 0.95rem;">App HTML/JS girano in-app con preview</span>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 0.5rem;">
-                                <span style="color: #10b981; font-size: 1.2rem;">✅</span>
-                                <span style="color: #a1a1aa; font-size: 0.95rem;">GitHub clone, commit, push, PR</span>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 0.5rem;">
-                                <span style="color: #10b981; font-size: 1.2rem;">✅</span>
-                                <span style="color: #a1a1aa; font-size: 0.95rem;">UI ottimizzata per mobile touch</span>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 0.5rem;">
-                                <span style="color: #10b981; font-size: 1.2rem;">✅</span>
-                                <span style="color: #a1a1aa; font-size: 0.95rem;">Syntax highlighting multi-language</span>
+                    <!-- Features List -->
+                    <div style="max-width: 450px; display: flex; flex-direction: column; gap: 1.5rem;">
+                        <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.02) 100%); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 16px rgba(16, 185, 129, 0.1);">
+                            <h3 style="color: #10b981; font-size: 1.3rem; font-weight: 800; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-size: 1.5rem;">✅</span> FUNZIONA OGGI
+                            </h3>
+                            <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+                                <div style="display: flex; align-items: center; gap: 0.6rem; background: rgba(16, 185, 129, 0.05); padding: 0.6rem; border-radius: 8px;">
+                                    <div style="width: 6px; height: 6px; background: #10b981; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);"></div>
+                                    <span style="color: #d4d4d8; font-size: 0.95rem; font-weight: 500;">Editor Flutter funzionante</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.6rem; background: rgba(16, 185, 129, 0.05); padding: 0.6rem; border-radius: 8px;">
+                                    <div style="width: 6px; height: 6px; background: #10b981; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);"></div>
+                                    <span style="color: #d4d4d8; font-size: 0.95rem; font-weight: 500;">App HTML/JS con preview live</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.6rem; background: rgba(16, 185, 129, 0.05); padding: 0.6rem; border-radius: 8px;">
+                                    <div style="width: 6px; height: 6px; background: #10b981; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);"></div>
+                                    <span style="color: #d4d4d8; font-size: 0.95rem; font-weight: 500;">GitHub: clone, commit, push, PR</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.6rem; background: rgba(16, 185, 129, 0.05); padding: 0.6rem; border-radius: 8px;">
+                                    <div style="width: 6px; height: 6px; background: #10b981; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);"></div>
+                                    <span style="color: #d4d4d8; font-size: 0.95rem; font-weight: 500;">UI ottimizzata per mobile</span>
+                                </div>
                             </div>
                         </div>
                         
-                        <h3 style="color: #ffffff; font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; border-bottom: 2px solid #333; padding-bottom: 0.5rem;">IN SVILUPPO (prossime 8 settimane):</h3>
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
-                            <div style="display: flex; align-items: start; gap: 0.5rem;">
-                                <span style="color: #a855f7; font-size: 1.2rem;">🔄</span>
-                                <span style="color: #a1a1aa; font-size: 0.95rem;">Container Python, Node, Go</span>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 0.5rem;">
-                                <span style="color: #a855f7; font-size: 1.2rem;">🔄</span>
-                                <span style="color: #a1a1aa; font-size: 0.95rem;">AI multimodello (GPT-5, Claude, Gemini)</span>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 0.5rem;">
-                                <span style="color: #a855f7; font-size: 1.2rem;">🔄</span>
-                                <span style="color: #a1a1aa; font-size: 0.95rem;">AI Agent autonomo</span>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 0.5rem;">
-                                <span style="color: #a855f7; font-size: 1.2rem;">🔄</span>
-                                <span style="color: #a1a1aa; font-size: 0.95rem;">Terminal completo bash/zsh</span>
+                        <div style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.05) 0%, rgba(168, 85, 247, 0.02) 100%); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 16px rgba(168, 85, 247, 0.1);">
+                            <h3 style="color: #a855f7; font-size: 1.3rem; font-weight: 800; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-size: 1.5rem;">🔄</span> IN SVILUPPO (8 sett.)
+                            </h3>
+                            <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+                                <div style="display: flex; align-items: center; gap: 0.6rem; background: rgba(168, 85, 247, 0.05); padding: 0.6rem; border-radius: 8px;">
+                                    <div style="width: 6px; height: 6px; background: #a855f7; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 6px rgba(168, 85, 247, 0.6);"></div>
+                                    <span style="color: #a1a1aa; font-size: 0.95rem; font-weight: 500;">Container Python, Node, Go</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.6rem; background: rgba(168, 85, 247, 0.05); padding: 0.6rem; border-radius: 8px;">
+                                    <div style="width: 6px; height: 6px; background: #a855f7; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 6px rgba(168, 85, 247, 0.6);"></div>
+                                    <span style="color: #a1a1aa; font-size: 0.95rem; font-weight: 500;">AI multimodello</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.6rem; background: rgba(168, 85, 247, 0.05); padding: 0.6rem; border-radius: 8px;">
+                                    <div style="width: 6px; height: 6px; background: #a855f7; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 6px rgba(168, 85, 247, 0.6);"></div>
+                                    <span style="color: #a1a1aa; font-size: 0.95rem; font-weight: 500;">AI Agent autonomo</span>
+                                </div>
                             </div>
                         </div>
                     </div>
