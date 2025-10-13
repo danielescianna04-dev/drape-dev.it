@@ -2231,6 +2231,24 @@
             font-weight: 700 !important;
         }
 
+        @keyframes phoneFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        @keyframes codeBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .slide:nth-child(4) > .slide-content > div > div:first-child {
+            animation: phoneFloat 4s ease-in-out infinite;
+        }
+
+        .slide:nth-child(4) [style*="Code Editor"] {
+            animation: codeBlink 3s ease-in-out infinite;
+        }
+
         @media (max-width: 900px) {
             .slide:nth-child(2) > .slide-content > div,
             .slide:nth-child(3) > .slide-content > div {
