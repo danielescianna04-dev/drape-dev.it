@@ -2268,6 +2268,15 @@
 
         .phone-mockup {
             animation: screenGlow 4s ease-in-out infinite !important;
+            transition: transform 0.3s ease;
+        }
+
+        .phone-container:hover .phone-mockup {
+            transform: scale(1.05) !important;
+        }
+
+        .phone-container:hover .phone-glow {
+            opacity: 0.6 !important;
         }
 
         @media (max-width: 900px) {
