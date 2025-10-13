@@ -2232,21 +2232,41 @@
         }
 
         @keyframes phoneFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(2deg); }
+            0%, 100% { transform: translateY(0px) rotate(-1deg); }
+            25% { transform: translateY(-10px) rotate(1deg); }
+            50% { transform: translateY(-15px) rotate(0deg); }
+            75% { transform: translateY(-10px) rotate(-1deg); }
         }
 
-        @keyframes codeBlink {
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.25; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.4; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        @keyframes screenGlow {
+            0%, 100% { box-shadow: 0 25px 70px rgba(168, 85, 247, 0.3), 0 10px 30px rgba(0, 0, 0, 0.8); }
+            50% { box-shadow: 0 25px 70px rgba(168, 85, 247, 0.5), 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(168, 85, 247, 0.1); }
+        }
+
+        @keyframes codeType {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
+            50% { opacity: 0.7; }
         }
 
         .slide:nth-child(4) > .slide-content > div > div:first-child {
-            animation: phoneFloat 4s ease-in-out infinite;
+            animation: phoneFloat 5s ease-in-out infinite;
         }
 
-        .slide:nth-child(4) [style*="Code Editor"] {
-            animation: codeBlink 3s ease-in-out infinite;
+        .slide:nth-child(4) [style*="radial-gradient"] {
+            animation: glowPulse 3s ease-in-out infinite !important;
+        }
+
+        .slide:nth-child(4) [style*="width: 280px"] {
+            animation: screenGlow 4s ease-in-out infinite;
+        }
+
+        .slide:nth-child(4) [style*="Code Editor"] + div {
+            animation: codeType 2s ease-in-out infinite;
         }
 
         @media (max-width: 900px) {
