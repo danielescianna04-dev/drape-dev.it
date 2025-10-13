@@ -2196,35 +2196,42 @@
         }
 
         @media (max-width: 900px) {
-            .slide:nth-child(2) > .slide-content > div {
+            .slide:nth-child(2) > .slide-content > div,
+            .slide:nth-child(3) > .slide-content > div {
                 flex-direction: column !important;
                 padding-top: 8rem !important;
             }
             
-            .slide:nth-child(2) h1[style*="position: absolute"] {
+            .slide:nth-child(2) h1[style*="position: absolute"],
+            .slide:nth-child(3) h1[style*="position: absolute"] {
                 font-size: 2rem !important;
                 top: 2rem !important;
             }
             
             .slide:nth-child(2) [style*="flex: 1.2"],
-            .slide:nth-child(2) [style*="flex: 0.8"] {
+            .slide:nth-child(2) [style*="flex: 0.8"],
+            .slide:nth-child(3) [style*="flex: 1.2"],
+            .slide:nth-child(3) [style*="flex: 0.8"] {
                 flex: 1 !important;
                 max-width: 100% !important;
                 padding: 1rem !important;
             }
             
-            .slide:nth-child(2) [style*="width: 450px"] {
+            .slide:nth-child(2) [style*="width: 450px"],
+            .slide:nth-child(3) [style*="width: 450px"] {
                 width: 100% !important;
                 max-width: 350px !important;
                 height: auto !important;
                 min-height: 250px !important;
             }
             
-            .slide:nth-child(2) h1[style*="font-size: 2.5rem"] {
+            .slide:nth-child(2) h1[style*="font-size: 2.5rem"],
+            .slide:nth-child(3) h1[style*="font-size: 2.5rem"] {
                 font-size: 1.8rem !important;
             }
             
-            .slide:nth-child(2) p[style*="font-size: 1.1rem"] {
+            .slide:nth-child(2) p[style*="font-size: 1.1rem"],
+            .slide:nth-child(3) p[style*="font-size: 1.1rem"] {
                 font-size: 1rem !important;
             }
         }
