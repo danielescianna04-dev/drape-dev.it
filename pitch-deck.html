@@ -2279,6 +2279,22 @@
             opacity: 0.6 !important;
         }
 
+        .market-card-interactive:hover,
+        .market-card-interactive:active {
+            transform: translateY(-10px) scale(1.05) !important;
+            box-shadow: 0 12px 40px rgba(168, 85, 247, 0.4) !important;
+        }
+
+        .market-card-interactive:hover .market-icon,
+        .market-card-interactive:active .market-icon {
+            transform: scale(1.2) rotate(10deg) !important;
+        }
+
+        .funnel-stage:hover {
+            transform: scale(1.05) !important;
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.3) !important;
+        }
+
         @media (max-width: 900px) {
             .slide:nth-child(2) > .slide-content > div,
             .slide:nth-child(3) > .slide-content > div {
