@@ -3298,102 +3298,73 @@
         <!-- Slide 13: Rischi & Mitigazioni -->
         <div class="slide">
             <div class="slide-number">13/18</div>
-            <div class="slide-content">
-                <section class="section">
-                    <div class="container">
-                        <div class="hero-content">
-                            <h1 class="hero-title">RISCHI & MITIGAZIONI</h1>
-                            <h2 class="hero-subtitle">SIAMO ONESTI SUI RISCHI</h2>
-                            
-                            <div class="risks-grid">
-                                <div class="risk-item">
-                                    <div class="risk-header">
-                                        <div class="risk-icon">⚠️</div>
-                                        <div class="risk-title">RISK: iOS/Android limitano esecuzione codice</div>
-                                    </div>
-                                    <div class="mitigation">
-                                        <div class="mitigation-header">✅ MITIGATION:</div>
-                                        <div class="mitigation-points">
-                                            <div class="mitigation-point">• WebContainers via WASM (già testato, funziona)</div>
-                                            <div class="mitigation-point">• Sandbox sicuro, Apple/Google compliant</div>
-                                            <div class="mitigation-point">• Fallback: remote containers se needed</div>
-                                            <div class="mitigation-point">• Stessa tech di CodeSandbox, Stackblitz (già su store)</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="risk-item">
-                                    <div class="risk-header">
-                                        <div class="risk-icon">⚠️</div>
-                                        <div class="risk-title">RISK: Costi API AI troppo alti</div>
-                                    </div>
-                                    <div class="mitigation">
-                                        <div class="mitigation-header">✅ MITIGATION:</div>
-                                        <div class="mitigation-points">
-                                            <div class="mitigation-point">• Free tier: 50 queries = €4/user (sostenibile loss leader)</div>
-                                            <div class="mitigation-point">• Starter/Pro: costo AI coperto da subscription</div>
-                                            <div class="mitigation-point">• Ultimate: BYOK = zero costo per noi</div>
-                                            <div class="mitigation-point">• Unit economics: LTV €240 > AI cost €24/anno = 10x</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="risk-item">
-                                    <div class="risk-header">
-                                        <div class="risk-icon">⚠️</div>
-                                        <div class="risk-title">RISK: "Nessuno vuole codare su mobile"</div>
-                                    </div>
-                                    <div class="mitigation">
-                                        <div class="mitigation-header">✅ MITIGATION:</div>
-                                        <div class="mitigation-points">
-                                            <div class="mitigation-point">• Non vendiamo "full development"</div>
-                                            <div class="mitigation-point">• Vendiamo "emergency fixes + quick edits"</div>
-                                            <div class="mitigation-point">• Beta testing per validare uso reale (primi 3 mesi)</div>
-                                            <div class="mitigation-point">• Decision point: se retention <30% → pivot a DevOps tools</div>
-                                            <div class="mitigation-point">• Pivot options: monitoring, logs, incident response</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="risk-item">
-                                    <div class="risk-header">
-                                        <div class="risk-icon">⚠️</div>
-                                        <div class="risk-title">RISK: Cursor/GitHub/Microsoft ci copiano</div>
-                                    </div>
-                                    <div class="mitigation">
-                                        <div class="mitigation-header">✅ MITIGATION:</div>
-                                        <div class="mitigation-points">
-                                            <div class="mitigation-point">• First-mover: 12-18 mesi di vantaggio</div>
-                                            <div class="mitigation-point">• Mobile UX è HARD (Replit ci ha provato, ha fallito)</div>
-                                            <div class="mitigation-point">• Community loyalty da early adopters</div>
-                                            <div class="mitigation-point">• Worst case: acquisition target (€20-50M exit)</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="risk-item">
-                                    <div class="risk-header">
-                                        <div class="risk-icon">⚠️</div>
-                                        <div class="risk-title">RISK: Team giovane/inesperto</div>
-                                    </div>
-                                    <div class="mitigation">
-                                        <div class="mitigation-header">✅ MITIGATION:</div>
-                                        <div class="mitigation-points">
-                                            <div class="mitigation-point">• Cerchiamo advisors senior (parte del deal)</div>
-                                            <div class="mitigation-point">• Assumeremo senior developers con funding</div>
-                                            <div class="mitigation-point">• Siamo coachable, impariamo veloce</div>
-                                            <div class="mitigation-point">• Track record: prototipo in 1 mese = execution ability</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="transparency-note">
-                                <p>TRANSPARENCY = CREDIBILITY</p>
-                            </div>
+            <div class="slide-content" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 2rem 1rem; position: relative; z-index: 1; overflow-y: auto;">
+                
+                <h2 style="font-size: clamp(1.8rem, 3.5vw, 3rem); font-weight: 800; margin-bottom: 0.3rem; background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.1; text-align: center;">Rischi & Mitigazioni</h2>
+                <p style="color: #a1a1aa; font-size: clamp(0.8rem, 1.3vw, 1rem); margin-bottom: 1.5rem; text-align: center;">Siamo onesti sui rischi</p>
+                
+                <div style="max-width: 1000px; width: 100%; display: flex; flex-direction: column; gap: 1rem;">
+                    
+                    <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.2rem;">
+                        <div style="color: #ef4444; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.8rem;">⚠ iOS/Android limitano esecuzione codice</div>
+                        <div style="color: #10b981; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">✓ MITIGATION:</div>
+                        <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.5;">
+                            • WebContainers via WASM (già testato, funziona)<br/>
+                            • Sandbox sicuro, Apple/Google compliant<br/>
+                            • Fallback: remote containers se needed<br/>
+                            • Stessa tech di CodeSandbox, Stackblitz (già su store)
                         </div>
                     </div>
-                </section>
+                    
+                    <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.2rem;">
+                        <div style="color: #ef4444; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.8rem;">⚠ Costi API AI troppo alti</div>
+                        <div style="color: #10b981; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">✓ MITIGATION:</div>
+                        <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.5;">
+                            • Free tier: 50 queries = €4/user (sostenibile loss leader)<br/>
+                            • Starter/Pro: costo AI coperto da subscription<br/>
+                            • Ultimate: BYOK = zero costo per noi<br/>
+                            • Unit economics: LTV €240 > AI cost €24/anno = 10x
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.2rem;">
+                        <div style="color: #ef4444; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.8rem;">⚠ Nessuno vuole codare su mobile</div>
+                        <div style="color: #10b981; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">✓ MITIGATION:</div>
+                        <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.5;">
+                            • Non vendiamo "full development"<br/>
+                            • Vendiamo "emergency fixes + quick edits"<br/>
+                            • Beta testing per validare uso reale (primi 3 mesi)<br/>
+                            • Decision point: se retention <30% → pivot a DevOps tools<br/>
+                            • Pivot options: monitoring, logs, incident response
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.2rem;">
+                        <div style="color: #ef4444; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.8rem;">⚠ Cursor/GitHub/Microsoft ci copiano</div>
+                        <div style="color: #10b981; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">✓ MITIGATION:</div>
+                        <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.5;">
+                            • First-mover: 12-18 mesi di vantaggio<br/>
+                            • Mobile UX è HARD (Replit ci ha provato, ha fallito)<br/>
+                            • Community loyalty da early adopters<br/>
+                            • Worst case: acquisition target (€20-50M exit)
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.2rem;">
+                        <div style="color: #ef4444; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.8rem;">⚠ Team giovane/inesperto</div>
+                        <div style="color: #10b981; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">✓ MITIGATION:</div>
+                        <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.5;">
+                            • Cerchiamo advisors senior (parte del deal)<br/>
+                            • Assumeremo senior developers con funding<br/>
+                            • Siamo coachable, impariamo veloce<br/>
+                            • Track record: prototipo in 1 mese = execution ability
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 1rem; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; margin-top: 0.5rem;">
+                        <p style="color: #a855f7; font-size: 0.9rem; font-weight: 700;">TRANSPARENCY = CREDIBILITY</p>
+                    </div>
+                </div>
             </div>
         </div>
 
