@@ -3237,98 +3237,61 @@
         <!-- Slide 12: Stato Attuale & Roadmap -->
         <div class="slide">
             <div class="slide-number">12/18</div>
-            <div class="slide-content">
-                <section class="section">
-                    <div class="container">
-                        <div class="hero-content">
-                            <h1 class="hero-title">STATO ATTUALE & ROADMAP</h1>
-                            <h2 class="hero-subtitle">PROGRESS & MILESTONES</h2>
-                            
-                            <div class="current-status">
-                                <h3>OGGI (Ottobre 2025) - 1 MESE DI SVILUPPO</h3>
-                                
-                                <div class="status-section">
-                                    <h4>✅ COMPLETATO:</h4>
-                                    <div class="status-items">
-                                        <div class="status-item">- Frontend Flutter funzionante e responsive</div>
-                                        <div class="status-item">- GitHub integration: clone, commit, push, PR</div>
-                                        <div class="status-item">- Container runtime: app HTML/JS girano in-app</div>
-                                        <div class="status-item">- Editor con syntax highlighting</div>
-                                        <div class="status-item">- Preview in tempo reale</div>
-                                        <div class="status-item">- UI base ottimizzata per touch</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="status-section">
-                                    <h4>🔄 IN SVILUPPO (prossime 8 settimane):</h4>
-                                    <div class="status-items">
-                                        <div class="status-item">- Container Python, Node.js, Go</div>
-                                        <div class="status-item">- Integration GPT-5, Claude 4.5, Gemini 2.5</div>
-                                        <div class="status-item">- AI Agent che scrive codice autonomamente</div>
-                                        <div class="status-item">- Terminal bash/zsh funzionante</div>
-                                        <div class="status-item">- Sistema di projects e workspace</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="roadmap">
-                                <h3>ROADMAP</h3>
-                                
-                                <div class="roadmap-timeline">
-                                    <div class="timeline-item">
-                                        <div class="timeline-date">8 SETTIMANE (Dicembre 2025):</div>
-                                        <div class="timeline-content">
-                                            <div class="timeline-point">→ MVP feature-complete</div>
-                                            <div class="timeline-point">→ 10 beta tester interni</div>
-                                            <div class="timeline-point">→ Feedback loop veloce, bug fixing</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="timeline-item">
-                                        <div class="timeline-date">3 MESI (Gennaio 2026):</div>
-                                        <div class="timeline-content">
-                                            <div class="timeline-point">→ Landing page + waitlist attivo</div>
-                                            <div class="timeline-point">→ Private beta 100 developer</div>
-                                            <div class="timeline-point">→ Validazione problema/soluzione</div>
-                                            <div class="timeline-point">→ Metriche: retention D7, time in app</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="timeline-item">
-                                        <div class="timeline-date">6 MESI (Aprile 2026):</div>
-                                        <div class="timeline-content">
-                                            <div class="timeline-point">→ Public beta TestFlight</div>
-                                            <div class="timeline-point">→ 1,000 users, primi 50 paganti</div>
-                                            <div class="timeline-point">→ Team: +2 persone (senior dev + designer)</div>
-                                            <div class="timeline-point">→ Product-market fit iniziale</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="timeline-item">
-                                        <div class="timeline-date">12 MESI (Ottobre 2026):</div>
-                                        <div class="timeline-content">
-                                            <div class="timeline-point">→ Public launch App Store + Play Store</div>
-                                            <div class="timeline-point">→ 5,000 users, 300-500 paganti</div>
-                                            <div class="timeline-point">→ €72-120K ARR</div>
-                                            <div class="timeline-point">→ Team: 6 persone</div>
-                                            <div class="timeline-point">→ Ready per Series A (€500K-1M)</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="timeline-item">
-                                        <div class="timeline-date">18 MESI (Aprile 2027):</div>
-                                        <div class="timeline-content">
-                                            <div class="timeline-point">→ 15,000 users, 1,500 paganti</div>
-                                            <div class="timeline-point">→ €360K ARR</div>
-                                            <div class="timeline-point">→ Enterprise features complete</div>
-                                            <div class="timeline-point">→ Series A chiuso, scaling aggressivo</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            <div class="slide-content" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 2rem 1rem; position: relative; z-index: 1; overflow-y: auto;">
+                
+                <h2 style="font-size: clamp(1.8rem, 3.5vw, 3rem); font-weight: 800; margin-bottom: 0.3rem; background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.1; text-align: center;">Stato Attuale & Roadmap</h2>
+                <p style="color: #a1a1aa; font-size: clamp(0.8rem, 1.3vw, 1rem); margin-bottom: 1.5rem; text-align: center;">Progress & Milestones</p>
+                
+                <div style="max-width: 1000px; width: 100%; display: flex; flex-direction: column; gap: 1.5rem;">
+                    
+                    <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.5rem;">
+                        <h3 style="color: #10b981; font-size: 1rem; font-weight: 700; margin-bottom: 1rem;">✓ COMPLETATO (1 mese di sviluppo)</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0.5rem;">
+                            <div style="color: #a1a1aa; font-size: 0.85rem;">Frontend Flutter funzionante</div>
+                            <div style="color: #a1a1aa; font-size: 0.85rem;">GitHub integration completa</div>
+                            <div style="color: #a1a1aa; font-size: 0.85rem;">Container runtime HTML/JS</div>
+                            <div style="color: #a1a1aa; font-size: 0.85rem;">Editor con syntax highlighting</div>
+                            <div style="color: #a1a1aa; font-size: 0.85rem;">Preview in tempo reale</div>
+                            <div style="color: #a1a1aa; font-size: 0.85rem;">UI ottimizzata per touch</div>
                         </div>
                     </div>
-                </section>
+                    
+                    <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.5rem;">
+                        <h3 style="color: #a855f7; font-size: 1rem; font-weight: 700; margin-bottom: 1rem;">→ IN SVILUPPO (8 settimane)</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0.5rem;">
+                            <div style="color: #a1a1aa; font-size: 0.85rem;">Container Python, Node, Go</div>
+                            <div style="color: #a1a1aa; font-size: 0.85rem;">GPT-5, Claude 4.5, Gemini 2.5</div>
+                            <div style="color: #a1a1aa; font-size: 0.85rem;">AI Agent autonomo</div>
+                            <div style="color: #a1a1aa; font-size: 0.85rem;">Terminal bash/zsh</div>
+                            <div style="color: #a1a1aa; font-size: 0.85rem;">Sistema projects & workspace</div>
+                        </div>
+                    </div>
+                    
+                    <h3 style="color: #ffffff; font-size: 1.1rem; font-weight: 700; text-align: center; margin-top: 1rem;">ROADMAP</h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                        <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.2rem;">
+                            <div style="color: #a855f7; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.5rem;">8 SETTIMANE (Dic 2025)</div>
+                            <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.5;">MVP feature-complete<br/>10 beta tester interni<br/>Feedback loop veloce</div>
+                        </div>
+                        <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.2rem;">
+                            <div style="color: #a855f7; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.5rem;">3 MESI (Gen 2026)</div>
+                            <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.5;">Waitlist attivo<br/>Private beta 100 dev<br/>Validazione problema/soluzione</div>
+                        </div>
+                        <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.2rem;">
+                            <div style="color: #a855f7; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.5rem;">6 MESI (Apr 2026)</div>
+                            <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.5;">Public beta TestFlight<br/>1,000 users, 50 paganti<br/>Product-market fit iniziale</div>
+                        </div>
+                        <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.2rem;">
+                            <div style="color: #a855f7; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.5rem;">12 MESI (Ott 2026)</div>
+                            <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.5;">Public launch<br/>5,000 users, 300-500 paganti<br/>€72-120K ARR</div>
+                        </div>
+                        <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.2rem;">
+                            <div style="color: #a855f7; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.5rem;">18 MESI (Apr 2027)</div>
+                            <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.5;">15,000 users, 1,500 paganti<br/>€360K ARR<br/>Series A chiuso</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
