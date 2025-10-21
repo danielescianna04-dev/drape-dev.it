@@ -3340,66 +3340,50 @@
                 <h2 style="font-size: clamp(1.8rem, 3.5vw, 3rem); font-weight: 800; margin-bottom: 0.3rem; background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.1; text-align: center;">Rischi & Mitigazioni</h2>
                 <p style="color: #a1a1aa; font-size: clamp(0.8rem, 1.3vw, 1rem); margin-bottom: 1.5rem; text-align: center;">Siamo onesti sui rischi</p>
                 
-                <div style="max-width: 1000px; width: 100%; display: flex; flex-direction: column; gap: 1rem;">
+                <div style="max-width: 1000px; width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
                     
-                    <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.2rem;">
-                        <div style="color: #ef4444; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.8rem;">⚠ iOS/Android limitano esecuzione codice</div>
-                        <div style="color: #10b981; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">✓ MITIGATION:</div>
-                        <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.5;">
-                            • WebContainers via WASM (già testato, funziona)<br/>
-                            • Sandbox sicuro, Apple/Google compliant<br/>
-                            • Fallback: remote containers se needed<br/>
-                            • Stessa tech di CodeSandbox, Stackblitz (già su store)
+                    <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border-left: 3px solid #ef4444; border-radius: 12px; padding: 1.5rem;">
+                        <div style="color: #ef4444; font-size: 1rem; font-weight: 700; margin-bottom: 1rem;">iOS/Android limitano codice</div>
+                        <div style="color: #10b981; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">✓ Soluzione:</div>
+                        <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.6;">
+                            WebContainers via WASM (già testato). Stessa tech di CodeSandbox/Stackblitz già su store.
                         </div>
                     </div>
                     
-                    <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.2rem;">
-                        <div style="color: #ef4444; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.8rem;">⚠ Costi API AI troppo alti</div>
-                        <div style="color: #10b981; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">✓ MITIGATION:</div>
-                        <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.5;">
-                            • Free tier: 50 queries = €4/user (sostenibile loss leader)<br/>
-                            • Starter/Pro: costo AI coperto da subscription<br/>
-                            • Ultimate: BYOK = zero costo per noi<br/>
-                            • Unit economics: LTV €240 > AI cost €24/anno = 10x
+                    <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border-left: 3px solid #ef4444; border-radius: 12px; padding: 1.5rem;">
+                        <div style="color: #ef4444; font-size: 1rem; font-weight: 700; margin-bottom: 1rem;">Costi API AI troppo alti</div>
+                        <div style="color: #10b981; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">✓ Soluzione:</div>
+                        <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.6;">
+                            LTV €240 > AI cost €24/anno = 10x. Ultimate plan con BYOK = zero costo.
                         </div>
                     </div>
                     
-                    <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.2rem;">
-                        <div style="color: #ef4444; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.8rem;">⚠ Nessuno vuole codare su mobile</div>
-                        <div style="color: #10b981; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">✓ MITIGATION:</div>
-                        <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.5;">
-                            • Non vendiamo "full development"<br/>
-                            • Vendiamo "emergency fixes + quick edits"<br/>
-                            • Beta testing per validare uso reale (primi 3 mesi)<br/>
-                            • Decision point: se retention <30% → pivot a DevOps tools<br/>
-                            • Pivot options: monitoring, logs, incident response
+                    <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border-left: 3px solid #ef4444; border-radius: 12px; padding: 1.5rem;">
+                        <div style="color: #ef4444; font-size: 1rem; font-weight: 700; margin-bottom: 1rem;">Nessuno vuole codare su mobile</div>
+                        <div style="color: #10b981; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">✓ Soluzione:</div>
+                        <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.6;">
+                            Vendiamo "emergency fixes", non "full development". Beta testing per validare (3 mesi).
                         </div>
                     </div>
                     
-                    <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.2rem;">
-                        <div style="color: #ef4444; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.8rem;">⚠ Cursor/GitHub/Microsoft ci copiano</div>
-                        <div style="color: #10b981; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">✓ MITIGATION:</div>
-                        <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.5;">
-                            • First-mover: 12-18 mesi di vantaggio<br/>
-                            • Mobile UX è HARD (Replit ci ha provato, ha fallito)<br/>
-                            • Community loyalty da early adopters<br/>
-                            • Worst case: acquisition target (€20-50M exit)
+                    <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border-left: 3px solid #ef4444; border-radius: 12px; padding: 1.5rem;">
+                        <div style="color: #ef4444; font-size: 1rem; font-weight: 700; margin-bottom: 1rem;">Big tech ci copia</div>
+                        <div style="color: #10b981; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">✓ Soluzione:</div>
+                        <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.6;">
+                            12-18 mesi di vantaggio. Mobile UX è difficile (Replit ha fallito). Worst case: acquisition €20-50M.
                         </div>
                     </div>
                     
-                    <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.2rem;">
-                        <div style="color: #ef4444; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.8rem;">⚠ Team giovane/inesperto</div>
-                        <div style="color: #10b981; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">✓ MITIGATION:</div>
-                        <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.5;">
-                            • Cerchiamo advisors senior (parte del deal)<br/>
-                            • Assumeremo senior developers con funding<br/>
-                            • Siamo coachable, impariamo veloce<br/>
-                            • Track record: prototipo in 1 mese = execution ability
+                    <div style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border-left: 3px solid #ef4444; border-radius: 12px; padding: 1.5rem;">
+                        <div style="color: #ef4444; font-size: 1rem; font-weight: 700; margin-bottom: 1rem;">Team giovane/inesperto</div>
+                        <div style="color: #10b981; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">✓ Soluzione:</div>
+                        <div style="color: #a1a1aa; font-size: 0.8rem; line-height: 1.6;">
+                            Advisors senior + assunzioni con funding. Track record: prototipo in 1 mese.
                         </div>
                     </div>
                     
-                    <div style="text-align: center; padding: 1rem; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; margin-top: 0.5rem;">
-                        <p style="color: #a855f7; font-size: 0.9rem; font-weight: 700;">TRANSPARENCY = CREDIBILITY</p>
+                    <div style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(168, 85, 247, 0.05) 100%); backdrop-filter: blur(20px); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; padding: 1.5rem; display: flex; align-items: center; justify-content: center;">
+                        <p style="color: #a855f7; font-size: 1rem; font-weight: 700; text-align: center;">TRANSPARENCY = CREDIBILITY</p>
                     </div>
                 </div>
             </div>
