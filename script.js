@@ -1,80 +1,108 @@
 // ANIMATED BACKGROUND - PARTICLES
+// Only initialize particles on desktop for better mobile performance
 const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+let particles = [];
+let animationId = null;
 
-const particles = [];
-const particleCount = 80;
-
-class Particle {
-    constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 1;
-        this.speedX = Math.random() * 0.5 - 0.25;
-        this.speedY = Math.random() * 0.5 - 0.25;
-        this.opacity = Math.random() * 0.5 + 0.2;
+function initParticles() {
+    // Check if mobile device or prefers reduced motion
+    const isMobile = window.innerWidth <= 768;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    if (isMobile || prefersReducedMotion || !canvas) {
+        return;
     }
     
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const particleCount = 80;
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 1;
+            this.speedX = Math.random() * 0.5 - 0.25;
+            this.speedY = Math.random() * 0.5 - 0.25;
+            this.opacity = Math.random() * 0.5 + 0.2;
+        }
         
-        if (this.x > canvas.width) this.x = 0;
-        if (this.x < 0) this.x = canvas.width;
-        if (this.y > canvas.height) this.y = 0;
-        if (this.y < 0) this.y = canvas.height;
-    }
-    
-    draw() {
-        ctx.fillStyle = `rgba(168, 85, 247, ${this.opacity})`;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-    }
-}
-
-for (let i = 0; i < particleCount; i++) {
-    particles.push(new Particle());
-}
-
-function connectParticles() {
-    for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
             
-            if (distance < 120) {
-                ctx.strokeStyle = `rgba(168, 85, 247, ${0.2 * (1 - distance / 120)})`;
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.moveTo(particles[i].x, particles[i].y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                ctx.stroke();
+            if (this.x > canvas.width) this.x = 0;
+            if (this.x < 0) this.x = canvas.width;
+            if (this.y > canvas.height) this.y = 0;
+            if (this.y < 0) this.y = canvas.height;
+        }
+        
+        draw() {
+            ctx.fillStyle = `rgba(168, 85, 247, ${this.opacity})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+    }
+
+    function connectParticles() {
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 120) {
+                    ctx.strokeStyle = `rgba(168, 85, 247, ${0.2 * (1 - distance / 120)})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                }
             }
         }
     }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        particles.forEach(particle => {
+            particle.update();
+            particle.draw();
+        });
+        
+        connectParticles();
+        animationId = requestAnimationFrame(animate);
+    }
+
+    animate();
 }
 
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    particles.forEach(particle => {
-        particle.update();
-        particle.draw();
-    });
-    
-    connectParticles();
-    requestAnimationFrame(animate);
-}
+// Initialize particles on load
+initParticles();
 
-animate();
-
+// Handle resize (only on desktop)
 window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+        if (animationId) {
+            cancelAnimationFrame(animationId);
+        }
+        particles = [];
+        return;
+    }
+    
+    if (canvas && particles.length > 0) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
 });
 
 // TYPING CODE ANIMATION
@@ -350,8 +378,21 @@ if (contactForm) {
 const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
 const navLinks = document.querySelector('.nav-links');
 
-console.log('Mobile menu toggle:', mobileMenuToggle);
-console.log('Nav links:', navLinks);
+function closeMobileMenu() {
+    if (mobileMenuToggle && navLinks) {
+        mobileMenuToggle.classList.remove('active');
+        navLinks.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+function openMobileMenu() {
+    if (mobileMenuToggle && navLinks) {
+        mobileMenuToggle.classList.add('active');
+        navLinks.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
 
 // AUTO LANGUAGE DETECTION
 function detectLanguage() {
@@ -377,8 +418,6 @@ function translatePage(lang) {
             }
         }
     });
-    
-    console.log('Page translated to:', lang);
 }
 
 // Auto-detect and translate on page load
@@ -386,6 +425,7 @@ const detectedLang = detectLanguage();
 translatePage(detectedLang);
 
 if (mobileMenuToggle && navLinks) {
+    // Toggle menu on button click
     mobileMenuToggle.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -393,26 +433,69 @@ if (mobileMenuToggle && navLinks) {
         const isActive = navLinks.classList.contains('active');
         
         if (isActive) {
-            mobileMenuToggle.classList.remove('active');
-            navLinks.classList.remove('active');
+            closeMobileMenu();
         } else {
-            mobileMenuToggle.classList.add('active');
-            navLinks.classList.add('active');
+            openMobileMenu();
         }
-        
-        console.log('Menu is now:', navLinks.classList.contains('active') ? 'open' : 'closed');
     });
     
     // Close menu when clicking on a link
     const navLinksItems = document.querySelectorAll('.nav-links a');
     navLinksItems.forEach(function(link) {
         link.addEventListener('click', function() {
-            mobileMenuToggle.classList.remove('active');
-            navLinks.classList.remove('active');
+            closeMobileMenu();
         });
     });
-} else {
-    console.error('Mobile menu elements not found!');
+    
+    // Close menu when clicking backdrop (outside menu)
+    navLinks.addEventListener('click', function(e) {
+        if (e.target === navLinks) {
+            closeMobileMenu();
+        }
+    });
+    
+    // Swipe to close functionality
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    navLinks.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    
+    navLinks.addEventListener('touchmove', function(e) {
+        // Prevent scrolling when swiping on menu
+        if (navLinks.classList.contains('active')) {
+            const currentX = e.changedTouches[0].screenX;
+            const diff = touchStartX - currentX;
+            
+            // Only prevent default if swiping horizontally more than vertically
+            if (Math.abs(diff) > 10) {
+                e.preventDefault();
+            }
+        }
+    }, { passive: false });
+    
+    navLinks.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const swipeDistance = touchStartX - touchEndX;
+        
+        // Swipe right to close (swipe from left to right, positive distance)
+        if (swipeDistance > swipeThreshold && navLinks.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    }
+    
+    // Close menu on ESC key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
 }
 
 // COOKIE BANNER
@@ -457,4 +540,4 @@ if (newsletterForm) {
     });
 }
 
-console.log('🚀 Drape - Animations loaded successfully!');
+// Initialization complete

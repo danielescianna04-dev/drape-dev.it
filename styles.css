@@ -56,6 +56,24 @@ html {
     pointer-events: none;
 }
 
+/* Disable particles on mobile for better performance */
+@media (max-width: 768px) {
+    #particles {
+        display: none;
+    }
+}
+
+/* Reduced motion for low-end devices */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -2290,6 +2308,9 @@ tbody tr:hover {
     font-size: 16px;
     font-family: inherit;
     transition: all 0.3s ease;
+    min-height: 44px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .form-group input:focus,
@@ -2425,6 +2446,10 @@ tbody tr:hover {
     display: flex;
     align-items: center;
     gap: 10px;
+    min-height: 44px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    cursor: pointer;
 }
 
 .btn-primary svg,
@@ -2509,12 +2534,15 @@ footer {
     background: var(--primary);
     color: white;
     border: none;
-    padding: 10px 24px;
+    padding: 12px 24px;
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     white-space: nowrap;
+    min-height: 44px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .cookie-btn:hover {
@@ -2580,6 +2608,9 @@ footer {
     cursor: pointer;
     transition: all 0.3s ease;
     white-space: nowrap;
+    min-height: 44px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .newsletter-form button:hover {
@@ -2656,8 +2687,14 @@ footer {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 8px;
+    padding: 12px;
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+    align-items: center;
     z-index: 1001;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .mobile-menu-toggle span {
@@ -2736,30 +2773,59 @@ footer {
         top: 60px;
         left: 0;
         right: 0;
+        bottom: 0;
         background: rgba(0, 0, 0, 0.98);
         backdrop-filter: blur(20px);
         flex-direction: column;
         gap: 0;
         padding: 20px;
-        transform: translateY(-100%);
+        transform: translateX(-100%);
         opacity: 0;
         visibility: hidden;
-        transition: all 0.3s ease;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, visibility 0.3s ease;
         border-top: 1px solid rgba(168, 85, 247, 0.2);
         z-index: 999;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        will-change: transform;
     }
     
     .nav-links.active {
-        transform: translateY(0);
+        transform: translateX(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    /* Mobile menu backdrop */
+    .nav-links::before {
+        content: '';
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        z-index: -1;
+    }
+    
+    .nav-links.active::before {
         opacity: 1;
         visibility: visible;
     }
     
     .nav-links a {
-        padding: 15px 0;
+        padding: 18px 0;
+        min-height: 44px;
         border-bottom: 1px solid rgba(168, 85, 247, 0.1);
         width: 100%;
         font-size: 16px;
+        display: flex;
+        align-items: center;
+        -webkit-tap-highlight-color: rgba(168, 85, 247, 0.2);
+        touch-action: manipulation;
     }
     
     .nav-links a:last-child {
@@ -3085,6 +3151,7 @@ footer {
     }
     
     .solution-features {
+        grid-template-columns: 1fr;
         gap: 20px;
     }
     
@@ -3449,25 +3516,14 @@ footer {
         padding: 20px;
     }
     
-    .cta-form {
-        padding: 30px 20px;
+    .feature-icon {
+        width: 50px;
+        height: 50px;
     }
     
-    .table-header,
-    .table-row {
-        min-width: 700px;
-    }
-    
-    .demo-description h3 {
-        font-size: 22px;
-    }
-    
-    .demo-intro {
-        font-size: 15px;
-    }
-    
-    .mockup-full {
-        height: 350px;
+    .feature-icon svg {
+        width: 24px;
+        height: 24px;
     }
     
     .feature h3 {
