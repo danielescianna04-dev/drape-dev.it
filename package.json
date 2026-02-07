@@ -1,0 +1,16 @@
+{
+  "name": "drape-dev-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npx serve -l 8000",
+    "server": "node server.js",
+    "dev": "vercel dev",
+    "build": "echo 'Static site - no build needed'"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "firebase-admin": "^12.0.0"
+  }
+}

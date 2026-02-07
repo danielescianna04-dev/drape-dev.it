@@ -1,3 +1,17 @@
 .DS_Store
 script-backup.js
 Screenshot*.png
+
+# Secrets - MAI committare
+serviceAccountKey.json
+*.pem
+*.p12
+.env
+.env.*
+
+# Dependencies
+node_modules/
+
+# OS
+Thumbs.db
+nul

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <base href="/admin/">
+    <title>Admin Login - Drape</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-logo">
+                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="40" rx="8" fill="url(#gradient)"/>
+                    <path d="M12 14h16v2H12v-2zm0 5h12v2H12v-2zm0 5h14v2H12v-2z" fill="white"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="0" y1="0" x2="40" y2="40">
+                            <stop stop-color="#a855f7"/>
+                            <stop offset="1" stop-color="#c084fc"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <h1>Drape Admin</h1>
+                <p>Accedi per gestire la piattaforma</p>
+            </div>
+
+            <div id="loginError" class="login-error"></div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="admin@drape-dev.it"
+                        required
+                        autocomplete="email"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div style="position:relative">
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="••••••••"
+                            required
+                            autocomplete="current-password"
+                            style="padding-right:44px"
+                        >
+                        <button type="button" id="togglePass" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:6px;color:var(--text-secondary,#888)" aria-label="Mostra password">
+                            <svg id="eyeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" id="loginBtn">
+                    Accedi
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import {
+            getAuth,
+            signInWithEmailAndPassword,
+            onAuthStateChanged
+        } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+
+        // Firebase config - Replace with your actual config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDPWDvrOQAzARqh9ecUHlv_WVRteQN2slE",
+            authDomain: "drape-mobile-ide.firebaseapp.com",
+            projectId: "drape-mobile-ide",
+            storageBucket: "drape-mobile-ide.firebasestorage.app",
+            messagingSenderId: "74904913373",
+            appId: "1:74904913373:web:3a88a420928a868083e234"
+        };
+
+        // Admin whitelist
+        const ADMIN_EMAILS = [
+            'rivaslleon27@gmail.com'
+        ];
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Check if already logged in
+        onAuthStateChanged(auth, (user) => {
+            if (user && ADMIN_EMAILS.includes(user.email)) {
+                // Already logged in as admin, redirect to dashboard
+                window.location.href = 'dashboard.html';
+            }
+        });
+
+        // Toggle password visibility
+        const toggleBtn = document.getElementById('togglePass');
+        const passInput = document.getElementById('password');
+        const eyeIcon = document.getElementById('eyeIcon');
+        toggleBtn.addEventListener('click', () => {
+            const show = passInput.type === 'password';
+            passInput.type = show ? 'text' : 'password';
+            eyeIcon.innerHTML = show
+                ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>'
+                : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+            toggleBtn.setAttribute('aria-label', show ? 'Nascondi password' : 'Mostra password');
+        });
+
+        // Form submission
+        const form = document.getElementById('loginForm');
+        const errorDiv = document.getElementById('loginError');
+        const loginBtn = document.getElementById('loginBtn');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Reset error
+            errorDiv.textContent = '';
+            errorDiv.classList.remove('show');
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Accesso in corso...';
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // Check if user is admin
+                if (!ADMIN_EMAILS.includes(user.email)) {
+                    await auth.signOut();
+                    throw new Error('Non sei autorizzato ad accedere all\'area admin.');
+                }
+
+                // Get ID token for API calls
+                const token = await user.getIdToken();
+                sessionStorage.setItem('adminToken', token);
+                sessionStorage.setItem('adminUser', JSON.stringify({
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: user.displayName
+                }));
+
+                // Redirect to dashboard
+                window.location.href = 'dashboard.html';
+
+            } catch (error) {
+                console.error('Login error:', error);
+
+                let message = 'Errore durante il login.';
+                if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                    message = 'Email o password non validi.';
+                } else if (error.code === 'auth/too-many-requests') {
+                    message = 'Troppi tentativi. Riprova più tardi.';
+                } else if (error.message) {
+                    message = error.message;
+                }
+
+                errorDiv.textContent = message;
+                errorDiv.classList.add('show');
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Accedi';
+            }
+        });
+    </script>
+</body>
+</html>
