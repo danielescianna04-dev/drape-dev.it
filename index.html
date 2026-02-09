@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Drape - Costruisci app dal tuo iPhone</title>
     <meta name="description" content="Drape è il primo IDE mobile con AI multimodello. Descrivi cosa vuoi costruire e guardalo prendere vita. Terminal completo, AI Agent, GitHub integration.">
     <meta name="keywords" content="IDE mobile, AI coding, mobile development, Claude, GPT, Gemini, coding app, vibe coding, app builder">
@@ -948,7 +948,13 @@
             .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
         }
         @media (max-width: 480px) {
-            .footer-grid { grid-template-columns: 1fr; }
+            footer { padding: 32px 0 24px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 20px 16px; margin-bottom: 24px; }
+            .footer-brand { grid-column: 1 / -1; }
+            .footer-brand p { font-size: 13px; max-width: 100%; }
+            .footer-col h4 { font-size: 12px; margin-bottom: 10px; }
+            .footer-col a { font-size: 13px; margin-bottom: 8px; }
+            .footer-bottom { padding-top: 16px; font-size: 12px; }
         }
 
         /* ─── ANIMATIONS ─── */
@@ -984,7 +990,7 @@
                 <a href="#features">Funzionalit&agrave;</a>
                 <a href="#pricing">Prezzi</a>
                 <a href="#faq">FAQ</a>
-                <a href="mailto:leon.rivas@drape-dev.it">Contatti</a>
+                <a href="support.html">Supporto</a>
                 <a href="javascript:void(0)" class="nav-cta">Scarica</a>
             </div>
         </div>
