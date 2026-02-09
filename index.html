@@ -3,1003 +3,1451 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drape - Il Primo IDE Mobile con AI Multimodello</title>
-    <meta name="description" content="Drape è il primo IDE mobile-first con AI multimodello. Sviluppa con GPT-5, Claude 4.5 e Gemini Pro 2.5 direttamente da iPhone e Android.">
-    <meta name="keywords" content="IDE mobile, AI coding, mobile development, GPT-5, Claude, Gemini, coding app, developer tools">
+    <title>Drape - Costruisci app dal tuo iPhone</title>
+    <meta name="description" content="Drape è il primo IDE mobile con AI multimodello. Descrivi cosa vuoi costruire e guardalo prendere vita. Terminal completo, AI Agent, GitHub integration.">
+    <meta name="keywords" content="IDE mobile, AI coding, mobile development, Claude, GPT, Gemini, coding app, vibe coding, app builder">
     <meta name="author" content="Drape">
     <meta name="robots" content="index, follow">
-    <meta name="language" content="Italian">
     <link rel="canonical" href="https://drape-dev.it/">
-    
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://drape-dev.it/">
-    <meta property="og:title" content="Drape - Il Primo IDE Mobile con AI Multimodello">
-    <meta property="og:description" content="Sviluppa con GPT-5, Claude 4.5 e Gemini Pro 2.5 direttamente da iPhone e Android. Terminal completo, GitHub integration, AI Agent autonomo.">
-    <meta property="og:image" content="https://drape-dev.it/og-image.svg">
-    
-    <!-- Twitter -->
+    <meta property="og:title" content="Drape - Costruisci app dal tuo iPhone">
+    <meta property="og:description" content="Il primo IDE mobile con AI multimodello. Terminal completo, AI Agent autonomo, GitHub integration. Tutto dal tuo iPhone.">
+    <meta property="og:image" content="https://drape-dev.it/og-image-v2.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://drape-dev.it/">
-    <meta property="twitter:title" content="Drape - Il Primo IDE Mobile con AI Multimodello">
-    <meta property="twitter:description" content="Sviluppa con GPT-5, Claude 4.5 e Gemini Pro 2.5 direttamente da iPhone e Android.">
-    <meta property="twitter:image" content="https://drape-dev.it/og-image.svg">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="styles.css">
+    <meta property="twitter:title" content="Drape - Costruisci app dal tuo iPhone">
+    <meta property="twitter:description" content="Il primo IDE mobile con AI multimodello. Terminal completo, AI Agent autonomo, GitHub integration.">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #050507;
+            --bg-card: #0c0c10;
+            --bg-card-hover: #111116;
+            --border: rgba(255,255,255,0.06);
+            --border-hover: rgba(255,255,255,0.12);
+            --text: #f5f5f7;
+            --text-secondary: #8e8e93;
+            --text-muted: #636366;
+            --accent: #a855f7;
+            --accent-light: #c084fc;
+            --accent-glow: rgba(168, 85, 247, 0.15);
+            --accent-glow-strong: rgba(168, 85, 247, 0.3);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-lg: 24px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 16px 0;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(5, 5, 7, 0.8);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 700;
+            font-size: 20px;
+            letter-spacing: -0.5px;
+        }
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .logo-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-cta {
+            background: var(--accent) !important;
+            color: #fff !important;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+        .nav-cta:hover { opacity: 0.85; }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            padding: 160px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 600px;
+            background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 20px;
+            background: var(--accent-glow);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            color: var(--accent-light);
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-size: clamp(40px, 7vw, 72px);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            background: linear-gradient(180deg, #fff 30%, rgba(255,255,255,0.5));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+        .hero-ctas {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 60px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-1px);
+        }
+        .btn-primary svg { width: 20px; height: 20px; }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: rgba(255,255,255,0.06);
+            color: var(--text);
+            border: 1px solid var(--border-hover);
+            border-radius: 60px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        /* ─── AI MODELS BAR ─── */
+        .models-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            padding: 40px 0 0;
+            flex-wrap: wrap;
+        }
+        .model-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .model-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .model-dot.claude { background: #d4a574; }
+        .model-dot.gpt { background: #10a37f; }
+        .model-dot.gemini { background: #4285f4; }
+
+        /* ─── iPHONE 16 MOCKUPS ─── */
+        .hero-phones {
+            margin-top: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 28px;
+            position: relative;
+        }
+        .hero-phones::before {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            height: 300px;
+            background: radial-gradient(ellipse, var(--accent-glow-strong) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .phone-frame {
+            position: relative;
+            width: 260px;
+            flex-shrink: 0;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .phone-frame:hover { transform: translateY(-8px); }
+        .phone-frame.center { width: 280px; z-index: 2; }
+        .phone-frame.side { opacity: 0.85; transform: scale(0.92); }
+        .phone-frame.side:hover { opacity: 1; transform: scale(0.92) translateY(-8px); }
+
+        /* iPhone 16 chassis */
+        .phone-bezel {
+            background: #1c1c1e;
+            border-radius: 52px;
+            padding: 10px;
+            position: relative;
+            /* Titanium frame edge */
+            box-shadow:
+                inset 0 0 0 1.5px rgba(255,255,255,0.08),
+                0 0 0 1px rgba(255,255,255,0.06),
+                0 20px 60px rgba(0,0,0,0.7),
+                0 0 60px var(--accent-glow);
+        }
+        .phone-frame.center .phone-bezel {
+            box-shadow:
+                inset 0 0 0 1.5px rgba(255,255,255,0.1),
+                0 0 0 1px rgba(255,255,255,0.08),
+                0 30px 80px rgba(0,0,0,0.8),
+                0 0 80px var(--accent-glow-strong);
+        }
+        /* Side buttons */
+        .phone-bezel::before {
+            content: '';
+            position: absolute;
+            right: -2px;
+            top: 120px;
+            width: 3px;
+            height: 56px;
+            background: #2a2a2e;
+            border-radius: 0 2px 2px 0;
+        }
+        .phone-bezel::after {
+            content: '';
+            position: absolute;
+            left: -2px;
+            top: 100px;
+            width: 3px;
+            height: 36px;
+            background: #2a2a2e;
+            border-radius: 2px 0 0 2px;
+            box-shadow: 0 52px 0 #2a2a2e;
+        }
+
+        /* Screen */
+        .phone-screen {
+            background: #000;
+            border-radius: 44px;
+            overflow: hidden;
+            aspect-ratio: 9/19.5;
+            position: relative;
+        }
+        .phone-screen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Dynamic Island */
+        .phone-dynamic-island {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 92px;
+            height: 28px;
+            background: #000;
+            border-radius: 20px;
+            z-index: 3;
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.8);
+        }
+        /* Front camera dot */
+        .phone-dynamic-island::after {
+            content: '';
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #0a0a0c;
+            box-shadow: inset 0 0 2px rgba(30,30,60,0.6);
+        }
+
+        .phone-screen-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: linear-gradient(180deg, #0c0c10 0%, #0a0a12 100%);
+        }
+        .phone-screen-placeholder svg {
+            width: 40px;
+            height: 40px;
+            opacity: 0.15;
+        }
+        .phone-screen-placeholder span {
+            font-size: 12px;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        /* Status bar */
+        .phone-statusbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px 0;
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+        }
+        .phone-statusbar-right {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        /* Battery icon */
+        .phone-battery {
+            width: 22px;
+            height: 10px;
+            border: 1.5px solid rgba(255,255,255,0.7);
+            border-radius: 3px;
+            position: relative;
+            margin-left: 2px;
+        }
+        .phone-battery::before {
+            content: '';
+            position: absolute;
+            right: -4px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2px;
+            height: 5px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 0 1px 1px 0;
+        }
+        .phone-battery::after {
+            content: '';
+            position: absolute;
+            left: 1.5px;
+            top: 1.5px;
+            bottom: 1.5px;
+            width: 70%;
+            background: #fff;
+            border-radius: 1px;
+        }
+
+        /* Home indicator */
+        .phone-home-indicator {
+            position: absolute;
+            bottom: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: rgba(255,255,255,0.25);
+            border-radius: 4px;
+            z-index: 3;
+        }
+
+        .phone-label {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        @media (max-width: 768px) {
+            .hero-phones { gap: 12px; }
+            .phone-frame { width: 170px; }
+            .phone-frame.center { width: 190px; }
+            .phone-frame.side { display: none; }
+            .phone-bezel { border-radius: 40px; padding: 8px; }
+            .phone-bezel::before, .phone-bezel::after { display: none; }
+            .phone-screen { border-radius: 34px; }
+            .phone-dynamic-island { width: 72px; height: 22px; top: 8px; }
+            .phone-dynamic-island::after { width: 6px; height: 6px; right: 12px; }
+        }
+
+        /* ─── SECTIONS ─── */
+        section { padding: 120px 0; }
+        .section-label {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+        .section-desc {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        .section-header {
+            margin-bottom: 60px;
+        }
+        .section-header.center {
+            text-align: center;
+        }
+        .section-header.center .section-desc {
+            margin: 0 auto;
+        }
+
+        /* ─── WHAT YOU CAN BUILD — marquee ─── */
+        .build-marquee-wrap {
+            overflow: hidden;
+            mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+            -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+        }
+        .build-marquee-track { margin-bottom: 14px; }
+        .build-marquee-track:last-child { margin-bottom: 0; }
+        .build-marquee {
+            display: flex;
+            gap: 14px;
+            width: max-content;
+            animation: marquee 35s linear infinite;
+        }
+        .build-marquee.reverse {
+            animation: marquee-reverse 35s linear infinite;
+        }
+        .build-marquee:hover { animation-play-state: paused; }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes marquee-reverse {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+        .build-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 24px;
+            border-radius: 60px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            white-space: nowrap;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+            transition: all 0.3s;
+            cursor: default;
+        }
+        .build-pill:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+        .build-pill .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .build-pill span {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* ─── FEATURES — rows ─── */
+        .feat-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .feat-row {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 0 32px;
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s;
+            position: relative;
+        }
+        .feat-row:first-child { border-top: 1px solid var(--border); }
+        .feat-row::before {
+            content: '';
+            position: absolute;
+            left: -40px;
+            right: -40px;
+            top: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 0% 50%, var(--accent-glow) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+        .feat-row:hover::before { opacity: 1; }
+        .feat-row:hover { border-bottom-color: rgba(168,85,247,0.2); }
+        .feat-num {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1;
+            background: linear-gradient(180deg, var(--accent-light) 0%, rgba(168,85,247,0.2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            padding-top: 2px;
+        }
+        .feat-content h3 {
+            font-size: clamp(24px, 3vw, 32px);
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            margin-bottom: 8px;
+            transition: color 0.3s;
+        }
+        .feat-row:hover .feat-content h3 { color: var(--accent-light); }
+        .feat-content p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 560px;
+        }
+        @media (max-width: 600px) {
+            .feat-row {
+                grid-template-columns: 50px 1fr;
+                gap: 0 20px;
+                padding: 28px 0;
+            }
+            .feat-num { font-size: 32px; }
+        }
+
+        /* ─── HOW IT WORKS ─── */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            position: relative;
+        }
+        .steps-grid::before {
+            content: '';
+            position: absolute;
+            top: 36px;
+            left: 15%;
+            right: 15%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--border), var(--accent-glow-strong), var(--border));
+        }
+        .step {
+            text-align: center;
+            position: relative;
+        }
+        .step-number {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--accent);
+            position: relative;
+            z-index: 1;
+        }
+        .step h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .step p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            max-width: 280px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ─── PRICING ─── */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            align-items: start;
+        }
+        .pricing-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .pricing-card.featured {
+            border-color: var(--accent);
+            box-shadow: 0 0 40px var(--accent-glow);
+        }
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 12px;
+        }
+        .pricing-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .pricing-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+        .pricing-price {
+            font-size: 40px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 4px;
+        }
+        .pricing-period {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 28px;
+        }
+        .pricing-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .pricing-features li::before {
+            content: '';
+            width: 18px;
+            height: 18px;
+            min-width: 18px;
+            border-radius: 50%;
+            background: rgba(34, 197, 94, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2322c55e' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        .pricing-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border-radius: 60px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .pricing-btn.outline {
+            background: transparent;
+            border: 1px solid var(--border-hover);
+            color: var(--text);
+        }
+        .pricing-btn.outline:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.2);
+        }
+        .pricing-btn.filled {
+            background: var(--accent);
+            border: 1px solid var(--accent);
+            color: #fff;
+        }
+        .pricing-btn.filled:hover {
+            background: var(--accent-light);
+        }
+
+        /* ─── CTA ─── */
+        .cta-section {
+            text-align: center;
+            position: relative;
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .cta-section h2 {
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .cta-section p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto 32px;
+        }
+
+        /* ─── FAQ ─── */
+        .faq-list {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+        .faq-question {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            transition: color 0.2s;
+            user-select: none;
+        }
+        .faq-question:hover { color: var(--accent-light); }
+        .faq-icon {
+            font-size: 20px;
+            color: var(--text-muted);
+            transition: transform 0.3s;
+            min-width: 24px;
+            text-align: center;
+        }
+        .faq-item.open .faq-icon {
+            transform: rotate(45deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 200px;
+        }
+        .faq-answer p {
+            padding-bottom: 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 60px 0 40px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-brand p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 12px;
+            max-width: 260px;
+            line-height: 1.6;
+        }
+        .footer-col h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .footer-col a {
+            display: block;
+            font-size: 14px;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color 0.2s;
+        }
+        .footer-col a:hover { color: var(--text); }
+        .footer-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .footer-socials {
+            display: flex;
+            gap: 16px;
+        }
+        .footer-socials a {
+            color: var(--text-muted);
+            transition: color 0.2s;
+            text-decoration: none;
+        }
+        .footer-socials a:hover { color: var(--text); }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(5, 5, 7, 0.98);
+                border-bottom: 1px solid var(--border);
+                padding: 16px 24px;
+                gap: 16px;
+            }
+            .hero { padding: 120px 0 60px; }
+            .steps-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .steps-grid::before { display: none; }
+            .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 32px;
+            }
+            .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ─── ANIMATIONS ─── */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body>
-    <!-- Particles Background -->
-    <canvas id="particles"></canvas>
-    
-    <!-- Cursor Follower -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-content">
-                <a href="#" class="logo">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <rect width="32" height="32" rx="8" fill="url(#gradient)"/>
-                        <path d="M10 10h12v12H10z" fill="white" opacity="0.2"/>
-                        <path d="M12 16l4 4 4-8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <defs>
-                            <linearGradient id="gradient" x1="0" y1="0" x2="32" y2="32">
-                                <stop offset="0%" stop-color="#a855f7"/>
-                                <stop offset="100%" stop-color="#c084fc"/>
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                    <span class="logo-text">Drape</span>
-                </a>
-                <button class="mobile-menu-toggle" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <div class="nav-links">
-                    <a href="#problema">Problema</a>
-                    <a href="#soluzione">Soluzione</a>
-                    <a href="#mercato">Mercato</a>
-                    <a href="#traction">Traction</a>
-                    <a href="pitch-deck.html">Pitch Deck</a>
-                    <a href="#contatti" class="nav-cta">Contattaci</a>
+
+<!-- ─── NAV ─── -->
+<nav>
+    <div class="container">
+        <div class="nav-inner">
+            <a href="/" class="logo">
+                <div class="logo-icon">
+                    <img src="logo.png" alt="Drape">
                 </div>
+                Drape
+            </a>
+            <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+            <div class="nav-links">
+                <a href="#features">Funzionalit&agrave;</a>
+                <a href="#pricing">Prezzi</a>
+                <a href="#faq">FAQ</a>
+                <a href="mailto:leon.rivas@drape-dev.it">Contatti</a>
+                <a href="javascript:void(0)" class="nav-cta">Scarica</a>
             </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="glitch" data-text="Il Tuo Smartphone È Il Tuo Nuovo IDE" data-translate="Il Tuo Smartphone È Il Tuo Nuovo IDE">Il Tuo Smartphone È Il Tuo Nuovo IDE</h1>
-                <p class="hero-subtitle fade-in" data-translate="Terminal completo, editor avanzato, GitHub integration e AI Agent autonomo. Tutto quello che serve per sviluppare progetti reali, direttamente da iPhone e Android.">Terminal completo, editor avanzato, GitHub integration e AI Agent autonomo. Tutto quello che serve per sviluppare progetti reali, direttamente da iPhone e Android.</p>
-                
-                <!-- Code Animation -->
-                <div class="code-demo">
-                    <div class="code-window">
-                        <div class="window-header">
-                            <span class="dot red"></span>
-                            <span class="dot yellow"></span>
-                            <span class="dot green"></span>
-                            <span class="window-title">drape_mobile_ide.dart</span>
-                        </div>
-                        <div class="code-content">
-                            <pre id="typing-code"></pre>
-                            <span class="cursor-blink">|</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="hero-stats">
-                    <div class="stat" data-target="8.6">
-                        <div class="stat-number">$<span class="counter">0</span>B</div>
-                        <div class="stat-label">TAM</div>
-                    </div>
-                    <div class="stat" data-target="28.7">
-                        <div class="stat-number"><span class="counter">0</span>M</div>
-                        <div class="stat-label">Developer Globali</div>
-                    </div>
-                    <div class="stat" data-target="150">
-                        <div class="stat-number"><span class="counter">0</span>%</div>
-                        <div class="stat-label">Growth AI Dev Tools</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Floating Elements -->
-        <div class="floating-shape shape-1"></div>
-        <div class="floating-shape shape-2"></div>
-        <div class="floating-shape shape-3"></div>
-    </section>
-
-    <!-- Problema -->
-    <section id="problema" class="section">
-        <div class="container">
-            <h2 class="reveal">Il Problema</h2>
-            <div class="problem-grid">
-                <div class="problem-card reveal" data-delay="0">
-                    <div class="icon-wrapper">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                            <line x1="8" y1="21" x2="16" y2="21"></line>
-                            <line x1="12" y1="17" x2="12" y2="21"></line>
-                        </svg>
-                    </div>
-                    <h3>Desktop Dependency</h3>
-                    <p>Gli IDE attuali (VS Code, Cursor, Warp) sono progettati per desktop. Il mobile manca di un'esperienza fluida per lo sviluppo professionale.</p>
-                    <div class="card-glow"></div>
-                </div>
-                <div class="problem-card reveal" data-delay="100">
-                    <div class="icon-wrapper">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                        </svg>
-                    </div>
-                    <h3>AI Frammentata</h3>
-                    <p>Developer devono usare tool separati per GPT-5, Claude 4.5, Gemini Pro 2.5. Nessuna integrazione nativa in ambiente mobile.</p>
-                    <div class="card-glow"></div>
-                </div>
-                <div class="problem-card reveal" data-delay="200">
-                    <div class="icon-wrapper">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-                            <line x1="12" y1="18" x2="12.01" y2="18"></line>
-                        </svg>
-                    </div>
-                    <h3>Produttività Persa</h3>
-                    <p>68% dei developer lavorano remote/hybrid ma non possono essere produttivi su mobile durante spostamenti.</p>
-                    <div class="card-glow"></div>
-                </div>
-                <div class="problem-card reveal" data-delay="300">
-                    <div class="icon-wrapper">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="12" y1="8" x2="12" y2="12"></line>
-                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                        </svg>
-                    </div>
-                    <h3>Emergenze Bloccanti</h3>
-                    <p>Production down mentre sei fuori ufficio? Devi correre al PC. Le app mobile non hanno terminal né accesso GitHub per hotfix urgenti.</p>
-                    <div class="card-glow"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Soluzione -->
-    <section id="soluzione" class="section bg-dark">
-        <div class="container">
-            <h2 class="reveal">La Nostra Soluzione</h2>
-            
-            <!-- Interactive AI Demo -->
-            <div class="ai-demo reveal">
-                <div class="demo-description">
-                    <h3>Il Primo IDE Mobile Completo</h3>
-                    <p class="demo-intro">Drape porta l'esperienza di sviluppo desktop direttamente su mobile, con funzionalità che nessun competitor offre.</p>
-                    
-                    <div class="demo-features">
-                        <div class="demo-feature">
-                            <div class="demo-icon">→</div>
-                            <div>
-                                <h4>Terminal Bash/Zsh Completo</h4>
-                                <p>Esegui comandi, script e gestisci processi come su desktop. Nessuna limitazione.</p>
-                            </div>
-                        </div>
-                        <div class="demo-feature">
-                            <div class="demo-icon">→</div>
-                            <div>
-                                <h4>AI Agent Autonomo</h4>
-                                <p>L'AI crea e modifica progetti esistenti in autonomia, non solo genera template.</p>
-                            </div>
-                        </div>
-                        <div class="demo-feature">
-                            <div class="demo-icon">→</div>
-                            <div>
-                                <h4>GitHub Repository Integration</h4>
-                                <p>Clone, commit, push e gestisci PR direttamente dalle tue repo esistenti.</p>
-                            </div>
-                        </div>
-                        <div class="demo-feature">
-                            <div class="demo-icon">→</div>
-                            <div>
-                                <h4>Multi-Model AI</h4>
-                                <p>Scegli tra GPT-5, Claude 4.5 e Gemini Pro 2.5 per ogni task specifico.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="phone-mockup-image">
-                    <img src="Progetto senza titolo (3).png" alt="Drape App Mockup" class="mockup-full">
-                </div>
-            </div>
-            
-            <div class="solution-features">
-                <div class="feature reveal" data-delay="0">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="4 17 10 11 4 5"></polyline>
-                            <line x1="12" y1="19" x2="20" y2="19"></line>
-                        </svg>
-                    </div>
-                    <h3>Terminal Desktop-Grade</h3>
-                    <p>Terminal completo come da desktop con supporto comandi bash, zsh. Esegui script, gestisci processi e lavora come su un vero terminale.</p>
-                </div>
-                <div class="feature reveal" data-delay="100">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                        </svg>
-                    </div>
-                    <h3>AI Agent Autonomo</h3>
-                    <p>Agent AI che può creare, modificare e gestire progetti in autonomia. Pianifica task complessi e li esegue step-by-step.</p>
-                </div>
-                <div class="feature reveal" data-delay="200">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                        </svg>
-                    </div>
-                    <h3>Modifica Progetti Esistenti</h3>
-                    <p>Importa e modifica progetti esistenti, non solo template. Lavora su codebase reali con pieno controllo.</p>
-                </div>
-                <div class="feature reveal" data-delay="300">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                        </svg>
-                    </div>
-                    <h3>GitHub Repo Integration</h3>
-                    <p>Connessione diretta alle repository GitHub. Clone, commit, push, pull e gestisci branch direttamente dall'app.</p>
-                </div>
-                <div class="feature reveal" data-delay="400">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="3"></circle>
-                            <path d="M12 1v6m0 6v6m5.2-13.2l-4.2 4.2m0 6l4.2 4.2M23 12h-6m-6 0H1m18.2 5.2l-4.2-4.2m0-6l4.2-4.2"></path>
-                        </svg>
-                    </div>
-                    <h3>AI Multimodello</h3>
-                    <p>GPT-5, Claude 4.5 Sonnet, Gemini Pro 2.5 integrati. Switching trasparente tra modelli per task specifici.</p>
-                </div>
-                <div class="feature reveal" data-delay="500">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="16 18 22 12 16 6"></polyline>
-                            <polyline points="8 6 2 12 8 18"></polyline>
-                        </svg>
-                    </div>
-                    <h3>Full Code Editor</h3>
-                    <p>Editor completo con syntax highlighting, autocompletion, multi-file editing e tutte le feature di un IDE professionale.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases -->
-    <section class="section bg-dark">
-        <div class="container">
-            <h2 class="reveal">Casi d'Uso</h2>
-            <p class="section-subtitle reveal">Scenari reali in cui Drape fa la differenza</p>
-            <div class="use-cases-grid">
-                <div class="use-case-card reveal" data-delay="0">
-                    <div class="use-case-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                        </svg>
-                    </div>
-                    <h3>Commuting Developer</h3>
-                    <p>Developer che passa 2-3 ore al giorno in treno/metro. Usa Drape per lavorare su feature, fixare bug, o imparare nuove tecnologie durante il viaggio.</p>
-                    <div class="use-case-stats">
-                        <span>10-15 ore/settimana recuperate</span>
-                    </div>
-                </div>
-
-                <div class="use-case-card reveal" data-delay="100">
-                    <div class="use-case-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                    </div>
-                    <h3>Hotfix Urgenti</h3>
-                    <p>Production down mentre sei fuori ufficio. Con Drape cloni la repo, identifichi il bug con AI, fai il fix, testi e pushhi. Tutto da mobile in 10 minuti.</p>
-                    <div class="use-case-stats">
-                        <span>Downtime ridotto del 70%</span>
-                    </div>
-                </div>
-
-                <div class="use-case-card reveal" data-delay="200">
-                    <div class="use-case-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                        </svg>
-                    </div>
-                    <h3>Prototipazione Rapida</h3>
-                    <p>Hai un'idea alle 23:00. Invece di aspettare domani, apri Drape, chiedi all'AI di creare il boilerplate, e hai un prototipo funzionante in 20 minuti.</p>
-                    <div class="use-case-stats">
-                        <span>Da idea a MVP in ore, non giorni</span>
-                    </div>
-                </div>
-
-                <div class="use-case-card reveal" data-delay="300">
-                    <div class="use-case-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
-                    </div>
-                    <h3>Code Review On-the-Go</h3>
-                    <p>Ricevi notifica di PR mentre sei in giro. Apri Drape, vedi il diff, testi le modifiche localmente, lasci commenti e approvi. Senza bloccare il team.</p>
-                    <div class="use-case-stats">
-                        <span>Review time ridotto del 50%</span>
-                    </div>
-                </div>
-
-                <div class="use-case-card reveal" data-delay="400">
-                    <div class="use-case-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                        </svg>
-                    </div>
-                    <h3>Learning & Sperimentazione</h3>
-                    <p>Vuoi imparare un nuovo framework o linguaggio. Usa Drape durante pause pranzo o tempi morti per seguire tutorial, sperimentare e fare pratica.</p>
-                    <div class="use-case-stats">
-                        <span>Apprendimento continuo 24/7</span>
-                    </div>
-                </div>
-
-                <div class="use-case-card reveal" data-delay="500">
-                    <div class="use-case-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                        </svg>
-                    </div>
-                    <h3>Side Projects</h3>
-                    <p>Lavori su side project ma hai poco tempo. Con Drape sfrutti ogni momento libero: sala d'attesa, pausa caffè, weekend fuori. Il tuo progetto avanza sempre.</p>
-                    <div class="use-case-stats">
-                        <span>+300% tempo produttivo</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Mercato -->
-    <section id="mercato" class="section">
-        <div class="container">
-            <h2 class="reveal">Opportunità di Mercato</h2>
-            <div class="market-grid">
-                <div class="market-card reveal" data-delay="0">
-                    <h3>TAM</h3>
-                    <div class="market-value">$8.6B</div>
-                    <p>28.7M developer globali × $100/anno medio</p>
-                    <div class="progress-ring">
-                        <svg width="120" height="120">
-                            <circle cx="60" cy="60" r="54" class="progress-ring-circle" style="--percent: 100"></circle>
-                        </svg>
-                    </div>
-                </div>
-                <div class="market-card highlight reveal" data-delay="100">
-                    <h3>SAM</h3>
-                    <div class="market-value">$860M</div>
-                    <p>4.3M mobile + AI interested developers</p>
-                    <div class="progress-ring">
-                        <svg width="120" height="120">
-                            <circle cx="60" cy="60" r="54" class="progress-ring-circle" style="--percent: 70"></circle>
-                        </svg>
-                    </div>
-                </div>
-                <div class="market-card reveal" data-delay="200">
-                    <h3>SOM (Year 3)</h3>
-                    <div class="market-value">$3.36M</div>
-                    <p>500K users, 5% conversion rate</p>
-                    <div class="progress-ring">
-                        <svg width="120" height="120">
-                            <circle cx="60" cy="60" r="54" class="progress-ring-circle" style="--percent: 40"></circle>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-            <div class="market-trends reveal">
-                <h3>Trend Chiave</h3>
-                <ul>
-                    <li><strong>68%</strong> - Developer interessati a coding da mobile (Stack Overflow 2024)</li>
-                    <li><strong>+150% YoY</strong> - Crescita AI-powered development tools</li>
-                    <li><strong>$2.3B</strong> - Venture funding in AI dev tools (2024)</li>
-                    <li><strong>3.5 ore/giorno</strong> - Tempo medio in commute/travel per developer</li>
-                    <li><strong>92%</strong> - Developer che usano AI assistants regolarmente</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Business Model -->
-    <section class="section bg-dark">
-        <div class="container">
-            <h2 class="reveal">Modello di Business</h2>
-            <div class="pricing-grid">
-                <div class="pricing-card reveal" data-delay="0">
-                    <h3>Free</h3>
-                    <div class="price">$0</div>
-                    <ul>
-                        <li>Editor Base</li>
-                        <li>100 AI requests/mese</li>
-                        <li>GitHub Basic</li>
-                        <li>1 Progetto attivo</li>
-                        <li>Community Support</li>
-                    </ul>
-                </div>
-                <div class="pricing-card featured reveal" data-delay="100">
-                    <div class="popular-badge">Popolare</div>
-                    <h3>Plus</h3>
-                    <div class="price">$20<span>/mese</span></div>
-                    <ul>
-                        <li>2.500 AI requests/mese</li>
-                        <li>Hot Reload & Testing</li>
-                        <li>Progetti Illimitati</li>
-                        <li>Cloud Sync</li>
-                        <li>Priority Support</li>
-                        <li>Advanced Debugging</li>
-                    </ul>
-                </div>
-                <div class="pricing-card reveal" data-delay="200">
-                    <h3>Pro</h3>
-                    <div class="price">$50<span>/mese</span></div>
-                    <ul>
-                        <li>10.000 AI requests/mese</li>
-                        <li>Fino a 10 membri</li>
-                        <li>Admin Dashboard</li>
-                        <li>Team Analytics</li>
-                        <li>Shared Workspaces</li>
-                        <li>Custom AI Models</li>
-                        <li>API Access</li>
-                    </ul>
-                </div>
-                <div class="pricing-card enterprise reveal" data-delay="300">
-                    <h3>Business</h3>
-                    <div class="price">$200<span>/mese</span></div>
-                    <ul>
-                        <li>Unlimited AI requests</li>
-                        <li>Team Illimitato</li>
-                        <li>On-Premise Deploy</li>
-                        <li>SSO & Advanced Security</li>
-                        <li>Dedicated Support 24/7</li>
-                        <li>Custom Integrations</li>
-                        <li>SLA Garantito</li>
-                        <li>Training & Onboarding</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Traction -->
-    <section id="traction" class="section">
-        <div class="container">
-            <h2 class="reveal">Trazione & Roadmap</h2>
-            <div class="traction-content">
-                <div class="roadmap">
-                    <div class="roadmap-item completed">
-                        <h4>Q1-Q3 2025 - Fondamenta</h4>
-                        <p>Prototipo iniziale, validazione concept, primi test con utenti beta</p>
-                    </div>
-                    <div class="roadmap-item">
-                        <h4>Q4 2025 - Lancio MVP</h4>
-                        <p>Editor base, Terminal integrato, AI GPT-5, Integrazione GitHub, UI ottimizzata per mobile</p>
-                    </div>
-                    <div class="roadmap-item">
-                        <h4>Q1 2026 - Potenziamento AI</h4>
-                        <p>AI Multi-modello (Claude 4.5, Gemini Pro 2.5), AI Agent autonomo, Debugging intelligente avanzato</p>
-                    </div>
-                    <div class="roadmap-item">
-                        <h4>Q2 2026 - Funzionalità Avanzate</h4>
-                        <p>Modifica progetti esistenti, Visualizzatore diff, Gestione PR, Collaborazione team, Target 3K+ utenti</p>
-                    </div>
-                    <div class="roadmap-item">
-                        <h4>Q3 2026 - Crescita & Scalabilità</h4>
-                        <p>Hot reload Flutter, Framework testing, Ottimizzazione performance, Target 8K+ utenti</p>
-                    </div>
-                    <div class="roadmap-item">
-                        <h4>Q4 2026 - Consolidamento</h4>
-                        <p>Featured su App Store, Espansione internazionale, 15K+ utenti, Preparazione Serie A</p>
-                    </div>
-                </div>
-                <div class="projections">
-                    <h3>Proiezioni Ricavi</h3>
-                    <div class="projection-grid">
-                        <div class="projection">
-                            <h4>Fine 2026</h4>
-                            <p>3K utenti gratuiti</p>
-                            <p>200 Plus ($20)</p>
-                            <p>20 Pro ($50)</p>
-                            <p>5 Business ($200)</p>
-                            <p class="revenue">$62K ARR</p>
-                        </div>
-                        <div class="projection highlight">
-                            <h4>Fine 2027</h4>
-                            <p>15K utenti gratuiti</p>
-                            <p>1.2K Plus ($20)</p>
-                            <p>80 Pro ($50)</p>
-                            <p>20 Business ($200)</p>
-                            <p class="revenue">$340K ARR</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Competitive Advantage -->
-    <section class="section bg-dark">
-        <div class="container">
-            <h2 class="reveal">Vantaggio Competitivo</h2>
-            <p class="section-subtitle reveal">Drape è l'unico IDE mobile con terminal completo e AI agent autonomo</p>
-            
-            <!-- Key Differentiators -->
-            <div class="differentiators-grid reveal">
-                <div class="differentiator-card">
-                    <div class="diff-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="4 17 10 11 4 5"></polyline>
-                            <line x1="12" y1="19" x2="20" y2="19"></line>
-                        </svg>
-                    </div>
-                    <h3>Terminal Desktop-Grade</h3>
-                    <p>L'unico con terminal bash/zsh completo su mobile. I competitor hanno solo console limitate o nessun terminal.</p>
-                </div>
-                <div class="differentiator-card">
-                    <div class="diff-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                        </svg>
-                    </div>
-                    <h3>AI Agent Autonomo</h3>
-                    <p>Agent che crea e modifica progetti in autonomia. I competitor hanno solo AI assistenti passivi.</p>
-                </div>
-                <div class="differentiator-card">
-                    <div class="diff-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="3"></circle>
-                            <path d="M12 1v6m0 6v6m5.2-13.2l-4.2 4.2m0 6l4.2 4.2M23 12h-6m-6 0H1m18.2 5.2l-4.2-4.2m0-6l4.2-4.2"></path>
-                        </svg>
-                    </div>
-                    <h3>Multi-Model AI</h3>
-                    <p>GPT-5, Claude 4.5, Gemini Pro 2.5 integrati. I competitor sono limitati a un singolo modello.</p>
-                </div>
-            </div>
-
-            <!-- Comparison Table -->
-            <div class="comparison-table-modern reveal">
-                <div class="table-header">
-                    <div class="header-cell">Feature</div>
-                    <div class="header-cell">Vibe code</div>
-                    <div class="header-cell">Replit Mobile</div>
-                    <div class="header-cell">Steercode</div>
-                    <div class="header-cell">Warp</div>
-                    <div class="header-cell drape-header">
-                        <div class="logo-badge">D</div>
-                        <span>Drape</span>
-                    </div>
-                </div>
-                
-                <div class="table-row">
-                    <div class="feature-name">Terminale</div>
-                    <div class="cell fail">✗</div>
-                    <div class="cell success">✓</div>
-                    <div class="cell fail">✗</div>
-                    <div class="cell success">✓</div>
-                    <div class="cell success">✓</div>
-                </div>
-                
-                <div class="table-row">
-                    <div class="feature-name">Multi-AI Routing</div>
-                    <div class="cell success">✓</div>
-                    <div class="cell fail">✗</div>
-                    <div class="cell success">✓</div>
-                    <div class="cell success">✓</div>
-                    <div class="cell success">✓</div>
-                </div>
-                
-                <div class="table-row">
-                    <div class="feature-name">GitHub Integration</div>
-                    <div class="cell fail">✗</div>
-                    <div class="cell success">✓</div>
-                    <div class="cell fail">✗</div>
-                    <div class="cell warning">⚠️</div>
-                    <div class="cell success">✓</div>
-                </div>
-                
-                <div class="table-row">
-                    <div class="feature-name">Team Collaboration</div>
-                    <div class="cell fail">✗</div>
-                    <div class="cell fail">✗</div>
-                    <div class="cell fail">✗</div>
-                    <div class="cell success">✓</div>
-                    <div class="cell success">✓</div>
-                </div>
-                
-                <div class="table-row">
-                    <div class="feature-name">Custom AI API</div>
-                    <div class="cell fail">✗</div>
-                    <div class="cell success">✓</div>
-                    <div class="cell fail">✗</div>
-                    <div class="cell fail">✗</div>
-                    <div class="cell success">✓</div>
-                </div>
-                
-                <div class="table-row">
-                    <div class="feature-name">Mobile Experience</div>
-                    <div class="cell success">✓</div>
-                    <div class="cell success">✓</div>
-                    <div class="cell success">✓</div>
-                    <div class="cell fail">✗</div>
-                    <div class="cell success">✓</div>
-                </div>
-                
-                <div class="table-footer">
-                    <div class="footer-cell"></div>
-                    <div class="footer-cell">
-                        <div class="score-small">2/6</div>
-                    </div>
-                    <div class="footer-cell">
-                        <div class="score-small">4/6</div>
-                    </div>
-                    <div class="footer-cell">
-                        <div class="score-small">2/6</div>
-                    </div>
-                    <div class="footer-cell">
-                        <div class="score-small">2.5/6</div>
-                    </div>
-                    <div class="footer-cell drape-score">
-                        <div class="score-big">6/6</div>
-                        <div class="score-label">Leader</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Team -->
-    <section id="team" class="section">
-        <div class="container">
-            <h2 class="reveal">Il Team</h2>
-            <p class="section-subtitle reveal">I founder dietro Drape</p>
-            
-            <div class="team-grid">
-                <div class="team-card reveal" data-delay="0">
-                    <div class="team-avatar">
-                        <div class="avatar-placeholder">DS</div>
-                    </div>
-                    <h3>Daniele Scianna</h3>
-                    <div class="team-role">Co-Founder & Developer</div>
-                    <p class="team-bio">Programmatore full-stack con esperienza nello sviluppo mobile e AI integration.</p>
-                </div>
-                
-                <div class="team-card reveal" data-delay="100">
-                    <div class="team-avatar">
-                        <div class="avatar-placeholder">LR</div>
-                    </div>
-                    <h3>Leon Rivas</h3>
-                    <div class="team-role">Co-Founder & Developer</div>
-                    <p class="team-bio">Programmatore specializzato in mobile development e architetture scalabili.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="section">
-        <div class="container">
-            <h2 class="reveal">Domande Frequenti</h2>
-            <div class="faq-container">
-                <div class="faq-item reveal" data-delay="0">
-                    <div class="faq-question">
-                        <h3>Qual è il vostro vantaggio competitivo principale?</h3>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Siamo l'unico IDE mobile con terminal desktop-grade completo, AI Agent autonomo per modifiche multi-file, e integrazione nativa con GitHub. I competitor offrono solo editor base o playground limitati.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item reveal" data-delay="100">
-                    <div class="faq-question">
-                        <h3>Come monetizzate?</h3>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Modello freemium con 4 tier: Free (100 AI requests/mese), Pro $20/mese (2.500 requests), Team $50/mese (10.000 requests), Enterprise $200/mese (unlimited). Revenue share con provider AI già negoziato.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item reveal" data-delay="200">
-                    <div class="faq-question">
-                        <h3>Qual è la dimensione del mercato?</h3>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>TAM $8.2B (developer tools market), SAM $2.1B (mobile-first developers), SOM $180M (early adopters mobile coding). 27M developers worldwide, 68% interessati a coding mobile secondo Stack Overflow 2024.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item reveal" data-delay="300">
-                    <div class="faq-question">
-                        <h3>Chi sono i vostri competitor?</h3>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>App mobile: VibeCode, Rork, Instance, Lovable. Nessuna ha terminal completo + AI Agent + GitHub integration insieme. Desktop tools (Replit, Cursor) non sono mobile-first.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item reveal" data-delay="400">
-                    <div class="faq-question">
-                        <h3>Quali sono le proiezioni di crescita?</h3>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Fine 2026: 3K utenti, $62K ARR. Fine 2027: 15K utenti, $340K ARR. Assumiamo 8% conversion free-to-paid (conservativo per early-stage product).</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- The Ask -->
-    <section class="section bg-dark">
-        <div class="container">
-            <h2 class="reveal">L'Opportunità di Investimento</h2>
-            <p class="section-subtitle reveal">Unisciti a noi nella rivoluzione dello sviluppo mobile</p>
-            
-            <div class="investment-grid">
-                <div class="investment-card highlight reveal" data-delay="0">
-                    <div class="investment-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="12" y1="1" x2="12" y2="23"></line>
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                        </svg>
-                    </div>
-                    <h3>Cerchiamo</h3>
-                    <div class="investment-amount">€1M</div>
-                    <p>Seed Round</p>
-                </div>
-                
-                <div class="investment-card reveal" data-delay="100">
-                    <div class="investment-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                    </div>
-                    <h3>Stato Attuale</h3>
-                    <div class="investment-status">Demo Phase</div>
-                    <p>Prototipo funzionante, validazione concept</p>
-                </div>
-                
-                <div class="investment-card reveal" data-delay="200">
-                    <div class="investment-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                    </div>
-                    <h3>Obiettivo</h3>
-                    <div class="investment-goal">Q4 2025</div>
-                    <p>Lancio MVP su App Store</p>
-                </div>
-            </div>
-            
-            <div class="use-of-funds reveal">
-                <h3>Utilizzo del Capitale</h3>
-                <div class="funds-breakdown">
-                    <div class="fund-item">
-                        <div class="fund-bar">
-                            <div class="fund-fill" style="width: 45%"></div>
-                        </div>
-                        <div class="fund-details">
-                            <span class="fund-label">Sviluppo & Engineering</span>
-                            <span class="fund-amount">€450K (45%)</span>
-                        </div>
-                        <p class="fund-description">2 Senior iOS/Android Developers, 1 Backend Engineer, infrastruttura cloud</p>
-                    </div>
-                    
-                    <div class="fund-item">
-                        <div class="fund-bar">
-                            <div class="fund-fill" style="width: 25%"></div>
-                        </div>
-                        <div class="fund-details">
-                            <span class="fund-label">Product & Design</span>
-                            <span class="fund-amount">€250K (25%)</span>
-                        </div>
-                        <p class="fund-description">1 Product Designer, 1 UX Researcher, user testing, iterazioni MVP</p>
-                    </div>
-                    
-                    <div class="fund-item">
-                        <div class="fund-bar">
-                            <div class="fund-fill" style="width: 20%"></div>
-                        </div>
-                        <div class="fund-details">
-                            <span class="fund-label">Marketing & Growth</span>
-                            <span class="fund-amount">€200K (20%)</span>
-                        </div>
-                        <p class="fund-description">Content marketing, developer community, App Store optimization, beta program</p>
-                    </div>
-                    
-                    <div class="fund-item">
-                        <div class="fund-bar">
-                            <div class="fund-fill" style="width: 10%"></div>
-                        </div>
-                        <div class="fund-details">
-                            <span class="fund-label">Operazioni & Legale</span>
-                            <span class="fund-amount">€100K (10%)</span>
-                        </div>
-                        <p class="fund-description">Compliance, legale, accounting, office, tools & software</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="why-now reveal">
-                <h3>Perché Ora?</h3>
-                <div class="why-now-grid">
-                    <div class="why-card">
-                        <div class="why-number">1</div>
-                        <h4>AI Boom</h4>
-                        <p>L'adozione di AI tools tra developer è cresciuta del 150% YoY. Il momento perfetto per un IDE AI-first.</p>
-                    </div>
-                    <div class="why-card">
-                        <div class="why-number">2</div>
-                        <h4>Cloud Maturity</h4>
-                        <p>Infrastruttura cloud ora permette terminal remoti veloci e affidabili. Latenza <50ms rende l'esperienza indistinguibile da locale.</p>
-                    </div>
-                    <div class="why-card">
-                        <div class="why-number">3</div>
-                        <h4>Remote Work</h4>
-                        <p>68% developer lavorano remote/hybrid. Vogliono produttività ovunque, non solo alla scrivania.</p>
-                    </div>
-                    <div class="why-card">
-                        <div class="why-number">4</div>
-                        <h4>Competitor Deboli</h4>
-                        <p>Nessun competitor ha terminal + AI agent + GitHub insieme. Finestra di opportunità aperta.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Form -->
-    <section class="section">
-        <div class="container">
-            <h2 class="reveal">Contattaci</h2>
-            <p style="text-align: center; color: var(--text-muted); max-width: 600px; margin: 0 auto 60px;">Interessato a investire o collaborare? Compila il form e ti risponderemo entro 24 ore.</p>
-            <form class="cta-form reveal">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="name">Nome</label>
-                        <input type="text" id="name" name="name" required placeholder="Il tuo nome">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required placeholder="tua@email.com">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="message">Messaggio</label>
-                    <textarea id="message" name="message" rows="5" required placeholder="Raccontaci del tuo interesse..."></textarea>
-                </div>
-                <button type="submit" class="btn-primary">Invia Messaggio</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- CTA Final -->
-    <section id="contatti" class="section cta-section">
-        <div class="container">
-            <div class="cta-content">
-                <div class="cta-stats">
-                    <div class="cta-stat">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="9" cy="7" r="4"></circle>
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                            </svg>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-value">15K+</div>
-                            <div class="stat-label">Target Utenti 2027</div>
-                        </div>
-                    </div>
-                    <div class="cta-stat">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="12" y1="1" x2="12" y2="23"></line>
-                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                            </svg>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-value">$340K</div>
-                            <div class="stat-label">ARR Proiettato 2027</div>
-                        </div>
-                    </div>
-                    <div class="cta-stat">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-                            </svg>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-value">6/6</div>
-                            <div class="stat-label">Vantaggio vs Competitor</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="cta-main">
-                    <h2>Investire in Drape</h2>
-                    <p>Cerchiamo investitori visionari per portare il primo IDE mobile completo a milioni di developer. Unisciti a noi nella rivoluzione dello sviluppo mobile.</p>
-                    <div class="cta-buttons">
-                        <a href="mailto:leon.rivas@drape-dev.it" class="btn-primary">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                <polyline points="22,6 12,13 2,6"></polyline>
-                            </svg>
-                            Richiedi Pitch Deck
-                        </a>
-                        <a href="#" class="btn-secondary">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-                                <polyline points="10 17 15 12 10 7"></polyline>
-                                <line x1="15" y1="12" x2="3" y2="12"></line>
-                            </svg>
-                            Prenota Demo
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">DRAPE</div>
-                <div class="footer-links">
-                    <a href="privacy-policy.html">Privacy Policy</a>
-                    <a href="terms-of-service.html">Terms of Service</a>
-                    <a href="mailto:leon.rivas@drape-dev.it">Contatti</a>
-                </div>
-            </div>
-            <p class="copyright">© 2025 Drape. All rights reserved.</p>
-        </div>
-    </footer>
-    
-    <!-- Cookie Banner -->
-    <div id="cookie-banner" class="cookie-banner">
-        <div class="cookie-content">
-            <p>Utilizziamo cookie essenziali per il funzionamento del sito. Nessun tracking o analytics. <a href="privacy-policy.html">Privacy Policy</a></p>
-            <button id="accept-cookies" class="cookie-btn">Accetta</button>
         </div>
     </div>
-    
-    <script src="translations.js"></script>
-    <script src="script.js"></script>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+    <div class="container">
+        <h1>Dai vita alle tue idee.</h1>
+        <p>Crea progetti da zero o importa le tue repository esistenti. AI multimodello, terminal completo e preview live &mdash; tutto dal tuo iPhone.</p>
+        <div class="hero-ctas">
+            <a href="javascript:void(0)" class="btn-primary">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                Scarica su App Store
+            </a>
+            <a href="#features" class="btn-secondary">Scopri di pi&ugrave;</a>
+        </div>
+        <div class="models-bar">
+            <div class="model-item"><div class="model-dot claude"></div>Claude 4.5 Sonnet</div>
+            <div class="model-item"><div class="model-dot claude"></div>Claude 4.6 Opus</div>
+            <div class="model-item"><div class="model-dot gpt"></div>GPT 5.2</div>
+            <div class="model-item"><div class="model-dot gemini"></div>Gemini 3.0 Pro</div>
+            <div class="model-item"><div class="model-dot gemini"></div>Gemini 3.0 Flash</div>
+        </div>
+
+        <!-- iPhone Mockups -->
+        <div class="hero-phones">
+            <div class="phone-frame side">
+                <div class="phone-bezel">
+                    <div class="phone-screen">
+                        <div class="phone-statusbar">
+                            <span>9:41</span>
+                            <span class="phone-statusbar-right">
+                                <svg width="14" height="10" viewBox="0 0 14 10" fill="white"><rect x="0" y="6" width="2.5" height="4" rx="0.5" opacity="0.4"/><rect x="3.5" y="4" width="2.5" height="6" rx="0.5" opacity="0.6"/><rect x="7" y="2" width="2.5" height="8" rx="0.5" opacity="0.8"/><rect x="10.5" y="0" width="2.5" height="10" rx="0.5"/></svg>
+                                <div class="phone-battery"></div>
+                            </span>
+                        </div>
+                        <div class="phone-dynamic-island"></div>
+                        <!-- Sostituire con: <img src="screens/terminal.png" alt="Terminal"> -->
+                        <div class="phone-screen-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                            <span>Terminal</span>
+                        </div>
+                        <div class="phone-home-indicator"></div>
+                    </div>
+                </div>
+                <div class="phone-label">Terminal</div>
+            </div>
+            <div class="phone-frame center">
+                <div class="phone-bezel">
+                    <div class="phone-screen">
+                        <div class="phone-statusbar">
+                            <span>9:41</span>
+                            <span class="phone-statusbar-right">
+                                <svg width="14" height="10" viewBox="0 0 14 10" fill="white"><rect x="0" y="6" width="2.5" height="4" rx="0.5" opacity="0.4"/><rect x="3.5" y="4" width="2.5" height="6" rx="0.5" opacity="0.6"/><rect x="7" y="2" width="2.5" height="8" rx="0.5" opacity="0.8"/><rect x="10.5" y="0" width="2.5" height="10" rx="0.5"/></svg>
+                                <div class="phone-battery"></div>
+                            </span>
+                        </div>
+                        <div class="phone-dynamic-island"></div>
+                        <!-- Sostituire con: <img src="screens/chat.png" alt="AI Chat"> -->
+                        <div class="phone-screen-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            <span>AI Chat</span>
+                        </div>
+                        <div class="phone-home-indicator"></div>
+                    </div>
+                </div>
+                <div class="phone-label">AI Agent</div>
+            </div>
+            <div class="phone-frame side">
+                <div class="phone-bezel">
+                    <div class="phone-screen">
+                        <div class="phone-statusbar">
+                            <span>9:41</span>
+                            <span class="phone-statusbar-right">
+                                <svg width="14" height="10" viewBox="0 0 14 10" fill="white"><rect x="0" y="6" width="2.5" height="4" rx="0.5" opacity="0.4"/><rect x="3.5" y="4" width="2.5" height="6" rx="0.5" opacity="0.6"/><rect x="7" y="2" width="2.5" height="8" rx="0.5" opacity="0.8"/><rect x="10.5" y="0" width="2.5" height="10" rx="0.5"/></svg>
+                                <div class="phone-battery"></div>
+                            </span>
+                        </div>
+                        <div class="phone-dynamic-island"></div>
+                        <!-- Sostituire con: <img src="screens/preview.png" alt="Preview"> -->
+                        <div class="phone-screen-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                            <span>Preview</span>
+                        </div>
+                        <div class="phone-home-indicator"></div>
+                    </div>
+                </div>
+                <div class="phone-label">Preview Live</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── WHAT YOU CAN BUILD ─── -->
+<section>
+    <div class="container">
+        <div class="section-header center fade-up">
+            <div class="section-label">Crea o importa</div>
+            <h2 class="section-title">Parti da zero o dalle<br>tue repository.</h2>
+        </div>
+    </div>
+    <div class="build-marquee-wrap fade-up">
+        <!-- Row 1 — left -->
+        <div class="build-marquee-track">
+            <div class="build-marquee">
+                <div class="build-pill"><div class="dot" style="background:#a855f7"></div>Web App <span>React, Next.js, Vue, Svelte</span></div>
+                <div class="build-pill"><div class="dot" style="background:#3b82f6"></div>API &amp; Backend <span>Node.js, Express, FastAPI</span></div>
+                <div class="build-pill"><div class="dot" style="background:#22c55e"></div>Landing Page <span>Portfolio, blog, siti statici</span></div>
+                <div class="build-pill"><div class="dot" style="background:#f97316"></div>Dashboard <span>Admin panel, analytics, CRM</span></div>
+                <div class="build-pill"><div class="dot" style="background:#ec4899"></div>SaaS Tool <span>Auth, pagamenti, database</span></div>
+                <div class="build-pill"><div class="dot" style="background:#14b8a6"></div>Script &amp; Bot <span>CLI, scraper, automazioni</span></div>
+                <div class="build-pill"><div class="dot" style="background:#eab308"></div>E-commerce <span>Shopify, Stripe, WooCommerce</span></div>
+                <div class="build-pill"><div class="dot" style="background:#8b5cf6"></div>Game Prototipi <span>Phaser, Three.js, Canvas</span></div>
+                <!-- duplicate -->
+                <div class="build-pill"><div class="dot" style="background:#a855f7"></div>Web App <span>React, Next.js, Vue, Svelte</span></div>
+                <div class="build-pill"><div class="dot" style="background:#3b82f6"></div>API &amp; Backend <span>Node.js, Express, FastAPI</span></div>
+                <div class="build-pill"><div class="dot" style="background:#22c55e"></div>Landing Page <span>Portfolio, blog, siti statici</span></div>
+                <div class="build-pill"><div class="dot" style="background:#f97316"></div>Dashboard <span>Admin panel, analytics, CRM</span></div>
+                <div class="build-pill"><div class="dot" style="background:#ec4899"></div>SaaS Tool <span>Auth, pagamenti, database</span></div>
+                <div class="build-pill"><div class="dot" style="background:#14b8a6"></div>Script &amp; Bot <span>CLI, scraper, automazioni</span></div>
+                <div class="build-pill"><div class="dot" style="background:#eab308"></div>E-commerce <span>Shopify, Stripe, WooCommerce</span></div>
+                <div class="build-pill"><div class="dot" style="background:#8b5cf6"></div>Game Prototipi <span>Phaser, Three.js, Canvas</span></div>
+            </div>
+        </div>
+        <!-- Row 2 — right (reverse) -->
+        <div class="build-marquee-track">
+            <div class="build-marquee reverse">
+                <div class="build-pill"><div class="dot" style="background:#06b6d4"></div>Blog <span>Markdown, CMS, RSS feed</span></div>
+                <div class="build-pill"><div class="dot" style="background:#f43f5e"></div>Chat App <span>WebSocket, real-time</span></div>
+                <div class="build-pill"><div class="dot" style="background:#84cc16"></div>Portfolio <span>Personale, freelancer</span></div>
+                <div class="build-pill"><div class="dot" style="background:#d946ef"></div>AI Tool <span>LLM wrapper, prompt app</span></div>
+                <div class="build-pill"><div class="dot" style="background:#fb923c"></div>Automazioni <span>Cron job, webhook, pipeline</span></div>
+                <div class="build-pill"><div class="dot" style="background:#2dd4bf"></div>REST API <span>CRUD, auth, middleware</span></div>
+                <div class="build-pill"><div class="dot" style="background:#facc15"></div>Utility <span>Converter, calculator, tool</span></div>
+                <div class="build-pill"><div class="dot" style="background:#818cf8"></div>Plugin <span>Chrome ext, Slack bot</span></div>
+                <!-- duplicate -->
+                <div class="build-pill"><div class="dot" style="background:#06b6d4"></div>Blog <span>Markdown, CMS, RSS feed</span></div>
+                <div class="build-pill"><div class="dot" style="background:#f43f5e"></div>Chat App <span>WebSocket, real-time</span></div>
+                <div class="build-pill"><div class="dot" style="background:#84cc16"></div>Portfolio <span>Personale, freelancer</span></div>
+                <div class="build-pill"><div class="dot" style="background:#d946ef"></div>AI Tool <span>LLM wrapper, prompt app</span></div>
+                <div class="build-pill"><div class="dot" style="background:#fb923c"></div>Automazioni <span>Cron job, webhook, pipeline</span></div>
+                <div class="build-pill"><div class="dot" style="background:#2dd4bf"></div>REST API <span>CRUD, auth, middleware</span></div>
+                <div class="build-pill"><div class="dot" style="background:#facc15"></div>Utility <span>Converter, calculator, tool</span></div>
+                <div class="build-pill"><div class="dot" style="background:#818cf8"></div>Plugin <span>Chrome ext, Slack bot</span></div>
+            </div>
+        </div>
+        <!-- Row 3 — left -->
+        <div class="build-marquee-track">
+            <div class="build-marquee" style="animation-duration:40s;">
+                <div class="build-pill"><div class="dot" style="background:#10b981"></div>Startup MVP <span>Idea to prototype, fast</span></div>
+                <div class="build-pill"><div class="dot" style="background:#6366f1"></div>Mobile Backend <span>API per app iOS/Android</span></div>
+                <div class="build-pill"><div class="dot" style="background:#ef4444"></div>Scraper <span>Web crawling, data mining</span></div>
+                <div class="build-pill"><div class="dot" style="background:#0ea5e9"></div>Docs Site <span>Wiki, documentazione, guide</span></div>
+                <div class="build-pill"><div class="dot" style="background:#f59e0b"></div>Form Builder <span>Survey, contatti, quiz</span></div>
+                <div class="build-pill"><div class="dot" style="background:#a3e635"></div>Microservizio <span>Docker, serverless, lambda</span></div>
+                <div class="build-pill"><div class="dot" style="background:#c084fc"></div>Social App <span>Feed, profili, notifiche</span></div>
+                <div class="build-pill"><div class="dot" style="background:#fb7185"></div>Booking System <span>Calendario, prenotazioni</span></div>
+                <!-- duplicate -->
+                <div class="build-pill"><div class="dot" style="background:#10b981"></div>Startup MVP <span>Idea to prototype, fast</span></div>
+                <div class="build-pill"><div class="dot" style="background:#6366f1"></div>Mobile Backend <span>API per app iOS/Android</span></div>
+                <div class="build-pill"><div class="dot" style="background:#ef4444"></div>Scraper <span>Web crawling, data mining</span></div>
+                <div class="build-pill"><div class="dot" style="background:#0ea5e9"></div>Docs Site <span>Wiki, documentazione, guide</span></div>
+                <div class="build-pill"><div class="dot" style="background:#f59e0b"></div>Form Builder <span>Survey, contatti, quiz</span></div>
+                <div class="build-pill"><div class="dot" style="background:#a3e635"></div>Microservizio <span>Docker, serverless, lambda</span></div>
+                <div class="build-pill"><div class="dot" style="background:#c084fc"></div>Social App <span>Feed, profili, notifiche</span></div>
+                <div class="build-pill"><div class="dot" style="background:#fb7185"></div>Booking System <span>Calendario, prenotazioni</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FEATURES ─── -->
+<section id="features">
+    <div class="container">
+        <div class="section-header center fade-up">
+            <div class="section-label">Funzionalit&agrave;</div>
+            <h2 class="section-title">Tutto quello che serve.<br>Niente di meno.</h2>
+        </div>
+        <div class="feat-list">
+            <div class="feat-row fade-up">
+                <div class="feat-num">01</div>
+                <div class="feat-content">
+                    <h3>AI Agent Autonomo</h3>
+                    <p>Descrivi cosa vuoi e l'AI crea, modifica e organizza i file per te. Editing multi-file, installazione dipendenze, esecuzione comandi &mdash; tutto con un singolo prompt.</p>
+                </div>
+            </div>
+            <div class="feat-row fade-up">
+                <div class="feat-num">02</div>
+                <div class="feat-content">
+                    <h3>Terminal Completo</h3>
+                    <p>Bash e Zsh reali in container Docker isolati. Esegui npm, git, python e qualsiasi comando come su un terminale desktop.</p>
+                </div>
+            </div>
+            <div class="feat-row fade-up">
+                <div class="feat-num">03</div>
+                <div class="feat-content">
+                    <h3>5 Modelli AI</h3>
+                    <p>Claude 4.5 Sonnet, Claude 4.6 Opus, GPT 5.2, Gemini 3.0 Pro e Gemini 3.0 Flash. Cambia modello in qualsiasi momento durante lo sviluppo.</p>
+                </div>
+            </div>
+            <div class="feat-row fade-up">
+                <div class="feat-num">04</div>
+                <div class="feat-content">
+                    <h3>Preview Live</h3>
+                    <p>Vedi il risultato in tempo reale, sia per progetti nuovi che repository importate. Web app, API, server &mdash; tutto visibile e testabile con un tap.</p>
+                </div>
+            </div>
+            <div class="feat-row fade-up">
+                <div class="feat-num">05</div>
+                <div class="feat-content">
+                    <h3>Importa le tue Repository</h3>
+                    <p>Clona qualsiasi repo da GitHub, GitLab o Bitbucket e lavoraci con l'AI. Avvia la preview, testa le modifiche live e pusha &mdash; come faresti su desktop.</p>
+                </div>
+            </div>
+            <div class="feat-row fade-up">
+                <div class="feat-num">06</div>
+                <div class="feat-content">
+                    <h3>File Explorer &amp; Editor</h3>
+                    <p>Naviga il progetto, crea e modifica file con syntax highlighting. Gestione completa del filesystem cloud con undo e redo.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── HOW IT WORKS ─── -->
+<section>
+    <div class="container">
+        <div class="section-header center fade-up">
+            <div class="section-label">Come funziona</div>
+            <h2 class="section-title">Da idea a progetto<br>in pochi minuti.</h2>
+        </div>
+        <div class="steps-grid">
+            <div class="step fade-up">
+                <div class="step-number">1</div>
+                <h3>Crea o importa</h3>
+                <p>Parti da zero con un prompt oppure importa una repository esistente da GitHub, GitLab o Bitbucket.</p>
+            </div>
+            <div class="step fade-up">
+                <div class="step-number">2</div>
+                <h3>Costruisci</h3>
+                <p>L'AI Agent crea i file, scrive il codice, installa le dipendenze. Tu guardi e intervieni quando vuoi.</p>
+            </div>
+            <div class="step fade-up">
+                <div class="step-number">3</div>
+                <h3>Lancia</h3>
+                <p>Preview live del progetto, push su GitHub, deploy. Tutto dal tuo iPhone, senza mai aprire un laptop.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── PRICING ─── -->
+<section id="pricing" style="background: rgba(255,255,255,0.01);">
+    <div class="container">
+        <div class="section-header center fade-up">
+            <div class="section-label">Prezzi</div>
+            <h2 class="section-title">Inizia gratis.<br>Scala quando vuoi.</h2>
+            <p class="section-desc">Nessuna carta di credito richiesta. Upgrade dal tuo iPhone tramite App Store.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card fade-up">
+                <div class="pricing-name">Starter</div>
+                <div class="pricing-desc">Per esplorare e sperimentare</div>
+                <div class="pricing-price">Gratis</div>
+                <div class="pricing-period">Per sempre</div>
+                <ul class="pricing-features">
+                    <li>Claude 4.5 Sonnet &amp; Gemini 3.0 Flash</li>
+                    <li>3 progetti + 2 repository clonate</li>
+                    <li>5 preview al mese</li>
+                    <li>1 GB storage cloud</li>
+                    <li>Terminal completo</li>
+                    <li>GitHub, GitLab, Bitbucket</li>
+                </ul>
+                <a href="javascript:void(0)" class="pricing-btn outline">Inizia gratis</a>
+            </div>
+            <div class="pricing-card featured fade-up">
+                <div class="pricing-badge">Popolare</div>
+                <div class="pricing-name">Go</div>
+                <div class="pricing-desc">Per sviluppatori seri</div>
+                <div class="pricing-price">&euro;22.99<span style="font-size:16px;font-weight:500;color:var(--text-muted)">/mese</span></div>
+                <div class="pricing-period">o &euro;19.17/mese con piano annuale (-20%)</div>
+                <ul class="pricing-features">
+                    <li>Tutti i modelli AI inclusi</li>
+                    <li>Claude 4.6 Opus, GPT 5.2, Gemini 3.0 Pro</li>
+                    <li>10 progetti + 5 repository clonate</li>
+                    <li>20 preview al mese</li>
+                    <li>5 GB storage cloud</li>
+                    <li>Supporto email</li>
+                </ul>
+                <a href="javascript:void(0)" class="pricing-btn filled">Passa a Go</a>
+            </div>
+            <div class="pricing-card fade-up">
+                <div class="pricing-name">Pro</div>
+                <div class="pricing-desc">Per professionisti e team</div>
+                <div class="pricing-price">&euro;39.99<span style="font-size:16px;font-weight:500;color:var(--text-muted)">/mese</span></div>
+                <div class="pricing-period">o &euro;33.33/mese con piano annuale (-20%)</div>
+                <ul class="pricing-features">
+                    <li>Tutti i modelli AI inclusi</li>
+                    <li>Budget AI massimo</li>
+                    <li>50 progetti + 25 repository clonate</li>
+                    <li>Preview illimitate</li>
+                    <li>10 GB storage cloud</li>
+                    <li>Supporto prioritario</li>
+                </ul>
+                <a href="javascript:void(0)" class="pricing-btn outline">Passa a Pro</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+<section id="faq">
+    <div class="container">
+        <div class="section-header center fade-up">
+            <div class="section-label">FAQ</div>
+            <h2 class="section-title">Domande frequenti</h2>
+        </div>
+        <div class="faq-list fade-up">
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Come funziona il terminal su mobile?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Il terminal di Drape si connette a container Docker isolati nel cloud. Ogni progetto ha il suo ambiente con accesso completo a bash/zsh, npm, git e tutti i tool di sviluppo. La latenza &egrave; minima e l'esperienza &egrave; identica a un terminale desktop.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Quali modelli AI sono disponibili?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Il piano Starter include Claude 4.5 Sonnet e Gemini 3.0 Flash. I piani Go (&euro;22.99/mese) e Pro (&euro;39.99/mese) sbloccano anche Claude 4.6 Opus, GPT 5.2 e Gemini 3.0 Pro. Puoi cambiare modello in qualsiasi momento.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Posso importare le mie repository esistenti?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>S&igrave;, &egrave; una delle funzionalit&agrave; principali. Clona qualsiasi repository da GitHub, GitLab o Bitbucket, lavora con l'AI, avvia la preview live per testare le modifiche e pusha direttamente dall'app. Commit, pull, branch &mdash; tutto supportato.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Come funziona la fatturazione?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Tutti i pagamenti sono gestiti tramite Apple In-App Purchase. L'abbonamento si rinnova automaticamente e puoi cancellarlo in qualsiasi momento dalle impostazioni del tuo Apple ID.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>I miei dati e il codice sono al sicuro?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Assolutamente. Ogni progetto gira in un container Docker isolato. I dati sono crittografati in transito (TLS) e a riposo. Non vendiamo n&eacute; condividiamo i tuoi dati. Leggi la nostra <a href="privacy-policy.html" style="color:var(--accent)">Privacy Policy</a> per i dettagli.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<section class="cta-section">
+    <div class="container">
+        <h2 class="fade-up">Inizia a costruire.<br>Ovunque tu sia.</h2>
+        <p class="fade-up">Scarica Drape e trasforma il tuo iPhone nel tuo IDE.</p>
+        <div class="hero-ctas fade-up">
+            <a href="javascript:void(0)" class="btn-primary">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                Scarica su App Store
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="/" class="logo">
+                    <div class="logo-icon">
+                        <img src="logo.png" alt="Drape">
+                    </div>
+                    Drape
+                </a>
+                <p>Il primo IDE mobile con AI multimodello. Costruisci qualsiasi progetto, ovunque tu sia.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Prodotto</h4>
+                <a href="#features">Funzionalit&agrave;</a>
+                <a href="#pricing">Prezzi</a>
+                <a href="#faq">FAQ</a>
+            </div>
+            <div class="footer-col">
+                <h4>Risorse</h4>
+                <a href="support.html">Supporto</a>
+                <a href="mailto:leon.rivas@drape-dev.it">Contatti</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legale</h4>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms-of-service.html">Termini di Servizio</a>
+            </div>
+            <div class="footer-col">
+                <h4>Social</h4>
+                <a href="javascript:void(0)">Instagram</a>
+                <a href="javascript:void(0)">X (Twitter)</a>
+                <a href="javascript:void(0)">LinkedIn</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Drape. Tutti i diritti riservati.</span>
+            <span>Made in Italy</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        e.preventDefault();
+        const href = a.getAttribute('href');
+        if (href === '#') return;
+        const target = document.querySelector(href);
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            history.replaceState(null, '', '/');
+            document.querySelector('.nav-links')?.classList.remove('open');
+        }
+    });
+});
+
+// Nav background on scroll
+window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 20) {
+        nav.style.borderBottomColor = 'rgba(255,255,255,0.08)';
+    } else {
+        nav.style.borderBottomColor = 'rgba(255,255,255,0.04)';
+    }
+});
+</script>
 </body>
 </html>
