@@ -724,15 +724,47 @@
             color: var(--text-secondary);
         }
         @media (max-width: 768px) {
-            .hero-phones { gap: 12px; }
-            .phone-frame { width: 170px; }
-            .phone-frame.center { width: 190px; }
-            .phone-frame.side { display: none; }
-            .phone-bezel { border-radius: 40px; padding: 8px; }
+            .hero-phones {
+                gap: 8px;
+                padding: 0 16px;
+            }
+            .phone-frame {
+                width: 105px;
+            }
+            .phone-frame.center {
+                width: 120px;
+                z-index: 2;
+            }
+            .phone-frame.side {
+                opacity: 0.75;
+                transform: scale(0.88);
+            }
+            .phone-frame.side:hover {
+                opacity: 0.9;
+                transform: scale(0.88) translateY(-4px);
+            }
+            .phone-bezel {
+                border-radius: 28px;
+                padding: 6px;
+            }
             .phone-bezel::before, .phone-bezel::after { display: none; }
-            .phone-screen { border-radius: 34px; }
-            .phone-dynamic-island { width: 72px; height: 22px; top: 8px; }
-            .phone-dynamic-island::after { width: 6px; height: 6px; right: 12px; }
+            .phone-screen {
+                border-radius: 22px;
+            }
+            .phone-dynamic-island {
+                width: 48px;
+                height: 16px;
+                top: 6px;
+                border-radius: 12px;
+            }
+            .phone-dynamic-island::after {
+                width: 4px;
+                height: 4px;
+                right: 8px;
+            }
+            .phone-screen img {
+                border-radius: 22px;
+            }
         }
 
         /* ─── SECTIONS ─── */
