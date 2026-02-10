@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support - Drape</title>
+    <meta name="description" content="Need help with Drape? Contact us for technical support, subscription questions, or bug reports.">
+    <link rel="icon" type="image/png" href="../logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #050507;
+            --bg-card: #0c0c10;
+            --bg-card-hover: #111116;
+            --border: rgba(255,255,255,0.06);
+            --border-hover: rgba(255,255,255,0.12);
+            --text: #f5f5f7;
+            --text-secondary: #8e8e93;
+            --text-muted: #636366;
+            --accent: #a855f7;
+            --accent-light: #c084fc;
+            --accent-glow: rgba(168, 85, 247, 0.15);
+            --radius: 16px;
+            --radius-sm: 10px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            margin-bottom: 30px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .back-link:hover { text-decoration: underline; }
+
+        .hero-support {
+            padding: 20px 0 60px;
+            position: relative;
+        }
+        .hero-support::before {
+            content: '';
+            position: absolute;
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--text) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 50px;
+        }
+
+        /* ─── CARDS ─── */
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+        .support-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px 28px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--text);
+            display: block;
+        }
+        .support-card:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+        }
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--accent-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        .support-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .support-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        .card-action {
+            display: inline-block;
+            margin-top: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        /* ─── FAQ ─── */
+        .faq-section {
+            margin-bottom: 60px;
+        }
+        .faq-section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--accent-light);
+        }
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 20px 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 15px;
+            background: var(--bg-card);
+            transition: background 0.2s;
+        }
+        .faq-question:hover { background: var(--bg-card-hover); }
+        .faq-question .arrow {
+            font-size: 12px;
+            color: var(--text-muted);
+            transition: transform 0.3s;
+        }
+        .faq-item.open .arrow { transform: rotate(180deg); }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-item.open .faq-answer { max-height: 300px; }
+        .faq-answer p {
+            padding: 0 24px 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ─── CONTACT FORM ─── */
+        .contact-section {
+            margin-bottom: 80px;
+        }
+        .contact-section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--accent-light);
+        }
+        .contact-section .section-sub {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent);
+        }
+        .form-group textarea { resize: vertical; min-height: 140px; }
+        .form-group select option { background: var(--bg-card); }
+
+        .submit-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            font-family: inherit;
+        }
+        .submit-btn:hover { opacity: 0.85; }
+
+        .form-note {
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 0;
+            text-align: center;
+        }
+        footer span {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 13px;
+        }
+        footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 640px) {
+            h1 { font-size: 30px; }
+            .subtitle { font-size: 16px; }
+            .support-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/en/" class="back-link">&larr; Back to site</a>
+
+        <div class="hero-support">
+            <h1>Support Center</h1>
+            <p class="subtitle">We're here to help. Choose how to contact us or find the answer in the FAQ.</p>
+        </div>
+
+        <!-- ─── CONTACT CARDS ─── -->
+        <div class="support-grid">
+            <a href="mailto:info@drape-dev.it" class="support-card">
+                <div class="card-icon">&#9993;</div>
+                <h3>Email</h3>
+                <p>Write to us for any question, technical issue, or information request.</p>
+                <span class="card-action">info@drape-dev.it &rarr;</span>
+            </a>
+            <a href="mailto:info@drape-dev.it?subject=Bug%20Report%20-%20Drape" class="support-card">
+                <div class="card-icon">&#128027;</div>
+                <h3>Report a Bug</h3>
+                <p>Found a problem? Describe it and we'll fix it as soon as possible.</p>
+                <span class="card-action">Send report &rarr;</span>
+            </a>
+            <a href="mailto:info@drape-dev.it?subject=Refund%20Request%20-%20Drape" class="support-card">
+                <div class="card-icon">&#128176;</div>
+                <h3>Subscription & Refunds</h3>
+                <p>Questions about plans, billing, or refund requests.</p>
+                <span class="card-action">Contact us &rarr;</span>
+            </a>
+        </div>
+
+        <!-- ─── FAQ ─── -->
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>How can I cancel my subscription?</span>
+                    <span class="arrow">&#9660;</span>
+                </div>
+                <div class="faq-answer">
+                    <p>You can manage or cancel your subscription directly from your iPhone Settings: Settings &rarr; [Your name] &rarr; Subscriptions &rarr; Drape. Cancellation takes effect at the end of the current billing period.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Can I get a refund?</span>
+                    <span class="arrow">&#9660;</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Refunds for in-app purchases are handled by Apple. You can request a refund at <a href="https://reportaproblem.apple.com" style="color:var(--accent)">reportaproblem.apple.com</a>. For special cases, contact us directly via email.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>My project won't start, what can I do?</span>
+                    <span class="arrow">&#9660;</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Try closing and reopening the workstation from the projects screen. If the problem persists, check your internet connection and try again. You can also contact us with the project details for quick assistance.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Which AI models are available?</span>
+                    <span class="arrow">&#9660;</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Drape supports 5 AI models: Claude 4.5 Sonnet, Claude 4.6 Opus, GPT 5.2, GPT 5.3, and Gemini 3.0 Flash. Available models depend on your plan (Starter, Go, or Pro).</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>How does the terminal work?</span>
+                    <span class="arrow">&#9660;</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Each project has a full Linux terminal with support for npm, pip, git, and other tools. You can run commands, install dependencies, and manage your project like on a computer.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Is my data safe?</span>
+                    <span class="arrow">&#9660;</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Each project runs in an isolated Docker container. Data is encrypted in transit (TLS) and at rest. We don't sell or share your data with third parties. Read our <a href="../privacy-policy.html" style="color:var(--accent)">Privacy Policy</a> for details.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Can I delete my account?</span>
+                    <span class="arrow">&#9660;</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, you can delete your account from the app settings (Settings &rarr; Delete Account). All your data will be permanently removed. You can also request deletion via email.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── CONTACT FORM ─── -->
+        <div class="contact-section">
+            <h2>Write to Us</h2>
+            <p class="section-sub">Fill out the form and we'll respond within 24 hours.</p>
+
+            <form id="supportForm" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="" disabled selected>Select a category</option>
+                        <option value="bug">Bug Report</option>
+                        <option value="account">Account & Subscription</option>
+                        <option value="technical">Technical Issue</option>
+                        <option value="feedback">Feedback & Suggestions</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Describe your issue or question..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+                <p class="form-note">We usually respond within 24 business hours.</p>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <span>&copy; 2026 Drape. All rights reserved.</span>
+            &nbsp;&middot;&nbsp;
+            <a href="../privacy-policy.html">Privacy Policy</a>
+            &nbsp;&middot;&nbsp;
+            <a href="../terms-of-service.html">Terms of Service</a>
+            &nbsp;&middot;&nbsp;
+            <a href="/en/">Home</a>
+        </div>
+    </footer>
+
+    <script>
+    function handleSubmit(e) {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const category = document.getElementById('category').value;
+        const message = document.getElementById('message').value;
+
+        const subject = encodeURIComponent('Drape Support - ' + category);
+        const body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\nCategory: ' + category + '\n\n' + message);
+
+        window.location.href = 'mailto:info@drape-dev.it?subject=' + subject + '&body=' + body;
+    }
+    </script>
+</body>
+</html>
