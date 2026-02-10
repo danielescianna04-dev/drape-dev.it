@@ -34,10 +34,10 @@
     <meta name="twitter:image" content="https://drape-dev.it/og-image-v2.png">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon2-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon2-16x16.png">
-    <link rel="icon" href="favicon2.ico" sizes="48x48">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon2.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" href="favicon.ico" sizes="48x48">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 
     <!-- Structured Data: Organization -->
     <script type="application/ld+json">
@@ -46,7 +46,7 @@
       "@type": "Organization",
       "name": "Drape",
       "url": "https://drape-dev.it",
-      "logo": "https://drape-dev.it/icon2.png",
+      "logo": "https://drape-dev.it/icon.png",
       "description": "The first mobile IDE with multi-model AI. Vibe code from your phone.",
       "founder": [
         { "@type": "Person", "name": "Daniele Scianna" },
@@ -72,7 +72,7 @@
       "applicationSubCategory": "IDE",
       "description": "Drape is the first mobile IDE with multi-model AI for vibe coding from your phone. Write code, build projects, and ship apps from iPhone and Android with full terminal, AI Agent, GitHub integration, and support for GPT-5, Claude 4.5 Sonnet, and Gemini Pro 2.5.",
       "url": "https://drape-dev.it",
-      "image": "https://drape-dev.it/icon2.png",
+      "image": "https://drape-dev.it/icon.png",
       "screenshot": "https://drape-dev.it/og-image-v2.png",
       "offers": {
         "@type": "Offer",

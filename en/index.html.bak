@@ -93,7 +93,7 @@
           "name": "How does the terminal work on mobile?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Drape\'s terminal connects to isolated Docker containers in the cloud. Each project has its own environment with full access to bash/zsh, npm, git and all development tools. Latency is minimal and the experience is identical to a desktop terminal."
+            "text": "Drape's terminal connects to isolated Docker containers in the cloud. Each project has its own environment with full access to bash/zsh, npm, git and all development tools. Latency is minimal and the experience is identical to a desktop terminal."
           }
         },
         {
