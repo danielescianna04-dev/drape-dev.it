@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drape - Mobile IDE with AI | Vibe Code from Your Phone</title>
+    <meta name="description" content="Drape is the first mobile IDE with multi-model AI. Describe what you want to build and watch it come to life. Full terminal, AI Agent, GitHub integration. Vibe code from your phone.">
+    <meta name="keywords" content="mobile IDE, AI coding, mobile development, Claude, GPT, Gemini, coding app, vibe coding, vibe code, app builder, code on phone, mobile coding app, AI code editor, code from phone, mobile developer tools, IDE app iPhone Android, mobile IDE, build apps on phone">
+    <meta name="author" content="Drape">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#6F5CFF">
+        <link rel="alternate" hreflang="it" href="https://drape-dev.it/">
+    <link rel="alternate" hreflang="en" href="https://drape-dev.it/en/">
+    <link rel="alternate" hreflang="x-default" href="https://drape-dev.it/">
+    <link rel="canonical" href="https://drape-dev.it/en/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://drape-dev.it/en/">
+    <meta property="og:site_name" content="Drape">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="Drape - Mobile IDE with AI | Vibe Code from Your Phone">
+    <meta property="og:description" content="The first mobile IDE with multi-model AI. Full terminal, autonomous AI Agent, GitHub integration. All from your iPhone.">
+    <meta property="og:image" content="https://drape-dev.it/og-image-v2.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://drape-dev.it/en/">
+    <meta property="twitter:title" content="Drape - Mobile IDE with AI | Vibe Code from Your Phone">
+    <meta property="twitter:description" content="The first mobile IDE with multi-model AI. Full terminal, autonomous AI Agent, GitHub integration. All from your iPhone.">
+    <link rel="icon" type="image/png" href="/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="image" type="image/webp" href="/screens/home.webp" fetchpriority="high">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+    <style>*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#050507;--bg-card:#0c0c10;--bg-card-hover:#111116;--border:rgba(255,255,255,0.06);--border-hover:rgba(255,255,255,0.12);--text:#f5f5f7;--text-secondary:#9a9aa0;--text-muted:#8a8a8e;--accent:#a855f7;--accent-light:#c084fc;--accent-glow:rgba(168,85,247,0.15);--accent-glow-strong:rgba(168,85,247,0.3);--radius:16px;--radius-sm:10px;--radius-lg:24px}html,body{scroll-behavior:smooth;overflow-x:hidden;width:100%}body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;position:relative}.container{max-width:1200px;margin:0 auto;padding:0 24px}nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(5,5,7,0.8);border-bottom:1px solid var(--border)}.nav-inner{display:flex;align-items:center;justify-content:space-between}.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:700;font-size:20px;letter-spacing:-0.5px}.logo-icon{width:32px;height:32px;border-radius:8px;overflow:hidden;flex-shrink:0}.logo-icon img{width:100%;height:100%;object-fit:cover;display:block}.nav-links{display:flex;align-items:center;gap:32px}.nav-links a{color:var(--text-secondary);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.2s}.nav-links a:hover{color:var(--text)}.nav-cta{background:var(--accent) !important;color:#fff !important;padding:8px 20px;border-radius:20px;font-size:14px;font-weight:600;transition:opacity 0.2s}.nav-cta:hover{opacity:0.85}.mobile-menu-btn{display:none;background:none;border:none;color:var(--text);cursor:pointer;padding:8px}.hero{padding:160px 0 100px;text-align:center;position:relative;overflow:hidden}.hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:600px;background:radial-gradient(ellipse,var(--accent-glow) 0%,transparent 70%);pointer-events:none}.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:20px;background:var(--accent-glow);border:1px solid rgba(168,85,247,0.2);color:var(--accent-light);font-size:13px;font-weight:600;margin-bottom:24px}.hero h1{font-size:clamp(40px,7vw,72px);font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:20px;background:linear-gradient(180deg,#fff 30%,rgba(255,255,255,0.5));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.hero p{font-size:clamp(16px,2vw,20px);color:var(--text-secondary);max-width:600px;margin:0 auto 40px;line-height:1.6}.hero-ctas{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}.btn-primary{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;background:var(--accent);color:#fff;border:none;border-radius:60px;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.2s}.btn-primary:hover{background:var(--accent-light);transform:translateY(-1px)}.btn-primary svg{width:20px;height:20px}.btn-secondary{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;background:rgba(255,255,255,0.06);color:var(--text);border:1px solid var(--border-hover);border-radius:60px;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.2s}.btn-secondary:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2)}.models-bar{display:flex;align-items:center;justify-content:center;gap:40px;padding:40px 0 0;flex-wrap:wrap}.model-item{display:flex;align-items:center;gap:10px;color:var(--text-muted);font-size:14px;font-weight:500}.model-dot{width:8px;height:8px;border-radius:50%}.model-dot.claude{background:#d4a574}.model-dot.gpt{background:#10a37f}.model-dot.gemini{background:#4285f4}.hero-phones{margin-top:70px;display:flex;justify-content:center;align-items:flex-end;gap:28px;position:relative}.hero-phones::before{content:'';position:absolute;bottom:-60px;left:50%;transform:translateX(-50%);width:700px;height:300px;background:radial-gradient(ellipse,var(--accent-glow-strong) 0%,transparent 70%);pointer-events:none}.phone-frame{position:relative;width:260px;flex-shrink:0;transition:transform 0.4s cubic-bezier(0.16,1,0.3,1)}.phone-frame:hover{transform:translateY(-8px)}.phone-frame.center{width:280px;z-index:2}.phone-frame.side{opacity:0.85;transform:scale(0.92)}.phone-frame.side:hover{opacity:1;transform:scale(0.92) translateY(-8px)}.phone-bezel{background:#1c1c1e;border-radius:52px;padding:10px;position:relative;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,0.08),0 0 0 1px rgba(255,255,255,0.06),0 20px 60px rgba(0,0,0,0.7),0 0 60px var(--accent-glow)}.phone-frame.center .phone-bezel{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,0.1),0 0 0 1px rgba(255,255,255,0.08),0 30px 80px rgba(0,0,0,0.8),0 0 80px var(--accent-glow-strong)}.phone-bezel::before{content:'';position:absolute;right:-2px;top:120px;width:3px;height:56px;background:#2a2a2e;border-radius:0 2px 2px 0}.phone-bezel::after{content:'';position:absolute;left:-2px;top:100px;width:3px;height:36px;background:#2a2a2e;border-radius:2px 0 0 2px;box-shadow:0 52px 0 #2a2a2e}.phone-screen{background:#000;border-radius:44px;overflow:hidden;aspect-ratio:9/19.5;position:relative}.phone-screen img{width:100%;height:100%;object-fit:cover;display:block}.phone-dynamic-island{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:92px;height:28px;background:#000;border-radius:20px;z-index:3;box-shadow:0 0 0 2px rgba(0,0,0,0.8)}.phone-dynamic-island::after{content:'';position:absolute;right:16px;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:#0a0a0c;box-shadow:inset 0 0 2px rgba(30,30,60,0.6)}.phone-screen-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:linear-gradient(180deg,#0c0c10 0%,#0a0a12 100%)}.phone-screen-placeholder svg{width:40px;height:40px;opacity:0.15}.phone-screen-placeholder span{font-size:12px;color:var(--text-muted);opacity:0.5}.phone-statusbar{position:absolute;top:0;left:0;right:0;height:50px;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:12px 24px 0;font-size:12px;font-weight:600;color:#fff}.phone-statusbar-right{display:flex;align-items:center;gap:4px}.phone-battery{width:22px;height:10px;border:1.5px solid rgba(255,255,255,0.7);border-radius:3px;position:relative;margin-left:2px}.phone-battery::before{content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:2px;height:5px;background:rgba(255,255,255,0.7);border-radius:0 1px 1px 0}.phone-battery::after{content:'';position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:70%;background:#fff;border-radius:1px}.phone-home-indicator{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:100px;height:4px;background:rgba(255,255,255,0.25);border-radius:4px;z-index:3}.phone-label{text-align:center;margin-top:16px;font-size:13px;font-weight:600;color:var(--text-secondary)}@media (max-width:768px){.hero-phones{gap:12px}.phone-frame{width:170px}.phone-frame.center{width:190px}.phone-frame.side{display:none}.phone-bezel{border-radius:40px;padding:8px}.phone-bezel::before,.phone-bezel::after{display:none}.phone-screen{border-radius:34px}.phone-dynamic-island{width:72px;height:22px;top:8px}.phone-dynamic-island::after{width:6px;height:6px;right:12px}}section{padding:120px 0}.section-label{display:inline-block;font-size:13px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}.section-title{font-size:clamp(32px,5vw,48px);font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:16px}.section-desc{font-size:18px;color:var(--text-secondary);max-width:600px;line-height:1.6}.section-header{margin-bottom:60px}.section-header.center{text-align:center}.section-header.center .section-desc{margin:0 auto}.build-marquee-wrap{overflow:hidden;mask-image:linear-gradient(90deg,transparent 0%,#000 10%,#000 90%,transparent 100%);-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 10%,#000 90%,transparent 100%)}.build-marquee-track{margin-bottom:14px}.build-marquee-track:last-child{margin-bottom:0}.build-marquee{display:flex;gap:14px;width:max-content;animation:marquee 35s linear infinite}.build-marquee.reverse{animation:marquee-reverse 35s linear infinite}.build-marquee:hover{animation-play-state:paused}@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}@keyframes marquee-reverse{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}.build-pill{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:60px;background:var(--bg-card);border:1px solid var(--border);white-space:nowrap;font-size:15px;font-weight:600;color:var(--text);transition:all 0.3s;cursor:default}.build-pill:hover{border-color:var(--accent);box-shadow:0 0 20px var(--accent-glow)}.build-pill .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}.build-pill span{font-size:13px;color:var(--text-muted);font-weight:400}.feat-list{max-width:900px;margin:0 auto}.feat-row{display:grid;grid-template-columns:80px 1fr;gap:0 32px;padding:40px 0;border-bottom:1px solid var(--border);transition:all 0.3s;position:relative}.feat-row:first-child{border-top:1px solid var(--border)}.feat-row::before{content:'';position:absolute;left:-40px;right:-40px;top:0;bottom:0;background:radial-gradient(ellipse at 0% 50%,var(--accent-glow) 0%,transparent 50%);opacity:0;transition:opacity 0.4s;pointer-events:none}.feat-row:hover::before{opacity:1}.feat-row:hover{border-bottom-color:rgba(168,85,247,0.2)}.feat-num{font-size:48px;font-weight:800;letter-spacing:-2px;line-height:1;background:linear-gradient(180deg,var(--accent-light) 0%,rgba(168,85,247,0.2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;padding-top:2px}.feat-content h3{font-size:clamp(24px,3vw,32px);font-weight:800;letter-spacing:-0.8px;margin-bottom:8px;transition:color 0.3s}.feat-row:hover .feat-content h3{color:var(--accent-light)}.feat-content p{font-size:16px;color:var(--text-secondary);line-height:1.6;max-width:560px}@media (max-width:600px){.feat-row{grid-template-columns:50px 1fr;gap:0 20px;padding:28px 0}.feat-num{font-size:32px}}.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;position:relative}.steps-grid::before{content:'';position:absolute;top:36px;left:15%;right:15%;height:2px;background:linear-gradient(90deg,var(--border),var(--accent-glow-strong),var(--border))}.step{text-align:center;position:relative}.step-number{width:72px;height:72px;border-radius:50%;background:var(--bg-card);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:24px;font-weight:800;color:var(--accent);position:relative;z-index:1}.step h3{font-size:20px;font-weight:700;margin-bottom:8px}.step p{font-size:14px;color:var(--text-secondary);max-width:280px;margin:0 auto;line-height:1.6}.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}.pricing-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:32px;transition:all 0.3s;position:relative}.pricing-card.featured{border-color:var(--accent);box-shadow:0 0 40px var(--accent-glow)}.pricing-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:12px;font-weight:700;padding:4px 16px;border-radius:12px}.pricing-name{font-size:18px;font-weight:700;margin-bottom:4px}.pricing-desc{font-size:13px;color:var(--text-muted);margin-bottom:20px}.pricing-price{font-size:40px;font-weight:800;letter-spacing:-1px;margin-bottom:4px}.pricing-period{font-size:14px;color:var(--text-muted);margin-bottom:24px}.pricing-features{list-style:none;margin-bottom:28px}.pricing-features li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-secondary);margin-bottom:12px;line-height:1.4}.pricing-features li::before{content:'';width:18px;height:18px;min-width:18px;border-radius:50%;background:rgba(34,197,94,0.15);display:flex;align-items:center;justify-content:center;margin-top:1px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2322c55e' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center}.pricing-btn{display:block;width:100%;padding:12px;border-radius:60px;text-align:center;font-size:14px;font-weight:600;text-decoration:none;transition:all 0.2s;cursor:pointer}.pricing-btn.outline{background:transparent;border:1px solid var(--border-hover);color:var(--text)}.pricing-btn.outline:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.2)}.pricing-btn.filled{background:var(--accent);border:1px solid var(--accent);color:#fff}.pricing-btn.filled:hover{background:var(--accent-light)}.cta-section{text-align:center;position:relative}.cta-section::before{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse,var(--accent-glow) 0%,transparent 70%);pointer-events:none}.cta-section h2{font-size:clamp(32px,5vw,52px);font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:16px;position:relative}.cta-section p{font-size:18px;color:var(--text-secondary);max-width:500px;margin:0 auto 32px}.faq-list{max-width:700px;margin:0 auto}.faq-item{border-bottom:1px solid var(--border)}.faq-question{display:flex;align-items:center;justify-content:space-between;padding:20px 0;cursor:pointer;font-size:16px;font-weight:600;color:var(--text);transition:color 0.2s;user-select:none}.faq-question:hover{color:var(--accent-light)}.faq-icon{font-size:20px;color:var(--text-muted);transition:transform 0.3s;min-width:24px;text-align:center}.faq-item.open .faq-icon{transform:rotate(45deg)}.faq-answer{max-height:0;overflow:hidden;transition:max-height 0.3s ease}.faq-item.open .faq-answer{max-height:200px}.faq-answer p{padding-bottom:20px;font-size:14px;color:var(--text-secondary);line-height:1.6}footer{border-top:1px solid var(--border);padding:60px 0 40px}.footer-grid{display:grid;grid-template-columns:2fr repeat(4,1fr);gap:40px;margin-bottom:40px}.footer-brand p{font-size:14px;color:var(--text-muted);margin-top:12px;max-width:260px;line-height:1.6}.footer-col h3{font-size:13px;font-weight:700;color:var(--text);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.5px}.footer-col a{display:block;font-size:14px;color:var(--text-muted);text-decoration:none;margin-bottom:10px;transition:color 0.2s}.footer-col a:hover{color:var(--text)}.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:24px;border-top:1px solid var(--border);font-size:13px;color:var(--text-muted)}.footer-socials{display:flex;gap:16px}.footer-socials a{color:var(--text-muted);transition:color 0.2s;text-decoration:none}.footer-socials a:hover{color:var(--text)}@media (max-width:768px){.nav-links{display:none}.mobile-menu-btn{display:block}.nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(5,5,7,0.98);border-bottom:1px solid var(--border);padding:16px 24px;gap:16px}.hero{padding:120px 0 60px}.steps-grid{grid-template-columns:1fr;gap:40px}.steps-grid::before{display:none}.pricing-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto}.footer-grid{grid-template-columns:1fr 1fr;gap:32px}.footer-bottom{flex-direction:column;gap:12px;text-align:center}}@media (max-width:480px){footer{padding:32px 0 24px}.footer-grid{grid-template-columns:1fr 1fr;gap:20px 16px;margin-bottom:24px}.footer-brand{grid-column:1 / -1}.footer-brand p{font-size:13px;max-width:100%}.footer-col h3{font-size:12px;margin-bottom:10px}.footer-col a{font-size:13px;margin-bottom:8px}.footer-bottom{padding-top:16px;font-size:12px}}.fade-up{opacity:0;transform:translateY(20px);transition:all 0.6s cubic-bezier(0.16,1,0.3,1)}.fade-up.visible{opacity:1;transform:translateY(0)}</style>
+
+    <!-- Structured Data: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Drape",
+      "url": "https://drape-dev.it",
+      "logo": "https://drape-dev.it/logo.png",
+      "description": "The first mobile IDE with multi-model AI. Build apps from your iPhone.",
+      "founder": [
+        { "@type": "Person", "name": "Daniele Scianna" },
+        { "@type": "Person", "name": "Leon Rivas" }
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "leon.rivas@drape-dev.it",
+        "contactType": "customer support"
+      }
+    }
+    </script>
+
+    <!-- Structured Data: SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Drape",
+      "operatingSystem": "iOS, Android",
+      "applicationCategory": "DeveloperApplication",
+      "description": "Mobile IDE with multi-model AI. Write code, build projects, and ship apps from your phone. Terminal, Git, file manager and AI Agent built-in. Vibe code anywhere.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      },
+      "featureList": [
+        "Desktop-grade terminal (bash/zsh)",
+        "Multi-model AI (Claude 4.5, GPT-5, Gemini Pro)",
+        "Autonomous AI Agent",
+        "GitHub repository integration",
+        "Full code editor with syntax highlighting",
+        "File manager",
+        "Live preview"
+      ]
+    }
+    </script>
+
+    <!-- Structured Data: FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does the terminal work on mobile?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Drape\'s terminal connects to isolated Docker containers in the cloud. Each project has its own environment with full access to bash/zsh, npm, git and all development tools. Latency is minimal and the experience is identical to a desktop terminal."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which AI models are available?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Starter plan includes Claude 4.5 Sonnet and Gemini 3.0 Flash. Go and Pro plans also unlock Claude 4.6 Opus, GPT 5.2 and Gemini 3.0 Pro. You can switch models at any time."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I import my existing repositories?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, it is one of the main features. Clone any repository from GitHub, GitLab or Bitbucket, work with AI, start the live preview to test changes and push directly from the app. Commit, pull, branch - all supported."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does billing work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "All payments are handled through Apple In-App Purchase. The subscription renews automatically and you can cancel anytime from your Apple ID settings."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are my data and code safe?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely. Each project runs in an isolated Docker container. Data is encrypted in transit (TLS) and at rest. We never sell or share your data."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+    <div class="container">
+        <div class="nav-inner">
+            <a href="/en/" class="logo">
+                <div class="logo-icon">
+                    <picture><source srcset="/logo.webp" type="image/webp"><img src="/logo.png" alt="Drape" width="40" height="40"></picture>
+                </div>
+                Drape
+            </a>
+            <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#faq">FAQ</a>
+                <a href="/support.html">Support</a>
+                <a href="javascript:void(0)" class="nav-cta">Download</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+    <div class="container">
+        <h1>Bring your ideas to life.</h1>
+        <p>Create projects from scratch or import your existing repositories. Multi-model AI, full terminal and live preview &mdash; all from your iPhone.</p>
+        <div class="hero-ctas">
+            <a href="javascript:void(0)" class="btn-primary">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                Download on App Store
+            </a>
+            <a href="#features" class="btn-secondary">Learn more</a>
+        </div>
+        <div class="models-bar">
+            <div class="model-item"><div class="model-dot claude"></div>Claude 4.5 Sonnet</div>
+            <div class="model-item"><div class="model-dot claude"></div>Claude 4.6 Opus</div>
+            <div class="model-item"><div class="model-dot gpt"></div>GPT 5.2</div>
+            <div class="model-item"><div class="model-dot gemini"></div>Gemini 3.0 Pro</div>
+            <div class="model-item"><div class="model-dot gemini"></div>Gemini 3.0 Flash</div>
+        </div>
+
+        <!-- iPhone Mockups -->
+        <div class="hero-phones">
+            <div class="phone-frame side">
+                <div class="phone-bezel">
+                    <div class="phone-screen">
+                        <picture><source srcset="/screens/home.webp" type="image/webp"><img src="/screens/home.png" alt="Drape home screen" fetchpriority="high" width="1179" height="2556"></picture>
+                    </div>
+                </div>
+                <div class="phone-label">Home</div>
+            </div>
+            <div class="phone-frame center">
+                <div class="phone-bezel">
+                    <div class="phone-screen">
+                        <picture><source srcset="/screens/create.webp" type="image/webp"><img src="/screens/create.png" alt="Create new project in Drape" loading="lazy" width="1179" height="2556"></picture>
+                    </div>
+                </div>
+                <div class="phone-label">Create Project</div>
+            </div>
+            <div class="phone-frame side">
+                <div class="phone-bezel">
+                    <div class="phone-screen">
+                        <picture><source srcset="/screens/preview.webp" type="image/webp"><img src="/screens/preview.png" alt="Live preview in Drape" loading="lazy" width="1179" height="2556"></picture>
+                    </div>
+                </div>
+                <div class="phone-label">Live Preview</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── WHAT YOU CAN BUILD ─── -->
+<section>
+    <div class="container">
+        <div class="section-header center fade-up">
+            <div class="section-label">Create or import</div>
+            <h2 class="section-title">Start from scratch or from<br>your repositories.</h2>
+        </div>
+    </div>
+    <div class="build-marquee-wrap fade-up">
+        <!-- Row 1 — left -->
+        <div class="build-marquee-track">
+            <div class="build-marquee">
+                <div class="build-pill"><div class="dot" style="background:#a855f7"></div>Web App <span>React, Next.js, Vue, Svelte</span></div>
+                <div class="build-pill"><div class="dot" style="background:#3b82f6"></div>API &amp; Backend <span>Node.js, Express, FastAPI</span></div>
+                <div class="build-pill"><div class="dot" style="background:#22c55e"></div>Landing Page <span>Portfolio, blog, static sites</span></div>
+                <div class="build-pill"><div class="dot" style="background:#f97316"></div>Dashboard <span>Admin panel, analytics, CRM</span></div>
+                <div class="build-pill"><div class="dot" style="background:#ec4899"></div>SaaS Tool <span>Auth, pagamenti, database</span></div>
+                <div class="build-pill"><div class="dot" style="background:#14b8a6"></div>Script &amp; Bot <span>CLI, scraper, automazioni</span></div>
+                <div class="build-pill"><div class="dot" style="background:#eab308"></div>E-commerce <span>Shopify, Stripe, WooCommerce</span></div>
+                <div class="build-pill"><div class="dot" style="background:#8b5cf6"></div>Game Prototypes <span>Phaser, Three.js, Canvas</span></div>
+                <!-- duplicate -->
+                <div class="build-pill"><div class="dot" style="background:#a855f7"></div>Web App <span>React, Next.js, Vue, Svelte</span></div>
+                <div class="build-pill"><div class="dot" style="background:#3b82f6"></div>API &amp; Backend <span>Node.js, Express, FastAPI</span></div>
+                <div class="build-pill"><div class="dot" style="background:#22c55e"></div>Landing Page <span>Portfolio, blog, static sites</span></div>
+                <div class="build-pill"><div class="dot" style="background:#f97316"></div>Dashboard <span>Admin panel, analytics, CRM</span></div>
+                <div class="build-pill"><div class="dot" style="background:#ec4899"></div>SaaS Tool <span>Auth, pagamenti, database</span></div>
+                <div class="build-pill"><div class="dot" style="background:#14b8a6"></div>Script &amp; Bot <span>CLI, scraper, automazioni</span></div>
+                <div class="build-pill"><div class="dot" style="background:#eab308"></div>E-commerce <span>Shopify, Stripe, WooCommerce</span></div>
+                <div class="build-pill"><div class="dot" style="background:#8b5cf6"></div>Game Prototypes <span>Phaser, Three.js, Canvas</span></div>
+            </div>
+        </div>
+        <!-- Row 2 — right (reverse) -->
+        <div class="build-marquee-track">
+            <div class="build-marquee reverse">
+                <div class="build-pill"><div class="dot" style="background:#06b6d4"></div>Blog <span>Markdown, CMS, RSS feed</span></div>
+                <div class="build-pill"><div class="dot" style="background:#f43f5e"></div>Chat App <span>WebSocket, real-time</span></div>
+                <div class="build-pill"><div class="dot" style="background:#84cc16"></div>Portfolio <span>Personal, freelancer</span></div>
+                <div class="build-pill"><div class="dot" style="background:#d946ef"></div>AI Tool <span>LLM wrapper, prompt app</span></div>
+                <div class="build-pill"><div class="dot" style="background:#fb923c"></div>Automazioni <span>Cron job, webhook, pipeline</span></div>
+                <div class="build-pill"><div class="dot" style="background:#2dd4bf"></div>REST API <span>CRUD, auth, middleware</span></div>
+                <div class="build-pill"><div class="dot" style="background:#facc15"></div>Utility <span>Converter, calculator, tool</span></div>
+                <div class="build-pill"><div class="dot" style="background:#818cf8"></div>Plugin <span>Chrome ext, Slack bot</span></div>
+                <!-- duplicate -->
+                <div class="build-pill"><div class="dot" style="background:#06b6d4"></div>Blog <span>Markdown, CMS, RSS feed</span></div>
+                <div class="build-pill"><div class="dot" style="background:#f43f5e"></div>Chat App <span>WebSocket, real-time</span></div>
+                <div class="build-pill"><div class="dot" style="background:#84cc16"></div>Portfolio <span>Personal, freelancer</span></div>
+                <div class="build-pill"><div class="dot" style="background:#d946ef"></div>AI Tool <span>LLM wrapper, prompt app</span></div>
+                <div class="build-pill"><div class="dot" style="background:#fb923c"></div>Automazioni <span>Cron job, webhook, pipeline</span></div>
+                <div class="build-pill"><div class="dot" style="background:#2dd4bf"></div>REST API <span>CRUD, auth, middleware</span></div>
+                <div class="build-pill"><div class="dot" style="background:#facc15"></div>Utility <span>Converter, calculator, tool</span></div>
+                <div class="build-pill"><div class="dot" style="background:#818cf8"></div>Plugin <span>Chrome ext, Slack bot</span></div>
+            </div>
+        </div>
+        <!-- Row 3 — left -->
+        <div class="build-marquee-track">
+            <div class="build-marquee" style="animation-duration:40s;">
+                <div class="build-pill"><div class="dot" style="background:#10b981"></div>Startup MVP <span>Idea to prototype, fast</span></div>
+                <div class="build-pill"><div class="dot" style="background:#6366f1"></div>Mobile Backend <span>API per app iOS/Android</span></div>
+                <div class="build-pill"><div class="dot" style="background:#ef4444"></div>Scraper <span>Web crawling, data mining</span></div>
+                <div class="build-pill"><div class="dot" style="background:#0ea5e9"></div>Docs Site <span>Wiki, documentazione, guide</span></div>
+                <div class="build-pill"><div class="dot" style="background:#f59e0b"></div>Form Builder <span>Survey, contatti, quiz</span></div>
+                <div class="build-pill"><div class="dot" style="background:#a3e635"></div>Microservizio <span>Docker, serverless, lambda</span></div>
+                <div class="build-pill"><div class="dot" style="background:#c084fc"></div>Social App <span>Feed, profili, notifiche</span></div>
+                <div class="build-pill"><div class="dot" style="background:#fb7185"></div>Booking System <span>Calendario, prenotazioni</span></div>
+                <!-- duplicate -->
+                <div class="build-pill"><div class="dot" style="background:#10b981"></div>Startup MVP <span>Idea to prototype, fast</span></div>
+                <div class="build-pill"><div class="dot" style="background:#6366f1"></div>Mobile Backend <span>API per app iOS/Android</span></div>
+                <div class="build-pill"><div class="dot" style="background:#ef4444"></div>Scraper <span>Web crawling, data mining</span></div>
+                <div class="build-pill"><div class="dot" style="background:#0ea5e9"></div>Docs Site <span>Wiki, documentazione, guide</span></div>
+                <div class="build-pill"><div class="dot" style="background:#f59e0b"></div>Form Builder <span>Survey, contatti, quiz</span></div>
+                <div class="build-pill"><div class="dot" style="background:#a3e635"></div>Microservizio <span>Docker, serverless, lambda</span></div>
+                <div class="build-pill"><div class="dot" style="background:#c084fc"></div>Social App <span>Feed, profili, notifiche</span></div>
+                <div class="build-pill"><div class="dot" style="background:#fb7185"></div>Booking System <span>Calendario, prenotazioni</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FEATURES ─── -->
+<section id="features">
+    <div class="container">
+        <div class="section-header center fade-up">
+            <div class="section-label">Features</div>
+            <h2 class="section-title">Everything you need.<br>Nothing less.</h2>
+        </div>
+        <div class="feat-list">
+            <div class="feat-row fade-up">
+                <div class="feat-num">01</div>
+                <div class="feat-content">
+                    <h3>Autonomous AI Agent</h3>
+                    <p>Describe what you want and AI creates, edits and organizes files for you. Multi-file editing, dependency installation, command execution &mdash; all with a single prompt.</p>
+                </div>
+            </div>
+            <div class="feat-row fade-up">
+                <div class="feat-num">02</div>
+                <div class="feat-content">
+                    <h3>Full Terminal</h3>
+                    <p>Real Bash and Zsh in isolated Docker containers. Run npm, git, python and any command just like on a desktop terminal.</p>
+                </div>
+            </div>
+            <div class="feat-row fade-up">
+                <div class="feat-num">03</div>
+                <div class="feat-content">
+                    <h3>5 AI Models</h3>
+                    <p>Claude 4.5 Sonnet, Claude 4.6 Opus, GPT 5.2, Gemini 3.0 Pro and Gemini 3.0 Flash. Switch models anytime during development.</p>
+                </div>
+            </div>
+            <div class="feat-row fade-up">
+                <div class="feat-num">04</div>
+                <div class="feat-content">
+                    <h3>Live Preview</h3>
+                    <p>See results in real-time, for both new projects and imported repositories. Web apps, APIs, servers &mdash; all visible and testable with a tap.</p>
+                </div>
+            </div>
+            <div class="feat-row fade-up">
+                <div class="feat-num">05</div>
+                <div class="feat-content">
+                    <h3>Import Your Repositories</h3>
+                    <p>Clone any repo from GitHub, GitLab or Bitbucket and work on it with AI. Start the preview, test changes live and push &mdash; just like on desktop.</p>
+                </div>
+            </div>
+            <div class="feat-row fade-up">
+                <div class="feat-num">06</div>
+                <div class="feat-content">
+                    <h3>File Explorer &amp; Editor</h3>
+                    <p>Navigate your project, create and edit files with syntax highlighting. Full cloud filesystem management with undo and redo.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── HOW IT WORKS ─── -->
+<section>
+    <div class="container">
+        <div class="section-header center fade-up">
+            <div class="section-label">How it works</div>
+            <h2 class="section-title">From idea to project<br>in minutes.</h2>
+        </div>
+        <div class="steps-grid">
+            <div class="step fade-up">
+                <div class="step-number">1</div>
+                <h3>Create or import</h3>
+                <p>Start from scratch with a prompt or import an existing repository from GitHub, GitLab or Bitbucket.</p>
+            </div>
+            <div class="step fade-up">
+                <div class="step-number">2</div>
+                <h3>Build</h3>
+                <p>The AI Agent creates files, writes code, installs dependencies. You watch and step in whenever you want.</p>
+            </div>
+            <div class="step fade-up">
+                <div class="step-number">3</div>
+                <h3>Launch</h3>
+                <p>Live preview of your project, push to GitHub, deploy. All from your iPhone, without ever opening a laptop.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── PRICING ─── -->
+<section id="pricing" style="background: rgba(255,255,255,0.01);">
+    <div class="container">
+        <div class="section-header center fade-up">
+            <div class="section-label">Pricing</div>
+            <h2 class="section-title">Start free.<br>Scale when ready.</h2>
+            <p class="section-desc">No credit card required. Upgrade from your iPhone via App Store.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card fade-up">
+                <div class="pricing-name">Starter</div>
+                <div class="pricing-desc">To explore and experiment</div>
+                <div class="pricing-price">Free</div>
+                <div class="pricing-period">Forever</div>
+                <ul class="pricing-features">
+                    <li>Claude 4.5 Sonnet &amp; Gemini 3.0 Flash</li>
+                    <li>3 projects + 2 cloned repositories</li>
+                    <li>5 previews per month</li>
+                    <li>1 GB cloud storage</li>
+                    <li>Terminal completo</li>
+                    <li>GitHub, GitLab, Bitbucket</li>
+                </ul>
+                <a href="javascript:void(0)" class="pricing-btn outline">Start free</a>
+            </div>
+            <div class="pricing-card featured fade-up">
+                <div class="pricing-badge">Popular</div>
+                <div class="pricing-name">Go</div>
+                <div class="pricing-desc">For serious developers</div>
+                <div class="pricing-price">&euro;22.99<span style="font-size:16px;font-weight:500;color:var(--text-muted)">/mese</span></div>
+                <div class="pricing-period">or &euro;19.17/mo with annual plan (-20%)</div>
+                <ul class="pricing-features">
+                    <li>All AI models included</li>
+                    <li>Claude 4.6 Opus, GPT 5.2, Gemini 3.0 Pro</li>
+                    <li>10 projects + 5 cloned repositories</li>
+                    <li>20 previews per month</li>
+                    <li>5 GB cloud storage</li>
+                    <li>Email support</li>
+                </ul>
+                <a href="javascript:void(0)" class="pricing-btn filled">Upgrade to Go</a>
+            </div>
+            <div class="pricing-card fade-up">
+                <div class="pricing-name">Pro</div>
+                <div class="pricing-desc">For professionals and teams</div>
+                <div class="pricing-price">&euro;39.99<span style="font-size:16px;font-weight:500;color:var(--text-muted)">/mese</span></div>
+                <div class="pricing-period">or &euro;33.33/mo with annual plan (-20%)</div>
+                <ul class="pricing-features">
+                    <li>All AI models included</li>
+                    <li>Maximum AI budget</li>
+                    <li>50 projects + 25 cloned repositories</li>
+                    <li>Unlimited previews</li>
+                    <li>10 GB cloud storage</li>
+                    <li>Priority support</li>
+                </ul>
+                <a href="javascript:void(0)" class="pricing-btn outline">Upgrade to Pro</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+<section id="faq">
+    <div class="container">
+        <div class="section-header center fade-up">
+            <div class="section-label">FAQ</div>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+        </div>
+        <div class="faq-list fade-up">
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>How it works il terminal su mobile?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Drape's terminal connects to isolated Docker containers in the cloud. Each project has its own environment with full access to bash/zsh, npm, git and all development tools. Latency is minimal and the experience is identical to a desktop terminal.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Which AI models are available?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>The Starter plan includes Claude 4.5 Sonnet and Gemini 3.0 Flash. Go (&euro;22.99/mo) and Pro (&euro;39.99/mo) plans also unlock Claude 4.6 Opus, GPT 5.2 and Gemini 3.0 Pro. You can switch models at any time.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Can I import my existing repositories?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, it's one of the main features. Clone any repository from GitHub, GitLab or Bitbucket, work with AI, start the live preview to test changes and push directly from the app. Commit, pull, branch &mdash; all supported.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>How it works la fatturazione?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>All payments are handled through Apple In-App Purchase. The subscription renews automatically and you can cancel anytime from your Apple ID settings.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Are my data and code safe?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Absolutely. Each project runs in an isolated Docker container. Data is encrypted in transit (TLS) and at rest. We never sell or share your data. Read our <a href="/privacy-policy.html" style="color:var(--accent)">Privacy Policy</a> for details.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<section class="cta-section">
+    <div class="container">
+        <h2 class="fade-up">Start building.<br>Wherever you are.</h2>
+        <p class="fade-up">Download Drape and turn your iPhone into your IDE.</p>
+        <div class="hero-ctas fade-up">
+            <a href="javascript:void(0)" class="btn-primary">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                Download on App Store
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="/en/" class="logo">
+                    <div class="logo-icon">
+                        <picture><source srcset="/logo.webp" type="image/webp"><img src="/logo.png" alt="Drape" width="40" height="40"></picture>
+                    </div>
+                    Drape
+                </a>
+                <p>Il primo IDE mobile con AI multimodello. Build qualsiasi progetto, ovunque tu sia.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Product</h3>
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#faq">FAQ</a>
+            </div>
+            <div class="footer-col">
+                <h3>Risorse</h3>
+                <a href="/support.html">Support</a>
+                <a href="mailto:leon.rivas@drape-dev.it">Contatti</a>
+            </div>
+            <div class="footer-col">
+                <h3>Legale</h3>
+                <a href="/privacy-policy.html">Privacy Policy</a>
+                <a href="terms-of-service.html">Termini di Servizio</a>
+            </div>
+            <div class="footer-col">
+                <h3>Social</h3>
+                <a href="javascript:void(0)">Instagram</a>
+                <a href="javascript:void(0)">X (Twitter)</a>
+                <a href="javascript:void(0)">LinkedIn</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Drape. Tutti i diritti riservati.</span>
+            <span>Made in Italy</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        e.preventDefault();
+        const href = a.getAttribute('href');
+        if (href === '#') return;
+        const target = document.querySelector(href);
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            history.replaceState(null, '', '/');
+            document.querySelector('.nav-links')?.classList.remove('open');
+        }
+    });
+});
+
+// Nav background on scroll
+window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 20) {
+        nav.style.borderBottomColor = 'rgba(255,255,255,0.08)';
+    } else {
+        nav.style.borderBottomColor = 'rgba(255,255,255,0.04)';
+    }
+});
+</script>
+</body>
+</html>

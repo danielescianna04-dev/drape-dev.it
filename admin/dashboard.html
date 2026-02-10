@@ -235,7 +235,7 @@
                         <div class="stat-card-label">Containers In Uso</div>
                     </div>
 
-                    <div class="stat-card">
+                    <div class="stat-card" id="aiCostCard" style="cursor:pointer" title="Clicca per dettagli">
                         <div class="stat-card-header">
                             <div class="stat-card-icon purple">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -793,6 +793,19 @@
                 <button class="modal-close" id="closeOnlineModal">&times;</button>
             </div>
             <div class="modal-body" id="onlineUsersModalBody">
+                <div class="loading"><div class="loading-spinner"></div> Caricamento...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Costi AI -->
+    <div id="aiCostModal" class="modal-overlay" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Costi AI - Dettaglio Mensile</h3>
+                <button class="modal-close" id="closeAiCostModal">&times;</button>
+            </div>
+            <div class="modal-body" id="aiCostModalBody">
                 <div class="loading"><div class="loading-spinner"></div> Caricamento...</div>
             </div>
         </div>

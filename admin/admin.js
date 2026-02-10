@@ -23,7 +23,7 @@ const firebaseConfig = {
 };
 
 // Backend API URL - via Nginx HTTPS proxy
-const API_BASE_URL = 'https://77-42-1-116.nip.io/admin-api';
+const API_BASE_URL = 'https://drape-dev.it/admin-api';
 
 // Admin whitelist
 const ADMIN_EMAILS = [
@@ -2063,6 +2063,15 @@ function initDashboard() {
     // Load sidebar badge counts in background
     loadSidebarBadges();
 
+    // Setup AI Cost modal
+    document.getElementById('aiCostCard')?.addEventListener('click', openAiCostModal);
+    document.getElementById('closeAiCostModal')?.addEventListener('click', () => {
+        document.getElementById('aiCostModal').style.display = 'none';
+    });
+    document.getElementById('aiCostModal')?.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal-overlay')) e.target.style.display = 'none';
+    });
+
     // Setup refresh button
     document.getElementById('refreshSessions')?.addEventListener('click', loadSessionsTable);
 
@@ -2083,4 +2092,85 @@ function initDashboard() {
             loadContainersData();
         }
     }, 5000);
+}
+
+// ============================================
+// AI COST MODAL
+// ============================================
+
+async function openAiCostModal() {
+    const modal = document.getElementById('aiCostModal');
+    const body = document.getElementById('aiCostModalBody');
+    modal.style.display = 'flex';
+    body.innerHTML = '<div class="loading"><div class="loading-spinner"></div> Caricamento...</div>';
+
+    const data = await apiCall('/admin/stats/ai-costs');
+    if (!data) {
+        body.innerHTML = '<p style="color:#f87171;">Errore nel caricamento dei dati.</p>';
+        return;
+    }
+
+    const providers = data.providers || {};
+    let html = `
+        <div style="display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:200px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.3);border-radius:12px;padding:16px;">
+                <div style="font-size:12px;color:#a78bfa;text-transform:uppercase;letter-spacing:1px;">Totale Mese</div>
+                <div style="font-size:28px;font-weight:700;color:#e2e8f0;margin-top:4px;">&euro;${data.totalCost.toFixed(2)}</div>
+                <div style="font-size:12px;color:#94a3b8;margin-top:4px;">${data.totalCalls} chiamate API</div>
+            </div>
+        </div>
+        <div style="display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap;">`;
+
+    for (const [name, info] of Object.entries(providers)) {
+        const color = name === 'Anthropic' ? '#f97316' : '#4ade80';
+        html += `
+            <div style="flex:1;min-width:200px;background:rgba(30,30,40,0.8);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px;">
+                <div style="font-size:14px;font-weight:600;color:${color};margin-bottom:8px;">${name}</div>
+                <div style="font-size:22px;font-weight:700;color:#e2e8f0;">&euro;${info.cost.toFixed(2)}</div>
+                <div style="font-size:12px;color:#94a3b8;margin-top:4px;">${info.calls} chiamate</div>
+            </div>`;
+    }
+
+    html += `</div>
+        <table style="width:100%;border-collapse:collapse;">
+            <thead>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+                    <th style="text-align:left;padding:8px;color:#94a3b8;font-size:12px;">Modello</th>
+                    <th style="text-align:right;padding:8px;color:#94a3b8;font-size:12px;">Costo</th>
+                    <th style="text-align:right;padding:8px;color:#94a3b8;font-size:12px;">Chiamate</th>
+                    <th style="text-align:right;padding:8px;color:#94a3b8;font-size:12px;">Token In</th>
+                    <th style="text-align:right;padding:8px;color:#94a3b8;font-size:12px;">Token Out</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+    const sortedModels = Object.entries(data.byModel || {}).sort((a, b) => b[1].cost - a[1].cost);
+    for (const [model, info] of sortedModels) {
+        html += `
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                    <td style="padding:8px;color:#e2e8f0;font-size:13px;">${model}</td>
+                    <td style="text-align:right;padding:8px;color:#e2e8f0;font-size:13px;">&euro;${info.cost.toFixed(2)}</td>
+                    <td style="text-align:right;padding:8px;color:#94a3b8;font-size:13px;">${info.calls}</td>
+                    <td style="text-align:right;padding:8px;color:#94a3b8;font-size:13px;">${(info.inputTokens / 1000).toFixed(1)}k</td>
+                    <td style="text-align:right;padding:8px;color:#94a3b8;font-size:13px;">${(info.outputTokens / 1000).toFixed(1)}k</td>
+                </tr>`;
+    }
+
+    html += `</tbody></table>
+        <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap;">
+            <a href="https://console.cloud.google.com/billing" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:rgba(66,133,244,0.15);border:1px solid rgba(66,133,244,0.3);border-radius:8px;color:#60a5fa;text-decoration:none;font-size:13px;">
+                Google Cloud Console
+            </a>
+            <a href="https://console.anthropic.com/settings/billing" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:rgba(249,115,22,0.15);border:1px solid rgba(249,115,22,0.3);border-radius:8px;color:#f97316;text-decoration:none;font-size:13px;">
+                Anthropic Console
+            </a>
+            <a href="https://console.firebase.google.com/project/drape-mobile-ide/usage" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:rgba(251,191,36,0.15);border:1px solid rgba(251,191,36,0.3);border-radius:8px;color:#fbbf24;text-decoration:none;font-size:13px;">
+                Firebase Console
+            </a>
+        </div>`;
+
+    body.innerHTML = html;
 }
