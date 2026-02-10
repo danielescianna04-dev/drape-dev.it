@@ -1,0 +1,54 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to drape-dev.it
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add server to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H 77.42.1.116 >> ~/.ssh/known_hosts
+
+      - name: Deploy to server
+        run: |
+          echo "🚀 Deploying to drape-dev.it..."
+          rsync -avz --delete \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='node_modules' \
+            --exclude='.DS_Store' \
+            --exclude='*.bak' \
+            --exclude='deploy.sh' \
+            --exclude='deploy-admin-server.sh' \
+            --exclude='sync-from-server.sh' \
+            --exclude='server.js' \
+            --exclude='package.json' \
+            --exclude='serviceAccountKey.json' \
+            -e "ssh -o StrictHostKeyChecking=no" \
+            ./ \
+            root@77.42.1.116:/var/www/drape-dev.it/
+
+      - name: Deployment complete
+        run: |
+          echo "✅ Deploy completato!"
+          echo "🌐 Sito: https://drape-dev.it"
+          echo ""
+          echo "📝 Note:"
+          echo "- Cloudflare potrebbe cacheare i file per qualche minuto"
+          echo "- Svuota la cache Cloudflare per vedere subito le modifiche"
