@@ -479,6 +479,37 @@
             background: rgba(255,255,255,0.1);
             border-color: rgba(255,255,255,0.2);
         }
+        .btn-android {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: rgba(255,255,255,0.03);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 60px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+            position: relative;
+        }
+        .btn-android:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: var(--border-hover);
+            color: var(--text);
+        }
+        .btn-android .badge {
+            background: var(--accent-glow);
+            color: var(--accent-light);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
         /* ─── AI MODELS BAR ─── */
         .models-bar {
@@ -1343,7 +1374,7 @@
                 <a href="pricing.html">Pricing</a>
                 <a href="#faq">FAQ</a>
                 <a href="support.html">Support</a>
-                <a href="javascript:void(0)" class="nav-cta">Download</a>
+                <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="nav-cta">Download</a>
             </div>
         </div>
     </div>
@@ -1363,11 +1394,15 @@
         <h1>Your Smartphone Is Your New IDE</h1>
         <p>Full terminal, advanced editor, GitHub integration and autonomous AI Agent. Everything you need to build real projects, straight from iPhone and Android.</p>
         <div class="hero-ctas">
-            <a href="javascript:void(0)" class="btn-primary">
+            <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="btn-primary">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
                 Download on App Store
             </a>
-            <a href="#features" class="btn-secondary">Learn more</a>
+            <a href="mailto:info@drape-dev.it?subject=Interest%20in%20Drape%20for%20Android&body=Hi%2C%0A%0AI'm%20interested%20in%20the%20Android%20version%20of%20Drape.%20Please%20notify%20me%20when%20it%20becomes%20available.%0A%0AThank%20you!" class="btn-android">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.523 15.341c-.108-.287-.32-.511-.593-.629l-4.367-1.896c-.13-.056-.273-.084-.417-.084-.294 0-.578.117-.786.324l-1.56 1.56c-2.077-.845-3.807-2.577-4.652-4.655l1.56-1.56c.207-.208.324-.492.324-.786 0-.144-.028-.287-.084-.417L5.053 2.83c-.118-.273-.342-.485-.629-.593-.286-.107-.602-.094-.878.037L.73 3.53c-.262.125-.47.35-.586.633C.024 4.458-.01 4.774.004 5.091c.062 1.493.41 4.074 1.917 6.828 1.26 2.303 3.053 4.332 5.187 5.873 2.127 1.536 4.722 2.556 7.505 2.95.314.045.63.041.94-.014.28-.05.54-.175.744-.358l2.358-2.117c.13-.116.223-.271.267-.442.043-.17.037-.349-.017-.513zM16.897 18.73c-2.59-.367-4.977-1.317-6.906-2.755-1.933-1.443-3.6-3.305-4.771-5.398-1.36-2.487-1.68-4.828-1.735-6.2l2.537-1.212 1.464 3.372-1.683 1.683c-.13.13-.197.31-.18.493.016.182.103.348.237.454 1.296 1.022 2.625 1.897 4.067 2.672.144.077.31.11.475.093.165-.016.318-.086.428-.196l1.683-1.683 3.372 1.464-1.212 2.537c-1.372-.055-3.713-.375-6.2-1.735-2.093-1.17-3.955-2.838-5.398-4.771C1.437 5.62.487 3.233.12.643l2.537-1.212c.164-.053.343-.06.513-.017.17.044.325.137.442.267l2.117 2.358c.183.204.308.464.358.744.055.31.059.626.014.94-.394 2.783-1.414 5.378-2.95 7.505-1.54 2.134-3.57 3.927-5.873 5.187-2.754 1.507-5.335 1.855-6.828 1.917-.317.014-.633-.02-.945-.128-.283-.116-.508-.324-.633-.586L3.53 14.27c-.131-.276-.144-.592-.037-.878.108-.287.32-.511.593-.629l4.367-1.896c.13-.056.273-.084.417-.084.294 0 .578.117.786.324l1.56 1.56c2.078-.847 3.81-2.575 4.655-4.652l-1.56-1.56c-.207-.208-.324-.492-.324-.786 0-.144.028-.287.084-.417l1.896-4.367c.118-.273.342-.485.629-.593.287-.107.602-.094.878.037l2.816 1.256c.262.125.47.35.586.633.11.312.142.628.128.945-.062 1.493-.41 4.074-1.917 6.828z"/></svg>
+                <span>Android</span>
+                <span class="badge">Coming Soon</span>
+            </a>
         </div>
         <div class="models-bar">
             <div class="model-item"><div class="model-dot claude"></div>Claude 4.5 Sonnet</div>
