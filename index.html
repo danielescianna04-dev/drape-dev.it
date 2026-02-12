@@ -519,6 +519,152 @@
             letter-spacing: 0.5px;
         }
 
+        /* ─── MODAL ─── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 28px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .modal-close:hover {
+            background: var(--bg-card-hover);
+            color: var(--text);
+        }
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+        .modal-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .modal-submit {
+            width: 100%;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            font-family: inherit;
+        }
+        .modal-submit:hover {
+            opacity: 0.85;
+        }
+        .modal-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .modal-success {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        .modal-success.active {
+            display: block;
+        }
+        .modal-success-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(34, 197, 94, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 32px;
+        }
+        @media (max-width: 480px) {
+            .modal-content {
+                padding: 28px 20px;
+            }
+        }
+
         /* ─── AI MODELS BAR ─── */
         .models-bar {
             display: flex;
@@ -1406,7 +1552,7 @@
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
                 Scarica su App Store
             </a>
-            <a href="mailto:info@drape-dev.it?subject=Interesse%20per%20Drape%20Android&body=Ciao%2C%0A%0ASono%20interessato%20alla%20versione%20Android%20di%20Drape.%20Vorrei%20essere%20avvisato%20quando%20sar%C3%A0%20disponibile.%0A%0AGrazie!" class="btn-android">
+            <a href="javascript:void(0)" onclick="openAndroidModal()" class="btn-android">
                 <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.523 15.341c-.108-.287-.32-.511-.593-.629l-4.367-1.896c-.13-.056-.273-.084-.417-.084-.294 0-.578.117-.786.324l-1.56 1.56c-2.077-.845-3.807-2.577-4.652-4.655l1.56-1.56c.207-.208.324-.492.324-.786 0-.144-.028-.287-.084-.417L5.053 2.83c-.118-.273-.342-.485-.629-.593-.286-.107-.602-.094-.878.037L.73 3.53c-.262.125-.47.35-.586.633C.024 4.458-.01 4.774.004 5.091c.062 1.493.41 4.074 1.917 6.828 1.26 2.303 3.053 4.332 5.187 5.873 2.127 1.536 4.722 2.556 7.505 2.95.314.045.63.041.94-.014.28-.05.54-.175.744-.358l2.358-2.117c.13-.116.223-.271.267-.442.043-.17.037-.349-.017-.513zM16.897 18.73c-2.59-.367-4.977-1.317-6.906-2.755-1.933-1.443-3.6-3.305-4.771-5.398-1.36-2.487-1.68-4.828-1.735-6.2l2.537-1.212 1.464 3.372-1.683 1.683c-.13.13-.197.31-.18.493.016.182.103.348.237.454 1.296 1.022 2.625 1.897 4.067 2.672.144.077.31.11.475.093.165-.016.318-.086.428-.196l1.683-1.683 3.372 1.464-1.212 2.537c-1.372-.055-3.713-.375-6.2-1.735-2.093-1.17-3.955-2.838-5.398-4.771C1.437 5.62.487 3.233.12.643l2.537-1.212c.164-.053.343-.06.513-.017.17.044.325.137.442.267l2.117 2.358c.183.204.308.464.358.744.055.31.059.626.014.94-.394 2.783-1.414 5.378-2.95 7.505-1.54 2.134-3.57 3.927-5.873 5.187-2.754 1.507-5.335 1.855-6.828 1.917-.317.014-.633-.02-.945-.128-.283-.116-.508-.324-.633-.586L3.53 14.27c-.131-.276-.144-.592-.037-.878.108-.287.32-.511.593-.629l4.367-1.896c.13-.056.273-.084.417-.084.294 0 .578.117.786.324l1.56 1.56c2.078-.847 3.81-2.575 4.655-4.652l-1.56-1.56c-.207-.208-.324-.492-.324-.786 0-.144.028-.287.084-.417l1.896-4.367c.118-.273.342-.485.629-.593.287-.107.602-.094.878.037l2.816 1.256c.262.125.47.35.586.633.11.312.142.628.128.945-.062 1.493-.41 4.074-1.917 6.828z"/></svg>
                 <span>Android</span>
                 <span class="badge">In arrivo</span>
@@ -1723,6 +1869,47 @@
     </div>
 </footer>
 
+<!-- ─── MODAL ANDROID ─── -->
+<div class="modal-overlay" id="androidModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeAndroidModal()">&times;</button>
+
+        <div id="modalForm">
+            <h3 class="modal-title">Richiedi Android</h3>
+            <p class="modal-subtitle">Invia una richiesta per la versione Android di Drape e ti avviseremo quando sarà disponibile.</p>
+
+            <form id="androidForm" action="https://formsubmit.co/drape.dev.info@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="Nuova richiesta Android da Drape">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+
+                <div class="form-group">
+                    <label for="name">Nome</label>
+                    <input type="text" id="name" name="name" placeholder="Il tuo nome" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="tua@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Messaggio (opzionale)</label>
+                    <textarea id="message" name="message" placeholder="Perché sei interessato alla versione Android?"></textarea>
+                </div>
+
+                <button type="submit" class="modal-submit">Invia Sollecitazione</button>
+            </form>
+        </div>
+
+        <div class="modal-success" id="modalSuccess">
+            <div class="modal-success-icon">✓</div>
+            <h3 class="modal-title">Richiesta Inviata!</h3>
+            <p class="modal-subtitle">Grazie per il tuo interesse. Ti avviseremo non appena la versione Android sarà disponibile.</p>
+        </div>
+    </div>
+</div>
+
 <script>
 // Scroll animations
 const observer = new IntersectionObserver((entries) => {
@@ -1840,6 +2027,69 @@ document.querySelectorAll('.pricing-card').forEach(card => {
         card.style.setProperty('--mouse-x', '50%');
         card.style.setProperty('--mouse-y', '50%');
     });
+});
+
+// Android modal functions
+function openAndroidModal() {
+    document.getElementById('androidModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeAndroidModal() {
+    document.getElementById('androidModal').classList.remove('active');
+    document.body.style.overflow = '';
+    // Reset form after closing
+    setTimeout(() => {
+        document.getElementById('modalForm').style.display = 'block';
+        document.getElementById('modalSuccess').classList.remove('active');
+        document.getElementById('androidForm').reset();
+    }, 300);
+}
+
+// Close modal when clicking outside
+document.getElementById('androidModal').addEventListener('click', (e) => {
+    if (e.target.id === 'androidModal') {
+        closeAndroidModal();
+    }
+});
+
+// Handle form submission
+document.getElementById('androidForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const submitBtn = form.querySelector('.modal-submit');
+
+    // Disable button during submission
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Invio in corso...';
+
+    try {
+        const formData = new FormData(form);
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            // Show success message
+            document.getElementById('modalForm').style.display = 'none';
+            document.getElementById('modalSuccess').classList.add('active');
+
+            // Close modal after 3 seconds
+            setTimeout(() => {
+                closeAndroidModal();
+            }, 3000);
+        } else {
+            throw new Error('Network response was not ok');
+        }
+    } catch (error) {
+        alert('Si è verificato un errore. Riprova più tardi o scrivici a drape.dev.info@gmail.com');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Invia Sollecitazione';
+    }
 });
 </script>
 </body>
