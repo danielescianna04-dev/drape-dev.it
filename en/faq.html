@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FAQ - Drape Mobile IDE</title>
+    <meta name="description" content="Frequently asked questions about Drape. Everything you want to know about the mobile IDE with AI for developers.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#6F5CFF">
+    <link rel="canonical" href="https://drape-dev.it/en/faq.html">
+    <link rel="alternate" hreflang="it" href="https://drape-dev.it/faq.html">
+    <link rel="alternate" hreflang="en" href="https://drape-dev.it/en/faq.html">
+    <link rel="alternate" hreflang="x-default" href="https://drape-dev.it/faq.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://drape-dev.it/en/faq.html">
+    <meta property="og:title" content="FAQ - Drape Mobile IDE">
+    <meta property="og:description" content="Frequently asked questions about Drape.">
+    <meta property="og:image" content="https://drape-dev.it/og-image-v2.png">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon2-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon2-16x16.png">
+    <link rel="icon" href="../favicon2.ico" sizes="48x48">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon2.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #050507;
+            --bg-card: #0c0c10;
+            --bg-card-hover: #111116;
+            --border: rgba(255,255,255,0.06);
+            --border-hover: rgba(255,255,255,0.12);
+            --text: #f5f5f7;
+            --text-secondary: #8e8e93;
+            --text-muted: #636366;
+            --accent: #a855f7;
+            --accent-light: #c084fc;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-lg: 24px;
+        }
+        html, body { scroll-behavior: smooth; overflow-x: hidden; width: 100%; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+        body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(155, 138, 255, 0.04) 0%, transparent 50%); pointer-events: none; z-index: 0; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* ─── NAV ─── */
+        nav { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 100; padding: 0; width: auto; max-width: 900px; }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 10px 10px 10px 20px; background: rgba(12, 12, 16, 0.7); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); border-radius: 60px; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 700; font-size: 18px; letter-spacing: -0.5px; white-space: nowrap; }
+        .logo-icon { width: 28px; height: 28px; border-radius: 7px; overflow: hidden; flex-shrink: 0; }
+        .logo-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .nav-links { display: flex; align-items: center; gap: 24px; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; white-space: nowrap; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-cta { background: var(--accent); color: #fff !important; padding: 8px 20px; border-radius: 20px; font-size: 13px; font-weight: 600; transition: all 0.2s; box-shadow: 0 4px 16px rgba(168, 85, 247, 0.3); }
+        .nav-cta:hover { background: var(--accent-light); box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4); }
+        .mobile-menu-btn { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 8px; }
+        .nav-dropdown { position: relative; }
+        .nav-dropdown-toggle { display: flex; align-items: center; gap: 4px; cursor: pointer; color: var(--text-secondary); font-size: 13px; font-weight: 500; transition: color 0.2s; white-space: nowrap; background: none; border: none; font-family: inherit; padding: 0; }
+        .nav-dropdown-toggle:hover { color: var(--text); }
+        .nav-dropdown-toggle svg { width: 12px; height: 12px; transition: transform 0.2s; }
+        .nav-dropdown:hover .nav-dropdown-toggle svg, .nav-dropdown.open .nav-dropdown-toggle svg { transform: rotate(180deg); }
+        .nav-dropdown-panel { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(-4px); min-width: 200px; background: rgba(16, 16, 20, 0.9); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 16px 8px 8px; opacity: 0; visibility: hidden; transition: all 0.2s ease; pointer-events: none; z-index: 200; }
+        .nav-dropdown:hover .nav-dropdown-panel, .nav-dropdown.open .nav-dropdown-panel { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+        .nav-dropdown-panel a { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; color: var(--text-secondary) !important; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.15s; }
+        .nav-dropdown-panel a:hover { background: rgba(255,255,255,0.05); color: var(--text) !important; }
+        .nav-dropdown-panel a .dropdown-icon { width: 32px; height: 32px; border-radius: 8px; background: rgba(155, 138, 255, 0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .nav-dropdown-panel a .dropdown-icon svg { width: 16px; height: 16px; color: #9B8AFF; }
+        .lang-toggle { display: flex; align-items: center; gap: 0; border-radius: 20px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); padding: 3px; flex-shrink: 0; }
+        .lang-toggle a, .lang-toggle span { display: flex; align-items: center; justify-content: center; width: 30px; height: 24px; border-radius: 14px; font-size: 11px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+        .lang-toggle .lang-active { background: rgba(255,255,255,0.12); color: var(--text); }
+        .lang-toggle a { color: var(--text-muted); }
+        .lang-toggle a:hover { color: var(--text-secondary); background: rgba(255,255,255,0.05); }
+
+        /* ─── FAQ HERO ─── */
+        .faq-hero {
+            padding: 140px 0 48px;
+            text-align: center;
+            position: relative;
+        }
+        .faq-hero::before { content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 800px; height: 600px; background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, rgba(99, 102, 241, 0.04) 40%, transparent 70%); pointer-events: none; }
+        .faq-hero h1 {
+            font-size: clamp(32px, 6vw, 52px);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 12px;
+            background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.65) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+        .faq-hero p { font-size: 17px; color: var(--text-secondary); max-width: 520px; margin: 0 auto; position: relative; }
+
+        /* ─── FAQ CATEGORIES ─── */
+        .faq-container {
+            max-width: 760px;
+            margin: 0 auto 80px;
+            position: relative;
+        }
+        .faq-category {
+            margin-bottom: 48px;
+        }
+        .faq-category-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #9B8AFF;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(155, 138, 255, 0.15);
+        }
+        .faq-category-title svg { width: 18px; height: 18px; }
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            margin-bottom: 8px;
+            overflow: hidden;
+            background: rgba(12,12,16,0.5);
+            transition: border-color 0.2s;
+        }
+        .faq-item:hover { border-color: var(--border-hover); }
+        .faq-item.open { border-color: rgba(155, 138, 255, 0.15); }
+        .faq-question {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 18px 20px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+            transition: color 0.2s;
+        }
+        .faq-question:hover { color: #9B8AFF; }
+        .faq-question svg {
+            width: 18px;
+            height: 18px;
+            color: var(--text-muted);
+            transition: transform 0.3s;
+            flex-shrink: 0;
+        }
+        .faq-item.open .faq-question svg { transform: rotate(45deg); color: #9B8AFF; }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-answer-inner {
+            padding: 0 20px 20px;
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .faq-answer-inner a {
+            color: #9B8AFF;
+            text-decoration: none;
+        }
+        .faq-answer-inner a:hover { text-decoration: underline; }
+
+        /* ─── CTA ─── */
+        .faq-cta {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 80px;
+            padding: 48px 32px;
+            background: linear-gradient(180deg, rgba(155, 138, 255, 0.06) 0%, rgba(155, 138, 255, 0.02) 100%);
+            border: 1px solid rgba(155, 138, 255, 0.12);
+            border-radius: var(--radius-lg);
+        }
+        .faq-cta h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+        .faq-cta p { font-size: 15px; color: var(--text-secondary); margin-bottom: 24px; }
+        .faq-cta .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%);
+            color: #fff; padding: 13px 28px; border-radius: 14px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.2s; box-shadow: 0 8px 30px rgba(168, 85, 247, 0.3);
+        }
+        .faq-cta .btn-primary:hover { box-shadow: 0 12px 40px rgba(168, 85, 247, 0.4); transform: translateY(-1px); }
+
+        /* ─── FOOTER ─── */
+        footer { padding: 48px 0 24px; border-top: 1px solid var(--border); position: relative; }
+        footer::before { content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(155, 138, 255, 0.2), transparent); }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 32px; }
+        .footer-brand p { font-size: 14px; color: var(--text-secondary); margin-top: 12px; max-width: 260px; line-height: 1.6; }
+        .footer-col { display: flex; flex-direction: column; }
+        .footer-col h4 { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .footer-col a { color: var(--text-secondary); text-decoration: none; font-size: 14px; margin-bottom: 10px; transition: color 0.2s; }
+        .footer-col a:hover { color: var(--text); }
+        .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 24px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text-muted); }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 768px) {
+            nav { top: 10px; left: 10px; right: 10px; transform: none; max-width: none; width: auto; }
+            .nav-inner { padding: 8px 8px 8px 16px; }
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .nav-links.open { display: flex; flex-direction: column; position: absolute; top: calc(100% + 8px); left: 0; right: 0; background: rgba(12, 12, 16, 0.95); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 16px 24px; gap: 16px; }
+            .nav-dropdown-panel { position: static; transform: none; opacity: 1; visibility: visible; pointer-events: auto; background: rgba(255,255,255,0.03); border: none; padding: 4px 0; min-width: auto; border-radius: 10px; backdrop-filter: none; -webkit-backdrop-filter: none; display: none; }
+            .nav-dropdown.open .nav-dropdown-panel { display: block; transform: none; }
+            .nav-dropdown:hover .nav-dropdown-panel { display: none; opacity: 0; visibility: hidden; }
+            .nav-dropdown.open:hover .nav-dropdown-panel { display: block; opacity: 1; visibility: visible; }
+            .nav-dropdown-panel a { padding: 8px 12px; font-size: 13px; }
+            .nav-dropdown-panel a .dropdown-icon { width: 28px; height: 28px; }
+            .lang-toggle span, .lang-toggle a { width: 26px; height: 22px; font-size: 10px; }
+            .faq-hero { padding: 110px 0 36px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+            .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            footer { padding: 32px 0 24px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 20px 16px; margin-bottom: 24px; }
+            .footer-brand { grid-column: 1 / -1; }
+            .footer-brand p { font-size: 13px; max-width: 100%; }
+            .footer-col h4 { font-size: 12px; margin-bottom: 10px; }
+            .footer-col a { font-size: 13px; margin-bottom: 8px; }
+            .footer-bottom { padding-top: 16px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+    <div class="container">
+        <div class="nav-inner">
+            <a href="/en/" class="logo"><div class="logo-icon"><img src="../logo.png" alt="Drape"></div>Drape</a>
+            <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <div class="nav-links">
+                <div class="nav-dropdown">
+                    <button class="nav-dropdown-toggle" onclick="this.parentElement.classList.toggle('open')">
+                        Product
+                        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4.5L6 7.5L9 4.5"/></svg>
+                    </button>
+                    <div class="nav-dropdown-panel">
+                        <a href="/en/#features"><span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></span>Features</a>
+                        <a href="/en/#how-it-works"><span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></span>How it Works</a>
+                        <a href="changelog.html"><span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>Changelog</a>
+                        <a href="docs.html"><span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></span>Documentation</a>
+                    </div>
+                </div>
+                <a href="/en/#pricing">Pricing</a>
+                <a href="blog.html">Blog</a>
+                <a href="docs.html">Docs</a>
+                <div class="lang-toggle">
+                    <a href="/faq.html" title="Italiano">IT</a>
+                    <span class="lang-active">EN</span>
+                </div>
+                <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="nav-cta">Download</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="faq-hero">
+    <div class="container">
+        <h1>Frequently Asked Questions</h1>
+        <p>Everything you want to know about Drape, all in one place.</p>
+    </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+<section>
+    <div class="container">
+        <div class="faq-container">
+
+            <!-- GENERAL -->
+            <div class="faq-category">
+                <div class="faq-category-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                    General
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight=a.style.maxHeight?null:a.scrollHeight+'px'">
+                        What is Drape?
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                    <div class="faq-answer"><div class="faq-answer-inner">Drape is a complete mobile IDE with AI. It lets you code directly from your iPhone with a real bash/zsh terminal, 8 AI models, GitHub integration, code editor and live preview. It's built for real developers who want to work even when they don't have their laptop.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight=a.style.maxHeight?null:a.scrollHeight+'px'">
+                        Which devices does it work on?
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                    <div class="faq-answer"><div class="faq-answer-inner">Drape is available on <strong>iPhone</strong> via the App Store. The <strong>Android</strong> version is in development. You can <a href="mailto:info@drape-dev.it">request early access</a> for Android.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight=a.style.maxHeight?null:a.scrollHeight+'px'">
+                        Is Drape free?
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                    <div class="faq-answer"><div class="faq-answer-inner">Yes! The Free plan includes 100 AI requests per month, full editor, terminal and GitHub access. You can upgrade to Plus, Pro or Business for more AI requests and advanced features. <a href="/en/#pricing">See all plans</a>.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight=a.style.maxHeight?null:a.scrollHeight+'px'">
+                        How does it work? Does the code run on the phone?
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                    <div class="faq-answer"><div class="faq-answer-inner">The code runs on secure cloud servers. Your phone acts as the control interface &mdash; you write code, run commands and see results in real time. This means you have all the power of a server, without hardware limitations of the phone.</div></div>
+                </div>
+            </div>
+
+            <!-- FEATURES -->
+            <div class="faq-category">
+                <div class="faq-category-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    Features
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight=a.style.maxHeight?null:a.scrollHeight+'px'">
+                        Which AI models are available?
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                    <div class="faq-answer"><div class="faq-answer-inner">Drape supports 8 AI models: Claude 4.5 Sonnet, GPT-5, Gemini 2.5 Pro, Gemini 3 Flash, Llama 3.3 70B, and more. You can switch models at any time based on the type of task you're working on.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight=a.style.maxHeight?null:a.scrollHeight+'px'">
+                        Can I use npm, pip and other package managers?
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                    <div class="faq-answer"><div class="faq-answer-inner">Absolutely. Drape's terminal is a full bash/zsh terminal. You can use npm, yarn, pip, cargo, and any command-line tool. Everything works just like on your Mac or PC.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight=a.style.maxHeight?null:a.scrollHeight+'px'">
+                        How does GitHub integration work?
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                    <div class="faq-answer"><div class="faq-answer-inner">You connect your GitHub account directly from the app. Then you can clone any repository (public or private), edit code, create commits and push &mdash; all from your phone. We also support branches, pull and merge.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight=a.style.maxHeight?null:a.scrollHeight+'px'">
+                        Is there a live preview?
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                    <div class="faq-answer"><div class="faq-answer-inner">Yes. For web projects, Drape offers a live preview that updates automatically as you edit your code. You can see the result in real time without having to deploy.</div></div>
+                </div>
+            </div>
+
+            <!-- PRICING -->
+            <div class="faq-category">
+                <div class="faq-category-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                    Pricing &amp; Plans
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight=a.style.maxHeight?null:a.scrollHeight+'px'">
+                        How much does Drape cost?
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                    <div class="faq-answer"><div class="faq-answer-inner">Free: free forever. Plus: $20/month (2,500 AI requests). Pro: $50/month (10,000 requests). Business: $200/month (unlimited requests). <a href="/en/#pricing">Compare plans</a>.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight=a.style.maxHeight?null:a.scrollHeight+'px'">
+                        Can I change plans at any time?
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                    <div class="faq-answer"><div class="faq-answer-inner">Yes, you can upgrade or downgrade at any time from the app settings. Changes take effect from the next billing cycle.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight=a.style.maxHeight?null:a.scrollHeight+'px'">
+                        What happens when I run out of AI requests?
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                    <div class="faq-answer"><div class="faq-answer-inner">You can keep using the editor, terminal and GitHub without limits. Only AI features are paused until your monthly renewal. You can also upgrade to the next plan for additional requests right away.</div></div>
+                </div>
+            </div>
+
+            <!-- TECHNICAL -->
+            <div class="faq-category">
+                <div class="faq-category-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    Technical
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight=a.style.maxHeight?null:a.scrollHeight+'px'">
+                        Do I need an internet connection?
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                    <div class="faq-answer"><div class="faq-answer-inner">Yes, Drape requires an internet connection as the code runs on cloud servers. It works well even on mobile connections (4G/5G). Sessions are optimized to reduce data usage.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight=a.style.maxHeight?null:a.scrollHeight+'px'">
+                        Are my data and code secure?
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                    <div class="faq-answer"><div class="faq-answer-inner">Absolutely. Each user has an isolated environment. Code is encrypted in transit and at rest. We never access your code and don't use it for AI training. GitHub connection uses secure OAuth.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight=a.style.maxHeight?null:a.scrollHeight+'px'">
+                        Which programming languages do you support?
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                    <div class="faq-answer"><div class="faq-answer-inner">All of them. Drape provides a full Linux environment in the cloud, so it supports any language: JavaScript/TypeScript, Python, Rust, Go, Java, Ruby, PHP, C/C++, Swift and many more. If it runs on Linux, it runs on Drape.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<section>
+    <div class="container">
+        <div class="faq-cta">
+            <h3>Didn't find your answer?</h3>
+            <p>Write to us and we'll get back to you within the day.</p>
+            <a href="support.html" class="btn-primary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                Contact support
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="/en/" class="logo"><div class="logo-icon"><img src="../logo.png" alt="Drape"></div>Drape</a>
+                <p>The mobile IDE for developers. Code from your phone like you would from your PC.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Product</h4>
+                <a href="/en/#features">Features</a>
+                <a href="/en/#how-it-works">How it Works</a>
+                <a href="/en/#pricing">Pricing</a>
+                <a href="faq.html">FAQ</a>
+            </div>
+            <div class="footer-col">
+                <h4>Resources</h4>
+                <a href="blog.html">Blog</a>
+                <a href="docs.html">Documentation</a>
+                <a href="changelog.html">Changelog</a>
+                <a href="support.html">Support</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="../privacy-policy.html">Privacy Policy</a>
+                <a href="../terms-of-service.html">Terms of Service</a>
+            </div>
+            <div class="footer-col">
+                <h4>Download</h4>
+                <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer">App Store</a>
+                <a href="mailto:info@drape-dev.it">Request Android</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Drape. All rights reserved.</span>
+            <span>Made in Italy</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+document.addEventListener('click', (e) => {
+    document.querySelectorAll('.nav-dropdown').forEach(dd => {
+        if (!dd.contains(e.target)) dd.classList.remove('open');
+    });
+});
+</script>
+</body>
+</html>

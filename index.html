@@ -176,8 +176,8 @@
             --text-muted: #636366;
             --accent: #a855f7;
             --accent-light: #c084fc;
-            --accent-glow: rgba(168, 85, 247, 0.15);
-            --accent-glow-strong: rgba(168, 85, 247, 0.3);
+            --accent-glow: rgba(168, 85, 247, 0.10);
+            --accent-glow-strong: rgba(168, 85, 247, 0.20);
             --radius: 16px;
             --radius-sm: 10px;
             --radius-lg: 24px;
@@ -193,6 +193,14 @@
             -webkit-font-smoothing: antialiased;
             position: relative;
         }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(155, 138, 255, 0.04) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
 
         .container {
             max-width: 1200px;
@@ -203,20 +211,25 @@
         /* ─── NAV ─── */
         nav {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 100;
-            padding: 16px 0;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            background: rgba(5, 5, 7, 0.8);
-            border-bottom: 1px solid var(--border);
+            padding: 0;
+            width: auto;
+            max-width: 900px;
         }
         .nav-inner {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 24px;
+            padding: 10px 10px 10px 20px;
+            background: rgba(12, 12, 16, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 60px;
         }
         .logo {
             display: flex;
@@ -225,13 +238,14 @@
             text-decoration: none;
             color: var(--text);
             font-weight: 700;
-            font-size: 20px;
+            font-size: 18px;
             letter-spacing: -0.5px;
+            white-space: nowrap;
         }
         .logo-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 28px;
+            height: 28px;
+            border-radius: 7px;
             overflow: hidden;
             flex-shrink: 0;
         }
@@ -239,26 +253,28 @@
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 32px;
+            gap: 24px;
         }
         .nav-links a {
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
             transition: color 0.2s;
+            white-space: nowrap;
         }
         .nav-links a:hover { color: var(--text); }
         .nav-cta {
-            background: var(--accent) !important;
+            background: var(--accent);
             color: #fff !important;
             padding: 8px 20px;
             border-radius: 20px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
-            transition: opacity 0.2s;
+            transition: all 0.2s;
+            box-shadow: 0 4px 16px rgba(168, 85, 247, 0.3);
         }
-        .nav-cta:hover { opacity: 0.85; }
+        .nav-cta:hover { background: var(--accent-light); box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4); }
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -267,23 +283,144 @@
             cursor: pointer;
             padding: 8px;
         }
+        .nav-dropdown {
+            position: relative;
+        }
+        .nav-dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s;
+            white-space: nowrap;
+            background: none;
+            border: none;
+            font-family: inherit;
+            padding: 0;
+        }
+        .nav-dropdown-toggle:hover { color: var(--text); }
+        .nav-dropdown-toggle svg {
+            width: 12px;
+            height: 12px;
+            transition: transform 0.2s;
+        }
+        .nav-dropdown:hover .nav-dropdown-toggle svg,
+        .nav-dropdown.open .nav-dropdown-toggle svg {
+            transform: rotate(180deg);
+        }
+        .nav-dropdown-panel {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-4px);
+            min-width: 200px;
+            background: rgba(16, 16, 20, 0.9);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 16px 8px 8px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            pointer-events: none;
+            z-index: 200;
+        }
+        .nav-dropdown:hover .nav-dropdown-panel,
+        .nav-dropdown.open .nav-dropdown-panel {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+        .nav-dropdown-panel a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            color: var(--text-secondary) !important;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.15s;
+        }
+        .nav-dropdown-panel a:hover {
+            background: rgba(255,255,255,0.05);
+            color: var(--text) !important;
+        }
+        .nav-dropdown-panel a .dropdown-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(155, 138, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .nav-dropdown-panel a .dropdown-icon svg {
+            width: 16px;
+            height: 16px;
+            color: #9B8AFF;
+        }
+        .lang-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            padding: 3px;
+            flex-shrink: 0;
+        }
+        .lang-toggle a, .lang-toggle span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 24px;
+            border-radius: 14px;
+            font-size: 11px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .lang-toggle .lang-active {
+            background: rgba(255,255,255,0.12);
+            color: var(--text);
+        }
+        .lang-toggle a {
+            color: var(--text-muted);
+        }
+        .lang-toggle a:hover {
+            color: var(--text-secondary);
+            background: rgba(255,255,255,0.05);
+        }
 
         /* ─── HERO ─── */
         .hero {
-            padding: 160px 0 100px;
+            min-height: 100vh;
+            min-height: 100svh;
+            display: flex;
+            align-items: center;
             text-align: center;
             position: relative;
             overflow: hidden;
+            padding: 80px 0 24px;
         }
         .hero::before {
             content: '';
             position: absolute;
-            top: -200px;
+            top: -100px;
             left: 50%;
             transform: translateX(-50%);
-            width: 800px;
-            height: 600px;
-            background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+            width: 900px;
+            height: 900px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, rgba(99, 102, 241, 0.06) 40%, transparent 70%);
             pointer-events: none;
         }
         .hero-badge {
@@ -292,192 +429,75 @@
             gap: 8px;
             padding: 6px 16px;
             border-radius: 20px;
-            background: var(--accent-glow);
-            border: 1px solid rgba(168, 85, 247, 0.2);
+            background: rgba(155, 138, 255, 0.08);
+            border: 1px solid rgba(155, 138, 255, 0.2);
             color: var(--accent-light);
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
-            margin-bottom: 24px;
+            margin-bottom: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(155, 138, 255, 0.08);
         }
         .hero h1 {
-            font-size: clamp(40px, 7vw, 72px);
+            font-size: clamp(36px, 7vw, 64px);
             font-weight: 800;
-            line-height: 1.05;
-            letter-spacing: -2px;
-            margin-bottom: 20px;
-            background: linear-gradient(180deg, #fff 30%, rgba(255,255,255,0.5));
+            line-height: 1.0;
+            letter-spacing: -2.5px;
+            margin-bottom: 14px;
+            background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.65) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             position: relative;
         }
 
-        /* Glitch Effect */
-        .glitch {
-            position: relative;
-        }
-        .glitch::before,
-        .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: inherit;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .glitch::before {
-            left: 2px;
-            text-shadow: -2px 0 #a855f7;
-            animation: glitch-anim 3s infinite linear alternate-reverse;
-        }
-        .glitch::after {
-            left: -2px;
-            text-shadow: -2px 0 #c084fc;
-            animation: glitch-anim-2 2s infinite linear alternate-reverse;
-        }
-        @keyframes glitch-anim {
-            0% { clip: rect(42px, 9999px, 44px, 0); }
-            5% { clip: rect(12px, 9999px, 59px, 0); }
-            10% { clip: rect(48px, 9999px, 29px, 0); }
-            15% { clip: rect(42px, 9999px, 73px, 0); }
-            20% { clip: rect(63px, 9999px, 27px, 0); }
-            25% { clip: rect(34px, 9999px, 55px, 0); }
-            30% { clip: rect(86px, 9999px, 73px, 0); }
-            35% { clip: rect(20px, 9999px, 20px, 0); }
-            40% { clip: rect(26px, 9999px, 60px, 0); }
-            45% { clip: rect(25px, 9999px, 66px, 0); }
-            50% { clip: rect(57px, 9999px, 98px, 0); }
-            55% { clip: rect(5px, 9999px, 46px, 0); }
-            60% { clip: rect(82px, 9999px, 31px, 0); }
-            65% { clip: rect(54px, 9999px, 27px, 0); }
-            70% { clip: rect(28px, 9999px, 99px, 0); }
-            75% { clip: rect(45px, 9999px, 30px, 0); }
-            80% { clip: rect(23px, 9999px, 85px, 0); }
-            85% { clip: rect(54px, 9999px, 84px, 0); }
-            90% { clip: rect(45px, 9999px, 47px, 0); }
-            95% { clip: rect(37px, 9999px, 20px, 0); }
-            100% { clip: rect(4px, 9999px, 91px, 0); }
-        }
-        @keyframes glitch-anim-2 {
-            0% { clip: rect(65px, 9999px, 100px, 0); }
-            5% { clip: rect(52px, 9999px, 74px, 0); }
-            10% { clip: rect(79px, 9999px, 85px, 0); }
-            15% { clip: rect(45px, 9999px, 60px, 0); }
-            20% { clip: rect(70px, 9999px, 29px, 0); }
-            25% { clip: rect(16px, 9999px, 48px, 0); }
-            30% { clip: rect(46px, 9999px, 16px, 0); }
-            35% { clip: rect(86px, 9999px, 51px, 0); }
-            40% { clip: rect(27px, 9999px, 88px, 0); }
-            45% { clip: rect(50px, 9999px, 40px, 0); }
-            50% { clip: rect(69px, 9999px, 22px, 0); }
-            55% { clip: rect(6px, 9999px, 77px, 0); }
-            60% { clip: rect(37px, 9999px, 92px, 0); }
-            65% { clip: rect(72px, 9999px, 20px, 0); }
-            70% { clip: rect(14px, 9999px, 71px, 0); }
-            75% { clip: rect(89px, 9999px, 30px, 0); }
-            80% { clip: rect(50px, 9999px, 49px, 0); }
-            85% { clip: rect(30px, 9999px, 93px, 0); }
-            90% { clip: rect(17px, 9999px, 75px, 0); }
-            95% { clip: rect(82px, 9999px, 23px, 0); }
-            100% { clip: rect(56px, 9999px, 74px, 0); }
-        }
-
-        /* Particles Canvas */
-        #particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        /* Floating Shapes */
-        .floating-shape {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-            opacity: 0.1;
-            animation: float 20s infinite ease-in-out;
-        }
-        .shape-1 {
-            width: 300px;
-            height: 300px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-        .shape-2 {
-            width: 200px;
-            height: 200px;
-            background: linear-gradient(135deg, var(--accent-light), #c084fc);
-            top: 60%;
-            right: 15%;
-            animation-delay: 3s;
-        }
-        .shape-3 {
-            width: 150px;
-            height: 150px;
-            background: linear-gradient(135deg, #c084fc, var(--accent));
-            bottom: 20%;
-            left: 20%;
-            animation-delay: 6s;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            25% { transform: translateY(-30px) rotate(5deg); }
-            50% { transform: translateY(0px) rotate(0deg); }
-            75% { transform: translateY(30px) rotate(-5deg); }
-        }
-        .hero p {
-            font-size: clamp(16px, 2vw, 20px);
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto 40px;
-            line-height: 1.6;
+        .hero p.hero-sub {
+            font-size: clamp(14px, 1.8vw, 17px);
+            color: rgba(255,255,255,0.45);
+            max-width: 500px;
+            margin: 0 auto 8px;
+            line-height: 1.5;
         }
         .hero-ctas {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 16px;
+            gap: 12px;
             flex-wrap: wrap;
         }
         .btn-primary {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 14px 28px;
-            background: var(--accent);
+            gap: 8px;
+            padding: 13px 28px;
+            background: linear-gradient(135deg, var(--accent) 0%, #9B8AFF 100%);
             color: #fff;
             border: none;
             border-radius: 60px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
-            transition: all 0.2s;
+            transition: all 0.3s;
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.35);
         }
         .btn-primary:hover {
-            background: var(--accent-light);
-            transform: translateY(-1px);
+            background: linear-gradient(135deg, var(--accent-light) 0%, #BEB4FF 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(168, 85, 247, 0.45);
         }
-        .btn-primary svg { width: 20px; height: 20px; }
+        .btn-primary svg { width: 18px; height: 18px; }
         .btn-secondary {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 14px 28px;
+            gap: 8px;
+            padding: 11px 22px;
             background: rgba(255,255,255,0.06);
             color: var(--text);
             border: 1px solid var(--border-hover);
             border-radius: 60px;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
@@ -490,13 +510,13 @@
         .btn-android {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 14px 28px;
+            gap: 8px;
+            padding: 11px 22px;
             background: rgba(255,255,255,0.03);
             color: var(--text-secondary);
             border: 1px solid var(--border);
             border-radius: 60px;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
@@ -665,294 +685,458 @@
             }
         }
 
-        /* ─── AI MODELS BAR ─── */
-        .models-bar {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 40px;
-            padding: 40px 0 0;
-            flex-wrap: wrap;
-        }
-        .model-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--text-muted);
-            font-size: 14px;
-            font-weight: 500;
-        }
-        .model-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-        .model-dot.claude { background: #d4a574; }
-        .model-dot.gpt { background: #10a37f; }
-        .model-dot.gemini { background: #4285f4; }
 
-        /* ─── iPHONE 16 MOCKUPS ─── */
-        .hero-phones {
-            margin-top: 70px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            gap: 28px;
+        /* ─── HERO CHAT DEMO ─── */
+        .hero-demo {
+            margin-top: 32px;
+            max-width: 740px;
+            margin-left: auto;
+            margin-right: auto;
             position: relative;
         }
-        .hero-phones::before {
+        .hero-demo::before {
             content: '';
             position: absolute;
-            bottom: -60px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 900px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(155, 138, 255, 0.15) 0%, rgba(99, 102, 241, 0.06) 35%, transparent 65%);
+            pointer-events: none;
+            filter: blur(80px);
+        }
+        .hero-demo::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
             left: 50%;
             transform: translateX(-50%);
-            width: 700px;
-            height: 300px;
-            background: radial-gradient(ellipse, var(--accent-glow-strong) 0%, transparent 70%);
+            width: 70%;
+            height: 80px;
+            background: radial-gradient(ellipse, rgba(155, 138, 255, 0.15) 0%, transparent 70%);
+            filter: blur(30px);
             pointer-events: none;
         }
-        .phone-frame {
+        .chat-border-glow {
             position: relative;
-            width: 260px;
-            flex-shrink: 0;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: 28px;
+            padding: 1.5px;
+            background: linear-gradient(160deg, rgba(155,138,255,0.5), rgba(255,255,255,0.08) 30%, rgba(99,102,241,0.15) 60%, rgba(155,138,255,0.4));
+            background-size: 300% 300%;
+            animation: borderShift 6s ease infinite;
         }
-        .phone-frame:hover { transform: translateY(-8px); }
-        .phone-frame.center { width: 280px; z-index: 2; }
-        .phone-frame.side { opacity: 0.85; transform: scale(0.92); }
-        .phone-frame.side:hover { opacity: 1; transform: scale(0.92) translateY(-8px); }
-
-        /* iPhone 16 chassis */
-        .phone-bezel {
-            background: #1c1c1e;
-            border-radius: 52px;
-            padding: 10px;
-            position: relative;
-            /* Titanium frame edge */
-            box-shadow:
-                inset 0 0 0 1.5px rgba(255,255,255,0.08),
-                0 0 0 1px rgba(255,255,255,0.06),
-                0 20px 60px rgba(0,0,0,0.7),
-                0 0 60px var(--accent-glow);
+        @keyframes borderShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
-        .phone-frame.center .phone-bezel {
-            box-shadow:
-                inset 0 0 0 1.5px rgba(255,255,255,0.1),
-                0 0 0 1px rgba(255,255,255,0.08),
-                0 30px 80px rgba(0,0,0,0.8),
-                0 0 80px var(--accent-glow-strong);
-        }
-        /* Side buttons */
-        .phone-bezel::before {
+        .chat-border-glow::before {
             content: '';
             position: absolute;
-            right: -2px;
-            top: 120px;
-            width: 3px;
-            height: 56px;
-            background: #2a2a2e;
-            border-radius: 0 2px 2px 0;
+            inset: -2px;
+            border-radius: 30px;
+            background: radial-gradient(ellipse at 50% 0%, rgba(155,138,255,0.25) 0%, transparent 55%);
+            filter: blur(20px);
+            opacity: 0.8;
+            pointer-events: none;
+            z-index: -1;
         }
-        .phone-bezel::after {
-            content: '';
-            position: absolute;
-            left: -2px;
-            top: 100px;
-            width: 3px;
-            height: 36px;
-            background: #2a2a2e;
-            border-radius: 2px 0 0 2px;
-            box-shadow: 0 52px 0 #2a2a2e;
-        }
-
-        /* Screen */
-        .phone-screen {
-            background: #000;
-            border-radius: 44px;
-            overflow: hidden;
-            aspect-ratio: 9/19.5;
+        .chat-window {
             position: relative;
+            background: linear-gradient(180deg, #111114 0%, #0a0a0d 100%);
+            border-radius: 27px;
+            box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03) inset;
         }
-        .phone-screen img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* Dynamic Island */
-        .phone-dynamic-island {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 92px;
-            height: 28px;
-            background: #000;
-            border-radius: 20px;
-            z-index: 3;
-            box-shadow: 0 0 0 2px rgba(0,0,0,0.8);
-        }
-        /* Front camera dot */
-        .phone-dynamic-island::after {
-            content: '';
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #0a0a0c;
-            box-shadow: inset 0 0 2px rgba(30,30,60,0.6);
-        }
-
-        .phone-screen-placeholder {
-            width: 100%;
-            height: 100%;
+        /* Empty state welcome */
+        .chat-welcome {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            background: linear-gradient(180deg, #0c0c10 0%, #0a0a12 100%);
+            padding: 32px 24px 16px;
+            text-align: center;
         }
-        .phone-screen-placeholder svg {
-            width: 40px;
-            height: 40px;
-            opacity: 0.15;
+        .chat-welcome-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 50% 40%, rgba(155, 138, 255, 0.2) 0%, rgba(155, 138, 255, 0.08) 100%);
+            border: 2px solid rgba(155, 138, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+            box-shadow: 0 0 30px rgba(155, 138, 255, 0.15), 0 0 60px rgba(155, 138, 255, 0.05);
         }
-        .phone-screen-placeholder span {
-            font-size: 12px;
-            color: var(--text-muted);
-            opacity: 0.5;
+        .chat-welcome-logo svg {
+            width: 28px;
+            height: 28px;
+            color: #9B8AFF;
         }
-
-        /* Status bar */
-        .phone-statusbar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 50px;
-            z-index: 2;
+        .chat-welcome h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+        .chat-welcome p {
+            font-size: 13px;
+            color: rgba(255,255,255,0.45);
+            line-height: 1.5;
+            max-width: 320px;
+        }
+        .chat-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            padding: 0 24px 16px;
+        }
+        .chat-chip {
+            padding: 10px 18px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.07);
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.25s;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+        .chat-chip:hover {
+            background: rgba(155, 138, 255, 0.1);
+            border-color: rgba(155, 138, 255, 0.25);
+            color: rgba(255,255,255,0.8);
+            box-shadow: 0 4px 16px rgba(155, 138, 255, 0.12);
+            transform: translateY(-1px);
+        }
+        /* Input container — matches the app */
+        .chat-input-container {
+            margin: 0 16px 16px;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: linear-gradient(180deg, rgba(35,35,40,0.95), rgba(20,20,25,0.98));
+            box-shadow: 0 8px 32px rgba(139, 124, 246, 0.1), 0 0 0 1px rgba(255,255,255,0.03) inset;
+            position: relative;
+        }
+        .chat-input-controls {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 24px 0;
-            font-size: 12px;
-            font-weight: 600;
-            color: #fff;
+            padding: 10px 14px 0;
+            height: 36px;
         }
-        .phone-statusbar-right {
+        .chat-mode-toggle {
             display: flex;
             align-items: center;
             gap: 4px;
+            padding: 3px;
+            border-radius: 20px;
         }
-        /* Battery icon */
-        .phone-battery {
-            width: 22px;
-            height: 10px;
-            border: 1.5px solid rgba(255,255,255,0.7);
-            border-radius: 3px;
+        .chat-mode {
+            height: 28px;
+            padding: 0 10px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 11px;
+            font-weight: 500;
+            color: #8A8A8A;
+        }
+        .chat-mode svg {
+            width: 13px;
+            height: 13px;
+            color: #8A8A8A;
+            transition: color 0.2s;
+            flex-shrink: 0;
+        }
+        .chat-mode.active {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        .chat-mode.active svg {
+            color: #fff;
+        }
+        .chat-model-selector {
             position: relative;
-            margin-left: 2px;
         }
-        .phone-battery::before {
-            content: '';
+        .chat-model-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.35);
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 8px;
+            transition: all 0.15s;
+        }
+        .chat-model-label:hover {
+            background: rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.55);
+        }
+        .chat-model-label svg {
+            width: 10px;
+            height: 10px;
+            opacity: 0.5;
+            transition: transform 0.2s;
+        }
+        .chat-model-selector.open .chat-model-label svg {
+            transform: rotate(180deg);
+        }
+        .chat-model-dropdown {
             position: absolute;
-            right: -4px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 2px;
-            height: 5px;
-            background: rgba(255,255,255,0.7);
-            border-radius: 0 1px 1px 0;
+            bottom: calc(100% + 6px);
+            right: 0;
+            background: #1a1a1f;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 4px;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(6px);
+            transition: all 0.15s ease;
+            z-index: 10;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.5);
         }
-        .phone-battery::after {
-            content: '';
+        .chat-model-selector.open .chat-model-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .chat-model-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.12s;
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            white-space: nowrap;
+        }
+        .chat-model-option:hover {
+            background: rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.85);
+        }
+        .chat-model-option.selected {
+            color: #9B8AFF;
+        }
+        .chat-model-option .model-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .chat-input-row {
+            display: flex;
+            align-items: flex-end;
+            padding: 8px 12px 12px;
+            gap: 8px;
+        }
+        .chat-real-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 8px 4px;
+            font-size: 14px;
+            color: #EDEDED;
+            font-family: 'Menlo', 'SF Mono', monospace;
+            line-height: 20px;
+            outline: none;
+            resize: none;
+            max-height: 80px;
+            overflow-y: auto;
+            word-wrap: break-word;
+        }
+        .chat-real-input::placeholder {
+            color: #9CA3AF;
+        }
+        .chat-send-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 2px;
+        }
+        .chat-send-btn.active {
+            background: #9B8AFF;
+            border-color: transparent;
+            box-shadow: 0 4px 8px rgba(155, 138, 255, 0.4);
+        }
+        .chat-send-btn svg {
+            width: 16px;
+            height: 16px;
+            color: #555;
+        }
+        .chat-send-btn.active svg {
+            color: #fff;
+        }
+        /* CTA overlay after send */
+        .chat-cta-overlay {
             position: absolute;
-            left: 1.5px;
-            top: 1.5px;
-            bottom: 1.5px;
-            width: 70%;
-            background: #fff;
-            border-radius: 1px;
+            inset: 0;
+            background: rgba(8, 8, 12, 0.96);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 40px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            border-radius: 27px;
+            z-index: 20;
         }
-
-        /* Home indicator */
-        .phone-home-indicator {
-            position: absolute;
-            bottom: 6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: rgba(255,255,255,0.25);
-            border-radius: 4px;
-            z-index: 3;
+        .chat-cta-overlay.visible {
+            opacity: 1;
+            pointer-events: auto;
         }
-
-        .phone-label {
+        .chat-cta-overlay .cta-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: rgba(155, 138, 255, 0.12);
+            border: 1px solid rgba(155, 138, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            margin-bottom: 4px;
+        }
+        .chat-cta-overlay h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
             text-align: center;
-            margin-top: 16px;
-            font-size: 13px;
+            line-height: 1.3;
+            letter-spacing: -0.5px;
+        }
+        .chat-cta-overlay .cta-sub {
+            font-size: 14px;
+            color: rgba(255,255,255,0.4);
+            text-align: center;
+            line-height: 1.5;
+            max-width: 300px;
+        }
+        .chat-cta-overlay .cta-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 28px;
+            background: #9B8AFF;
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            font-size: 15px;
             font-weight: 600;
-            color: var(--text-secondary);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+            box-shadow: 0 8px 24px rgba(155, 138, 255, 0.3);
+        }
+        .chat-cta-overlay .cta-download:hover {
+            background: #BEB4FF;
+            transform: translateY(-1px);
+        }
+        .chat-cta-overlay .cta-download svg {
+            width: 18px;
+            height: 18px;
+        }
+        .chat-cta-overlay .cta-retry {
+            font-size: 12px;
+            color: rgba(255,255,255,0.3);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: color 0.2s;
+        }
+        .chat-cta-overlay .cta-retry:hover {
+            color: rgba(255,255,255,0.6);
         }
         @media (max-width: 768px) {
-            .hero-phones {
-                gap: 8px;
-                padding: 0 16px;
+            .hero-demo {
+                margin-top: 20px;
+                margin-left: 12px;
+                margin-right: 12px;
             }
-            .phone-frame {
-                width: 105px;
-            }
-            .phone-frame.center {
-                width: 120px;
-                z-index: 2;
-            }
-            .phone-frame.side {
-                opacity: 0.75;
-                transform: scale(0.88);
-            }
-            .phone-frame.side:hover {
-                opacity: 0.9;
-                transform: scale(0.88) translateY(-4px);
-            }
-            .phone-bezel {
-                border-radius: 28px;
-                padding: 6px;
-            }
-            .phone-bezel::before, .phone-bezel::after { display: none; }
-            .phone-screen {
-                border-radius: 22px;
-            }
-            .phone-dynamic-island {
-                width: 48px;
-                height: 16px;
-                top: 6px;
-                border-radius: 12px;
-            }
-            .phone-dynamic-island::after {
-                width: 4px;
-                height: 4px;
-                right: 8px;
-            }
-            .phone-screen img {
-                border-radius: 22px;
-            }
+            .chat-border-glow { border-radius: 24px; }
+            .chat-window { border-radius: 23px; }
+            .chat-welcome { padding: 24px 16px 12px; }
+            .chat-welcome-logo { width: 44px; height: 44px; }
+            .chat-welcome-logo svg { width: 22px; height: 22px; }
+            .chat-welcome h3 { font-size: 16px; }
+            .chat-welcome p { font-size: 12px; }
+            .chat-suggestions { padding: 0 12px 12px; gap: 6px; }
+            .chat-chip { font-size: 12px; padding: 7px 12px; }
+            .chat-input-container { margin: 0 10px 10px; border-radius: 18px; }
+            .chat-cta-overlay { border-radius: 23px; padding: 28px 20px; }
+        }
+
+        /* ─── SOCIAL PROOF BAR ─── */
+        .social-proof-bar {
+            padding: 56px 0;
+            position: relative;
+            border-bottom: 1px solid var(--border);
+        }
+        .social-proof-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(155,138,255,0.3), transparent);
+        }
+        .social-proof-items {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            font-size: 15px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            flex-wrap: wrap;
+            letter-spacing: -0.2px;
+        }
+        .proof-dot {
+            color: rgba(155,138,255,0.4);
+            font-size: 8px;
+        }
+        @media (max-width: 600px) {
+            .social-proof-items { font-size: 13px; gap: 14px; }
         }
 
         /* ─── SECTIONS ─── */
-        section { padding: 120px 0; }
+        section { padding: 140px 0; }
         .section-label {
             display: inline-block;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
-            color: var(--accent);
+            color: var(--accent-light);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             margin-bottom: 12px;
         }
         .section-title {
@@ -961,6 +1145,10 @@
             letter-spacing: -1.5px;
             line-height: 1.1;
             margin-bottom: 16px;
+            background: linear-gradient(180deg, #fff 30%, rgba(255,255,255,0.6) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .section-desc {
             font-size: 18px;
@@ -1044,13 +1232,14 @@
             margin: 0 auto;
         }
         .feature-card {
-            background: var(--bg-card);
+            background: linear-gradient(180deg, rgba(15,15,20,0.8) 0%, rgba(10,10,14,0.9) 100%);
             border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 32px;
-            transition: all 0.3s;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px);
         }
         .feature-card::before {
             content: '';
@@ -1058,17 +1247,18 @@
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 0%, var(--accent-glow) 0%, transparent 70%);
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(155,138,255,0.3), transparent);
             opacity: 0;
             transition: opacity 0.4s;
-            pointer-events: none;
         }
-        .feature-card:hover::before { opacity: 1; }
         .feature-card:hover {
-            border-color: var(--accent);
+            border-color: rgba(168, 85, 247, 0.25);
             transform: translateY(-4px);
-            box-shadow: 0 12px 40px var(--accent-glow);
+            box-shadow: 0 20px 60px rgba(155, 138, 255, 0.08), 0 0 0 1px rgba(155, 138, 255, 0.1);
+        }
+        .feature-card:hover::before {
+            opacity: 1;
         }
         .feature-icon {
             width: 56px;
@@ -1144,7 +1334,7 @@
             width: 72px;
             height: 72px;
             border-radius: 50%;
-            background: var(--bg-card);
+            background: linear-gradient(180deg, rgba(15,15,20,0.9) 0%, rgba(10,10,14,1) 100%);
             border: 2px solid var(--accent);
             display: flex;
             align-items: center;
@@ -1155,6 +1345,7 @@
             color: var(--accent);
             position: relative;
             z-index: 1;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.15), 0 0 60px rgba(168, 85, 247, 0.05);
         }
         .step h3 {
             font-size: 20px;
@@ -1208,9 +1399,9 @@
         }
         .pricing-card.featured {
             border-color: var(--accent);
-            background: rgba(168, 85, 247, 0.05);
+            background: linear-gradient(180deg, rgba(155,138,255,0.08) 0%, rgba(10,10,14,0.95) 100%);
             transform: scale(1.05);
-            box-shadow: 0 0 40px var(--accent-glow);
+            box-shadow: 0 0 60px rgba(155, 138, 255, 0.15), 0 20px 80px rgba(155, 138, 255, 0.1);
             padding-top: 56px;
         }
         .pricing-card.featured::before {
@@ -1327,17 +1518,19 @@
         .cta-section {
             text-align: center;
             position: relative;
+            overflow: hidden;
         }
         .cta-section::before {
             content: '';
             position: absolute;
-            bottom: 0;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            width: 600px;
-            height: 400px;
-            background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 500px;
+            background: radial-gradient(ellipse, rgba(155, 138, 255, 0.1) 0%, rgba(99, 102, 241, 0.04) 40%, transparent 70%);
             pointer-events: none;
+            filter: blur(40px);
         }
         .cta-section h2 {
             font-size: clamp(32px, 5vw, 52px);
@@ -1346,6 +1539,10 @@
             line-height: 1.1;
             margin-bottom: 16px;
             position: relative;
+            background: linear-gradient(180deg, #fff 20%, rgba(255,255,255,0.7) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .cta-section p {
             font-size: 18px;
@@ -1400,10 +1597,230 @@
             line-height: 1.6;
         }
 
+        /* ─── TECH LOGO BAR ─── */
+        .tech-logos {
+            padding: 80px 0;
+            border-bottom: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .tech-logos::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 500px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(155,138,255,0.25), transparent);
+        }
+        .tech-logos::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(155,138,255,0.25), transparent);
+        }
+        .tech-logos-label {
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+        .tech-logos-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+        .tech-logo-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.35;
+            transition: opacity 0.3s ease;
+        }
+        .tech-logo-item:hover {
+            opacity: 0.8;
+        }
+        .tech-logo-item svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--text-secondary);
+        }
+        .tech-logo-item span {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: -0.3px;
+        }
+        @media (max-width: 768px) {
+            .tech-logos-row { gap: 28px; }
+            .tech-logo-item span { font-size: 13px; }
+            .tech-logo-item svg { width: 20px; height: 20px; }
+        }
+
+        /* ─── STATS SECTION ─── */
+        .stats-section {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(180deg, rgba(155,138,255,0.03) 0%, transparent 40%, rgba(155,138,255,0.03) 100%);
+            position: relative;
+        }
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(155,138,255,0.4), transparent);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            text-align: center;
+        }
+        .stat-item {
+            padding: 24px 16px;
+            position: relative;
+        }
+        .stat-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 20%;
+            height: 60%;
+            width: 1px;
+            background: var(--border);
+        }
+        .stat-number {
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 800;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 50%, #fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+        .stat-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+        }
+        .stat-sublabel {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+            .stat-item:nth-child(2)::after { display: none; }
+        }
+        @media (max-width: 480px) {
+            .stats-grid { gap: 16px; }
+            .stat-item { padding: 16px 8px; }
+        }
+
+        /* ─── TRUST SECTION ─── */
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+        .trust-card {
+            background: linear-gradient(180deg, rgba(15,15,20,0.8) 0%, rgba(10,10,14,0.9) 100%);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 40px 32px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .trust-card:hover {
+            border-color: rgba(168, 85, 247, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(155, 138, 255, 0.06);
+        }
+        .trust-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            background: var(--accent-glow);
+            border: 1px solid rgba(168, 85, 247, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .trust-icon svg {
+            width: 28px;
+            height: 28px;
+            color: var(--accent-light);
+        }
+        .trust-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+        .trust-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+        @media (max-width: 768px) {
+            .trust-grid { grid-template-columns: 1fr; gap: 20px; max-width: 400px; margin: 0 auto; }
+            .trust-card { padding: 28px 24px; }
+        }
+
+        /* ─── CTA MICRO-COPY ─── */
+        .cta-micro {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--text-muted);
+            letter-spacing: 0.2px;
+        }
+        .cta-micro svg {
+            width: 14px;
+            height: 14px;
+            vertical-align: -2px;
+            margin-right: 4px;
+            color: #22c55e;
+        }
+
+
         /* ─── FOOTER ─── */
         footer {
             border-top: 1px solid var(--border);
             padding: 60px 0 40px;
+            position: relative;
+        }
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(155,138,255,0.3), transparent);
         }
         .footer-grid {
             display: grid;
@@ -1457,21 +1874,75 @@
 
         /* ─── RESPONSIVE ─── */
         @media (max-width: 768px) {
+            nav {
+                top: 10px;
+                left: 10px;
+                right: 10px;
+                transform: none;
+                max-width: none;
+                width: auto;
+            }
+            .nav-inner { padding: 8px 8px 8px 16px; }
             .nav-links { display: none; }
             .mobile-menu-btn { display: block; }
             .nav-links.open {
                 display: flex;
                 flex-direction: column;
                 position: absolute;
-                top: 100%;
+                top: calc(100% + 8px);
                 left: 0;
                 right: 0;
-                background: rgba(5, 5, 7, 0.98);
-                border-bottom: 1px solid var(--border);
+                background: rgba(12, 12, 16, 0.95);
+                backdrop-filter: blur(24px);
+                -webkit-backdrop-filter: blur(24px);
+                border: 1px solid rgba(255,255,255,0.08);
+                border-radius: 20px;
                 padding: 16px 24px;
                 gap: 16px;
             }
-            .hero { padding: 120px 0 60px; }
+            .nav-dropdown-panel {
+                position: static;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+                background: rgba(255,255,255,0.03);
+                border: none;
+                padding: 4px 0;
+                min-width: auto;
+                border-radius: 10px;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                display: none;
+            }
+            .nav-dropdown.open .nav-dropdown-panel {
+                display: block;
+                transform: none;
+            }
+            .nav-dropdown:hover .nav-dropdown-panel {
+                display: none;
+                opacity: 0;
+                visibility: hidden;
+            }
+            .nav-dropdown.open:hover .nav-dropdown-panel {
+                display: block;
+                opacity: 1;
+                visibility: visible;
+            }
+            .nav-dropdown-panel a {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+            .nav-dropdown-panel a .dropdown-icon {
+                width: 28px;
+                height: 28px;
+            }
+            .lang-toggle span, .lang-toggle a {
+                width: 26px;
+                height: 22px;
+                font-size: 10px;
+            }
+            .hero { padding: 80px 0 20px; min-height: auto; }
             .steps-grid {
                 grid-template-columns: 1fr;
                 gap: 40px;
@@ -1495,15 +1966,6 @@
         }
 
         /* ─── ANIMATIONS ─── */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .fade-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
     </style>
 </head>
 <body>
@@ -1524,10 +1986,41 @@
                 </svg>
             </button>
             <div class="nav-links">
-                <a href="#features">Funzionalit&agrave;</a>
-                <a href="prezzi.html">Prezzi</a>
-                <a href="#faq">FAQ</a>
-                <a href="support.html">Supporto</a>
+                <div class="nav-dropdown">
+                    <button class="nav-dropdown-toggle" onclick="this.parentElement.classList.toggle('open')">
+                        Prodotto
+                        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4.5L6 7.5L9 4.5"/></svg>
+                    </button>
+                    <div class="nav-dropdown-panel">
+                        <a href="#features">
+                            <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></span>
+                            Funzionalit&agrave;
+                        </a>
+                        <a href="#how-it-works">
+                            <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></span>
+                            Come funziona
+                        </a>
+                        <a href="changelog.html">
+                            <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+                            Changelog
+                        </a>
+                        <a href="docs.html">
+                            <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></span>
+                            Documentazione
+                        </a>
+                        <a href="#faq">
+                            <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg></span>
+                            FAQ
+                        </a>
+                    </div>
+                </div>
+                <a href="#pricing">Prezzi</a>
+                <a href="blog.html">Blog</a>
+                <a href="docs.html">Docs</a>
+                <div class="lang-toggle">
+                    <span class="lang-active">IT</span>
+                    <a href="/en/" title="English">EN</a>
+                </div>
                 <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="nav-cta">Scarica</a>
             </div>
         </div>
@@ -1536,139 +2029,187 @@
 
 <!-- ─── HERO ─── -->
 <section class="hero">
-    <!-- Particles Background -->
-    <canvas id="particles"></canvas>
-
-    <!-- Floating Elements -->
-    <div class="floating-shape shape-1"></div>
-    <div class="floating-shape shape-2"></div>
-    <div class="floating-shape shape-3"></div>
-
     <div class="container">
-        <h1>Il Tuo Smartphone È Il Tuo Nuovo IDE</h1>
-        <p>Terminal completo, editor avanzato, GitHub integration e AI Agent autonomo. Tutto quello che serve per sviluppare progetti reali, direttamente da iPhone e Android.</p>
-        <div class="hero-ctas">
+        <div class="hero-badge">Il primo IDE mobile con AI</div>
+        <h1>Il tuo smartphone<br>&egrave; il tuo nuovo IDE.</h1>
+        <p class="hero-sub">Terminal reale, 8 modelli AI e GitHub &mdash; tutto dal tuo iPhone. Come lavorare dal Mac, ma ovunque.</p>
+        <div class="hero-ctas" style="margin-top: 16px;">
             <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="btn-primary">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
                 Scarica su App Store
             </a>
             <a href="javascript:void(0)" onclick="openAndroidModal()" class="btn-android">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.523 15.341c-.108-.287-.32-.511-.593-.629l-4.367-1.896c-.13-.056-.273-.084-.417-.084-.294 0-.578.117-.786.324l-1.56 1.56c-2.077-.845-3.807-2.577-4.652-4.655l1.56-1.56c.207-.208.324-.492.324-.786 0-.144-.028-.287-.084-.417L5.053 2.83c-.118-.273-.342-.485-.629-.593-.286-.107-.602-.094-.878.037L.73 3.53c-.262.125-.47.35-.586.633C.024 4.458-.01 4.774.004 5.091c.062 1.493.41 4.074 1.917 6.828 1.26 2.303 3.053 4.332 5.187 5.873 2.127 1.536 4.722 2.556 7.505 2.95.314.045.63.041.94-.014.28-.05.54-.175.744-.358l2.358-2.117c.13-.116.223-.271.267-.442.043-.17.037-.349-.017-.513zM16.897 18.73c-2.59-.367-4.977-1.317-6.906-2.755-1.933-1.443-3.6-3.305-4.771-5.398-1.36-2.487-1.68-4.828-1.735-6.2l2.537-1.212 1.464 3.372-1.683 1.683c-.13.13-.197.31-.18.493.016.182.103.348.237.454 1.296 1.022 2.625 1.897 4.067 2.672.144.077.31.11.475.093.165-.016.318-.086.428-.196l1.683-1.683 3.372 1.464-1.212 2.537c-1.372-.055-3.713-.375-6.2-1.735-2.093-1.17-3.955-2.838-5.398-4.771C1.437 5.62.487 3.233.12.643l2.537-1.212c.164-.053.343-.06.513-.017.17.044.325.137.442.267l2.117 2.358c.183.204.308.464.358.744.055.31.059.626.014.94-.394 2.783-1.414 5.378-2.95 7.505-1.54 2.134-3.57 3.927-5.873 5.187-2.754 1.507-5.335 1.855-6.828 1.917-.317.014-.633-.02-.945-.128-.283-.116-.508-.324-.633-.586L3.53 14.27c-.131-.276-.144-.592-.037-.878.108-.287.32-.511.593-.629l4.367-1.896c.13-.056.273-.084.417-.084.294 0 .578.117.786.324l1.56 1.56c2.078-.847 3.81-2.575 4.655-4.652l-1.56-1.56c-.207-.208-.324-.492-.324-.786 0-.144.028-.287.084-.417l1.896-4.367c.118-.273.342-.485.629-.593.287-.107.602-.094.878.037l2.816 1.256c.262.125.47.35.586.633.11.312.142.628.128.945-.062 1.493-.41 4.074-1.917 6.828z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V7H6v11zM3.5 7C2.67 7 2 7.67 2 8.5v7c0 .83.67 1.5 1.5 1.5S5 16.33 5 15.5v-7C5 7.67 4.33 7 3.5 7zm17 0c-.83 0-1.5.67-1.5 1.5v7c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-7c0-.83-.67-1.5-1.5-1.5zm-4.97-5.84l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48C13.85.55 12.95.05 11.99.05c-.96 0-1.86.5-2.66 1.08L7.85.65c-.2-.2-.51-.2-.71 0-.2.2-.2.51 0 .71l1.31 1.31C6.97 3.79 6 5.32 6 7h12c0-1.68-.97-3.21-2.47-4.34zM10 5H9V4h1v1zm5 0h-1V4h1v1z"/></svg>
                 <span>Android</span>
                 <span class="badge">In arrivo</span>
             </a>
         </div>
-        <div class="models-bar">
-            <div class="model-item"><div class="model-dot claude"></div>Claude 4.5 Sonnet</div>
-            <div class="model-item"><div class="model-dot claude"></div>Claude 4.6 Opus</div>
-            <div class="model-item"><div class="model-dot gpt"></div>GPT 5.2</div>
-            <div class="model-item"><div class="model-dot gemini"></div>Gemini 3.0 Pro</div>
-            <div class="model-item"><div class="model-dot gemini"></div>Gemini 3.0 Flash</div>
-        </div>
-
-        <!-- iPhone Mockups -->
-        <div class="hero-phones">
-            <div class="phone-frame side">
-                <div class="phone-bezel">
-                    <div class="phone-screen">
-                        <img src="screens/home.png" alt="Home">
+        <!-- Chat Demo -->
+        <div class="hero-demo">
+            <div class="chat-border-glow">
+                <div class="chat-window">
+                    <div class="chat-welcome">
+                        <div class="chat-welcome-logo">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                        </div>
+                        <h3>Cosa vuoi creare?</h3>
+                        <p>Descrivi la tua idea. L'AI scrive il codice, installa le dipendenze e ti mostra la preview.</p>
+                    </div>
+                    <div class="chat-suggestions">
+                        <span class="chat-chip" data-prompt="Ho un bug nel componente di autenticazione. Il token JWT scade ma il refresh token non viene rinnovato automaticamente. Controlla il middleware auth e fixa il flusso di rinnovo.">Fixare un bug</span>
+                        <span class="chat-chip" data-prompt="Crea una landing page responsive con hero section, feature grid, pricing table e footer. Stack: React + Tailwind. Design dark mode, mobile-first, animazioni scroll con Framer Motion.">Nuovo progetto</span>
+                        <span class="chat-chip" data-prompt="Aggiungi un endpoint REST per la gestione degli utenti. CRUD completo con validazione Zod, autenticazione JWT middleware, error handling e rate limiting. Framework: Express + TypeScript.">Aggiungere un'API</span>
+                        <span class="chat-chip" data-prompt="Configura una pipeline CI/CD con GitHub Actions. Build, test e deploy automatico su push al branch main. Includi linting, type-check e notifica Slack in caso di errore.">Setup CI/CD</span>
+                    </div>
+                    <div class="chat-input-container">
+                        <div class="chat-input-controls">
+                            <div class="chat-mode-toggle">
+                                <div class="chat-mode active" title="Fast">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                                    <span>Fast</span>
+                                </div>
+                                <div class="chat-mode" title="Plan">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                                    <span>Plan</span>
+                                </div>
+                            </div>
+                            <div class="chat-model-selector" id="model-selector">
+                                <span class="chat-model-label" onclick="toggleModelDropdown()">
+                                    <span id="selected-model-name">Claude 4.5 Sonnet</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                                </span>
+                                <div class="chat-model-dropdown">
+                                    <div class="chat-model-option selected" data-model="Claude 4.5 Sonnet">
+                                        <span class="model-dot" style="background: #c084fc;"></span>Claude 4.5 Sonnet
+                                    </div>
+                                    <div class="chat-model-option" data-model="Claude 4.5 Opus">
+                                        <span class="model-dot" style="background: #a855f7;"></span>Claude 4.5 Opus
+                                    </div>
+                                    <div class="chat-model-option" data-model="Claude Sonnet 4">
+                                        <span class="model-dot" style="background: #9B8AFF;"></span>Claude Sonnet 4
+                                    </div>
+                                    <div class="chat-model-option" data-model="Claude Haiku 3.5">
+                                        <span class="model-dot" style="background: #d8b4fe;"></span>Claude Haiku 3.5
+                                    </div>
+                                    <div class="chat-model-option" data-model="GPT-5.2">
+                                        <span class="model-dot" style="background: #10b981;"></span>GPT-5.2
+                                    </div>
+                                    <div class="chat-model-option" data-model="Gemini 3 Pro">
+                                        <span class="model-dot" style="background: #3b82f6;"></span>Gemini 3 Pro
+                                    </div>
+                                    <div class="chat-model-option" data-model="Gemini 3 Flash">
+                                        <span class="model-dot" style="background: #60a5fa;"></span>Gemini 3 Flash
+                                    </div>
+                                    <div class="chat-model-option" data-model="Llama 3.3 70B">
+                                        <span class="model-dot" style="background: #f59e0b;"></span>Llama 3.3 70B
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-input-row">
+                            <textarea class="chat-real-input" id="chat-input" placeholder="Chiedi qualcosa..." rows="1" autocomplete="off"></textarea>
+                            <button class="chat-send-btn" id="send-btn" onclick="handleChatSend()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="phone-label">Home</div>
             </div>
-            <div class="phone-frame center">
-                <div class="phone-bezel">
-                    <div class="phone-screen">
-                        <img src="screens/create.png" alt="New Project">
-                    </div>
-                </div>
-                <div class="phone-label">Crea Progetto</div>
-            </div>
-            <div class="phone-frame side">
-                <div class="phone-bezel">
-                    <div class="phone-screen">
-                        <img src="screens/preview.png" alt="Preview Live">
-                    </div>
-                </div>
-                <div class="phone-label">Preview Live</div>
+            <!-- CTA overlay -->
+            <div class="chat-cta-overlay" id="chat-cta">
+                <div class="cta-icon">&#128241;</div>
+                <h3>Immagina di farlo<br>dal tuo iPhone.</h3>
+                <p class="cta-sub">Programma ovunque. Descrivi, crea e deploya — tutto dal telefono.</p>
+                <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="cta-download">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                    Scarica Drape
+                </a>
+                <button class="cta-retry" onclick="resetChat()">Prova un altro prompt</button>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ─── WHAT YOU CAN BUILD ─── -->
-<section>
+<!-- ─── SOCIAL PROOF ─── -->
+<div class="social-proof-bar">
     <div class="container">
-        <div class="section-header center fade-up">
-            <div class="section-label">Crea o importa</div>
-            <h2 class="section-title">Parti da zero o dalle<br>tue repository.</h2>
+        <div class="social-proof-items">
+            <span>&#9889; 8 Modelli AI</span>
+            <span class="proof-dot">&bull;</span>
+            <span>&#128187; Terminale reale</span>
+            <span class="proof-dot">&bull;</span>
+            <span>&#128279; GitHub integrato</span>
+            <span class="proof-dot">&bull;</span>
+            <span>&#9997;&#65039; Zero configurazione</span>
         </div>
     </div>
-    <div class="build-marquee-wrap fade-up">
-        <!-- Row 1 — left -->
+</div>
+
+<!-- ─── POWERED BY ─── -->
+<section class="tech-logos">
+    <div class="container">
+        <div class="tech-logos-label">Integra i migliori modelli AI</div>
+        <div class="tech-logos-row">
+            <div class="tech-logo-item">
+                <svg viewBox="0 0 24 24"><path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.91 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.18a5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.772-4.206 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.747-7.073zM13.26 22.43a4.476 4.476 0 0 1-2.876-1.04l.141-.081 4.779-2.758a.795.795 0 0 0 .392-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.494 4.494zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.759a.771.771 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973V11.6a.766.766 0 0 0 .388.676l5.815 3.355-2.02 1.168a.076.076 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855l-5.833-3.387L15.119 7.2a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.676 8.105v-5.678a.79.79 0 0 0-.407-.667zm2.01-3.023l-.141-.085-4.774-2.782a.776.776 0 0 0-.785 0L9.409 9.23V6.897a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zm-12.64 4.135l-2.02-1.164a.08.08 0 0 1-.038-.057V6.075a4.5 4.5 0 0 1 7.375-3.453l-.142.08L8.704 5.46a.795.795 0 0 0-.393.681zm1.097-2.365l2.602-1.5 2.607 1.5v2.999l-2.597 1.5-2.607-1.5z"/></svg>
+                <span>OpenAI</span>
+            </div>
+            <div class="tech-logo-item">
+                <svg viewBox="0 0 24 24"><path d="M13.827 3.52h3.603L24 20.48h-3.603l-6.57-16.96zm-7.258 0h3.767l6.493 16.96h-3.603L9.796 11.2l-3.43 9.28H2.763L9.333 3.52z" fill="currentColor"/></svg>
+                <span>Anthropic</span>
+            </div>
+            <div class="tech-logo-item">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.372 0 0 5.373 0 12s5.372 12 12 12 12-5.373 12-12S18.628 0 12 0zm5.95 17.1H6.05L12 3.833 17.95 17.1z"/></svg>
+                <span>Google Gemini</span>
+            </div>
+            <div class="tech-logo-item">
+                <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                <span>GitHub</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ─── BUILD MARQUEE ─── -->
+<section style="padding: 100px 0 80px;">
+    <div class="container">
+        <div class="section-header center" style="margin-bottom: 48px;">
+            <div class="section-label">Cosa puoi costruire</div>
+            <h2 class="section-title">Da un'idea al codice.<br>Ovunque tu sia.</h2>
+        </div>
+    </div>
+    <div class="build-marquee-wrap">
         <div class="build-marquee-track">
             <div class="build-marquee">
-                <div class="build-pill"><div class="dot" style="background:#a855f7"></div>Web App <span>React, Next.js, Vue, Svelte</span></div>
-                <div class="build-pill"><div class="dot" style="background:#3b82f6"></div>API &amp; Backend <span>Node.js, Express, FastAPI</span></div>
-                <div class="build-pill"><div class="dot" style="background:#22c55e"></div>Landing Page <span>Portfolio, blog, siti statici</span></div>
-                <div class="build-pill"><div class="dot" style="background:#f97316"></div>Dashboard <span>Admin panel, analytics, CRM</span></div>
-                <div class="build-pill"><div class="dot" style="background:#ec4899"></div>SaaS Tool <span>Auth, pagamenti, database</span></div>
-                <div class="build-pill"><div class="dot" style="background:#14b8a6"></div>Script &amp; Bot <span>CLI, scraper, automazioni</span></div>
-                <div class="build-pill"><div class="dot" style="background:#eab308"></div>E-commerce <span>Shopify, Stripe, WooCommerce</span></div>
-                <div class="build-pill"><div class="dot" style="background:#8b5cf6"></div>Game Prototipi <span>Phaser, Three.js, Canvas</span></div>
-                <!-- duplicate -->
-                <div class="build-pill"><div class="dot" style="background:#a855f7"></div>Web App <span>React, Next.js, Vue, Svelte</span></div>
-                <div class="build-pill"><div class="dot" style="background:#3b82f6"></div>API &amp; Backend <span>Node.js, Express, FastAPI</span></div>
-                <div class="build-pill"><div class="dot" style="background:#22c55e"></div>Landing Page <span>Portfolio, blog, siti statici</span></div>
-                <div class="build-pill"><div class="dot" style="background:#f97316"></div>Dashboard <span>Admin panel, analytics, CRM</span></div>
-                <div class="build-pill"><div class="dot" style="background:#ec4899"></div>SaaS Tool <span>Auth, pagamenti, database</span></div>
-                <div class="build-pill"><div class="dot" style="background:#14b8a6"></div>Script &amp; Bot <span>CLI, scraper, automazioni</span></div>
-                <div class="build-pill"><div class="dot" style="background:#eab308"></div>E-commerce <span>Shopify, Stripe, WooCommerce</span></div>
-                <div class="build-pill"><div class="dot" style="background:#8b5cf6"></div>Game Prototipi <span>Phaser, Three.js, Canvas</span></div>
+                <div class="build-pill"><div class="dot" style="background:#a855f7"></div>Landing Page <span>React</span></div>
+                <div class="build-pill"><div class="dot" style="background:#3b82f6"></div>REST API <span>Express</span></div>
+                <div class="build-pill"><div class="dot" style="background:#10b981"></div>Bot Telegram <span>Node.js</span></div>
+                <div class="build-pill"><div class="dot" style="background:#f59e0b"></div>E-Commerce <span>Next.js</span></div>
+                <div class="build-pill"><div class="dot" style="background:#ef4444"></div>Dashboard <span>Vue</span></div>
+                <div class="build-pill"><div class="dot" style="background:#06b6d4"></div>CLI Tool <span>Python</span></div>
+                <div class="build-pill"><div class="dot" style="background:#a855f7"></div>Landing Page <span>React</span></div>
+                <div class="build-pill"><div class="dot" style="background:#3b82f6"></div>REST API <span>Express</span></div>
+                <div class="build-pill"><div class="dot" style="background:#10b981"></div>Bot Telegram <span>Node.js</span></div>
+                <div class="build-pill"><div class="dot" style="background:#f59e0b"></div>E-Commerce <span>Next.js</span></div>
+                <div class="build-pill"><div class="dot" style="background:#ef4444"></div>Dashboard <span>Vue</span></div>
+                <div class="build-pill"><div class="dot" style="background:#06b6d4"></div>CLI Tool <span>Python</span></div>
             </div>
         </div>
-        <!-- Row 2 — right (reverse) -->
         <div class="build-marquee-track">
             <div class="build-marquee reverse">
-                <div class="build-pill"><div class="dot" style="background:#06b6d4"></div>Blog <span>Markdown, CMS, RSS feed</span></div>
-                <div class="build-pill"><div class="dot" style="background:#f43f5e"></div>Chat App <span>WebSocket, real-time</span></div>
-                <div class="build-pill"><div class="dot" style="background:#84cc16"></div>Portfolio <span>Personale, freelancer</span></div>
-                <div class="build-pill"><div class="dot" style="background:#d946ef"></div>AI Tool <span>LLM wrapper, prompt app</span></div>
-                <div class="build-pill"><div class="dot" style="background:#fb923c"></div>Automazioni <span>Cron job, webhook, pipeline</span></div>
-                <div class="build-pill"><div class="dot" style="background:#2dd4bf"></div>REST API <span>CRUD, auth, middleware</span></div>
-                <div class="build-pill"><div class="dot" style="background:#facc15"></div>Utility <span>Converter, calculator, tool</span></div>
-                <div class="build-pill"><div class="dot" style="background:#818cf8"></div>Plugin <span>Chrome ext, Slack bot</span></div>
-                <!-- duplicate -->
-                <div class="build-pill"><div class="dot" style="background:#06b6d4"></div>Blog <span>Markdown, CMS, RSS feed</span></div>
-                <div class="build-pill"><div class="dot" style="background:#f43f5e"></div>Chat App <span>WebSocket, real-time</span></div>
-                <div class="build-pill"><div class="dot" style="background:#84cc16"></div>Portfolio <span>Personale, freelancer</span></div>
-                <div class="build-pill"><div class="dot" style="background:#d946ef"></div>AI Tool <span>LLM wrapper, prompt app</span></div>
-                <div class="build-pill"><div class="dot" style="background:#fb923c"></div>Automazioni <span>Cron job, webhook, pipeline</span></div>
-                <div class="build-pill"><div class="dot" style="background:#2dd4bf"></div>REST API <span>CRUD, auth, middleware</span></div>
-                <div class="build-pill"><div class="dot" style="background:#facc15"></div>Utility <span>Converter, calculator, tool</span></div>
-                <div class="build-pill"><div class="dot" style="background:#818cf8"></div>Plugin <span>Chrome ext, Slack bot</span></div>
-            </div>
-        </div>
-        <!-- Row 3 — left -->
-        <div class="build-marquee-track">
-            <div class="build-marquee" style="animation-duration:40s;">
-                <div class="build-pill"><div class="dot" style="background:#10b981"></div>Startup MVP <span>Idea to prototype, fast</span></div>
-                <div class="build-pill"><div class="dot" style="background:#6366f1"></div>Mobile Backend <span>API per app iOS/Android</span></div>
-                <div class="build-pill"><div class="dot" style="background:#ef4444"></div>Scraper <span>Web crawling, data mining</span></div>
-                <div class="build-pill"><div class="dot" style="background:#0ea5e9"></div>Docs Site <span>Wiki, documentazione, guide</span></div>
-                <div class="build-pill"><div class="dot" style="background:#f59e0b"></div>Form Builder <span>Survey, contatti, quiz</span></div>
-                <div class="build-pill"><div class="dot" style="background:#a3e635"></div>Microservizio <span>Docker, serverless, lambda</span></div>
-                <div class="build-pill"><div class="dot" style="background:#c084fc"></div>Social App <span>Feed, profili, notifiche</span></div>
-                <div class="build-pill"><div class="dot" style="background:#fb7185"></div>Booking System <span>Calendario, prenotazioni</span></div>
-                <!-- duplicate -->
-                <div class="build-pill"><div class="dot" style="background:#10b981"></div>Startup MVP <span>Idea to prototype, fast</span></div>
-                <div class="build-pill"><div class="dot" style="background:#6366f1"></div>Mobile Backend <span>API per app iOS/Android</span></div>
-                <div class="build-pill"><div class="dot" style="background:#ef4444"></div>Scraper <span>Web crawling, data mining</span></div>
-                <div class="build-pill"><div class="dot" style="background:#0ea5e9"></div>Docs Site <span>Wiki, documentazione, guide</span></div>
-                <div class="build-pill"><div class="dot" style="background:#f59e0b"></div>Form Builder <span>Survey, contatti, quiz</span></div>
-                <div class="build-pill"><div class="dot" style="background:#a3e635"></div>Microservizio <span>Docker, serverless, lambda</span></div>
-                <div class="build-pill"><div class="dot" style="background:#c084fc"></div>Social App <span>Feed, profili, notifiche</span></div>
-                <div class="build-pill"><div class="dot" style="background:#fb7185"></div>Booking System <span>Calendario, prenotazioni</span></div>
+                <div class="build-pill"><div class="dot" style="background:#8b5cf6"></div>Portfolio <span>Astro</span></div>
+                <div class="build-pill"><div class="dot" style="background:#ec4899"></div>Chat App <span>Socket.io</span></div>
+                <div class="build-pill"><div class="dot" style="background:#14b8a6"></div>CRM <span>TypeScript</span></div>
+                <div class="build-pill"><div class="dot" style="background:#f97316"></div>Blog <span>Markdown</span></div>
+                <div class="build-pill"><div class="dot" style="background:#6366f1"></div>Auth System <span>JWT</span></div>
+                <div class="build-pill"><div class="dot" style="background:#22c55e"></div>Scraper <span>Python</span></div>
+                <div class="build-pill"><div class="dot" style="background:#8b5cf6"></div>Portfolio <span>Astro</span></div>
+                <div class="build-pill"><div class="dot" style="background:#ec4899"></div>Chat App <span>Socket.io</span></div>
+                <div class="build-pill"><div class="dot" style="background:#14b8a6"></div>CRM <span>TypeScript</span></div>
+                <div class="build-pill"><div class="dot" style="background:#f97316"></div>Blog <span>Markdown</span></div>
+                <div class="build-pill"><div class="dot" style="background:#6366f1"></div>Auth System <span>JWT</span></div>
+                <div class="build-pill"><div class="dot" style="background:#22c55e"></div>Scraper <span>Python</span></div>
             </div>
         </div>
     </div>
@@ -1677,79 +2218,197 @@
 <!-- ─── FEATURES ─── -->
 <section id="features">
     <div class="container">
-        <div class="section-header center fade-up">
+        <div class="section-header center">
             <div class="section-label">Funzionalit&agrave;</div>
-            <h2 class="section-title">Tutto quello che serve.<br>Niente di meno.</h2>
+            <h2 class="section-title">Tutto quello che fai sul PC.<br>Adesso anche dal telefono.</h2>
         </div>
         <div class="features-grid">
-            <div class="feature-card fade-up">
+            <div class="feature-card">
                 <div class="feature-icon">
                     <div class="feature-number">01</div>
                 </div>
-                <h3>AI Agent Autonomo</h3>
-                <p>Descrivi cosa vuoi e l'AI crea, modifica e organizza i file per te. Editing multi-file, installazione dipendenze, esecuzione comandi &mdash; tutto con un singolo prompt.</p>
+                <h3>Descrivi. L'AI costruisce.</h3>
+                <p>Scrivi cosa vuoi in qualsiasi lingua. L'AI crea i file, installa le dipendenze e struttura il progetto &mdash; tu guidi, lei esegue.</p>
             </div>
-            <div class="feature-card fade-up">
+            <div class="feature-card">
                 <div class="feature-icon">
                     <div class="feature-number">02</div>
                 </div>
-                <h3>Terminal Completo</h3>
-                <p>Bash e Zsh reali in container Docker isolati. Esegui npm, git, python e qualsiasi comando come su un terminale desktop.</p>
+                <h3>Un terminale vero. Sul telefono.</h3>
+                <p>Esegui npm, git, python e qualsiasi comando come faresti sul Mac. Non &egrave; una simulazione &mdash; &egrave; un terminale reale nel cloud.</p>
             </div>
-            <div class="feature-card fade-up">
+            <div class="feature-card">
                 <div class="feature-icon">
                     <div class="feature-number">03</div>
                 </div>
-                <h3>5 Modelli AI</h3>
-                <p>Claude 4.5 Sonnet, Claude 4.6 Opus, GPT 5.2, Gemini 3.0 Pro e Gemini 3.0 Flash. Cambia modello in qualsiasi momento durante lo sviluppo.</p>
+                <h3>8 modelli AI. Scegli tu.</h3>
+                <p>Claude, GPT, Gemini, Llama &mdash; cambia modello al volo in base a cosa stai costruendo. Ognuno ha i suoi punti di forza.</p>
             </div>
-            <div class="feature-card fade-up">
+            <div class="feature-card">
                 <div class="feature-icon">
                     <div class="feature-number">04</div>
                 </div>
-                <h3>Preview Live</h3>
-                <p>Vedi il risultato in tempo reale, sia per progetti nuovi che repository importate. Web app, API, server &mdash; tutto visibile e testabile con un tap.</p>
+                <h3>Vedi il risultato. Subito.</h3>
+                <p>Ogni modifica &egrave; visibile in tempo reale. Web app, API, server &mdash; testa tutto con un tap, senza fare deploy.</p>
             </div>
-            <div class="feature-card fade-up">
+            <div class="feature-card">
                 <div class="feature-icon">
                     <div class="feature-number">05</div>
                 </div>
-                <h3>Importa le tue Repository</h3>
-                <p>Clona qualsiasi repo da GitHub, GitLab o Bitbucket e lavoraci con l'AI. Avvia la preview, testa le modifiche live e pusha &mdash; come faresti su desktop.</p>
+                <h3>Le tue repo. L'AI di Drape.</h3>
+                <p>Importa qualsiasi progetto da GitHub e lavoraci con l'AI. Modifica, testa e pusha &mdash; come faresti su desktop.</p>
             </div>
-            <div class="feature-card fade-up">
+            <div class="feature-card">
                 <div class="feature-icon">
                     <div class="feature-number">06</div>
                 </div>
-                <h3>File Explorer &amp; Editor</h3>
-                <p>Naviga il progetto, crea e modifica file con syntax highlighting. Gestione completa del filesystem cloud con undo e redo.</p>
+                <h3>Ogni file. Sotto controllo.</h3>
+                <p>Naviga il progetto, modifica con syntax highlighting, crea nuovi file. Il tuo workspace, sempre in tasca.</p>
             </div>
         </div>
     </div>
 </section>
 
+<!-- ─── STATS ─── -->
+<div class="stats-section">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Modelli AI</div>
+                <div class="stat-sublabel">Claude, GPT, Gemini, Llama</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">&lt;30s</div>
+                <div class="stat-label">Per iniziare</div>
+                <div class="stat-sublabel">Da prompt a progetto</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Disponibile</div>
+                <div class="stat-sublabel">Programma quando vuoi</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Cloud</div>
+                <div class="stat-sublabel">Niente da installare</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- ─── HOW IT WORKS ─── -->
 <section>
     <div class="container">
-        <div class="section-header center fade-up">
+        <div class="section-header center">
             <div class="section-label">Come funziona</div>
-            <h2 class="section-title">Da idea a progetto<br>in pochi minuti.</h2>
+            <h2 class="section-title">Da "ho un'idea" a "è online"<br>in 5 minuti.</h2>
         </div>
         <div class="steps-grid">
-            <div class="step fade-up">
+            <div class="step">
                 <div class="step-number">1</div>
-                <h3>Crea o importa</h3>
-                <p>Parti da zero con un prompt oppure importa una repository esistente da GitHub, GitLab o Bitbucket.</p>
+                <h3>Descrivi</h3>
+                <p>Dimmi cosa vuoi costruire in qualsiasi lingua. Parti da zero o importa una repo da GitHub. L'AI capisce il contesto e inizia subito.</p>
             </div>
-            <div class="step fade-up">
+            <div class="step">
                 <div class="step-number">2</div>
-                <h3>Costruisci</h3>
-                <p>L'AI Agent crea i file, scrive il codice, installa le dipendenze. Tu guardi e intervieni quando vuoi.</p>
+                <h3>Guarda l'AI costruire</h3>
+                <p>L'AI crea file, installa pacchetti, scrive codice. Tu intervieni quando vuoi &mdash; o lascia fare a lei.</p>
             </div>
-            <div class="step fade-up">
+            <div class="step">
                 <div class="step-number">3</div>
                 <h3>Lancia</h3>
-                <p>Preview live del progetto, push su GitHub, deploy. Tutto dal tuo iPhone, senza mai aprire un laptop.</p>
+                <p>Preview live, push su GitHub, deploy. Tutto dal telefono, ovunque tu sia. Come se avessi il laptop in tasca.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ─── TRUST ─── -->
+<section style="padding: 100px 0;">
+    <div class="container">
+        <div class="section-header center">
+            <div class="section-label">Sicurezza</div>
+            <h2 class="section-title">Il tuo codice. Le tue regole.</h2>
+        </div>
+        <div class="trust-grid">
+            <div class="trust-card">
+                <div class="trust-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                </div>
+                <h3>I tuoi dati sono al sicuro</h3>
+                <p>Container Docker isolati, crittografia TLS, nessun dato venduto a terzi. Il tuo codice resta tuo.</p>
+            </div>
+            <div class="trust-card">
+                <div class="trust-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <h3>Nessuna installazione</h3>
+                <p>Tutto gira nel cloud. Apri l'app e inizia a costruire in 30 secondi. Zero configurazione.</p>
+            </div>
+            <div class="trust-card">
+                <div class="trust-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h3>Cancella quando vuoi</h3>
+                <p>Nessun vincolo. Inizia gratis, aggiorna se ti serve di pi&ugrave;, cancella in un tap. Il codice &egrave; sempre tuo su GitHub.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── PRICING ─── -->
+<section id="pricing" style="padding: 100px 0;">
+    <div class="container">
+        <div class="section-header center">
+            <div class="section-label">Prezzi</div>
+            <h2 class="section-title">Scegli il piano giusto per te.</h2>
+            <p class="section-desc" style="margin: 8px auto 0;">Inizia gratis. Aggiorna quando vuoi.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="pricing-name">Starter</div>
+                <div class="pricing-desc">Per provare Drape</div>
+                <div class="pricing-price">Gratis</div>
+                <div class="pricing-period">Per sempre</div>
+                <ul class="pricing-features">
+                    <li>3 progetti</li>
+                    <li>Claude 4.5 Sonnet</li>
+                    <li>Gemini 3 Flash</li>
+                    <li>Terminal completo</li>
+                    <li>Preview live</li>
+                </ul>
+                <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="pricing-btn outline">Inizia gratis</a>
+            </div>
+            <div class="pricing-card featured">
+                <div class="pricing-badge">Pi&ugrave; popolare</div>
+                <div class="pricing-name">Go</div>
+                <div class="pricing-desc">Per sviluppatori attivi</div>
+                <div class="pricing-price">&euro;22.99</div>
+                <div class="pricing-period">al mese</div>
+                <ul class="pricing-features">
+                    <li>Progetti illimitati</li>
+                    <li>Tutti gli 8 modelli AI</li>
+                    <li>Importa repo da GitHub</li>
+                    <li>Push, commit, PR</li>
+                    <li>Supporto prioritario</li>
+                </ul>
+                <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="pricing-btn filled">Scegli Go</a>
+            </div>
+            <div class="pricing-card">
+                <div class="pricing-name">Pro</div>
+                <div class="pricing-desc">Per chi vuole il massimo</div>
+                <div class="pricing-price">&euro;39.99</div>
+                <div class="pricing-period">al mese</div>
+                <ul class="pricing-features">
+                    <li>Tutto di Go, pi&ugrave;:</li>
+                    <li>Messaggi AI illimitati</li>
+                    <li>Modelli premium (Opus, GPT-5.2)</li>
+                    <li>Container potenziati</li>
+                    <li>Supporto dedicato</li>
+                </ul>
+                <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="pricing-btn outline">Scegli Pro</a>
             </div>
         </div>
     </div>
@@ -1758,11 +2417,29 @@
 <!-- ─── FAQ ─── -->
 <section id="faq">
     <div class="container">
-        <div class="section-header center fade-up">
+        <div class="section-header center">
             <div class="section-label">FAQ</div>
             <h2 class="section-title">Domande frequenti</h2>
         </div>
-        <div class="faq-list fade-up">
+        <div class="faq-list">
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Posso usare Drape per progetti veri?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Assolutamente s&igrave;. Drape &egrave; un IDE completo con terminale reale, non una simulazione. Puoi eseguire npm, git, python, installare dipendenze, testare API e fare push su GitHub. &Egrave; pensato per sviluppatori che vogliono lavorare su progetti reali quando non hanno il laptop.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Come si confronta con VS Code o Cursor?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Drape non sostituisce il tuo IDE desktop &mdash; lo estende. &Egrave; l'unico IDE mobile completo con AI integrata, terminale reale e GitHub. Quando sei in treno, in pausa pranzo o sul divano, Drape ti permette di continuare a lavorare come faresti dal PC.</p>
+                </div>
+            </div>
             <div class="faq-item">
                 <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
                     <span>Come funziona il terminal su mobile?</span>
@@ -1778,7 +2455,7 @@
                     <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-answer">
-                    <p>Il piano Starter include Claude 4.5 Sonnet e Gemini 3.0 Flash. I piani Go (&euro;22.99/mese) e Pro (&euro;39.99/mese) sbloccano anche Claude 4.6 Opus, GPT 5.2 e Gemini 3.0 Pro. Puoi cambiare modello in qualsiasi momento.</p>
+                    <p>Il piano Starter include Claude 4.5 Sonnet e Gemini 3 Flash. I piani Go (&euro;22.99/mese) e Pro (&euro;39.99/mese) sbloccano anche Claude 4.5 Opus, GPT-5.2, Gemini 3 Pro e Llama 3.3 70B. Puoi cambiare modello in qualsiasi momento.</p>
                 </div>
             </div>
             <div class="faq-item">
@@ -1787,7 +2464,16 @@
                     <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-answer">
-                    <p>S&igrave;, &egrave; una delle funzionalit&agrave; principali. Clona qualsiasi repository da GitHub, GitLab o Bitbucket, lavora con l'AI, avvia la preview live per testare le modifiche e pusha direttamente dall'app. Commit, pull, branch &mdash; tutto supportato.</p>
+                    <p>S&igrave;, &egrave; una delle funzionalit&agrave; principali. Clona qualsiasi repository da GitHub, lavora con l'AI, avvia la preview live per testare le modifiche e pusha direttamente dall'app. Commit, pull, branch &mdash; tutto supportato.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Cosa succede al mio codice se cancello l'abbonamento?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Il codice &egrave; tuo, sempre. Fai push su GitHub prima di cancellare e avrai tutto. Drape non tiene in ostaggio il tuo lavoro &mdash; &egrave; un tool, non una gabbia.</p>
                 </div>
             </div>
             <div class="faq-item">
@@ -1815,14 +2501,18 @@
 <!-- ─── CTA ─── -->
 <section class="cta-section">
     <div class="container">
-        <h2 class="fade-up">Inizia a costruire.<br>Ovunque tu sia.</h2>
-        <p class="fade-up">Scarica Drape e trasforma il tuo iPhone nel tuo IDE.</p>
-        <div class="hero-ctas fade-up">
+        <h2>La prossima volta che hai un'idea,<br>non aspettare il laptop.</h2>
+        <p>Scarica Drape. &Egrave; gratis.</p>
+        <div class="hero-ctas">
             <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="btn-primary">
                 <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
                 Scarica su App Store
             </a>
         </div>
+        <p class="cta-micro">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Gratis per sempre &nbsp;&bull;&nbsp; Nessuna carta richiesta &nbsp;&bull;&nbsp; Cancella quando vuoi
+        </p>
     </div>
 </section>
 
@@ -1837,18 +2527,21 @@
                     </div>
                     Drape
                 </a>
-                <p>Il primo IDE mobile con AI multimodello. Costruisci qualsiasi progetto, ovunque tu sia.</p>
+                <p>L'IDE mobile per sviluppatori. Programma dal telefono come faresti dal PC.</p>
             </div>
             <div class="footer-col">
                 <h4>Prodotto</h4>
                 <a href="#features">Funzionalit&agrave;</a>
-                <a href="prezzi.html">Prezzi</a>
+                <a href="#how-it-works">Come funziona</a>
+                <a href="#pricing">Prezzi</a>
                 <a href="#faq">FAQ</a>
             </div>
             <div class="footer-col">
                 <h4>Risorse</h4>
+                <a href="blog.html">Blog</a>
+                <a href="docs.html">Documentazione</a>
+                <a href="changelog.html">Changelog</a>
                 <a href="support.html">Supporto</a>
-                <a href="mailto:info@drape-dev.it">Contatti</a>
             </div>
             <div class="footer-col">
                 <h4>Legale</h4>
@@ -1856,10 +2549,9 @@
                 <a href="terms-of-service.html">Termini di Servizio</a>
             </div>
             <div class="footer-col">
-                <h4>Social</h4>
-                <a href="javascript:void(0)">Instagram</a>
-                <a href="javascript:void(0)">X (Twitter)</a>
-                <a href="javascript:void(0)">LinkedIn</a>
+                <h4>Scarica</h4>
+                <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer">App Store</a>
+                <a href="mailto:info@drape-dev.it">Richiedi Android</a>
             </div>
         </div>
         <div class="footer-bottom">
@@ -1911,16 +2603,80 @@
 </div>
 
 <script>
-// Scroll animations
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
+// Interactive hero chat
+function handleChatSend() {
+    const input = document.getElementById('chat-input');
+    const val = input.value.trim();
+    if (!val) return;
+    input.value = '';
+    document.getElementById('send-btn').classList.remove('active');
+    setTimeout(() => {
+        document.getElementById('chat-cta').classList.add('visible');
+    }, 500);
+}
+function resetChat() {
+    document.getElementById('chat-cta').classList.remove('visible');
+    const inp = document.getElementById('chat-input');
+    inp.value = '';
+    inp.style.height = 'auto';
+    inp.focus();
+}
+(function() {
+    const input = document.getElementById('chat-input');
+    const btn = document.getElementById('send-btn');
+    if (!input) return;
+    function autoResize() {
+        input.style.height = 'auto';
+        input.style.height = Math.min(input.scrollHeight, 80) + 'px';
+    }
+    input.addEventListener('input', () => {
+        btn.classList.toggle('active', input.value.trim().length > 0);
+        autoResize();
     });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleChatSend(); }
+    });
+    // Suggestion chips fill input
+    document.querySelectorAll('.chat-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            input.value = chip.dataset.prompt;
+            input.focus();
+            btn.classList.add('active');
+            autoResize();
+        });
+    });
+    // Mode toggle
+    document.querySelectorAll('.chat-mode').forEach(mode => {
+        mode.addEventListener('click', () => {
+            document.querySelectorAll('.chat-mode').forEach(m => m.classList.remove('active'));
+            mode.classList.add('active');
+        });
+    });
+})();
 
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+// Model selector
+function toggleModelDropdown() {
+    document.getElementById('model-selector').classList.toggle('open');
+}
+document.querySelectorAll('.chat-model-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+        document.querySelectorAll('.chat-model-option').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        document.getElementById('selected-model-name').textContent = opt.dataset.model;
+        document.getElementById('model-selector').classList.remove('open');
+    });
+});
+document.addEventListener('click', (e) => {
+    const sel = document.getElementById('model-selector');
+    if (sel && !sel.contains(e.target)) sel.classList.remove('open');
+});
+
+// Close nav dropdowns on outside click
+document.addEventListener('click', (e) => {
+    document.querySelectorAll('.nav-dropdown').forEach(dd => {
+        if (!dd.contains(e.target)) dd.classList.remove('open');
+    });
+});
 
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -1933,6 +2689,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             history.replaceState(null, '', '/');
             document.querySelector('.nav-links')?.classList.remove('open');
+            document.querySelectorAll('.nav-dropdown').forEach(dd => dd.classList.remove('open'));
         }
     });
 });
@@ -1946,72 +2703,6 @@ window.addEventListener('scroll', () => {
         nav.style.borderBottomColor = 'rgba(255,255,255,0.04)';
     }
 });
-
-// Particles Animation
-const canvas = document.getElementById('particles');
-if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-
-    function resizeCanvas() {
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    class Particle {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * 0.5;
-            this.vy = (Math.random() - 0.5) * 0.5;
-            this.radius = Math.random() * 2 + 1;
-        }
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
-            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-        }
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(168, 85, 247, 0.3)';
-            ctx.fill();
-        }
-    }
-
-    for (let i = 0; i < 50; i++) {
-        particles.push(new Particle());
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-            p.update();
-            p.draw();
-        });
-        // Draw lines between close particles
-        for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 120) {
-                    ctx.beginPath();
-                    ctx.strokeStyle = `rgba(168, 85, 247, ${0.2 * (1 - dist / 120)})`;
-                    ctx.lineWidth = 1;
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.stroke();
-                }
-            }
-        }
-        requestAnimationFrame(animate);
-    }
-    animate();
-}
 
 // Pricing cards mouse tracking for glow effect
 document.querySelectorAll('.pricing-card').forEach(card => {
@@ -2091,6 +2782,7 @@ document.getElementById('androidForm').addEventListener('submit', async (e) => {
         submitBtn.textContent = 'Invia Sollecitazione';
     }
 });
+
 </script>
 </body>
 </html>

@@ -61,6 +61,86 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <!-- Blog IT -->
+  <url>
+    <loc>https://drape-dev.it/blog.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/blog.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/blog.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/blog.html"/>
+    <lastmod>2026-02-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Blog EN -->
+  <url>
+    <loc>https://drape-dev.it/en/blog.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/blog.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/blog.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/blog.html"/>
+    <lastmod>2026-02-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Changelog IT -->
+  <url>
+    <loc>https://drape-dev.it/changelog.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/changelog.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/changelog.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/changelog.html"/>
+    <lastmod>2026-02-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Changelog EN -->
+  <url>
+    <loc>https://drape-dev.it/en/changelog.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/changelog.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/changelog.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/changelog.html"/>
+    <lastmod>2026-02-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Docs IT -->
+  <url>
+    <loc>https://drape-dev.it/docs.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/docs.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/docs.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/docs.html"/>
+    <lastmod>2026-02-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Docs EN -->
+  <url>
+    <loc>https://drape-dev.it/en/docs.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/docs.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/docs.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/docs.html"/>
+    <lastmod>2026-02-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- FAQ IT -->
+  <url>
+    <loc>https://drape-dev.it/faq.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/faq.html"/>
+    <lastmod>2026-02-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- FAQ EN -->
+  <url>
+    <loc>https://drape-dev.it/en/faq.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/faq.html"/>
+    <lastmod>2026-02-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
   <!-- Pitch Deck -->
   <url>
     <loc>https://drape-dev.it/pitch-deck.html</loc>
