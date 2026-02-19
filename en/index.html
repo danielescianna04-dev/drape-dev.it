@@ -2335,12 +2335,11 @@
 
         /* ─── MOBILE ENHANCEMENTS ─── */
         @media (max-width: 768px) {
-            /* Smaller, more intense aurora for mobile */
-            .aurora-blob-1 { width: 300px; height: 300px; opacity: 0.7; }
-            .aurora-blob-2 { width: 250px; height: 250px; opacity: 0.6; }
-            .aurora-blob-3 { width: 280px; height: 280px; opacity: 0.55; }
+            /* Kill heavy effects on mobile */
+            .aurora { display: none; }
+            .grain-overlay { display: none; }
 
-            /* Stronger section glows on mobile */
+            /* Stronger section glows on mobile (lightweight, no blur) */
             .section-glow::before {
                 width: 350px;
                 height: 350px;
@@ -2396,16 +2395,6 @@
             @keyframes stepPulse {
                 0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.15), 0 0 40px rgba(168, 85, 247, 0.05); }
                 50% { box-shadow: 0 0 30px rgba(168, 85, 247, 0.3), 0 0 60px rgba(168, 85, 247, 0.1); }
-            }
-
-            /* Grain slightly stronger on mobile for texture */
-            .grain-overlay { opacity: 0.05; }
-
-            /* Smoother hero demo glow on mobile */
-            .hero-demo::before {
-                width: 130%;
-                height: 160%;
-                filter: blur(60px);
             }
         }
 
@@ -3104,8 +3093,9 @@
     shimmerEls.forEach(function(el) { shimmerObserver.observe(el); });
 })();
 
-// ─── PARALLAX STEPS ON SCROLL ───
+// ─── PARALLAX STEPS ON SCROLL (desktop only) ───
 (function() {
+    if (window.innerWidth <= 768) return;
     var steps = document.querySelectorAll('.parallax-step');
     if (!steps.length) return;
     function updateParallax() {
@@ -3386,8 +3376,9 @@ document.getElementById('androidForm').addEventListener('submit', async (e) => {
     });
 })();
 
-// ─── SCROLL TEXT BRIGHTNESS ───
+// ─── SCROLL TEXT BRIGHTNESS (desktop only) ───
 (function() {
+    if (window.innerWidth <= 768) return;
     var titles = document.querySelectorAll('.section-title');
     if (!titles.length) return;
     function updateBrightness() {

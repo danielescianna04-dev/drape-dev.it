@@ -143,6 +143,123 @@
         .nav-right-mobile {
             display: none;
         }
+        .nav-dropdown {
+            position: relative;
+        }
+        .nav-dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s;
+            white-space: nowrap;
+            background: none;
+            border: none;
+            font-family: inherit;
+            padding: 0;
+        }
+        .nav-dropdown-toggle:hover { color: var(--text); }
+        .nav-dropdown-toggle svg {
+            width: 12px;
+            height: 12px;
+            transition: transform 0.2s;
+        }
+        .nav-dropdown:hover .nav-dropdown-toggle svg,
+        .nav-dropdown.open .nav-dropdown-toggle svg {
+            transform: rotate(180deg);
+        }
+        .nav-dropdown-panel {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-4px);
+            min-width: 200px;
+            background: rgba(16, 16, 20, 0.9);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 16px 8px 8px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            pointer-events: none;
+            z-index: 200;
+        }
+        .nav-dropdown:hover .nav-dropdown-panel,
+        .nav-dropdown.open .nav-dropdown-panel {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+        .nav-dropdown-panel a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            color: var(--text-secondary) !important;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.15s;
+        }
+        .nav-dropdown-panel a:hover {
+            background: rgba(255,255,255,0.05);
+            color: var(--text) !important;
+        }
+        .nav-dropdown-panel a .dropdown-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(155, 138, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .nav-dropdown-panel a .dropdown-icon svg {
+            width: 16px;
+            height: 16px;
+            color: #9B8AFF;
+        }
+        .lang-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            padding: 3px;
+            flex-shrink: 0;
+        }
+        .lang-toggle a, .lang-toggle span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 24px;
+            border-radius: 14px;
+            font-size: 11px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .lang-toggle .lang-active {
+            background: rgba(255,255,255,0.12);
+            color: var(--text);
+        }
+        .lang-toggle a {
+            color: var(--text-muted);
+        }
+        .lang-toggle a:hover {
+            color: var(--text-secondary);
+            background: rgba(255,255,255,0.05);
+        }
 
         /* ─── HERO ─── */
         .hero {
@@ -573,6 +690,44 @@
                 padding: 16px 24px;
                 gap: 16px;
             }
+            .nav-dropdown-panel {
+                position: static;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+                background: rgba(255,255,255,0.03);
+                border: none;
+                padding: 4px 0;
+                min-width: auto;
+                border-radius: 10px;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                display: none;
+            }
+            .nav-dropdown.open .nav-dropdown-panel {
+                display: block;
+                transform: none;
+            }
+            .nav-dropdown:hover .nav-dropdown-panel {
+                display: none;
+                opacity: 0;
+                visibility: hidden;
+            }
+            .nav-dropdown.open:hover .nav-dropdown-panel {
+                display: block;
+                opacity: 1;
+                visibility: visible;
+            }
+            .nav-dropdown-panel a {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+            .nav-dropdown-panel a .dropdown-icon {
+                width: 28px;
+                height: 28px;
+            }
+            .nav-right-mobile .mobile-menu-btn-2 { min-width: 36px; min-height: 36px; }
             .hero { padding: 100px 0 24px; }
             section { padding: 40px 0; }
             .pricing-grid { gap: 16px; }
@@ -721,14 +876,45 @@
                 </svg>
             </button>
             <div class="nav-links">
-                <a href="/en/#features">Features</a>
-                <a href="/en/pricing.html">Pricing</a>
-                <a href="/en/#faq">FAQ</a>
-                <a href="/en/support.html">Support</a>
-                <a href="javascript:void(0)" class="nav-cta nav-cta-desktop">Download</a>
+                <div class="nav-dropdown">
+                    <button class="nav-dropdown-toggle" onclick="this.parentElement.classList.toggle('open')">
+                        Product
+                        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4.5L6 7.5L9 4.5"/></svg>
+                    </button>
+                    <div class="nav-dropdown-panel">
+                        <a href="/en/#features">
+                            <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></span>
+                            Features
+                        </a>
+                        <a href="/en/#how-it-works">
+                            <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></span>
+                            How it works
+                        </a>
+                        <a href="/en/changelog.html">
+                            <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+                            Changelog
+                        </a>
+                        <a href="/en/docs/guida-rapida.html">
+                            <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></span>
+                            Documentation
+                        </a>
+                        <a href="/en/#faq">
+                            <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg></span>
+                            FAQ
+                        </a>
+                    </div>
+                </div>
+                <a href="pricing.html">Pricing</a>
+                <a href="blog.html">Blog</a>
+                <a href="/en/docs/guida-rapida.html">Docs</a>
+                <div class="lang-toggle">
+                    <a href="/prezzi.html" title="Italiano">IT</a>
+                    <span class="lang-active">EN</span>
+                </div>
+                <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="nav-cta nav-cta-desktop">Download</a>
             </div>
             <div class="nav-right-mobile">
-                <a href="javascript:void(0)" class="nav-cta">Start now</a>
+                <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="nav-cta">Start now</a>
                 <button class="mobile-menu-btn mobile-menu-btn-2" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/>
