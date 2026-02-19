@@ -56,7 +56,7 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
         /* ─── NAV ─── */
-        nav { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 100; padding: 0; width: auto; max-width: 900px; }
+        nav { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 100; padding: 0; width: calc(100% - 48px); max-width: 1200px; }
         .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 10px 10px 10px 20px; background: rgba(12, 12, 16, 0.7); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); border-radius: 60px; }
         .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 700; font-size: 18px; letter-spacing: -0.5px; white-space: nowrap; }
         .logo-icon { width: 28px; height: 28px; border-radius: 7px; overflow: hidden; flex-shrink: 0; }
@@ -260,12 +260,12 @@
                         <a href="/#features"><span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></span>Funzionalit&agrave;</a>
                         <a href="/#how-it-works"><span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></span>Come funziona</a>
                         <a href="changelog.html"><span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>Changelog</a>
-                        <a href="docs.html"><span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></span>Documentazione</a>
+                        <a href="/docs/guida-rapida.html"><span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></span>Documentazione</a>
                     </div>
                 </div>
                 <a href="/#pricing">Prezzi</a>
                 <a href="blog.html">Blog</a>
-                <a href="docs.html">Docs</a>
+                <a href="/docs/guida-rapida.html">Docs</a>
                 <div class="lang-toggle">
                     <span class="lang-active">IT</span>
                     <a href="/en/faq.html" title="English">EN</a>
@@ -336,7 +336,7 @@
                         Quali modelli AI sono disponibili?
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                     </button>
-                    <div class="faq-answer"><div class="faq-answer-inner">Drape supporta 8 modelli AI: Claude 4.5 Sonnet, GPT-5, Gemini 2.5 Pro, Gemini 3 Flash, Llama 3.3 70B, e altri. Puoi cambiare modello in qualsiasi momento in base al tipo di task che stai svolgendo.</div></div>
+                    <div class="faq-answer"><div class="faq-answer-inner">Drape supporta 5 modelli AI: Claude 4.5 Sonnet, Claude 4.6 Opus, GPT 5.2, Gemini 3.0 Pro e Gemini 3.0 Flash. Puoi cambiare modello in qualsiasi momento in base al tipo di task che stai svolgendo.</div></div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight=a.style.maxHeight?null:a.scrollHeight+'px'">
@@ -454,7 +454,7 @@
             <div class="footer-col">
                 <h4>Risorse</h4>
                 <a href="blog.html">Blog</a>
-                <a href="docs.html">Documentazione</a>
+                <a href="/docs/guida-rapida.html">Documentazione</a>
                 <a href="changelog.html">Changelog</a>
                 <a href="support.html">Supporto</a>
             </div>

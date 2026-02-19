@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Live preview - Drape Documentation</title>
+    <meta name="description" content="See the result of your code in real time, directly from the app.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#6F5CFF">
+    <link rel="canonical" href="https://drape-dev.it/en/docs/preview-live.html">
+    <link rel="alternate" hreflang="it" href="https://drape-dev.it/docs/preview-live.html">
+    <link rel="alternate" hreflang="en" href="https://drape-dev.it/en/docs/preview-live.html">
+    <link rel="alternate" hreflang="x-default" href="https://drape-dev.it/docs/preview-live.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://drape-dev.it/en/docs/preview-live.html">
+    <meta property="og:title" content="Live preview - Drape Documentation">
+    <meta property="og:description" content="See the result of your code in real time, directly from the app.">
+    <meta property="og:image" content="https://drape-dev.it/og-image-v2.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon2-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon2-16x16.png">
+    <link rel="icon" href="/favicon2.ico" sizes="48x48">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon2.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/docs/docs.css">
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+    <div class="container">
+        <div class="nav-inner">
+            <a href="/en/" class="logo"><div class="logo-icon"><img src="/logo.png" alt="Drape"></div>Drape</a>
+            <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <div class="nav-links">
+                <div class="nav-dropdown">
+                    <button class="nav-dropdown-toggle" onclick="this.parentElement.classList.toggle('open')">
+                        Product
+                        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4.5L6 7.5L9 4.5"/></svg>
+                    </button>
+                    <div class="nav-dropdown-panel">
+                        <a href="/en/#features"><span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></span>Features</a>
+                        <a href="/en/#how-it-works"><span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></span>How it Works</a>
+                        <a href="/en/changelog.html"><span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>Changelog</a>
+                        <a href="/en/docs/guida-rapida.html"><span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></span>Documentation</a>
+                        <a href="/en/faq.html"><span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg></span>FAQ</a>
+                    </div>
+                </div>
+                <a href="/en/#pricing">Pricing</a>
+                <a href="/en/blog.html">Blog</a>
+                <a href="/en/docs/guida-rapida.html" style="color: var(--text);">Docs</a>
+                <div class="lang-toggle">
+                    <a href="/docs/preview-live.html" title="Italiano">IT</a>
+                    <span class="lang-active">EN</span>
+                </div>
+                <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="nav-cta">Download</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="sidebar-backdrop" onclick="closeSidebar()"></div>
+<button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Documentation menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+</button>
+
+<div class="docs-layout">
+
+    <aside class="docs-sidebar" id="docsSidebar">
+        <div class="sidebar-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Search documentation..." id="docsSearch" oninput="filterSidebar(this.value)">
+        </div>
+        <div class="sidebar-group" data-group="inizia">
+            <div class="sidebar-group-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                Get started
+            </div>
+            <a class="sidebar-link" href="/en/docs/guida-rapida.html">Quick start</a>
+            <a class="sidebar-link" href="/en/docs/creare-progetto.html">Create a project</a>
+            <a class="sidebar-link" href="/en/docs/interfaccia.html">Editor interface</a>
+            <a class="sidebar-link" href="/en/docs/preview-live.html">Live preview</a>
+        </div>
+        <div class="sidebar-group" data-group="ai">
+            <div class="sidebar-group-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                AI Agent
+            </div>
+            <a class="sidebar-link" href="/en/docs/modelli.html">Available models</a>
+            <a class="sidebar-link" href="/en/docs/generare-codice.html">Generate code</a>
+            <a class="sidebar-link" href="/en/docs/debug-ai.html">AI debugging</a>
+        </div>
+        <div class="sidebar-group" data-group="terminal">
+            <div class="sidebar-group-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                Terminal
+            </div>
+            <a class="sidebar-link" href="/en/docs/comandi-base.html">Basic commands</a>
+            <a class="sidebar-link" href="/en/docs/package-manager.html">Package manager</a>
+            <a class="sidebar-link" href="/en/docs/ambiente-linux.html">Linux environment</a>
+        </div>
+        <div class="sidebar-group" data-group="github">
+            <div class="sidebar-group-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+                GitHub
+            </div>
+            <a class="sidebar-link" href="/en/docs/collegare-github.html">Connect GitHub</a>
+            <a class="sidebar-link" href="/en/docs/clone-import.html">Clone & import</a>
+            <a class="sidebar-link" href="/en/docs/commit-push.html">Commit & push</a>
+        </div>
+        <div class="sidebar-group" data-group="account">
+            <div class="sidebar-group-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                Account & Plans
+            </div>
+            <a class="sidebar-link" href="/en/docs/gestire-account.html">Manage account</a>
+            <a class="sidebar-link" href="/en/docs/piani-prezzi.html">Plans & pricing</a>
+            <a class="sidebar-link" href="/en/docs/richieste-ai.html">AI requests</a>
+        </div>
+    </aside>
+
+    <main class="docs-main">
+        <div class="doc-page">
+
+            <h1>Live preview</h1>
+<p class="doc-intro">See the result of your code in real time, directly from the app.</p>
+
+<h2>How it works</h2>
+<p>When you start a web server in the terminal (e.g. <code>npm start</code>, <code>python -m http.server</code>), Drape automatically detects the port and offers to open the <strong>live preview</strong>.</p>
+<h3>Automatic detection</h3>
+<p>Drape monitors active ports and shows a notification when a server is started. Tap to open the preview.</p>
+<h3>Built-in browser</h3>
+<p>The preview shows your site/app in a built-in browser that automatically refreshes with every saved change.</p>
+
+<h2>Hot reload</h2>
+<p>For frameworks that support it (React, Next.js, Vite...), <strong>hot reload</strong> works automatically. Edit a component, save, and see the change instantly without reloading the page.</p>
+<h3>Supported frameworks</h3>
+<p>React, Next.js, Vite, Vue CLI and any framework with native HMR (Hot Module Replacement) support.</p>
+
+<h2>Supported ports</h2>
+<p>Drape supports any port between <code>1000</code> and <code>65535</code>. The most common ports are detected automatically:</p>
+<h3>Common ports</h3>
+<ul>
+    <li><code>3000</code> &mdash; React, Next.js, Express</li>
+    <li><code>5173</code> &mdash; Vite</li>
+    <li><code>8000</code> &mdash; Python, Django</li>
+    <li><code>8080</code> &mdash; Vue, generic</li>
+</ul>
+<h3>Custom ports</h3>
+<p>If you use a non-standard port, you can configure it manually in the preview settings.</p>
+
+<div class="callout">
+    <p><strong>Note:</strong> The preview is only accessible by you. Your project is not exposed to the internet until you explicitly deploy it.</p>
+</div>
+
+<div class="media-placeholder">
+    <div class="media-placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+    <div class="media-placeholder-label">Image: Live preview in action</div>
+    <div class="media-placeholder-desc">Split-screen screenshot: code in the editor on the left, live preview showing the result on the right (e.g. a rendered React app).</div>
+</div>
+
+<div class="media-placeholder">
+    <div class="media-placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+    <div class="media-placeholder-label">Video: Hot reload in action</div>
+    <div class="media-placeholder-desc">Short GIF or video showing a code change and the instant preview update without page reload. Duration: 10-15 seconds.</div>
+</div>
+
+            <div class="faq-section">
+                <h2>Frequently asked questions</h2>
+                <p class="faq-intro">Click a question to see the answer.</p>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">Does the preview work with all frameworks?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+                    <div class="faq-answer"><div class="faq-answer-inner">Yes, any framework that starts a local web server works with the preview: React, Vue, Angular, Svelte, Next.js, Flask, Django, Express and many more.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">Can I share the preview with others?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+                    <div class="faq-answer"><div class="faq-answer-inner">No, the preview is only accessible from your device. To share the result, you'll need to deploy the project on a hosting service.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">How do I change the preview port?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+                    <div class="faq-answer"><div class="faq-answer-inner">Drape automatically detects your server's port. If you use a non-standard port, you can configure it manually in the preview settings.</div></div>
+                </div>
+            </div>
+
+            <div class="doc-nav">
+                <a href="/en/docs/interfaccia.html">
+                    <span class="doc-nav-label">Previous</span>
+                    <span class="doc-nav-title">&larr; Editor interface</span>
+                </a>
+                <a href="/en/docs/modelli.html">
+                    <span class="doc-nav-label">Next</span>
+                    <span class="doc-nav-title">Available models &rarr;</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <aside class="docs-toc" id="docsToc">
+        <a href="#" class="toc-title" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" style="text-decoration:none;color:inherit;cursor:pointer;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="18" y2="18"/></svg>
+            On this page
+        </a>
+        <div id="tocLinks"></div>
+    </aside>
+
+</div>
+
+<!-- ─── FEEDBACK ─── -->
+<div class="docs-feedback">
+    <div class="feedback-question">
+        <p>Was this page helpful?</p>
+        <div class="feedback-buttons">
+            <button class="feedback-btn" onclick="sendFeedback(this, true)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg>Yes</button>
+            <button class="feedback-btn" onclick="sendFeedback(this, false)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17"/></svg>No</button>
+        </div>
+        <p class="feedback-thanks" id="feedbackThanks">Thanks for your feedback!</p>
+    </div>
+    <div class="feedback-socials">
+        <a href="https://instagram.com/draborapp" target="_blank" rel="noopener noreferrer" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="https://discord.gg/drape" target="_blank" rel="noopener noreferrer" title="Discord"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg></a>
+        <a href="https://x.com/drapeapp" target="_blank" rel="noopener noreferrer" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    </div>
+</div>
+
+<script src="/docs/docs.js"></script>
+</body>
+</html>

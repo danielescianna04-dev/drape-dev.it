@@ -70,7 +70,7 @@
       "operatingSystem": "iOS, Android",
       "applicationCategory": "DeveloperApplication",
       "applicationSubCategory": "IDE",
-      "description": "Drape is the first mobile IDE with multi-model AI for vibe coding from your phone. Write code, build projects, and ship apps from iPhone and Android with full terminal, AI Agent, GitHub integration, and support for GPT-5, Claude 4.5 Sonnet, and Gemini Pro 2.5.",
+      "description": "Drape is the first mobile IDE with multi-model AI for vibe coding from your phone. Write code, build projects, and ship apps from iPhone and Android with full terminal, AI Agent, GitHub integration, and support for Claude 4.5 Sonnet, GPT 5.2, and Gemini 3.0.",
       "url": "https://drape-dev.it",
       "image": "https://drape-dev.it/icon2.png",
       "screenshot": "https://drape-dev.it/og-image-v2.png",
@@ -82,7 +82,7 @@
       },
       "featureList": [
         "Desktop-grade terminal (bash/zsh) on mobile",
-        "Multi-model AI: GPT-5, Claude 4.5 Sonnet, Gemini Pro 2.5",
+        "Multi-model AI: Claude 4.5 Sonnet, Claude 4.6 Opus, GPT 5.2, Gemini 3.0 Pro, Gemini 3.0 Flash",
         "Autonomous AI Agent for code generation",
         "Vibe coding - describe what you want, AI builds it",
         "GitHub repository integration (clone, commit, push, PR)",
@@ -105,7 +105,7 @@
           "name": "What is vibe coding and how does it work?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Vibe coding is a new way of programming where you describe what you want to build in natural language, and AI generates the code for you. With Drape, you can vibe code directly from your phone - just tell the AI what you need, and it writes, tests, and deploys the code. Drape supports GPT-5, Claude 4.5, and Gemini Pro 2.5 for the best vibe coding experience on mobile."
+            "text": "Vibe coding is a new way of programming where you describe what you want to build in natural language, and AI generates the code for you. With Drape, you can vibe code directly from your phone - just tell the AI what you need, and it writes, tests, and deploys the code. Drape supports Claude 4.5 Sonnet, GPT 5.2, and Gemini 3.0 for the best vibe coding experience on mobile."
           }
         },
         {
@@ -121,7 +121,7 @@
           "name": "What is the best mobile IDE for iPhone and Android?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Drape is the most complete mobile IDE available for iPhone and Android. It's the only mobile IDE that combines a desktop-grade terminal (bash/zsh), multi-model AI (GPT-5, Claude 4.5, Gemini), an autonomous AI Agent, and native GitHub integration."
+            "text": "Drape is the most complete mobile IDE available for iPhone and Android. It's the only mobile IDE that combines a desktop-grade terminal (bash/zsh), multi-model AI (Claude 4.5 Sonnet, GPT 5.2, Gemini 3.0), an autonomous AI Agent, and native GitHub integration."
           }
         },
         {
@@ -145,7 +145,7 @@
           "name": "What AI models does Drape support for coding?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Drape integrates multiple AI models including OpenAI GPT-5, Anthropic Claude 4.5 Sonnet, and Google Gemini Pro 2.5. You can switch between models based on your task. Drape also features an autonomous AI Agent that can create and modify entire projects independently."
+            "text": "Drape integrates multiple AI models including Anthropic Claude 4.5 Sonnet, Claude 4.6 Opus, OpenAI GPT 5.2, and Google Gemini 3.0 Pro and Flash. You can switch between models based on your task. Drape also features an autonomous AI Agent that can create and modify entire projects independently."
           }
         }
       ]
@@ -208,8 +208,8 @@
             transform: translateX(-50%);
             z-index: 100;
             padding: 0;
-            width: auto;
-            max-width: 900px;
+            width: calc(100% - 48px);
+            max-width: 1200px;
         }
         .nav-inner {
             display: flex;
@@ -401,19 +401,13 @@
             align-items: center;
             text-align: center;
             position: relative;
-            overflow: hidden;
-            padding: 80px 0 24px;
+            overflow: visible;
+            padding: 90px 0 32px;
         }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 900px;
-            height: 900px;
-            background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, rgba(99, 102, 241, 0.06) 40%, transparent 70%);
-            pointer-events: none;
+        .hero > .container {
+            max-width: none;
+            width: 100%;
+            padding: 0 40px;
         }
         .hero-badge {
             display: inline-flex;
@@ -421,35 +415,31 @@
             gap: 8px;
             padding: 6px 16px;
             border-radius: 20px;
-            background: rgba(155, 138, 255, 0.08);
-            border: 1px solid rgba(155, 138, 255, 0.2);
+            background: rgba(155, 138, 255, 0.05);
+            border: 1px solid rgba(155, 138, 255, 0.12);
             color: var(--accent-light);
             font-size: 12px;
             font-weight: 600;
             margin-bottom: 14px;
             letter-spacing: 0.5px;
             text-transform: uppercase;
-            box-shadow: 0 0 20px rgba(155, 138, 255, 0.08);
         }
         .hero h1 {
             font-size: clamp(36px, 7vw, 64px);
             font-weight: 800;
             line-height: 1.0;
             letter-spacing: -2.5px;
-            margin-bottom: 14px;
-            background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.65) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-bottom: 16px;
+            color: #fff;
             position: relative;
         }
 
         .hero p.hero-sub {
             font-size: clamp(14px, 1.8vw, 17px);
-            color: rgba(255,255,255,0.45);
+            color: rgba(255,255,255,0.4);
             max-width: 500px;
             margin: 0 auto 8px;
-            line-height: 1.5;
+            line-height: 1.6;
         }
         .hero-ctas {
             display: flex;
@@ -463,7 +453,7 @@
             align-items: center;
             gap: 8px;
             padding: 13px 28px;
-            background: linear-gradient(135deg, var(--accent) 0%, #9B8AFF 100%);
+            background: #9B8AFF;
             color: #fff;
             border: none;
             border-radius: 60px;
@@ -471,13 +461,13 @@
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
-            transition: all 0.3s;
-            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.35);
+            transition: all 0.25s;
+            box-shadow: 0 4px 20px rgba(155, 138, 255, 0.2);
         }
         .btn-primary:hover {
-            background: linear-gradient(135deg, var(--accent-light) 0%, #BEB4FF 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(168, 85, 247, 0.45);
+            background: #BEB4FF;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(155, 138, 255, 0.25);
         }
         .btn-primary svg { width: 18px; height: 18px; }
         .btn-secondary {
@@ -681,7 +671,8 @@
         /* ─── HERO CHAT DEMO ─── */
         .hero-demo {
             margin-top: 32px;
-            max-width: 740px;
+            width: 100%;
+            max-width: 1000px;
             margin-left: auto;
             margin-right: auto;
             position: relative;
@@ -692,124 +683,94 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 900px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(155, 138, 255, 0.15) 0%, rgba(99, 102, 241, 0.06) 35%, transparent 65%);
-            pointer-events: none;
+            width: 150%;
+            height: 180%;
+            background: radial-gradient(ellipse at 20% 50%, rgba(155, 138, 255, 0.3) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 40%, rgba(168, 85, 247, 0.22) 0%, transparent 50%),
+                        radial-gradient(ellipse at 50% 70%, rgba(99, 102, 241, 0.15) 0%, transparent 45%);
             filter: blur(80px);
-        }
-        .hero-demo::after {
-            content: '';
-            position: absolute;
-            bottom: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70%;
-            height: 80px;
-            background: radial-gradient(ellipse, rgba(155, 138, 255, 0.15) 0%, transparent 70%);
-            filter: blur(30px);
             pointer-events: none;
+            z-index: 0;
         }
         .chat-border-glow {
             position: relative;
-            border-radius: 28px;
-            padding: 1.5px;
-            background: linear-gradient(160deg, rgba(155,138,255,0.5), rgba(255,255,255,0.08) 30%, rgba(99,102,241,0.15) 60%, rgba(155,138,255,0.4));
-            background-size: 300% 300%;
-            animation: borderShift 6s ease infinite;
-        }
-        @keyframes borderShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        .chat-border-glow::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 30px;
-            background: radial-gradient(ellipse at 50% 0%, rgba(155,138,255,0.25) 0%, transparent 55%);
-            filter: blur(20px);
-            opacity: 0.8;
-            pointer-events: none;
-            z-index: -1;
+            z-index: 1;
         }
         .chat-window {
             position: relative;
-            background: linear-gradient(180deg, #111114 0%, #0a0a0d 100%);
-            border-radius: 27px;
-            box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03) inset;
+            background: #0c0c10;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
         }
+        /* Empty state welcome */
         .chat-welcome {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 32px 24px 16px;
+            padding: 28px 24px 14px;
             text-align: center;
         }
         .chat-welcome-logo {
-            width: 60px;
-            height: 60px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            background: radial-gradient(circle at 50% 40%, rgba(155, 138, 255, 0.2) 0%, rgba(155, 138, 255, 0.08) 100%);
-            border: 2px solid rgba(155, 138, 255, 0.3);
+            background: rgba(155, 138, 255, 0.08);
+            border: 1px solid rgba(155, 138, 255, 0.15);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 14px;
-            box-shadow: 0 0 30px rgba(155, 138, 255, 0.15), 0 0 60px rgba(155, 138, 255, 0.05);
+            margin-bottom: 16px;
         }
         .chat-welcome-logo svg {
-            width: 28px;
-            height: 28px;
+            width: 22px;
+            height: 22px;
             color: #9B8AFF;
         }
         .chat-welcome h3 {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 700;
             color: #fff;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.3px;
             margin-bottom: 6px;
         }
         .chat-welcome p {
             font-size: 13px;
-            color: rgba(255,255,255,0.45);
-            line-height: 1.5;
-            max-width: 320px;
+            color: rgba(255,255,255,0.35);
+            line-height: 1.55;
+            max-width: 340px;
         }
         .chat-suggestions {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 8px;
-            padding: 0 24px 16px;
+            padding: 0 24px 20px;
         }
         .chat-chip {
-            padding: 10px 18px;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.07);
+            padding: 9px 16px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
             font-size: 13px;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.4);
             cursor: pointer;
-            transition: all 0.25s;
+            transition: all 0.2s;
             white-space: nowrap;
             font-weight: 500;
         }
         .chat-chip:hover {
-            background: rgba(155, 138, 255, 0.1);
-            border-color: rgba(155, 138, 255, 0.25);
-            color: rgba(255,255,255,0.8);
-            box-shadow: 0 4px 16px rgba(155, 138, 255, 0.12);
-            transform: translateY(-1px);
+            background: rgba(155, 138, 255, 0.06);
+            border-color: rgba(155, 138, 255, 0.15);
+            color: rgba(255,255,255,0.7);
         }
-        /* Input container — matches the app */
+        /* Input container */
         .chat-input-container {
-            margin: 0 16px 16px;
-            border-radius: 24px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: linear-gradient(180deg, rgba(35,35,40,0.95), rgba(20,20,25,0.98));
-            box-shadow: 0 8px 32px rgba(139, 124, 246, 0.1), 0 0 0 1px rgba(255,255,255,0.03) inset;
+            margin: 0 14px 14px;
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.04);
             position: relative;
         }
         .chat-input-controls {
@@ -886,8 +847,8 @@
             position: absolute;
             bottom: calc(100% + 6px);
             right: 0;
-            background: #1a1a1f;
-            border: 1px solid rgba(255,255,255,0.1);
+            background: #141418;
+            border: 1px solid rgba(255,255,255,0.08);
             border-radius: 12px;
             padding: 4px;
             min-width: 200px;
@@ -896,7 +857,7 @@
             transform: translateY(6px);
             transition: all 0.15s ease;
             z-index: 10;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
         }
         .chat-model-selector.open .chat-model-dropdown {
             opacity: 1;
@@ -969,7 +930,6 @@
         .chat-send-btn.active {
             background: #9B8AFF;
             border-color: transparent;
-            box-shadow: 0 4px 8px rgba(155, 138, 255, 0.4);
         }
         .chat-send-btn svg {
             width: 16px;
@@ -979,12 +939,13 @@
         .chat-send-btn.active svg {
             color: #fff;
         }
+        /* CTA overlay after send */
         .chat-cta-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(8, 8, 12, 0.96);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(12, 12, 16, 0.97);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -993,8 +954,8 @@
             padding: 40px;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.5s ease;
-            border-radius: 27px;
+            transition: opacity 0.4s ease;
+            border-radius: 23px;
             z-index: 20;
         }
         .chat-cta-overlay.visible {
@@ -1002,11 +963,11 @@
             pointer-events: auto;
         }
         .chat-cta-overlay .cta-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
-            background: rgba(155, 138, 255, 0.12);
-            border: 1px solid rgba(155, 138, 255, 0.25);
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: rgba(155, 138, 255, 0.08);
+            border: 1px solid rgba(155, 138, 255, 0.12);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1036,17 +997,15 @@
             background: #9B8AFF;
             color: #fff;
             border: none;
-            border-radius: 16px;
+            border-radius: 14px;
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
             transition: all 0.2s;
-            box-shadow: 0 8px 24px rgba(155, 138, 255, 0.3);
         }
         .chat-cta-overlay .cta-download:hover {
             background: #BEB4FF;
-            transform: translateY(-1px);
         }
         .chat-cta-overlay .cta-download svg {
             width: 18px;
@@ -1066,21 +1025,21 @@
         }
         @media (max-width: 768px) {
             .hero-demo {
-                margin-top: 20px;
+                margin-top: 28px;
                 margin-left: 12px;
                 margin-right: 12px;
             }
-            .chat-border-glow { border-radius: 24px; }
-            .chat-window { border-radius: 23px; }
-            .chat-welcome { padding: 24px 16px 12px; }
-            .chat-welcome-logo { width: 44px; height: 44px; }
-            .chat-welcome-logo svg { width: 22px; height: 22px; }
-            .chat-welcome h3 { font-size: 16px; }
+            .chat-border-glow { border-radius: 20px; }
+            .chat-window { border-radius: 19px; }
+            .chat-welcome { padding: 28px 16px 14px; }
+            .chat-welcome-logo { width: 40px; height: 40px; }
+            .chat-welcome-logo svg { width: 20px; height: 20px; }
+            .chat-welcome h3 { font-size: 15px; }
             .chat-welcome p { font-size: 12px; }
-            .chat-suggestions { padding: 0 12px 12px; gap: 6px; }
+            .chat-suggestions { padding: 0 12px 14px; gap: 6px; }
             .chat-chip { font-size: 12px; padding: 7px 12px; }
-            .chat-input-container { margin: 0 10px 10px; border-radius: 18px; }
-            .chat-cta-overlay { border-radius: 23px; padding: 28px 20px; }
+            .chat-input-container { margin: 0 10px 10px; border-radius: 16px; }
+            .chat-cta-overlay { border-radius: 19px; padding: 28px 20px; }
         }
 
         /* ─── SOCIAL PROOF BAR ─── */
@@ -1932,7 +1891,7 @@
                 height: 22px;
                 font-size: 10px;
             }
-            .hero { padding: 80px 0 20px; min-height: auto; }
+            .hero { padding: 80px 0 28px; min-height: auto; }
             .steps-grid {
                 grid-template-columns: 1fr;
                 gap: 40px;
@@ -1994,7 +1953,7 @@
                             <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
                             Changelog
                         </a>
-                        <a href="docs.html">
+                        <a href="/en/docs/guida-rapida.html">
                             <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></span>
                             Documentation
                         </a>
@@ -2006,7 +1965,7 @@
                 </div>
                 <a href="#pricing">Pricing</a>
                 <a href="blog.html">Blog</a>
-                <a href="docs.html">Docs</a>
+                <a href="/en/docs/guida-rapida.html">Docs</a>
                 <div class="lang-toggle">
                     <a href="/" title="Italiano">IT</a>
                     <span class="lang-active">EN</span>
@@ -2022,7 +1981,7 @@
     <div class="container">
         <div class="hero-badge">The first mobile IDE with AI</div>
         <h1>Your smartphone<br>is your new IDE.</h1>
-        <p class="hero-sub">Real terminal, 8 AI models and GitHub &mdash; all from your iPhone. Like working from your Mac, but anywhere.</p>
+        <p class="hero-sub">Real terminal, 5 AI models and GitHub &mdash; all from your iPhone. Like working from your Mac, but anywhere.</p>
         <div class="hero-ctas" style="margin-top: 16px;">
             <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="btn-primary">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
@@ -2072,26 +2031,17 @@
                                     <div class="chat-model-option selected" data-model="Claude 4.5 Sonnet">
                                         <span class="model-dot" style="background: #c084fc;"></span>Claude 4.5 Sonnet
                                     </div>
-                                    <div class="chat-model-option" data-model="Claude 4.5 Opus">
-                                        <span class="model-dot" style="background: #a855f7;"></span>Claude 4.5 Opus
+                                    <div class="chat-model-option" data-model="Claude 4.6 Opus">
+                                        <span class="model-dot" style="background: #a855f7;"></span>Claude 4.6 Opus
                                     </div>
-                                    <div class="chat-model-option" data-model="Claude Sonnet 4">
-                                        <span class="model-dot" style="background: #9B8AFF;"></span>Claude Sonnet 4
+                                    <div class="chat-model-option" data-model="GPT 5.2">
+                                        <span class="model-dot" style="background: #10b981;"></span>GPT 5.2
                                     </div>
-                                    <div class="chat-model-option" data-model="Claude Haiku 3.5">
-                                        <span class="model-dot" style="background: #d8b4fe;"></span>Claude Haiku 3.5
+                                    <div class="chat-model-option" data-model="Gemini 3.0 Pro">
+                                        <span class="model-dot" style="background: #3b82f6;"></span>Gemini 3.0 Pro
                                     </div>
-                                    <div class="chat-model-option" data-model="GPT-5.2">
-                                        <span class="model-dot" style="background: #10b981;"></span>GPT-5.2
-                                    </div>
-                                    <div class="chat-model-option" data-model="Gemini 3 Pro">
-                                        <span class="model-dot" style="background: #3b82f6;"></span>Gemini 3 Pro
-                                    </div>
-                                    <div class="chat-model-option" data-model="Gemini 3 Flash">
-                                        <span class="model-dot" style="background: #60a5fa;"></span>Gemini 3 Flash
-                                    </div>
-                                    <div class="chat-model-option" data-model="Llama 3.3 70B">
-                                        <span class="model-dot" style="background: #f59e0b;"></span>Llama 3.3 70B
+                                    <div class="chat-model-option" data-model="Gemini 3.0 Flash">
+                                        <span class="model-dot" style="background: #60a5fa;"></span>Gemini 3.0 Flash
                                     </div>
                                 </div>
                             </div>
@@ -2231,8 +2181,8 @@
                 <div class="feature-icon">
                     <div class="feature-number">03</div>
                 </div>
-                <h3>8 AI models. You choose.</h3>
-                <p>Claude, GPT, Gemini, Llama &mdash; switch models on the fly based on what you're building. Each has its strengths.</p>
+                <h3>5 AI models. You choose.</h3>
+                <p>Claude, GPT, Gemini &mdash; switch models on the fly based on what you're building. Each has its strengths.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
@@ -2264,9 +2214,9 @@
     <div class="container">
         <div class="stats-grid">
             <div class="stat-item">
-                <div class="stat-number">8</div>
+                <div class="stat-number">5</div>
                 <div class="stat-label">AI Models</div>
-                <div class="stat-sublabel">Claude, GPT, Gemini, Llama</div>
+                <div class="stat-sublabel">Claude, GPT, Gemini</div>
             </div>
             <div class="stat-item">
                 <div class="stat-number">&lt;30s</div>
@@ -2288,7 +2238,7 @@
 </div>
 
 <!-- ─── HOW IT WORKS ─── -->
-<section>
+<section id="how-it-works">
     <div class="container">
         <div class="section-header center">
             <div class="section-label">How it works</div>
@@ -2364,7 +2314,7 @@
                 <ul class="pricing-features">
                     <li>3 projects</li>
                     <li>Claude 4.5 Sonnet</li>
-                    <li>Gemini 3 Flash</li>
+                    <li>Gemini 3.0 Flash</li>
                     <li>Full terminal</li>
                     <li>Live preview</li>
                 </ul>
@@ -2378,7 +2328,7 @@
                 <div class="pricing-period">per month</div>
                 <ul class="pricing-features">
                     <li>Unlimited projects</li>
-                    <li>All 8 AI models</li>
+                    <li>All 5 AI models</li>
                     <li>Import repos from GitHub</li>
                     <li>Push, commit, PR</li>
                     <li>Priority support</li>
@@ -2393,7 +2343,7 @@
                 <ul class="pricing-features">
                     <li>Everything in Go, plus:</li>
                     <li>Unlimited AI messages</li>
-                    <li>Premium models (Opus, GPT-5.2)</li>
+                    <li>Premium models (Opus, GPT 5.2)</li>
                     <li>Boosted containers</li>
                     <li>Dedicated support</li>
                 </ul>
@@ -2444,7 +2394,7 @@
                     <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-answer">
-                    <p>The Starter plan includes Claude 4.5 Sonnet and Gemini 3 Flash. Go (&euro;22.99/month) and Pro (&euro;39.99/month) plans also unlock Claude 4.5 Opus, GPT-5.2, Gemini 3 Pro and Llama 3.3 70B. You can switch models at any time.</p>
+                    <p>The Starter plan includes Claude 4.5 Sonnet and Gemini 3.0 Flash. Go (&euro;22.99/month) and Pro (&euro;39.99/month) plans also unlock Claude 4.6 Opus, GPT 5.2 and Gemini 3.0 Pro. You can switch models at any time.</p>
                 </div>
             </div>
             <div class="faq-item">
@@ -2528,7 +2478,7 @@
             <div class="footer-col">
                 <h4>Resources</h4>
                 <a href="blog.html">Blog</a>
-                <a href="docs.html">Documentation</a>
+                <a href="/en/docs/guida-rapida.html">Documentation</a>
                 <a href="changelog.html">Changelog</a>
                 <a href="support.html">Support</a>
             </div>
