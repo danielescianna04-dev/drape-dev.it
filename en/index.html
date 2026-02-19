@@ -275,6 +275,9 @@
             cursor: pointer;
             padding: 8px;
         }
+        .nav-right-mobile {
+            display: none;
+        }
         .nav-dropdown {
             position: relative;
         }
@@ -1025,19 +1028,20 @@
         }
         @media (max-width: 768px) {
             .hero-demo {
-                margin-top: 28px;
-                margin-left: 12px;
-                margin-right: 12px;
+                margin-top: 24px;
+                margin-left: 0;
+                margin-right: 0;
             }
+            .hero-demo::before { width: 120%; height: 140%; filter: blur(60px); }
             .chat-border-glow { border-radius: 20px; }
             .chat-window { border-radius: 19px; }
-            .chat-welcome { padding: 28px 16px 14px; }
-            .chat-welcome-logo { width: 40px; height: 40px; }
-            .chat-welcome-logo svg { width: 20px; height: 20px; }
-            .chat-welcome h3 { font-size: 15px; }
-            .chat-welcome p { font-size: 12px; }
-            .chat-suggestions { padding: 0 12px 14px; gap: 6px; }
-            .chat-chip { font-size: 12px; padding: 7px 12px; }
+            .chat-welcome { padding: 20px 16px 10px; }
+            .chat-welcome-logo { width: 36px; height: 36px; }
+            .chat-welcome-logo svg { width: 18px; height: 18px; }
+            .chat-welcome h3 { font-size: 15px; margin-bottom: 2px; }
+            .chat-welcome p { display: none; }
+            .chat-suggestions { padding: 0 14px 14px; gap: 8px; }
+            .chat-chip { font-size: 12px; padding: 8px 14px; min-height: 36px; border-radius: 18px; }
             .chat-input-container { margin: 0 10px 10px; border-radius: 16px; }
             .chat-cta-overlay { border-radius: 19px; padding: 28px 20px; }
         }
@@ -1824,16 +1828,43 @@
         /* ─── RESPONSIVE ─── */
         @media (max-width: 768px) {
             nav {
-                top: 10px;
+                top: 6px;
                 left: 10px;
                 right: 10px;
                 transform: none;
                 max-width: none;
                 width: auto;
             }
-            .nav-inner { padding: 8px 8px 8px 16px; }
+            .nav-inner { padding: 3px 4px 3px 12px; border-radius: 50px; }
+            .logo { font-size: 14px; gap: 6px; }
+            .logo-icon { width: 20px; height: 20px; border-radius: 5px; }
             .nav-links { display: none; }
-            .mobile-menu-btn { display: block; }
+            .nav-cta-desktop { display: none; }
+            .mobile-menu-btn:first-of-type { display: none; }
+            .nav-right-mobile {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+            .nav-right-mobile .nav-cta {
+                padding: 5px 14px;
+                font-size: 12px;
+                border-radius: 16px;
+                box-shadow: 0 2px 10px rgba(168, 85, 247, 0.25);
+            }
+            .nav-right-mobile .mobile-menu-btn-2 {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: none;
+                border: none;
+                color: var(--text-secondary);
+                cursor: pointer;
+                padding: 4px;
+                width: 32px;
+                height: 32px;
+            }
+            .nav-right-mobile .mobile-menu-btn-2 svg { width: 18px; height: 18px; }
             .nav-links.open {
                 display: flex;
                 flex-direction: column;
@@ -1891,7 +1922,12 @@
                 height: 22px;
                 font-size: 10px;
             }
-            .hero { padding: 80px 0 28px; min-height: auto; }
+            .nav-right-mobile .mobile-menu-btn-2 { min-width: 36px; min-height: 36px; }
+            .hero { padding: 80px 0 48px; min-height: auto; }
+            section { padding: 80px 0; }
+            .social-proof-bar { padding: 40px 0; }
+            .pricing-card.featured { transform: none; }
+            .pricing-card.featured:hover { transform: translateY(-10px); }
             .steps-grid {
                 grid-template-columns: 1fr;
                 gap: 40px;
@@ -1905,16 +1941,217 @@
             .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
         }
         @media (max-width: 480px) {
+            .container { padding: 0 16px; }
+            section { padding: 56px 0; }
+            .hero { padding: 72px 0 32px; min-height: auto; }
+            .hero > .container { padding: 0 16px; }
+            .hero-badge { display: none; }
+            .hero h1 { font-size: 32px; letter-spacing: -1.5px; margin-bottom: 14px; }
+            .hero p.hero-sub { display: none; }
+            .hero-ctas { margin-top: 12px !important; gap: 10px; }
+            .hero-ctas .btn-primary { padding: 11px 22px; font-size: 14px; }
+            .hero-ctas .btn-android { padding: 11px 22px; font-size: 14px; }
+            .hero-demo { margin-top: 28px; }
+            .social-proof-bar { padding: 32px 0; }
+            .hero-demo::before { width: 110%; height: 120%; filter: blur(50px); }
+            .chat-welcome { padding: 16px 14px 8px; }
+            .chat-welcome-logo { width: 32px; height: 32px; }
+            .chat-welcome-logo svg { width: 16px; height: 16px; }
+            .chat-welcome h3 { font-size: 14px; margin-bottom: 0; }
+            .chat-suggestions { padding: 0 12px 12px; gap: 6px; }
+            .chat-chip { font-size: 11px; padding: 7px 12px; min-height: 32px; }
+            .chat-input-container { margin: 0 8px 8px; }
+            .chat-input-controls { padding: 8px 10px 0; height: 32px; }
+            .chat-mode { height: 24px; padding: 0 8px; font-size: 10px; }
+            .chat-mode svg { width: 11px; height: 11px; }
+            .chat-model-label { font-size: 10px; }
+            .chat-input-row { padding: 8px 10px; }
+            .chat-input-row input { font-size: 13px; }
+            .section-desc { font-size: 16px; }
+            .feature-card { padding: 24px 20px; }
+            .feature-card h3 { font-size: 17px; }
+            .feature-card p { font-size: 14px; }
+            .stats-grid { gap: 12px; }
+            .stat-item { padding: 16px 8px; }
+            .stat-item:not(:last-child)::after { display: none; }
+            .stat-sublabel { font-size: 11px; }
+            .trust-card { padding: 24px 20px; }
+            .trust-card h3 { font-size: 17px; }
+            .trust-card p { font-size: 13px; }
             footer { padding: 32px 0 24px; }
             .footer-grid { grid-template-columns: 1fr 1fr; gap: 20px 16px; margin-bottom: 24px; }
             .footer-brand { grid-column: 1 / -1; }
             .footer-brand p { font-size: 13px; max-width: 100%; }
             .footer-col h4 { font-size: 12px; margin-bottom: 10px; }
-            .footer-col a { font-size: 13px; margin-bottom: 8px; }
+            .footer-col a { font-size: 13px; margin-bottom: 8px; padding: 4px 0; }
             .footer-bottom { padding-top: 16px; font-size: 12px; }
         }
 
-        /* ─── ANIMATIONS ─── */
+        /* ─── SCROLL REVEAL ─── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-scale.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .reveal-stagger-1 { transition-delay: 0ms; }
+        .reveal-stagger-2 { transition-delay: 80ms; }
+        .reveal-stagger-3 { transition-delay: 160ms; }
+        .reveal-stagger-4 { transition-delay: 240ms; }
+        .reveal-stagger-5 { transition-delay: 320ms; }
+        .reveal-stagger-6 { transition-delay: 400ms; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .reveal-scale {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+
+        /* ─── BREATHER SECTIONS ─── */
+        .breather {
+            padding: 100px 24px;
+            text-align: center;
+        }
+        .breather-text {
+            font-size: clamp(24px, 5vw, 44px);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            line-height: 1.15;
+            background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.35) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        @media (max-width: 768px) {
+            .breather { padding: 72px 20px; }
+        }
+        @media (max-width: 480px) {
+            .breather { padding: 56px 16px; }
+        }
+
+        /* ─── FEATURES SCROLL (mobile) ─── */
+        .features-scroll-indicator { display: none; }
+
+        @media (max-width: 600px) {
+            .features-grid {
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                gap: 16px;
+                padding-bottom: 8px;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            .features-grid::-webkit-scrollbar { display: none; }
+            .feature-card {
+                min-width: 82vw;
+                max-width: 82vw;
+                flex-shrink: 0;
+                scroll-snap-align: center;
+                padding: 24px;
+            }
+            .features-scroll-indicator {
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+                margin-top: 20px;
+            }
+            .features-scroll-indicator .dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--border-hover);
+                transition: all 0.3s;
+            }
+            .features-scroll-indicator .dot.active {
+                background: var(--accent);
+                width: 20px;
+                border-radius: 3px;
+            }
+        }
+
+        /* ─── PRICING TEASER ─── */
+        .pricing-teaser {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .pricing-teaser-highlight {
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            background: linear-gradient(180deg, rgba(155,138,255,0.08) 0%, rgba(10,10,14,0.95) 100%);
+            border: 2px solid var(--accent);
+            border-radius: var(--radius-lg);
+            padding: 32px 40px;
+            margin-bottom: 24px;
+            box-shadow: 0 0 60px rgba(155, 138, 255, 0.1), 0 20px 80px rgba(155, 138, 255, 0.06);
+        }
+        .pricing-teaser-free {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 50%, #fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .pricing-teaser-divider {
+            width: 1px;
+            height: 48px;
+            background: var(--border-hover);
+        }
+        .pricing-teaser-plans { text-align: left; }
+        .pricing-teaser-plans .plan-line {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+        .pricing-teaser-plans .plan-line:last-child { margin-bottom: 0; }
+        .pricing-teaser-plans .plan-line strong { color: var(--text); font-weight: 700; }
+        .pricing-teaser-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--accent-light);
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .pricing-teaser-link:hover { color: #fff; gap: 10px; }
+        .pricing-teaser-link svg { width: 18px; height: 18px; transition: transform 0.2s; }
+        .pricing-teaser-link:hover svg { transform: translateX(3px); }
+        @media (max-width: 480px) {
+            .pricing-teaser-highlight {
+                flex-direction: column;
+                padding: 28px 24px;
+                gap: 12px;
+            }
+            .pricing-teaser-divider { width: 60px; height: 1px; }
+            .pricing-teaser-plans { text-align: center; }
+            .pricing-teaser-free { font-size: 40px; }
+        }
     </style>
 </head>
 <body>
@@ -1970,7 +2207,15 @@
                     <a href="/" title="Italiano">IT</a>
                     <span class="lang-active">EN</span>
                 </div>
+                <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="nav-cta nav-cta-desktop">Download</a>
+            </div>
+            <div class="nav-right-mobile">
                 <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="nav-cta">Download</a>
+                <button class="mobile-menu-btn mobile-menu-btn-2" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/>
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
@@ -2073,8 +2318,8 @@
 <!-- ─── SOCIAL PROOF ─── -->
 <div class="social-proof-bar">
     <div class="container">
-        <div class="social-proof-items">
-            <span>&#9889; 8 AI Models</span>
+        <div class="social-proof-items reveal">
+            <span>&#9889; 5 AI Models</span>
             <span class="proof-dot">&bull;</span>
             <span>&#128187; Real Terminal</span>
             <span class="proof-dot">&bull;</span>
@@ -2088,8 +2333,8 @@
 <!-- ─── POWERED BY ─── -->
 <section class="tech-logos">
     <div class="container">
-        <div class="tech-logos-label">Integrates the best AI models</div>
-        <div class="tech-logos-row">
+        <div class="tech-logos-label reveal">Integrates the best AI models</div>
+        <div class="tech-logos-row reveal">
             <div class="tech-logo-item">
                 <svg viewBox="0 0 24 24"><path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.91 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.18a5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.772-4.206 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.747-7.073zM13.26 22.43a4.476 4.476 0 0 1-2.876-1.04l.141-.081 4.779-2.758a.795.795 0 0 0 .392-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.494 4.494zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.759a.771.771 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973V11.6a.766.766 0 0 0 .388.676l5.815 3.355-2.02 1.168a.076.076 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855l-5.833-3.387L15.119 7.2a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.676 8.105v-5.678a.79.79 0 0 0-.407-.667zm2.01-3.023l-.141-.085-4.774-2.782a.776.776 0 0 0-.785 0L9.409 9.23V6.897a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zm-12.64 4.135l-2.02-1.164a.08.08 0 0 1-.038-.057V6.075a4.5 4.5 0 0 1 7.375-3.453l-.142.08L8.704 5.46a.795.795 0 0 0-.393.681zm1.097-2.365l2.602-1.5 2.607 1.5v2.999l-2.597 1.5-2.607-1.5z"/></svg>
                 <span>OpenAI</span>
@@ -2114,7 +2359,7 @@
 <!-- ─── BUILD MARQUEE ─── -->
 <section style="padding: 100px 0 80px;">
     <div class="container">
-        <div class="section-header center" style="margin-bottom: 48px;">
+        <div class="section-header center reveal" style="margin-bottom: 48px;">
             <div class="section-label">What you can build</div>
             <h2 class="section-title">From idea to code.<br>Wherever you are.</h2>
         </div>
@@ -2155,56 +2400,64 @@
     </div>
 </section>
 
+<!-- ─── BREATHER 1 ─── -->
+<div class="breather reveal">
+    <p class="breather-text">Your next project<br>starts with a chat.</p>
+</div>
+
 <!-- ─── FEATURES ─── -->
 <section id="features">
     <div class="container">
-        <div class="section-header center">
+        <div class="section-header center reveal">
             <div class="section-label">Features</div>
             <h2 class="section-title">Everything you do on your PC.<br>Now from your phone too.</h2>
         </div>
         <div class="features-grid">
-            <div class="feature-card">
+            <div class="feature-card reveal reveal-stagger-1">
                 <div class="feature-icon">
                     <div class="feature-number">01</div>
                 </div>
                 <h3>Describe. AI builds it.</h3>
                 <p>Write what you want in any language. AI creates files, installs dependencies and structures the project &mdash; you guide, it executes.</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card reveal reveal-stagger-2">
                 <div class="feature-icon">
                     <div class="feature-number">02</div>
                 </div>
                 <h3>A real terminal. On your phone.</h3>
                 <p>Run npm, git, python and any command just like on your Mac. It's not a simulation &mdash; it's a real terminal in the cloud.</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card reveal reveal-stagger-3">
                 <div class="feature-icon">
                     <div class="feature-number">03</div>
                 </div>
                 <h3>5 AI models. You choose.</h3>
                 <p>Claude, GPT, Gemini &mdash; switch models on the fly based on what you're building. Each has its strengths.</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card reveal reveal-stagger-4">
                 <div class="feature-icon">
                     <div class="feature-number">04</div>
                 </div>
                 <h3>See the result. Instantly.</h3>
                 <p>Every change is visible in real-time. Web apps, APIs, servers &mdash; test everything with a tap, no deploy needed.</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card reveal reveal-stagger-5">
                 <div class="feature-icon">
                     <div class="feature-number">05</div>
                 </div>
                 <h3>Your repos. Drape's AI.</h3>
                 <p>Import any project from GitHub and work on it with AI. Edit, test and push &mdash; just like you would on desktop.</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card reveal reveal-stagger-6">
                 <div class="feature-icon">
                     <div class="feature-number">06</div>
                 </div>
                 <h3>Every file. Under control.</h3>
                 <p>Navigate the project, edit with syntax highlighting, create new files. Your workspace, always in your pocket.</p>
             </div>
+        </div>
+        <div class="features-scroll-indicator" id="features-dots">
+            <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
         </div>
     </div>
 </section>
@@ -2213,23 +2466,23 @@
 <div class="stats-section">
     <div class="container">
         <div class="stats-grid">
-            <div class="stat-item">
-                <div class="stat-number">5</div>
+            <div class="stat-item reveal reveal-stagger-1">
+                <div class="stat-number" data-count-to="5">5</div>
                 <div class="stat-label">AI Models</div>
                 <div class="stat-sublabel">Claude, GPT, Gemini</div>
             </div>
-            <div class="stat-item">
-                <div class="stat-number">&lt;30s</div>
+            <div class="stat-item reveal reveal-stagger-2">
+                <div class="stat-number" data-count-to="30" data-prefix="<" data-suffix="s">&lt;30s</div>
                 <div class="stat-label">To get started</div>
                 <div class="stat-sublabel">From prompt to project</div>
             </div>
-            <div class="stat-item">
+            <div class="stat-item reveal reveal-stagger-3">
                 <div class="stat-number">24/7</div>
                 <div class="stat-label">Available</div>
                 <div class="stat-sublabel">Code whenever you want</div>
             </div>
-            <div class="stat-item">
-                <div class="stat-number">100%</div>
+            <div class="stat-item reveal reveal-stagger-4">
+                <div class="stat-number" data-count-to="100" data-suffix="%">100%</div>
                 <div class="stat-label">Cloud</div>
                 <div class="stat-sublabel">Nothing to install</div>
             </div>
@@ -2237,25 +2490,30 @@
     </div>
 </div>
 
+<!-- ─── BREATHER 2 ─── -->
+<div class="breather reveal">
+    <p class="breather-text">From prompt to deploy.<br>In your pocket.</p>
+</div>
+
 <!-- ─── HOW IT WORKS ─── -->
 <section id="how-it-works">
     <div class="container">
-        <div class="section-header center">
+        <div class="section-header center reveal">
             <div class="section-label">How it works</div>
             <h2 class="section-title">From "I have an idea" to "it's live"<br>in 5 minutes.</h2>
         </div>
         <div class="steps-grid">
-            <div class="step">
+            <div class="step reveal reveal-stagger-1">
                 <div class="step-number">1</div>
                 <h3>Describe</h3>
                 <p>Tell me what you want to build in any language. Start from scratch or import a repo from GitHub. AI understands context and starts right away.</p>
             </div>
-            <div class="step">
+            <div class="step reveal reveal-stagger-2">
                 <div class="step-number">2</div>
                 <h3>Watch AI build</h3>
                 <p>AI creates files, installs packages, writes code. Step in whenever you want &mdash; or let it handle everything.</p>
             </div>
-            <div class="step">
+            <div class="step reveal reveal-stagger-3">
                 <div class="step-number">3</div>
                 <h3>Launch</h3>
                 <p>Live preview, push to GitHub, deploy. All from your phone, wherever you are. Like having your laptop in your pocket.</p>
@@ -2267,26 +2525,26 @@
 <!-- ─── TRUST ─── -->
 <section style="padding: 100px 0;">
     <div class="container">
-        <div class="section-header center">
+        <div class="section-header center reveal">
             <div class="section-label">Security</div>
             <h2 class="section-title">Your code. Your rules.</h2>
         </div>
         <div class="trust-grid">
-            <div class="trust-card">
+            <div class="trust-card reveal reveal-stagger-1">
                 <div class="trust-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
                 </div>
                 <h3>Your data is safe</h3>
                 <p>Isolated Docker containers, TLS encryption, no data sold to third parties. Your code stays yours.</p>
             </div>
-            <div class="trust-card">
+            <div class="trust-card reveal reveal-stagger-2">
                 <div class="trust-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                 </div>
                 <h3>No installation needed</h3>
                 <p>Everything runs in the cloud. Open the app and start building in 30 seconds. Zero configuration.</p>
             </div>
-            <div class="trust-card">
+            <div class="trust-card reveal reveal-stagger-3">
                 <div class="trust-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 </div>
@@ -2300,55 +2558,24 @@
 <!-- ─── PRICING ─── -->
 <section id="pricing" style="padding: 100px 0;">
     <div class="container">
-        <div class="section-header center">
+        <div class="section-header center reveal">
             <div class="section-label">Pricing</div>
-            <h2 class="section-title">Choose the right plan for you.</h2>
-            <p class="section-desc" style="margin: 8px auto 0;">Start free. Upgrade whenever you want.</p>
+            <h2 class="section-title">Start free.<br>Upgrade when you need.</h2>
         </div>
-        <div class="pricing-grid">
-            <div class="pricing-card">
-                <div class="pricing-name">Starter</div>
-                <div class="pricing-desc">To try Drape</div>
-                <div class="pricing-price">Free</div>
-                <div class="pricing-period">Forever</div>
-                <ul class="pricing-features">
-                    <li>3 projects</li>
-                    <li>Claude 4.5 Sonnet</li>
-                    <li>Gemini 3.0 Flash</li>
-                    <li>Full terminal</li>
-                    <li>Live preview</li>
-                </ul>
-                <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="pricing-btn outline">Start free</a>
+        <div class="pricing-teaser reveal">
+            <div class="pricing-teaser-highlight reveal-scale">
+                <div class="pricing-teaser-free">Free</div>
+                <div class="pricing-teaser-divider"></div>
+                <div class="pricing-teaser-plans">
+                    <div class="plan-line"><strong>Starter</strong> &mdash; free forever</div>
+                    <div class="plan-line"><strong>Go</strong> &mdash; &euro;22.99/mo</div>
+                    <div class="plan-line"><strong>Pro</strong> &mdash; &euro;39.99/mo</div>
+                </div>
             </div>
-            <div class="pricing-card featured">
-                <div class="pricing-badge">Most popular</div>
-                <div class="pricing-name">Go</div>
-                <div class="pricing-desc">For active developers</div>
-                <div class="pricing-price">&euro;22.99</div>
-                <div class="pricing-period">per month</div>
-                <ul class="pricing-features">
-                    <li>Unlimited projects</li>
-                    <li>All 5 AI models</li>
-                    <li>Import repos from GitHub</li>
-                    <li>Push, commit, PR</li>
-                    <li>Priority support</li>
-                </ul>
-                <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="pricing-btn filled">Choose Go</a>
-            </div>
-            <div class="pricing-card">
-                <div class="pricing-name">Pro</div>
-                <div class="pricing-desc">For power users</div>
-                <div class="pricing-price">&euro;39.99</div>
-                <div class="pricing-period">per month</div>
-                <ul class="pricing-features">
-                    <li>Everything in Go, plus:</li>
-                    <li>Unlimited AI messages</li>
-                    <li>Premium models (Opus, GPT 5.2)</li>
-                    <li>Boosted containers</li>
-                    <li>Dedicated support</li>
-                </ul>
-                <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="pricing-btn outline">Choose Pro</a>
-            </div>
+            <a href="pricing.html" class="pricing-teaser-link">
+                Compare all plans
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
         </div>
     </div>
 </section>
@@ -2356,11 +2583,11 @@
 <!-- ─── FAQ ─── -->
 <section id="faq">
     <div class="container">
-        <div class="section-header center">
+        <div class="section-header center reveal">
             <div class="section-label">FAQ</div>
             <h2 class="section-title">Frequently Asked Questions</h2>
         </div>
-        <div class="faq-list">
+        <div class="faq-list reveal">
             <div class="faq-item">
                 <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
                     <span>Can I use Drape for real projects?</span>
@@ -2440,8 +2667,8 @@
 <!-- ─── CTA ─── -->
 <section class="cta-section">
     <div class="container">
-        <h2>Next time you have an idea,<br>don't wait for your laptop.</h2>
-        <p>Download Drape. It's free.</p>
+        <h2 class="reveal">Next time you have an idea,<br>don't wait for your laptop.</h2>
+        <p class="reveal">Download Drape. It's free.</p>
         <div class="hero-ctas">
             <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="btn-primary">
                 <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
@@ -2542,6 +2769,97 @@
 </div>
 
 <script>
+// ─── SCROLL REVEAL ───
+(function() {
+    if (window.innerWidth <= 600) {
+        var cards = document.querySelectorAll('.feature-card');
+        var grid = document.querySelector('.features-grid');
+        if (grid) {
+            cards.forEach(function(card) {
+                card.classList.remove('reveal', 'reveal-stagger-1', 'reveal-stagger-2',
+                    'reveal-stagger-3', 'reveal-stagger-4', 'reveal-stagger-5', 'reveal-stagger-6');
+            });
+            grid.classList.add('reveal');
+        }
+    }
+
+    var revealEls = document.querySelectorAll('.reveal, .reveal-scale');
+    if (!revealEls.length) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        revealEls.forEach(function(el) { el.classList.add('visible'); });
+        return;
+    }
+
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(function(el) { observer.observe(el); });
+})();
+
+// ─── STATS COUNTER ───
+(function() {
+    var stats = document.querySelectorAll('.stat-number[data-count-to]');
+    if (!stats.length) return;
+
+    function easeOutQuart(t) { return 1 - Math.pow(1 - t, 4); }
+
+    function animateCounter(el) {
+        var target = parseInt(el.getAttribute('data-count-to'), 10);
+        var prefix = el.getAttribute('data-prefix') || '';
+        var suffix = el.getAttribute('data-suffix') || '';
+        var duration = 1600;
+        var startTime = null;
+
+        function step(timestamp) {
+            if (!startTime) startTime = timestamp;
+            var progress = Math.min((timestamp - startTime) / duration, 1);
+            var current = Math.round(easeOutQuart(progress) * target);
+            el.textContent = prefix + current + suffix;
+            if (progress < 1) requestAnimationFrame(step);
+        }
+
+        el.textContent = prefix + '0' + suffix;
+        requestAnimationFrame(step);
+    }
+
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    stats.forEach(function(el) { observer.observe(el); });
+})();
+
+// ─── FEATURES SCROLL INDICATOR ───
+(function() {
+    var grid = document.querySelector('.features-grid');
+    var dots = document.querySelectorAll('#features-dots .dot');
+    if (!grid || !dots.length) return;
+
+    grid.addEventListener('scroll', function() {
+        var scrollLeft = grid.scrollLeft;
+        var card = grid.querySelector('.feature-card');
+        if (!card) return;
+        var cardWidth = card.offsetWidth;
+        var gap = 16;
+        var index = Math.round(scrollLeft / (cardWidth + gap));
+        dots.forEach(function(d, i) {
+            d.classList.toggle('active', i === index);
+        });
+    }, { passive: true });
+})();
+
 // Interactive hero chat
 function handleChatSend() {
     const input = document.getElementById('chat-input');
@@ -2639,22 +2957,6 @@ window.addEventListener('scroll', () => {
     } else {
         nav.style.borderBottomColor = 'rgba(255,255,255,0.04)';
     }
-});
-
-// Pricing cards mouse tracking for glow effect
-document.querySelectorAll('.pricing-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        card.style.setProperty('--mouse-x', `${x}%`);
-        card.style.setProperty('--mouse-y', `${y}%`);
-    });
-
-    card.addEventListener('mouseleave', () => {
-        card.style.setProperty('--mouse-x', '50%');
-        card.style.setProperty('--mouse-y', '50%');
-    });
 });
 
 // Android modal functions
