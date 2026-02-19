@@ -564,7 +564,7 @@
         /* ─── RESPONSIVE ─── */
         @media (max-width: 768px) {
             nav {
-                top: 10px;
+                top: 12px;
                 left: 10px;
                 right: 10px;
                 transform: none;
@@ -573,7 +573,7 @@
             }
             .nav-inner { padding: 8px 8px 8px 16px; }
             .nav-links { display: none; }
-            .mobile-menu-btn { display: block; }
+            .mobile-menu-btn { display: block; min-width: 44px; min-height: 44px; }
             .nav-links.open {
                 display: flex;
                 flex-direction: column;
@@ -626,6 +626,8 @@
                 max-width: 480px;
             }
             .blog-hero { padding: 110px 0 36px; }
+            .blog-article p { font-size: 15px; }
+            .blog-article h3 { font-size: 18px; }
             .footer-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 32px;
@@ -633,12 +635,20 @@
             .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
         }
         @media (max-width: 480px) {
+            .container { padding: 0 16px; }
+            .blog-cards { max-width: none; }
+            .blog-card { padding: 20px 16px; }
+            .blog-card h3 { font-size: 16px; }
+            .blog-card p { font-size: 13px; }
+            .blog-article p { font-size: 14px; }
+            .blog-article h3 { font-size: 17px; }
+            .blog-article-cta { padding: 20px 16px; }
             footer { padding: 32px 0 24px; }
             .footer-grid { grid-template-columns: 1fr 1fr; gap: 20px 16px; margin-bottom: 24px; }
             .footer-brand { grid-column: 1 / -1; }
             .footer-brand p { font-size: 13px; max-width: 100%; }
             .footer-col h4 { font-size: 12px; margin-bottom: 10px; }
-            .footer-col a { font-size: 13px; margin-bottom: 8px; }
+            .footer-col a { font-size: 13px; margin-bottom: 8px; padding: 4px 0; }
             .footer-bottom { padding-top: 16px; font-size: 12px; }
         }
     </style>

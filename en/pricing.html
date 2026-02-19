@@ -129,8 +129,9 @@
             font-size: 13px;
             font-weight: 600;
             transition: all 0.2s;
+            box-shadow: 0 4px 16px rgba(168, 85, 247, 0.3);
         }
-        .nav-cta:hover { background: var(--accent-light); }
+        .nav-cta:hover { background: var(--accent-light); box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4); }
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -520,14 +521,14 @@
         /* ─── RESPONSIVE ─── */
         @media (max-width: 768px) {
             nav {
-                top: 6px;
+                top: 12px;
                 left: 10px;
                 right: 10px;
                 transform: none;
                 max-width: none;
                 width: auto;
             }
-            .nav-inner { padding: 3px 4px 3px 12px; border-radius: 50px; }
+            .nav-inner { padding: 5px 6px 5px 14px; border-radius: 50px; }
             .logo { font-size: 14px; gap: 6px; }
             .logo-icon { width: 20px; height: 20px; border-radius: 5px; }
             .nav-links { display: none; }
@@ -539,10 +540,10 @@
                 gap: 4px;
             }
             .nav-right-mobile .nav-cta {
-                padding: 5px 14px;
-                font-size: 12px;
-                border-radius: 16px;
-                box-shadow: 0 2px 10px rgba(168, 85, 247, 0.25);
+                padding: 4px 12px;
+                font-size: 11px;
+                border-radius: 12px;
+                box-shadow: none;
             }
             .nav-right-mobile .mobile-menu-btn-2 {
                 display: flex;
@@ -572,8 +573,9 @@
                 padding: 16px 24px;
                 gap: 16px;
             }
-            .hero { padding: 120px 0 60px; }
-            .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+            .hero { padding: 100px 0 24px; }
+            section { padding: 40px 0; }
+            .pricing-grid { gap: 16px; }
             .footer-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 32px;
@@ -590,15 +592,114 @@
             .footer-bottom { padding-top: 16px; font-size: 12px; }
         }
 
-        /* ─── ANIMATIONS ─── */
-        .fade-up {
+        /* ─── SCROLL REVEAL ─── */
+        .reveal {
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(32px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .fade-up.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+        .reveal-stagger-1 { transition-delay: 0ms; }
+        .reveal-stagger-2 { transition-delay: 120ms; }
+        .reveal-stagger-3 { transition-delay: 240ms; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .reveal-scale { opacity: 1; transform: none; transition: none; }
+        }
+
+        /* ─── BREATHER ─── */
+        .breather { padding: 80px 24px; text-align: center; }
+        .breather-text {
+            font-size: clamp(24px, 5vw, 44px);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            line-height: 1.15;
+            background: linear-gradient(
+                90deg,
+                rgba(255,255,255,0.3) 0%,
+                rgba(255,255,255,0.3) 35%,
+                var(--accent-light) 45%,
+                #fff 50%,
+                var(--accent-light) 55%,
+                rgba(255,255,255,0.3) 65%,
+                rgba(255,255,255,0.3) 100%
+            );
+            background-size: 300% 100%;
+            background-position: 100% 0;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .breather-text.shimmer-active {
+            animation: textShimmer 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        @keyframes textShimmer {
+            0% { background-position: 100% 0; }
+            100% { background-position: -100% 0; }
+        }
+        @media (max-width: 768px) { .breather { padding: 56px 20px; } }
+        @media (max-width: 480px) { .breather { padding: 44px 16px; } }
+
+        /* ─── PRICING SCROLL (mobile) ─── */
+        .pricing-scroll-indicator { display: none; }
+        @media (max-width: 600px) {
+            .pricing-grid {
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                gap: 16px;
+                padding: 0 4px 8px;
+                scrollbar-width: none;
+                max-width: none;
+                margin: 0 -8px;
+            }
+            .pricing-grid::-webkit-scrollbar { display: none; }
+            .pricing-card {
+                min-width: 80vw;
+                max-width: 80vw;
+                flex-shrink: 0;
+                scroll-snap-align: center;
+            }
+            .pricing-card:first-child { margin-left: 8px; }
+            .pricing-card:last-child { margin-right: 8px; }
+            .pricing-card.featured {
+                transform: none;
+                padding-top: 56px;
+            }
+            .pricing-card.featured:hover {
+                transform: translateY(-10px);
+            }
+            .pricing-scroll-indicator {
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+                margin-top: 20px;
+            }
+            .pricing-scroll-indicator .dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--border-hover);
+                transition: all 0.3s;
+            }
+            .pricing-scroll-indicator .dot.active {
+                background: var(--accent);
+                width: 20px;
+                border-radius: 3px;
+            }
         }
     </style>
 </head>
@@ -627,10 +728,10 @@
                 <a href="javascript:void(0)" class="nav-cta nav-cta-desktop">Download</a>
             </div>
             <div class="nav-right-mobile">
-                <a href="javascript:void(0)" class="nav-cta">Download</a>
-                <button class="mobile-menu-btn-2" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+                <a href="javascript:void(0)" class="nav-cta">Start now</a>
+                <button class="mobile-menu-btn mobile-menu-btn-2" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/>
                     </svg>
                 </button>
             </div>
@@ -651,7 +752,7 @@
 <section>
     <div class="container">
         <div class="pricing-grid">
-            <div class="pricing-card fade-up">
+            <div class="pricing-card reveal reveal-scale reveal-stagger-1">
                 <div class="pricing-name">Starter</div>
                 <div class="pricing-desc">To explore and experiment</div>
                 <div class="pricing-price">Free</div>
@@ -666,7 +767,7 @@
                 </ul>
                 <a href="javascript:void(0)" class="pricing-btn outline">Start Free</a>
             </div>
-            <div class="pricing-card featured fade-up">
+            <div class="pricing-card featured reveal reveal-scale reveal-stagger-2">
                 <div class="pricing-badge">Popular</div>
                 <div class="pricing-name">Go</div>
                 <div class="pricing-desc">For serious developers</div>
@@ -682,7 +783,7 @@
                 </ul>
                 <a href="javascript:void(0)" class="pricing-btn filled">Upgrade to Go</a>
             </div>
-            <div class="pricing-card fade-up">
+            <div class="pricing-card reveal reveal-scale reveal-stagger-3">
                 <div class="pricing-name">Pro</div>
                 <div class="pricing-desc">For professionals and teams</div>
                 <div class="pricing-price">&euro;39.99<span style="font-size:16px;font-weight:500;color:var(--text-muted)">/month</span></div>
@@ -698,17 +799,26 @@
                 <a href="javascript:void(0)" class="pricing-btn outline">Upgrade to Pro</a>
             </div>
         </div>
+        <div class="pricing-scroll-indicator" id="pricing-dots">
+            <div class="dot"></div>
+            <div class="dot active"></div>
+            <div class="dot"></div>
+        </div>
     </div>
 </section>
+
+<div class="breather reveal">
+    <p class="breather-text">A plan for every stage<br>of your journey.</p>
+</div>
 
 <!-- ─── FAQ ─── -->
 <section class="faq-section">
     <div class="container">
-        <div class="section-header fade-up">
+        <div class="section-header reveal">
             <div class="section-label">FAQ</div>
             <h2 class="section-title">Pricing Questions</h2>
         </div>
-        <div class="faq-list fade-up">
+        <div class="faq-list reveal">
             <div class="faq-item">
                 <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
                     <span>Can I try Drape for free?</span>
@@ -770,9 +880,9 @@
 <!-- ─── CTA ─── -->
 <section class="cta-section">
     <div class="container">
-        <h2 class="fade-up">Start building.<br>Wherever you are.</h2>
-        <p class="fade-up">Download Drape and turn your iPhone into your IDE.</p>
-        <div class="fade-up">
+        <h2 class="reveal">Start building.<br>Wherever you are.</h2>
+        <p class="reveal">Download Drape and turn your iPhone into your IDE.</p>
+        <div class="reveal">
             <a href="javascript:void(0)" class="btn-primary">
                 <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
                 Download on App Store
@@ -825,18 +935,80 @@
 </footer>
 
 <script>
-// Scroll animations
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
+// ─── SCROLL REVEAL ───
+(function() {
+    var revealEls = document.querySelectorAll('.reveal, .reveal-scale');
+    if (window.innerWidth <= 600) {
+        // On mobile, move reveal from individual pricing cards to grid container
+        var grid = document.querySelector('.pricing-grid');
+        if (grid) {
+            grid.querySelectorAll('.pricing-card').forEach(function(card) {
+                card.classList.remove('reveal', 'reveal-scale', 'reveal-stagger-1', 'reveal-stagger-2', 'reveal-stagger-3');
+            });
+            grid.classList.add('reveal');
+            revealEls = document.querySelectorAll('.reveal, .reveal-scale');
         }
-    });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    }
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function(el) { observer.observe(el); });
+})();
 
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+// ─── BREATHER SHIMMER ON SCROLL ───
+(function() {
+    var shimmerEls = document.querySelectorAll('.breather-text');
+    if (!shimmerEls.length) return;
+    var shimmerObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.remove('shimmer-active');
+                void entry.target.offsetWidth;
+                entry.target.classList.add('shimmer-active');
+            } else {
+                entry.target.classList.remove('shimmer-active');
+            }
+        });
+    }, { threshold: 0.5 });
+    shimmerEls.forEach(function(el) { shimmerObserver.observe(el); });
+})();
 
-// Pricing cards mouse tracking for glow effect
+// ─── PRICING SCROLL INDICATOR + AUTO-SCROLL TO GO ───
+(function() {
+    if (window.innerWidth > 600) return;
+    var grid = document.querySelector('.pricing-grid');
+    var dots = document.querySelectorAll('#pricing-dots .dot');
+    if (!grid || !dots.length) return;
+
+    // Auto-scroll to Go plan (index 1) on load
+    setTimeout(function() {
+        var cards = grid.querySelectorAll('.pricing-card');
+        if (cards.length > 1) {
+            var cardWidth = cards[1].offsetWidth;
+            var gap = 16;
+            grid.scrollTo({ left: cardWidth + gap, behavior: 'instant' });
+            dots.forEach(function(d, i) { d.classList.toggle('active', i === 1); });
+        }
+    }, 100);
+
+    grid.addEventListener('scroll', function() {
+        var card = grid.querySelector('.pricing-card');
+        if (!card) return;
+        var cardWidth = card.offsetWidth;
+        var gap = 16;
+        var index = Math.round(grid.scrollLeft / (cardWidth + gap));
+        dots.forEach(function(d, i) {
+            d.classList.toggle('active', i === index);
+        });
+    }, { passive: true });
+})();
+
+// Pricing cards mouse tracking for glow effect (desktop)
 document.querySelectorAll('.pricing-card').forEach(card => {
     card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();

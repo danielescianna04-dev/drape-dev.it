@@ -407,6 +407,20 @@
             overflow: visible;
             padding: 90px 0 32px;
         }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120%;
+            height: 80%;
+            background: radial-gradient(ellipse at 50% 30%, rgba(155, 138, 255, 0.12) 0%, transparent 55%),
+                        radial-gradient(ellipse at 30% 60%, rgba(168, 85, 247, 0.08) 0%, transparent 45%),
+                        radial-gradient(ellipse at 70% 50%, rgba(99, 102, 241, 0.06) 0%, transparent 45%);
+            pointer-events: none;
+            z-index: 0;
+        }
         .hero > .container {
             max-width: none;
             width: 100%;
@@ -686,11 +700,11 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 150%;
-            height: 180%;
-            background: radial-gradient(ellipse at 20% 50%, rgba(155, 138, 255, 0.3) 0%, transparent 50%),
-                        radial-gradient(ellipse at 80% 40%, rgba(168, 85, 247, 0.22) 0%, transparent 50%),
-                        radial-gradient(ellipse at 50% 70%, rgba(99, 102, 241, 0.15) 0%, transparent 45%);
+            width: 160%;
+            height: 200%;
+            background: radial-gradient(ellipse at 20% 50%, rgba(155, 138, 255, 0.35) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 40%, rgba(168, 85, 247, 0.28) 0%, transparent 50%),
+                        radial-gradient(ellipse at 50% 70%, rgba(99, 102, 241, 0.2) 0%, transparent 45%);
             filter: blur(80px);
             pointer-events: none;
             z-index: 0;
@@ -1131,10 +1145,10 @@
             display: flex;
             gap: 14px;
             width: max-content;
-            animation: marquee 35s linear infinite;
+            animation: marquee 55s linear infinite;
         }
         .build-marquee.reverse {
-            animation: marquee-reverse 35s linear infinite;
+            animation: marquee-reverse 55s linear infinite;
         }
         .build-marquee:hover { animation-play-state: paused; }
         @keyframes marquee {
@@ -1174,6 +1188,13 @@
             font-size: 13px;
             color: var(--text-muted);
             font-weight: 400;
+        }
+        @media (max-width: 768px) {
+            .build-marquee { gap: 10px; }
+            .build-marquee-track { margin-bottom: 10px; }
+            .build-pill { padding: 10px 18px; font-size: 13px; gap: 8px; }
+            .build-pill .dot { width: 8px; height: 8px; }
+            .build-pill span { font-size: 11px; }
         }
 
         /* ─── FEATURES — grid cards ─── */
@@ -1828,14 +1849,14 @@
         /* ─── RESPONSIVE ─── */
         @media (max-width: 768px) {
             nav {
-                top: 6px;
+                top: 12px;
                 left: 10px;
                 right: 10px;
                 transform: none;
                 max-width: none;
                 width: auto;
             }
-            .nav-inner { padding: 3px 4px 3px 12px; border-radius: 50px; }
+            .nav-inner { padding: 5px 6px 5px 14px; border-radius: 50px; }
             .logo { font-size: 14px; gap: 6px; }
             .logo-icon { width: 20px; height: 20px; border-radius: 5px; }
             .nav-links { display: none; }
@@ -1847,10 +1868,10 @@
                 gap: 4px;
             }
             .nav-right-mobile .nav-cta {
-                padding: 5px 14px;
-                font-size: 12px;
-                border-radius: 16px;
-                box-shadow: 0 2px 10px rgba(168, 85, 247, 0.25);
+                padding: 4px 12px;
+                font-size: 11px;
+                border-radius: 12px;
+                box-shadow: none;
             }
             .nav-right-mobile .mobile-menu-btn-2 {
                 display: flex;
@@ -1923,7 +1944,7 @@
                 font-size: 10px;
             }
             .nav-right-mobile .mobile-menu-btn-2 { min-width: 36px; min-height: 36px; }
-            .hero { padding: 80px 0 48px; min-height: auto; }
+            .hero { padding: 90px 0 48px; min-height: auto; }
             section { padding: 80px 0; }
             .social-proof-bar { padding: 40px 0; }
             .pricing-card.featured { transform: none; }
@@ -1943,10 +1964,10 @@
         @media (max-width: 480px) {
             .container { padding: 0 16px; }
             section { padding: 56px 0; }
-            .hero { padding: 72px 0 32px; min-height: auto; }
+            .hero { padding: 88px 0 32px; min-height: auto; }
             .hero > .container { padding: 0 16px; }
             .hero-badge { display: none; }
-            .hero h1 { font-size: 32px; letter-spacing: -1.5px; margin-bottom: 14px; }
+            .hero h1 { font-size: 32px; letter-spacing: -1.5px; margin-bottom: 16px; }
             .hero p.hero-sub { display: none; }
             .hero-ctas { margin-top: 12px !important; gap: 10px; }
             .hero-ctas .btn-primary { padding: 11px 22px; font-size: 14px; }
@@ -2023,6 +2044,12 @@
             }
         }
 
+        /* ─── PARALLAX STEPS ─── */
+        .parallax-step {
+            will-change: transform;
+            transition: transform 0.1s linear;
+        }
+
         /* ─── BREATHER SECTIONS ─── */
         .breather {
             padding: 100px 24px;
@@ -2033,18 +2060,60 @@
             font-weight: 800;
             letter-spacing: -1.5px;
             line-height: 1.15;
-            background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.35) 100%);
+            background: linear-gradient(
+                90deg,
+                rgba(255,255,255,0.3) 0%,
+                rgba(255,255,255,0.3) 35%,
+                var(--accent-light) 45%,
+                #fff 50%,
+                var(--accent-light) 55%,
+                rgba(255,255,255,0.3) 65%,
+                rgba(255,255,255,0.3) 100%
+            );
+            background-size: 300% 100%;
+            background-position: 100% 0;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             max-width: 600px;
             margin: 0 auto;
         }
+        .breather-text.shimmer-active {
+            animation: textShimmer 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        @keyframes textShimmer {
+            0% { background-position: 100% 0; }
+            100% { background-position: -100% 0; }
+        }
         @media (max-width: 768px) {
             .breather { padding: 72px 20px; }
         }
         @media (max-width: 480px) {
             .breather { padding: 56px 16px; }
+        }
+
+        /* ─── SECTION GLOWS ─── */
+        .section-glow {
+            position: relative;
+        }
+        .section-glow::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 500px;
+            background: radial-gradient(ellipse, rgba(168, 85, 247, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .section-glow-blue::before {
+            background: radial-gradient(ellipse, rgba(99, 102, 241, 0.07) 0%, transparent 70%);
+        }
+        .section-glow > .container {
+            position: relative;
+            z-index: 1;
         }
 
         /* ─── FEATURES SCROLL (mobile) ─── */
@@ -2057,18 +2126,21 @@
                 scroll-snap-type: x mandatory;
                 -webkit-overflow-scrolling: touch;
                 gap: 16px;
-                padding-bottom: 8px;
+                padding: 8px 4px;
                 scrollbar-width: none;
                 -ms-overflow-style: none;
+                margin: 0 -8px;
             }
             .features-grid::-webkit-scrollbar { display: none; }
             .feature-card {
-                min-width: 82vw;
-                max-width: 82vw;
+                min-width: 80vw;
+                max-width: 80vw;
                 flex-shrink: 0;
                 scroll-snap-align: center;
                 padding: 24px;
             }
+            .feature-card:first-child { margin-left: 8px; }
+            .feature-card:last-child { margin-right: 8px; }
             .features-scroll-indicator {
                 display: flex;
                 justify-content: center;
@@ -2152,9 +2224,219 @@
             .pricing-teaser-plans { text-align: center; }
             .pricing-teaser-free { font-size: 40px; }
         }
+        /* ─── AURORA BLOBS ─── */
+        .aurora {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .aurora-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.5;
+            will-change: transform;
+        }
+        .aurora-blob-1 {
+            width: 500px;
+            height: 500px;
+            background: rgba(168, 85, 247, 0.07);
+            top: -10%;
+            left: -5%;
+            animation: auroraFloat1 25s ease-in-out infinite;
+        }
+        .aurora-blob-2 {
+            width: 400px;
+            height: 400px;
+            background: rgba(99, 102, 241, 0.06);
+            top: 40%;
+            right: -8%;
+            animation: auroraFloat2 30s ease-in-out infinite;
+        }
+        .aurora-blob-3 {
+            width: 450px;
+            height: 450px;
+            background: rgba(155, 138, 255, 0.05);
+            bottom: 10%;
+            left: 20%;
+            animation: auroraFloat3 22s ease-in-out infinite;
+        }
+        @keyframes auroraFloat1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(80px, 60px) scale(1.1); }
+            66% { transform: translate(-40px, 100px) scale(0.95); }
+        }
+        @keyframes auroraFloat2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-70px, -50px) scale(1.08); }
+            66% { transform: translate(50px, -80px) scale(0.92); }
+        }
+        @keyframes auroraFloat3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(60px, -70px) scale(1.05); }
+            66% { transform: translate(-80px, 40px) scale(1.1); }
+        }
+
+        /* ─── GRAIN OVERLAY ─── */
+        .grain-overlay {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.04;
+            animation: grainShift 0.5s steps(4) infinite;
+        }
+        @keyframes grainShift {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(-2%, -2%); }
+            50% { transform: translate(1%, 1%); }
+            75% { transform: translate(-1%, 2%); }
+        }
+
+        /* ─── CURSOR GLOW (desktop only) ─── */
+        .cursor-glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(155, 138, 255, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s;
+            opacity: 0;
+        }
+        .cursor-glow.active { opacity: 1; }
+        @media (max-width: 768px) {
+            .cursor-glow { display: none; }
+        }
+
+        /* ─── 3D TILT CARDS ─── */
+        .feature-card {
+            transform-style: preserve-3d;
+            perspective: 800px;
+        }
+
+        /* ─── SCROLL TEXT BRIGHTNESS ─── */
+        .section-title {
+            transition: filter 0.15s linear;
+        }
+        .section-title.dim {
+            filter: brightness(0.4);
+        }
+
+        /* ─── MOBILE ENHANCEMENTS ─── */
+        @media (max-width: 768px) {
+            /* Smaller, more intense aurora for mobile */
+            .aurora-blob-1 { width: 300px; height: 300px; opacity: 0.7; }
+            .aurora-blob-2 { width: 250px; height: 250px; opacity: 0.6; }
+            .aurora-blob-3 { width: 280px; height: 280px; opacity: 0.55; }
+
+            /* Stronger section glows on mobile */
+            .section-glow::before {
+                width: 350px;
+                height: 350px;
+                top: -60px;
+                background: radial-gradient(ellipse, rgba(168, 85, 247, 0.12) 0%, transparent 70%);
+            }
+            .section-glow-blue::before {
+                background: radial-gradient(ellipse, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            }
+
+            /* Hero glow brighter on mobile */
+            .hero::before {
+                height: 100%;
+                background: radial-gradient(ellipse at 50% 20%, rgba(155, 138, 255, 0.15) 0%, transparent 60%),
+                            radial-gradient(ellipse at 30% 70%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+            }
+
+            /* Accent line above each section on mobile */
+            .section-label {
+                position: relative;
+                padding-top: 16px;
+            }
+            .section-label::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 32px;
+                height: 2px;
+                background: linear-gradient(90deg, var(--accent), var(--accent-light));
+                border-radius: 2px;
+            }
+
+            /* Active state feedback on cards (touch) */
+            .feature-card:active {
+                transform: scale(0.97);
+                border-color: rgba(168, 85, 247, 0.3);
+            }
+            .trust-card:active {
+                transform: scale(0.97);
+            }
+            .chat-chip:active {
+                background: rgba(155, 138, 255, 0.1);
+                border-color: rgba(155, 138, 255, 0.25);
+                transform: scale(0.95);
+            }
+
+            /* Step numbers pulse glow on mobile */
+            .step-number {
+                animation: stepPulse 3s ease-in-out infinite;
+            }
+            @keyframes stepPulse {
+                0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.15), 0 0 40px rgba(168, 85, 247, 0.05); }
+                50% { box-shadow: 0 0 30px rgba(168, 85, 247, 0.3), 0 0 60px rgba(168, 85, 247, 0.1); }
+            }
+
+            /* Grain slightly stronger on mobile for texture */
+            .grain-overlay { opacity: 0.05; }
+
+            /* Smoother hero demo glow on mobile */
+            .hero-demo::before {
+                width: 130%;
+                height: 160%;
+                filter: blur(60px);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .aurora-blob { animation: none !important; }
+            .grain-overlay { animation: none !important; display: none; }
+            .cursor-glow { display: none; }
+            .parallax-step { transition: none !important; }
+            .step-number { animation: none !important; }
+        }
     </style>
 </head>
 <body>
+
+<!-- Aurora Background -->
+<div class="aurora" aria-hidden="true">
+    <div class="aurora-blob aurora-blob-1"></div>
+    <div class="aurora-blob aurora-blob-2"></div>
+    <div class="aurora-blob aurora-blob-3"></div>
+</div>
+
+<!-- Grain Overlay -->
+<svg class="grain-overlay" aria-hidden="true">
+    <filter id="grain-filter">
+        <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+    </filter>
+    <rect width="100%" height="100%" filter="url(#grain-filter)"/>
+</svg>
+
+<!-- Cursor Glow -->
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 
 <!-- ─── NAV ─── -->
 <nav>
@@ -2200,7 +2482,7 @@
                         </a>
                     </div>
                 </div>
-                <a href="#pricing">Pricing</a>
+                <a href="pricing.html">Pricing</a>
                 <a href="blog.html">Blog</a>
                 <a href="/en/docs/guida-rapida.html">Docs</a>
                 <div class="lang-toggle">
@@ -2210,7 +2492,7 @@
                 <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="nav-cta nav-cta-desktop">Download</a>
             </div>
             <div class="nav-right-mobile">
-                <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="nav-cta">Download</a>
+                <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="nav-cta">Start now</a>
                 <button class="mobile-menu-btn mobile-menu-btn-2" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/>
@@ -2250,10 +2532,11 @@
                         <p>Describe your idea. AI writes the code, installs dependencies and shows you the preview.</p>
                     </div>
                     <div class="chat-suggestions">
-                        <span class="chat-chip" data-prompt="I have a bug in the auth component. The JWT token expires but the refresh token doesn't auto-renew. Check the auth middleware and fix the renewal flow.">Fix a bug</span>
-                        <span class="chat-chip" data-prompt="Create a responsive landing page with hero section, feature grid, pricing table and footer. Stack: React + Tailwind. Dark mode design, mobile-first, scroll animations with Framer Motion.">New project</span>
-                        <span class="chat-chip" data-prompt="Add a REST endpoint for user management. Full CRUD with Zod validation, JWT auth middleware, error handling and rate limiting. Framework: Express + TypeScript.">Add an API</span>
-                        <span class="chat-chip" data-prompt="Set up a CI/CD pipeline with GitHub Actions. Auto build, test and deploy on push to main branch. Include linting, type-check and Slack notification on failure.">Setup CI/CD</span>
+                        <span class="chat-chip" data-prompt="Create a reporting dashboard with interactive charts, date filters and PDF export. Modern design, dark mode, smooth animations.">Reporting Dashboard</span>
+                        <span class="chat-chip" data-prompt="Create a gaming platform with lobby, matchmaking, real-time leaderboard and integrated chat. Immersive UI with animations.">Gaming Platform</span>
+                        <span class="chat-chip" data-prompt="Create an onboarding portal for new users with step-by-step wizard, progress bar, video tutorials and interactive checklist.">Onboarding Portal</span>
+                        <span class="chat-chip" data-prompt="Create a 3D room visualizer where you can place furniture, change wall and floor colors, with panoramic view.">Room Visualizer</span>
+                        <span class="chat-chip" data-prompt="Create a professional networking app with profiles, messaging, events and personalized feed. Elegant, mobile-first design.">Networking App</span>
                     </div>
                     <div class="chat-input-container">
                         <div class="chat-input-controls">
@@ -2357,7 +2640,7 @@
 
 
 <!-- ─── BUILD MARQUEE ─── -->
-<section style="padding: 100px 0 80px;">
+<section class="section-glow" style="padding: 100px 0 80px;">
     <div class="container">
         <div class="section-header center reveal" style="margin-bottom: 48px;">
             <div class="section-label">What you can build</div>
@@ -2402,11 +2685,11 @@
 
 <!-- ─── BREATHER 1 ─── -->
 <div class="breather reveal">
-    <p class="breather-text">Your next project<br>starts with a chat.</p>
+    <p class="breather-text">Write. Build. Deploy.<br>All from your phone.</p>
 </div>
 
 <!-- ─── FEATURES ─── -->
-<section id="features">
+<section id="features" class="section-glow-blue section-glow">
     <div class="container">
         <div class="section-header center reveal">
             <div class="section-label">Features</div>
@@ -2492,28 +2775,28 @@
 
 <!-- ─── BREATHER 2 ─── -->
 <div class="breather reveal">
-    <p class="breather-text">From prompt to deploy.<br>In your pocket.</p>
+    <p class="breather-text">A real IDE.<br>Always in your pocket.</p>
 </div>
 
 <!-- ─── HOW IT WORKS ─── -->
-<section id="how-it-works">
+<section id="how-it-works" class="section-glow">
     <div class="container">
-        <div class="section-header center reveal">
+        <div class="section-header center">
             <div class="section-label">How it works</div>
             <h2 class="section-title">From "I have an idea" to "it's live"<br>in 5 minutes.</h2>
         </div>
         <div class="steps-grid">
-            <div class="step reveal reveal-stagger-1">
+            <div class="step parallax-step" data-speed="0.06">
                 <div class="step-number">1</div>
                 <h3>Describe</h3>
                 <p>Tell me what you want to build in any language. Start from scratch or import a repo from GitHub. AI understands context and starts right away.</p>
             </div>
-            <div class="step reveal reveal-stagger-2">
+            <div class="step parallax-step" data-speed="0.12">
                 <div class="step-number">2</div>
                 <h3>Watch AI build</h3>
                 <p>AI creates files, installs packages, writes code. Step in whenever you want &mdash; or let it handle everything.</p>
             </div>
-            <div class="step reveal reveal-stagger-3">
+            <div class="step parallax-step" data-speed="0.06">
                 <div class="step-number">3</div>
                 <h3>Launch</h3>
                 <p>Live preview, push to GitHub, deploy. All from your phone, wherever you are. Like having your laptop in your pocket.</p>
@@ -2699,7 +2982,7 @@
                 <h4>Product</h4>
                 <a href="#features">Features</a>
                 <a href="#how-it-works">How it Works</a>
-                <a href="#pricing">Pricing</a>
+                <a href="pricing.html">Pricing</a>
                 <a href="#faq">FAQ</a>
             </div>
             <div class="footer-col">
@@ -2801,6 +3084,44 @@
     }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
     revealEls.forEach(function(el) { observer.observe(el); });
+})();
+
+// ─── BREATHER SHIMMER ON SCROLL ───
+(function() {
+    var shimmerEls = document.querySelectorAll('.breather-text');
+    if (!shimmerEls.length) return;
+    var shimmerObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.remove('shimmer-active');
+                void entry.target.offsetWidth;
+                entry.target.classList.add('shimmer-active');
+            } else {
+                entry.target.classList.remove('shimmer-active');
+            }
+        });
+    }, { threshold: 0.5 });
+    shimmerEls.forEach(function(el) { shimmerObserver.observe(el); });
+})();
+
+// ─── PARALLAX STEPS ON SCROLL ───
+(function() {
+    var steps = document.querySelectorAll('.parallax-step');
+    if (!steps.length) return;
+    function updateParallax() {
+        steps.forEach(function(step) {
+            var rect = step.getBoundingClientRect();
+            var center = window.innerHeight / 2;
+            var offset = (rect.top + rect.height / 2 - center);
+            var speed = parseFloat(step.dataset.speed) || 0.08;
+            var y = offset * speed;
+            step.style.transform = 'translateY(' + y + 'px)';
+        });
+    }
+    window.addEventListener('scroll', function() {
+        requestAnimationFrame(updateParallax);
+    }, { passive: true });
+    updateParallax();
 })();
 
 // ─── STATS COUNTER ───
@@ -3021,6 +3342,70 @@ document.getElementById('androidForm').addEventListener('submit', async (e) => {
         submitBtn.textContent = 'Send Request';
     }
 });
+
+// ─── CURSOR GLOW (desktop only) ───
+(function() {
+    if (window.innerWidth <= 768) return;
+    var glow = document.getElementById('cursorGlow');
+    if (!glow) return;
+    var mx = 0, my = 0, gx = 0, gy = 0;
+    document.addEventListener('mousemove', function(e) {
+        mx = e.clientX;
+        my = e.clientY;
+        if (!glow.classList.contains('active')) glow.classList.add('active');
+    });
+    document.addEventListener('mouseleave', function() {
+        glow.classList.remove('active');
+    });
+    function lerp() {
+        gx += (mx - gx) * 0.08;
+        gy += (my - gy) * 0.08;
+        glow.style.left = gx + 'px';
+        glow.style.top = gy + 'px';
+        requestAnimationFrame(lerp);
+    }
+    lerp();
+})();
+
+// ─── 3D TILT ON FEATURE CARDS ───
+(function() {
+    if (window.innerWidth <= 768) return;
+    var cards = document.querySelectorAll('.feature-card');
+    cards.forEach(function(card) {
+        card.addEventListener('mousemove', function(e) {
+            var rect = card.getBoundingClientRect();
+            var x = (e.clientX - rect.left) / rect.width;
+            var y = (e.clientY - rect.top) / rect.height;
+            var rotateX = (0.5 - y) * 8;
+            var rotateY = (x - 0.5) * 8;
+            card.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-4px)';
+        });
+        card.addEventListener('mouseleave', function() {
+            card.style.transform = '';
+        });
+    });
+})();
+
+// ─── SCROLL TEXT BRIGHTNESS ───
+(function() {
+    var titles = document.querySelectorAll('.section-title');
+    if (!titles.length) return;
+    function updateBrightness() {
+        var vh = window.innerHeight;
+        titles.forEach(function(title) {
+            var rect = title.getBoundingClientRect();
+            var center = rect.top + rect.height / 2;
+            var dist = Math.abs(center - vh / 2);
+            var ratio = Math.min(dist / (vh * 0.5), 1);
+            var brightness = 1 - (ratio * 0.5);
+            title.style.filter = 'brightness(' + brightness + ')';
+        });
+    }
+    window.addEventListener('scroll', function() {
+        requestAnimationFrame(updateBrightness);
+    }, { passive: true });
+    updateBrightness();
+})();
 
 </script>
 </body>

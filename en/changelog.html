@@ -463,7 +463,7 @@
         /* ─── RESPONSIVE ─── */
         @media (max-width: 768px) {
             nav {
-                top: 10px;
+                top: 12px;
                 left: 10px;
                 right: 10px;
                 transform: none;
@@ -472,7 +472,7 @@
             }
             .nav-inner { padding: 8px 8px 8px 16px; }
             .nav-links { display: none; }
-            .mobile-menu-btn { display: block; }
+            .mobile-menu-btn { display: block; min-width: 44px; min-height: 44px; }
             .nav-links.open {
                 display: flex;
                 flex-direction: column;
@@ -510,6 +510,7 @@
             .nav-dropdown-panel a .dropdown-icon { width: 28px; height: 28px; }
             .lang-toggle span, .lang-toggle a { width: 26px; height: 22px; font-size: 10px; }
             .changelog-hero { padding: 100px 0 40px; }
+            .changelog-release h2 { font-size: 22px; }
             .changelog-timeline { padding-left: 32px; }
             .changelog-release::before { left: -25px; }
             .changelog-release.latest::before { left: -27px; }
@@ -520,12 +521,20 @@
             .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
         }
         @media (max-width: 480px) {
+            .container { padding: 0 16px; }
+            .changelog-hero { padding: 90px 0 32px; }
+            .changelog-timeline { padding-left: 28px; }
+            .changelog-release::before { width: 8px; height: 8px; left: -22px; }
+            .changelog-release.latest::before { width: 12px; height: 12px; left: -24px; }
+            .changelog-release h2 { font-size: 20px; }
+            .changelog-items li { font-size: 14px; }
+            .changelog-tag { font-size: 10px; }
             footer { padding: 32px 0 24px; }
             .footer-grid { grid-template-columns: 1fr 1fr; gap: 20px 16px; margin-bottom: 24px; }
             .footer-brand { grid-column: 1 / -1; }
             .footer-brand p { font-size: 13px; max-width: 100%; }
             .footer-col h4 { font-size: 12px; margin-bottom: 10px; }
-            .footer-col a { font-size: 13px; margin-bottom: 8px; }
+            .footer-col a { font-size: 13px; margin-bottom: 8px; padding: 4px 0; }
             .footer-bottom { padding-top: 16px; font-size: 12px; }
         }
     </style>
