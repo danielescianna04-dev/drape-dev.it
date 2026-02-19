@@ -139,6 +139,9 @@
             cursor: pointer;
             padding: 8px;
         }
+        .nav-right-mobile {
+            display: none;
+        }
 
         /* ─── HERO ─── */
         .hero {
@@ -517,16 +520,43 @@
         /* ─── RESPONSIVE ─── */
         @media (max-width: 768px) {
             nav {
-                top: 10px;
+                top: 6px;
                 left: 10px;
                 right: 10px;
                 transform: none;
                 max-width: none;
                 width: auto;
             }
-            .nav-inner { padding: 8px 8px 8px 16px; }
+            .nav-inner { padding: 3px 4px 3px 12px; border-radius: 50px; }
+            .logo { font-size: 14px; gap: 6px; }
+            .logo-icon { width: 20px; height: 20px; border-radius: 5px; }
             .nav-links { display: none; }
-            .mobile-menu-btn { display: block; }
+            .nav-cta-desktop { display: none; }
+            .mobile-menu-btn:first-of-type { display: none; }
+            .nav-right-mobile {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+            .nav-right-mobile .nav-cta {
+                padding: 5px 14px;
+                font-size: 12px;
+                border-radius: 16px;
+                box-shadow: 0 2px 10px rgba(168, 85, 247, 0.25);
+            }
+            .nav-right-mobile .mobile-menu-btn-2 {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: none;
+                border: none;
+                color: var(--text-secondary);
+                cursor: pointer;
+                padding: 4px;
+                width: 32px;
+                height: 32px;
+            }
+            .nav-right-mobile .mobile-menu-btn-2 svg { width: 18px; height: 18px; }
             .nav-links.open {
                 display: flex;
                 flex-direction: column;
@@ -594,7 +624,15 @@
                 <a href="/en/pricing.html">Pricing</a>
                 <a href="/en/#faq">FAQ</a>
                 <a href="/en/support.html">Support</a>
+                <a href="javascript:void(0)" class="nav-cta nav-cta-desktop">Download</a>
+            </div>
+            <div class="nav-right-mobile">
                 <a href="javascript:void(0)" class="nav-cta">Download</a>
+                <button class="mobile-menu-btn-2" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
