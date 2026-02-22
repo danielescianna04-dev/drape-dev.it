@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Blog - Drape | Vibe Coding, AI & Mobile Development</title>
-    <meta name="description" content="Stories, ideas and updates from the Drape team. Vibe coding, AI for developers, coding from your phone and the latest mobile IDE news.">
-    <meta name="keywords" content="Drape blog, vibe coding blog, mobile IDE news, code from phone, AI coding">
+    <title>Vibe Coding: What It Is & How It Works | Drape</title>
+    <meta name="description" content="Discover what vibe coding is and how it works. Describe your idea, AI writes the code. With Drape you can vibe code from your phone using Claude, GPT and Gemini.">
+    <meta name="keywords" content="vibe coding, vibe code, what is vibe coding, vibe coding app, vibe coding mobile, code with AI, Drape vibe coding">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#6F5CFF">
-    <link rel="canonical" href="https://drape-dev.it/en/blog.html">
-    <link rel="alternate" hreflang="it" href="https://drape-dev.it/blog.html">
-    <link rel="alternate" hreflang="en" href="https://drape-dev.it/en/blog.html">
-    <link rel="alternate" hreflang="x-default" href="https://drape-dev.it/blog.html">
+    <link rel="canonical" href="https://drape-dev.it/en/vibe-coding.html">
+    <link rel="alternate" hreflang="it" href="https://drape-dev.it/vibe-coding.html">
+    <link rel="alternate" hreflang="en" href="https://drape-dev.it/en/vibe-coding.html">
+    <link rel="alternate" hreflang="x-default" href="https://drape-dev.it/vibe-coding.html">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://drape-dev.it/en/blog.html">
-    <meta property="og:title" content="Blog - Drape Mobile IDE">
-    <meta property="og:description" content="Stories, ideas and updates from the Drape team.">
+    <meta property="og:url" content="https://drape-dev.it/en/vibe-coding.html">
+    <meta property="og:title" content="Vibe Coding: What It Is & How It Works | Drape">
+    <meta property="og:description" content="Discover what vibe coding is and how it works. Describe your idea, AI writes the code. With Drape you can vibe code from your phone using Claude, GPT and Gemini.">
     <meta property="og:image" content="https://drape-dev.it/og-image-v2.png">
 
     <!-- Favicon -->
@@ -29,6 +29,49 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- FAQPage JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is vibe coding?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Vibe coding is a new approach to software development where you describe what you want to build in plain language, and an AI model writes the code for you. Instead of typing every line manually, you guide the AI with natural prompts, review the output, and iterate until the result matches your vision. The term was coined by Andrej Karpathy in early 2025."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do I need to know how to code to do vibe coding?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Not necessarily. Vibe coding lowers the barrier to entry dramatically. Non-programmers can build working apps by describing what they want. However, having some coding knowledge helps you guide the AI more effectively, debug issues faster, and understand the output. Vibe coding makes development accessible to everyone, from complete beginners to senior engineers."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I vibe code from my phone?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Drape is a mobile IDE specifically designed for vibe coding on iPhone. It includes 8 AI models (Claude, GPT, Gemini, Llama and more), a full terminal, GitHub integration, and live preview. You can describe your idea, let the AI Agent build it, and deploy — all from your phone."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the best app for vibe coding?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "For mobile vibe coding, Drape is the leading choice. It combines a cloud-based development environment with multiple AI models, giving you the flexibility to choose the right AI for each task. On desktop, tools like Cursor and Windsurf are popular. Drape is unique because it brings the full vibe coding experience to your phone."
+                }
+            }
+        ]
+    }
+    </script>
+
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -75,7 +118,7 @@
             padding: 0 24px;
         }
 
-        /* ─── NAV ─── */
+        /* --- NAV --- */
         nav {
             position: fixed;
             top: 16px;
@@ -256,7 +299,7 @@
             background: rgba(255,255,255,0.05);
         }
 
-        /* ─── BLOG HERO ─── */
+        /* --- BLOG HERO --- */
         .blog-hero {
             padding: 140px 0 48px;
             text-align: center;
@@ -288,94 +331,12 @@
         .blog-hero p {
             font-size: 17px;
             color: var(--text-secondary);
-            max-width: 500px;
+            max-width: 560px;
             margin: 0 auto;
             position: relative;
         }
 
-        /* ─── 3-COLUMN CARD GRID (Base44 style) ─── */
-        .blog-cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            max-width: 960px;
-            margin: 0 auto 80px;
-            position: relative;
-        }
-        .blog-card {
-            display: flex;
-            flex-direction: column;
-            background: linear-gradient(180deg, rgba(12,12,16,0.8) 0%, rgba(8,8,12,0.9) 100%);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 28px 24px;
-            text-decoration: none;
-            color: var(--text);
-            transition: all 0.3s;
-        }
-        .blog-card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-4px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 40px rgba(155, 138, 255, 0.05);
-        }
-        .blog-card-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: rgba(155, 138, 255, 0.1);
-            border: 1px solid rgba(155, 138, 255, 0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        .blog-card-icon svg {
-            width: 22px;
-            height: 22px;
-            color: #9B8AFF;
-        }
-        .blog-card-tag {
-            font-size: 11px;
-            color: #9B8AFF;
-            background: rgba(155, 138, 255, 0.08);
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 12px;
-        }
-        .blog-card h3 {
-            font-size: 17px;
-            font-weight: 700;
-            line-height: 1.3;
-            margin-bottom: 8px;
-            letter-spacing: -0.3px;
-        }
-        .blog-card p {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            flex: 1;
-        }
-        .blog-card .read-more {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 16px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #9B8AFF;
-        }
-        .blog-card .read-more svg {
-            width: 14px;
-            height: 14px;
-            transition: transform 0.2s;
-        }
-        .blog-card:hover .read-more svg {
-            transform: translateX(4px);
-        }
-
-        /* ─── GRADIENT DIVIDER ─── */
+        /* --- GRADIENT DIVIDER --- */
         .section-divider {
             height: 1px;
             max-width: 960px;
@@ -383,7 +344,7 @@
             background: linear-gradient(90deg, transparent, rgba(155, 138, 255, 0.2), transparent);
         }
 
-        /* ─── BLOG ARTICLE ─── */
+        /* --- BLOG ARTICLE --- */
         .blog-article {
             max-width: 720px;
             margin: 0 auto 80px;
@@ -468,6 +429,38 @@
             border-radius: 50%;
             background: #9B8AFF;
         }
+        .blog-article ol {
+            list-style: none;
+            margin: 20px 0;
+            padding: 0;
+            counter-reset: step-counter;
+        }
+        .blog-article ol li {
+            position: relative;
+            padding-left: 40px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            counter-increment: step-counter;
+        }
+        .blog-article ol li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(155, 138, 255, 0.12);
+            border: 1px solid rgba(155, 138, 255, 0.2);
+            color: #9B8AFF;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         .blog-article-cta {
             margin-top: 48px;
             padding: 32px;
@@ -504,7 +497,74 @@
             height: 18px;
         }
 
-        /* ─── FOOTER ─── */
+        /* --- FAQ SECTION --- */
+        .faq-section {
+            max-width: 720px;
+            margin: 0 auto 80px;
+            padding: 0 0 80px;
+            border-bottom: 1px solid var(--border);
+        }
+        .faq-section h2 {
+            font-size: clamp(24px, 4vw, 36px);
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -1.5px;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-item:hover {
+            border-color: var(--border-hover);
+        }
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: left;
+            line-height: 1.4;
+            gap: 16px;
+        }
+        .faq-question svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            color: var(--text-muted);
+            transition: transform 0.3s;
+        }
+        .faq-item.open .faq-question svg {
+            transform: rotate(45deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-answer-inner {
+            padding: 0 24px 20px;
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 300px;
+        }
+
+        /* --- FOOTER --- */
         footer {
             padding: 48px 0 24px;
             border-top: 1px solid var(--border);
@@ -562,7 +622,7 @@
             color: var(--text-muted);
         }
 
-        /* ─── RESPONSIVE ─── */
+        /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
             nav {
                 top: 12px;
@@ -622,13 +682,11 @@
             .nav-dropdown-panel a { padding: 8px 12px; font-size: 13px; }
             .nav-dropdown-panel a .dropdown-icon { width: 28px; height: 28px; }
             .lang-toggle span, .lang-toggle a { width: 26px; height: 22px; font-size: 10px; }
-            .blog-cards {
-                grid-template-columns: 1fr;
-                max-width: 480px;
-            }
             .blog-hero { padding: 110px 0 36px; }
             .blog-article p { font-size: 15px; }
             .blog-article h3 { font-size: 18px; }
+            .faq-question { font-size: 15px; padding: 16px 20px; }
+            .faq-answer-inner { padding: 0 20px 16px; font-size: 14px; }
             .footer-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 32px;
@@ -637,13 +695,11 @@
         }
         @media (max-width: 480px) {
             .container { padding: 0 16px; }
-            .blog-cards { max-width: none; }
-            .blog-card { padding: 20px 16px; }
-            .blog-card h3 { font-size: 16px; }
-            .blog-card p { font-size: 13px; }
             .blog-article p { font-size: 14px; }
             .blog-article h3 { font-size: 17px; }
             .blog-article-cta { padding: 20px 16px; }
+            .faq-question { font-size: 14px; padding: 14px 16px; }
+            .faq-answer-inner { padding: 0 16px 14px; font-size: 13px; }
             footer { padding: 32px 0 24px; }
             .footer-grid { grid-template-columns: 1fr 1fr; gap: 20px 16px; margin-bottom: 24px; }
             .footer-brand { grid-column: 1 / -1; }
@@ -656,7 +712,7 @@
 </head>
 <body>
 
-<!-- ─── NAV ─── -->
+<!-- --- NAV --- -->
 <nav>
     <div class="container">
         <div class="nav-inner">
@@ -701,10 +757,10 @@
                     </div>
                 </div>
                 <a href="/en/#pricing">Pricing</a>
-                <a href="blog.html" style="color: var(--text);">Blog</a>
+                <a href="blog.html">Blog</a>
                 <a href="/en/docs/guida-rapida.html">Docs</a>
                 <div class="lang-toggle">
-                    <a href="/blog.html" title="Italiano">IT</a>
+                    <a href="/vibe-coding.html" title="Italiano">IT</a>
                     <span class="lang-active">EN</span>
                 </div>
                 <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="nav-cta">Download</a>
@@ -713,295 +769,134 @@
     </div>
 </nav>
 
-<!-- ─── BLOG HERO ─── -->
+<!-- --- HERO --- -->
 <section class="blog-hero">
     <div class="container">
-        <h1>Blog</h1>
-        <p>Stories, ideas and updates from the Drape team.</p>
+        <h1>Vibe Coding: What It Is and How It Works</h1>
+        <p>The new way to code: describe what you want, AI builds it. Discover vibe coding with Drape.</p>
     </div>
 </section>
 
-<!-- ─── 3-COLUMN CARD GRID ─── -->
-<section>
-    <div class="container">
-        <div class="blog-cards">
-            <a href="#article-vibe" class="blog-card">
-                <div class="blog-card-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-                </div>
-                <span class="blog-card-tag">Guide</span>
-                <h3>What is Vibe Coding and how to get started</h3>
-                <p>The new way to code: describe your idea and AI writes the code. Here's how it works.</p>
-                <span class="read-more">Read <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-            </a>
-            <a href="#article-build-phone" class="blog-card">
-                <div class="blog-card-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
-                </div>
-                <span class="blog-card-tag">Tutorial</span>
-                <h3>How to build an app from your phone in 2026</h3>
-                <p>No computer needed. Here's how to create apps, websites and real projects from your iPhone.</p>
-                <span class="read-more">Read <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-            </a>
-            <a href="#article-1" class="blog-card">
-                <div class="blog-card-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                </div>
-                <span class="blog-card-tag">Story</span>
-                <h3>Why we built Drape</h3>
-                <p>Two Italian developers, an idea born from the frustration of not being able to code away from home.</p>
-                <span class="read-more">Read <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-            </a>
-            <a href="#article-2" class="blog-card">
-                <div class="blog-card-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-                </div>
-                <span class="blog-card-tag">Tutorial</span>
-                <h3>5 things you can do with Drape you didn't think were possible on mobile</h3>
-                <p>Fix a bug on the subway, deploy an API from the train, and other real scenarios.</p>
-                <span class="read-more">Read <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-            </a>
-            <a href="#article-3" class="blog-card">
-                <div class="blog-card-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                </div>
-                <span class="blog-card-tag">Vision</span>
-                <h3>The future of mobile development</h3>
-                <p>Why the phone will be the next essential tool for developers.</p>
-                <span class="read-more">Read <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- ─── DIVIDER ─── -->
+<!-- --- DIVIDER --- -->
 <div class="section-divider"></div>
 
-<!-- ─── ARTICLE: VIBE CODING ─── -->
-<article class="blog-article" id="article-vibe">
+<!-- --- SECTION 1: What is Vibe Coding? --- -->
+<article class="blog-article">
     <div class="container">
         <div class="blog-article-header">
             <div class="blog-article-meta">
-                <span class="blog-article-date">February 22, 2026</span>
                 <span class="blog-article-tag">Guide</span>
-                <span class="blog-article-author">by Leon Rivas</span>
             </div>
-            <h2>What is Vibe Coding and how to get started</h2>
+            <h2>What is Vibe Coding?</h2>
         </div>
 
-        <p><strong>Vibe coding</strong> is a new way of programming where you describe what you want to create using natural language, and an AI generates the code for you. Instead of writing every line manually, you tell the AI: "Create an e-commerce with shopping cart and checkout" and it builds the structure, files and working code.</p>
+        <p>Vibe coding is a fundamentally new approach to building software. Instead of writing every line of code by hand, you describe what you want in plain language and let an AI model generate the code for you. You stay in the driver's seat, guiding the direction and reviewing the output, but the heavy lifting of syntax, boilerplate, and implementation details is handled by artificial intelligence.</p>
 
-        <p>The term exploded in 2025 when AI models like Claude, GPT and Gemini became powerful enough to generate entire projects &mdash; not just snippets. Today, vibe coding is changing how millions of people create software.</p>
+        <p>The term was popularized by <strong>Andrej Karpathy</strong>, co-founder of OpenAI and former head of AI at Tesla, in early 2025. He described it as a style of programming where you "fully give in to the vibes" &mdash; you stop thinking about code as text and start thinking about what you want the software to do. You speak it, the AI writes it.</p>
 
-        <h3>How Vibe Coding works</h3>
+        <p>This is not autocomplete. Autocomplete suggests the next few characters. Vibe coding is a conversation. You tell the AI: "Build me a REST API with user authentication and a dashboard that shows analytics." The AI scaffolds the entire project, writes the routes, sets up the database schema, and generates the frontend. You review, adjust, and iterate. The result is working software, built in a fraction of the time it would take to write manually.</p>
 
-        <p>The process is simple: you describe, AI builds. But it's not just "ask and receive". Vibe coding is a dialogue: you describe your idea, the AI generates a first version, you guide it with feedback ("change the color", "add a login form", "make the homepage more minimal") and the AI iterates until the result matches your vision.</p>
-
-        <p>It's like having a senior developer working for you 24/7. You're the creative director, AI is the executor.</p>
-
-        <h3>Why it works so well on mobile</h3>
-
-        <p>Vibe coding is perfect for phones because it doesn't require typing hundreds of lines of code. Just describe what you want. With <strong>Drape</strong>, you can vibe code directly from your iPhone: choose from 5 AI models (Claude, GPT, Gemini), describe your project, and watch the AI build it in real-time with live preview.</p>
-
-        <h3>Who can do Vibe Coding?</h3>
-
-        <p>Everyone. If you can describe what you want, you can vibe code. Experienced developers use it to speed up work. Designers use it to prototype. Entrepreneurs use it to create MVPs without hiring a team. Students use it to learn. No programming experience required &mdash; just an idea.</p>
-
-        <p><a href="vibe-coding.html" style="color: #9B8AFF; font-weight: 600;">Learn more about vibe coding &rarr;</a></p>
-
-        <div class="blog-article-cta">
-            <p>Try vibe coding with Drape. It's free.</p>
-            <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="btn-primary">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                Download on App Store
-            </a>
-        </div>
+        <p>Vibe coding does not replace understanding. The best vibe coders know enough about software to guide the AI effectively, ask the right questions, and catch mistakes. But it radically reduces the gap between having an idea and having a working prototype.</p>
     </div>
 </article>
 
-<!-- ─── ARTICLE: BUILD APP FROM PHONE ─── -->
-<article class="blog-article" id="article-build-phone">
+<!-- --- SECTION 2: How Vibe Coding Works with Drape --- -->
+<article class="blog-article">
     <div class="container">
         <div class="blog-article-header">
             <div class="blog-article-meta">
-                <span class="blog-article-date">February 20, 2026</span>
                 <span class="blog-article-tag">Tutorial</span>
-                <span class="blog-article-author">by Daniele Scianna</span>
             </div>
-            <h2>How to build an app from your phone in 2026</h2>
+            <h2>How Vibe Coding Works with Drape</h2>
         </div>
 
-        <p>Yes, in 2026 you can <strong>build an app from your phone</strong>. Not a toy app, but a real project: websites, e-commerce stores, dashboards, APIs, bots and much more. The secret? A mobile IDE with AI that does the heavy lifting for you.</p>
+        <p>Drape turns your phone into a vibe coding machine. Here is the step-by-step process, from idea to running application:</p>
 
-        <p>Until recently, building an app required a computer, specific software and months of study. Today with cloud computing and artificial intelligence, your iPhone becomes a complete development studio.</p>
-
-        <h3>What you can build from your phone</h3>
-
-        <p>With <strong>Drape</strong> you can create virtually any digital project:</p>
-
-        <ul>
-            <li><strong>Websites and landing pages</strong> &mdash; Portfolios, business sites, one-pagers</li>
-            <li><strong>E-commerce</strong> &mdash; Online shops with cart and checkout</li>
-            <li><strong>Dashboards</strong> &mdash; Control panels with charts and data</li>
-            <li><strong>APIs and backends</strong> &mdash; Servers, endpoints, databases</li>
-            <li><strong>Bots and automations</strong> &mdash; Telegram bots, automated scripts</li>
-            <li><strong>Blogs and CMS</strong> &mdash; Content-managed websites</li>
-        </ul>
-
-        <h3>How it works: 3 steps</h3>
-
-        <p><strong>1. Download Drape</strong> from the App Store and create a free account. In 30 seconds you have a complete development environment in the cloud.</p>
-
-        <p><strong>2. Describe your idea</strong> to the AI in English or any language: "Create a website for my restaurant with menu, reservations and photo gallery". The AI generates the structure, writes the code and sets everything up.</p>
-
-        <p><strong>3. Customize and publish</strong>. Watch the live preview, modify anything you want with AI assistance, and when you're satisfied publish your project online.</p>
-
-        <h3>Do you need to know how to code?</h3>
-
-        <p>No, it's not required. Drape's AI handles the technical side. You focus on the idea and the result. Of course, if you can code you can intervene directly with the built-in editor and terminal &mdash; you have full control.</p>
-
-        <p><a href="build-app-from-phone.html" style="color: #9B8AFF; font-weight: 600;">Complete guide: build apps from your phone &rarr;</a></p>
-
-        <div class="blog-article-cta">
-            <p>Start building from your phone. Drape is free.</p>
-            <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="btn-primary">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                Download on App Store
-            </a>
-        </div>
+        <ol>
+            <li><strong>Describe your idea.</strong> Open Drape and tell the AI Agent what you want to build. Be as specific or as general as you like. "Create a personal finance tracker with expense categories, a monthly chart, and CSV export" is a great prompt. So is "Build me a landing page for a coffee shop."</li>
+            <li><strong>The AI writes the code.</strong> Drape's AI Agent generates the project structure, installs dependencies, and writes the source code. You can watch it work in real time. It creates files, runs terminal commands, and sets everything up &mdash; just like a developer would on a laptop.</li>
+            <li><strong>Review and refine.</strong> Open the live preview to see what the AI built. If something is not right, tell the AI: "Change the header color to dark blue" or "Add a login form before the dashboard." The AI updates the code instantly. This is the iterative heart of vibe coding &mdash; a back-and-forth dialogue between you and the machine.</li>
+            <li><strong>Choose the right AI model.</strong> Drape gives you access to 8 AI models including Claude, GPT, Gemini, and Llama. Each has different strengths. Use Claude for complex reasoning and architecture decisions. Use GPT for fast iterations. Use Gemini for multimodal tasks. Switch between them mid-project depending on what you need.</li>
+            <li><strong>Ship it.</strong> When you are satisfied, push to GitHub directly from Drape. Connect your CI/CD pipeline and deploy. Your idea went from your head to production without ever opening a laptop.</li>
+        </ol>
     </div>
 </article>
 
-<!-- ─── ARTICLE 1 ─── -->
-<article class="blog-article" id="article-1">
+<!-- --- SECTION 3: Why Vibe Coding Changes Everything --- -->
+<article class="blog-article">
     <div class="container">
         <div class="blog-article-header">
             <div class="blog-article-meta">
-                <span class="blog-article-date">February 10, 2026</span>
-                <span class="blog-article-tag">Story</span>
-                <span class="blog-article-author">by Leon Rivas &amp; Daniele Scianna</span>
-            </div>
-            <h2>Why we built Drape</h2>
-        </div>
-
-        <p>It all started with a frustration every developer knows: you have an idea, you want to write code, but you don't have your laptop with you. Maybe you're on a train, waiting somewhere, or simply away from your desk. The idea is there, the motivation is there, but you're <strong>completely stuck</strong>.</p>
-
-        <p>We're Daniele and Leon, two Italian developers. We found ourselves in this situation dozens of times. We tried every coding app available: basic editors that don't go beyond text, limited terminals, tools that promise a lot but don't deliver. None of them offered a real development experience.</p>
-
-        <h3>The problem was never the phone</h3>
-
-        <p>Modern phones have more powerful processors than laptops from a few years ago. The problem was never the hardware &mdash; it was always the software. Nobody had built a mobile IDE designed for real developers.</p>
-
-        <p>So we decided to build it ourselves.</p>
-
-        <h3>Not a toy. A real IDE.</h3>
-
-        <p>Drape is not a glorified text editor. It's a complete development environment that runs in the cloud and is controlled from your phone:</p>
-
-        <ul>
-            <li><strong>Real bash/zsh terminal</strong> &mdash; npm, git, python, everything you use on your Mac</li>
-            <li><strong>8 AI models</strong> &mdash; Claude, GPT, Gemini, Llama. Choose the right one for the task</li>
-            <li><strong>GitHub integration</strong> &mdash; Clone, commit, push. Just like from your desktop</li>
-            <li><strong>Live preview</strong> &mdash; See changes in real time, no deploy needed</li>
-            <li><strong>Autonomous AI Agent</strong> &mdash; Describe what you want, the AI builds the project</li>
-        </ul>
-
-        <p>The goal is simple: <strong>remove the blocker</strong>. If you have your phone in your pocket, you can code. Not tomorrow, not when you get home. Right now.</p>
-
-        <h3>Made in Italy, for the world</h3>
-
-        <p>Drape was born in Milan, but it's built for developers everywhere. The app is available in Italian and English, and the AI understands any language. We're just getting started, and we have a clear vision: make software development accessible from any device, at any time.</p>
-
-        <div class="blog-article-cta">
-            <p>Try Drape for free and start building from your phone.</p>
-            <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="btn-primary">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                Download on App Store
-            </a>
-        </div>
-    </div>
-</article>
-
-<!-- ─── ARTICLE 2 ─── -->
-<article class="blog-article" id="article-2">
-    <div class="container">
-        <div class="blog-article-header">
-            <div class="blog-article-meta">
-                <span class="blog-article-date">February 3, 2026</span>
-                <span class="blog-article-tag">Tutorial</span>
-                <span class="blog-article-author">by Leon Rivas</span>
-            </div>
-            <h2>5 things you can do with Drape you didn't think were possible on mobile</h2>
-        </div>
-
-        <p>When we say "code from your phone", the first reaction is always skepticism. "Sure, but not for serious stuff." In reality, with Drape you can do way more than you think. Here are 5 real scenarios.</p>
-
-        <h3>1. Fix a bug on the subway</h3>
-
-        <p>You get a notification: there's a bug in production. You're on the subway, the laptop is at home. With Drape, you open the app, import the repo from GitHub, find the file, ask the AI to analyze the problem and apply the fix. Commit, push, deploy. All before the next stop.</p>
-
-        <h3>2. Prototype an idea at the coffee shop</h3>
-
-        <p>You get an idea for a side project while having coffee. Open Drape, describe what you want to the AI Agent: "Create a landing page with contact form and pricing section". The AI creates the files, installs dependencies, writes the code. You guide the process, tweak what doesn't convince you, and in 10 minutes you have a working prototype.</p>
-
-        <h3>3. Import a GitHub repo and work on it</h3>
-
-        <p>You don't have to start from scratch. Import any repository from your GitHub: your work project, a side project, an open source library. Drape clones the repo, and you can browse files, edit code, and push changes &mdash; exactly like you would from your laptop.</p>
-
-        <h3>4. Deploy an API from the train</h3>
-
-        <p>You're working on a backend in Express or FastAPI. With Drape's terminal you can run any command: install packages, test endpoints, run scripts. The live preview shows you the result in real time. When ready, push to GitHub and trigger the deploy from CI/CD.</p>
-
-        <h3>5. Pair-programming with AI</h3>
-
-        <p>Choose from 8 different AI models: Claude for complex reasoning, GPT for speed, Gemini for multimodal tasks, Llama for quick responses. You can switch models on the fly based on what you're doing. It's like having 8 senior developers at your disposal, always.</p>
-
-        <div class="blog-article-cta">
-            <p>Try these scenarios yourself. Drape is free.</p>
-            <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="btn-primary">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                Download on App Store
-            </a>
-        </div>
-    </div>
-</article>
-
-<!-- ─── ARTICLE 3 ─── -->
-<article class="blog-article" id="article-3">
-    <div class="container">
-        <div class="blog-article-header">
-            <div class="blog-article-meta">
-                <span class="blog-article-date">January 22, 2026</span>
                 <span class="blog-article-tag">Vision</span>
-                <span class="blog-article-author">by Daniele Scianna</span>
             </div>
-            <h2>The future of mobile development</h2>
+            <h2>Why Vibe Coding Changes Everything</h2>
         </div>
 
-        <p>In 2010, the idea of editing a spreadsheet on your phone seemed absurd. Today Google Sheets on mobile is used by millions of people. The same happened with design (Figma mobile), music (GarageBand), video editing (CapCut). Every creative field has had its transition to mobile.</p>
+        <p>Software development has always had a steep learning curve. Years of practice to become proficient. Weeks to build what could be described in a paragraph. Vibe coding compresses that timeline dramatically.</p>
 
-        <p>Software development is the last frontier. And it's about to change.</p>
+        <ul>
+            <li><strong>Speed.</strong> What used to take days now takes hours. What used to take hours now takes minutes. Vibe coding eliminates the slowest parts of development: looking up documentation, writing boilerplate, debugging typos, and configuring build tools.</li>
+            <li><strong>Accessibility.</strong> People who could never build software before can now create working applications. Entrepreneurs can prototype their own ideas. Designers can build functional mockups. Students can go from concept to code in a single class period.</li>
+            <li><strong>Focus on what matters.</strong> Instead of spending mental energy on semicolons and import statements, you spend it on product decisions. What should the user experience feel like? What data should the dashboard show? Vibe coding moves the conversation from "how to implement" to "what to build."</li>
+            <li><strong>Iteration velocity.</strong> Because changes are described in natural language, you can experiment faster. "Try a card-based layout instead of a table." "Add dark mode." "Make it mobile responsive." Each change is a sentence, not a rewrite.</li>
+            <li><strong>Lower risk.</strong> Building a prototype to test an idea used to require a significant investment of time and money. With vibe coding, you can validate a concept in an afternoon. If it does not work, you have lost hours, not weeks.</li>
+        </ul>
 
-        <h3>Why we're still tied to the laptop</h3>
+        <p>Vibe coding does not make traditional programming obsolete. Complex systems, performance-critical code, and large-scale architecture still benefit from deep engineering expertise. But for the vast majority of software that needs to be built &mdash; internal tools, prototypes, MVPs, landing pages, CRUD apps &mdash; vibe coding is faster, simpler, and more accessible.</p>
+    </div>
+</article>
 
-        <p>The reason is historical, not technical. Development tools were born for desktop: terminals, editors, debuggers &mdash; everything designed for keyboard and large screen. But mobile hardware is already ready. An iPhone 16 has more RAM and computing power than a 2018 MacBook Pro.</p>
+<!-- --- SECTION 4: Drape: The Best IDE for Vibe Coding on Mobile --- -->
+<article class="blog-article">
+    <div class="container">
+        <div class="blog-article-header">
+            <div class="blog-article-meta">
+                <span class="blog-article-tag">Product</span>
+            </div>
+            <h2>Drape: The Best IDE for Vibe Coding on Mobile</h2>
+        </div>
 
-        <p>What was missing was the software. An IDE truly designed for mobile, not a poor port of a desktop tool.</p>
+        <p>Most vibe coding tools are built for desktop. Cursor, Windsurf, Replit &mdash; they all assume you are sitting in front of a laptop with a keyboard and a large screen. But ideas do not only come when you are at your desk.</p>
 
-        <h3>AI changes the rules</h3>
+        <p>Drape is the first mobile IDE designed specifically for vibe coding. It runs a full cloud-based development environment controlled entirely from your iPhone. Here is what makes it different:</p>
 
-        <p>Artificial intelligence is the game changer. With an AI Agent that understands context and writes code, the keyboard becomes less important. You don't need to type 200 lines of boilerplate &mdash; describe what you want and the AI builds it. The phone becomes a <strong>control center</strong>, not a keyboard replacement.</p>
+        <ul>
+            <li><strong>8 AI models in one app.</strong> Claude, GPT-4o, Gemini, Llama, and more. You are not locked into one AI provider. Pick the best model for the task and switch anytime.</li>
+            <li><strong>Autonomous AI Agent.</strong> Drape's Agent does not just suggest code &mdash; it builds entire projects. Describe what you want, and the Agent creates files, installs packages, writes code, and runs commands autonomously.</li>
+            <li><strong>Full terminal access.</strong> Real bash/zsh terminal with npm, git, python, and every tool you would use on a Mac. This is not a sandbox &mdash; it is a real development environment.</li>
+            <li><strong>GitHub integration.</strong> Clone repositories, create branches, commit, and push. Work on your existing projects or start new ones. Your code lives in your GitHub, not locked in a proprietary platform.</li>
+            <li><strong>Live preview.</strong> See your changes in real time as the AI builds. No need to deploy to test. The feedback loop is instant.</li>
+            <li><strong>Designed for touch.</strong> The interface is built from the ground up for mobile. No tiny desktop buttons crammed onto a phone screen. Every interaction is optimized for touch and gestures.</li>
+        </ul>
 
-        <p>This is fundamentally different from trying to replicate VS Code on a 6-inch screen. We're not shrinking the desktop experience &mdash; we're creating a new paradigm where interaction is at a higher level.</p>
+        <p>With Drape, vibe coding is no longer something you can only do at your desk. It is something you can do anywhere &mdash; on the train, at a coffee shop, on your couch, or waiting in line.</p>
+    </div>
+</article>
 
-        <h3>Our goal</h3>
+<!-- --- SECTION 5: Who Can Do Vibe Coding? --- -->
+<article class="blog-article">
+    <div class="container">
+        <div class="blog-article-header">
+            <div class="blog-article-meta">
+                <span class="blog-article-tag">Community</span>
+            </div>
+            <h2>Who Can Do Vibe Coding?</h2>
+        </div>
 
-        <p>We believe that in 5 years, nobody will find it strange to code from their phone. Just like today nobody finds it strange to edit a video on iPhone. The transition is inevitable &mdash; we're accelerating it.</p>
+        <p>The short answer: everyone. Vibe coding removes the traditional gatekeeping of software development. You do not need a computer science degree. You do not need years of practice. You need an idea and the ability to describe it clearly.</p>
 
-        <p>Drape is the first step. A complete mobile IDE, with AI, terminal, and everything you need to never be stuck again. We don't replace the laptop &mdash; we make it optional.</p>
+        <ul>
+            <li><strong>Entrepreneurs and founders.</strong> Build your MVP before hiring a developer. Test your idea with real users. Iterate based on feedback. Vibe coding turns founders into builders.</li>
+            <li><strong>Designers.</strong> Stop handing off static mockups and waiting for implementation. Build the real thing. Vibe code your designs into functional prototypes that stakeholders can actually interact with.</li>
+            <li><strong>Students.</strong> Learn by building. Instead of spending months on syntax before you can create anything meaningful, start with your idea and learn the underlying concepts as you go. Vibe coding is the fastest path from curiosity to competence.</li>
+            <li><strong>Professional developers.</strong> Vibe coding is not just for beginners. Experienced engineers use it to accelerate routine work, prototype faster, and focus their expertise on the problems that actually require deep thinking.</li>
+            <li><strong>Product managers and marketers.</strong> Need a quick internal tool? A data dashboard? A landing page with a contact form? Vibe code it yourself in an afternoon instead of adding it to the engineering backlog.</li>
+        </ul>
+
+        <p>The best part about vibe coding is that it meets you where you are. If you know nothing about code, the AI handles everything. If you are an experienced developer, the AI handles the tedious parts while you focus on architecture and logic. Either way, you build faster.</p>
 
         <div class="blog-article-cta">
-            <p>Join us in the future of mobile development.</p>
+            <p>Ready to start vibe coding? Download Drape and build your first project from your phone.</p>
             <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="btn-primary">
                 <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
                 Download on App Store
@@ -1010,7 +905,62 @@
     </div>
 </article>
 
-<!-- ─── FOOTER ─── -->
+<!-- --- FAQ SECTION --- -->
+<section class="faq-section">
+    <div class="container">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                What is vibe coding?
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    Vibe coding is a new approach to software development where you describe what you want to build in plain language, and an AI model writes the code for you. Instead of typing every line manually, you guide the AI with natural prompts, review the output, and iterate until the result matches your vision. The term was coined by Andrej Karpathy in early 2025.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Do I need to know how to code to do vibe coding?
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    Not necessarily. Vibe coding lowers the barrier to entry dramatically. Non-programmers can build working apps by describing what they want. However, having some coding knowledge helps you guide the AI more effectively, debug issues faster, and understand the output. Vibe coding makes development accessible to everyone, from complete beginners to senior engineers.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Can I vibe code from my phone?
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    Yes. Drape is a mobile IDE specifically designed for vibe coding on iPhone. It includes 8 AI models (Claude, GPT, Gemini, Llama and more), a full terminal, GitHub integration, and live preview. You can describe your idea, let the AI Agent build it, and deploy &mdash; all from your phone.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                What is the best app for vibe coding?
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    For mobile vibe coding, Drape is the leading choice. It combines a cloud-based development environment with multiple AI models, giving you the flexibility to choose the right AI for each task. On desktop, tools like Cursor and Windsurf are popular. Drape is unique because it brings the full vibe coding experience to your phone.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- --- FOOTER --- -->
 <footer>
     <div class="container">
         <div class="footer-grid">

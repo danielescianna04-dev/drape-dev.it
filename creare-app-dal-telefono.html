@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Creare App dal Telefono: Come Fare con AI | Drape</title>
+    <meta name="description" content="Scopri come creare app e siti web direttamente dal telefono con Drape. AI multimodello, preview live e pubblicazione. Nessuna esperienza richiesta.">
+    <meta name="keywords" content="creare app dal telefono, creare sito dal telefono, programmare da telefono, sviluppare app mobile, app per creare app, Drape, IDE mobile">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#6F5CFF">
+    <link rel="canonical" href="https://drape-dev.it/creare-app-dal-telefono.html">
+    <link rel="alternate" hreflang="it" href="https://drape-dev.it/creare-app-dal-telefono.html">
+    <link rel="alternate" hreflang="en" href="https://drape-dev.it/en/build-app-from-phone.html">
+    <link rel="alternate" hreflang="x-default" href="https://drape-dev.it/creare-app-dal-telefono.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://drape-dev.it/creare-app-dal-telefono.html">
+    <meta property="og:title" content="Creare App dal Telefono: Come Fare con AI | Drape">
+    <meta property="og:description" content="Scopri come creare app e siti web direttamente dal telefono con Drape. AI multimodello, preview live e pubblicazione.">
+    <meta property="og:image" content="https://drape-dev.it/og-image-v2.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Creare App dal Telefono: Come Fare con AI | Drape">
+    <meta name="twitter:description" content="Scopri come creare app e siti web direttamente dal telefono con Drape. AI multimodello, preview live e pubblicazione.">
+    <meta name="twitter:image" content="https://drape-dev.it/og-image-v2.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon2-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon2-16x16.png">
+    <link rel="icon" href="favicon2.ico" sizes="48x48">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon2.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- FAQPage JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Si pu\u00f2 davvero creare un'app dal telefono?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "S\u00ec. Con Drape puoi creare app, siti web e progetti completi direttamente dal tuo iPhone. L'app si connette a un ambiente cloud con terminale reale, 5 modelli AI e preview live. Non serve un laptop."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Serve saper programmare per usare Drape?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No, per i progetti base non serve esperienza. L'AI Agent di Drape genera codice a partire dalla tua descrizione in linguaggio naturale. Per personalizzazioni avanzate, conoscere le basi di programmazione aiuta, ma non \u00e8 obbligatorio."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Che tipo di app posso creare con Drape?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Puoi creare siti web, landing page, e-commerce, dashboard, API backend, bot, portfolio, blog e strumenti interni. Drape supporta qualsiasi tecnologia web: React, Next.js, Vue, Express, Python, e molto altro."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Drape \u00e8 gratuito?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Drape offre un piano gratuito che include accesso al terminale, editor e funzionalit\u00e0 base dell'AI. Per funzionalit\u00e0 avanzate come pi\u00f9 modelli AI e sessioni illimitate, sono disponibili piani premium."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #050507;
+            --bg-card: #0c0c10;
+            --bg-card-hover: #111116;
+            --border: rgba(255,255,255,0.06);
+            --border-hover: rgba(255,255,255,0.12);
+            --text: #f5f5f7;
+            --text-secondary: #8e8e93;
+            --text-muted: #636366;
+            --accent: #a855f7;
+            --accent-light: #c084fc;
+            --accent-glow: rgba(168, 85, 247, 0.10);
+            --accent-glow-strong: rgba(168, 85, 247, 0.20);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-lg: 24px;
+        }
+
+        html, body { scroll-behavior: smooth; overflow-x: hidden; width: 100%; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(155, 138, 255, 0.04) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            padding: 0;
+            width: calc(100% - 48px);
+            max-width: 1200px;
+        }
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            padding: 10px 10px 10px 20px;
+            background: rgba(12, 12, 16, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 60px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: -0.5px;
+            white-space: nowrap;
+        }
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 7px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .logo-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s;
+            white-space: nowrap;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-cta {
+            background: var(--accent);
+            color: #fff !important;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+            box-shadow: 0 4px 16px rgba(168, 85, 247, 0.3);
+        }
+        .nav-cta:hover { background: var(--accent-light); box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4); }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+            padding: 8px;
+        }
+        .nav-dropdown { position: relative; }
+        .nav-dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s;
+            white-space: nowrap;
+            background: none;
+            border: none;
+            font-family: inherit;
+            padding: 0;
+        }
+        .nav-dropdown-toggle:hover { color: var(--text); }
+        .nav-dropdown-toggle svg { width: 12px; height: 12px; transition: transform 0.2s; }
+        .nav-dropdown:hover .nav-dropdown-toggle svg,
+        .nav-dropdown.open .nav-dropdown-toggle svg { transform: rotate(180deg); }
+        .nav-dropdown-panel {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-4px);
+            min-width: 200px;
+            background: rgba(16, 16, 20, 0.9);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 16px 8px 8px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            pointer-events: none;
+            z-index: 200;
+        }
+        .nav-dropdown:hover .nav-dropdown-panel,
+        .nav-dropdown.open .nav-dropdown-panel {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+        .nav-dropdown-panel a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            color: var(--text-secondary) !important;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.15s;
+        }
+        .nav-dropdown-panel a:hover {
+            background: rgba(255,255,255,0.05);
+            color: var(--text) !important;
+        }
+        .nav-dropdown-panel a .dropdown-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(155, 138, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .nav-dropdown-panel a .dropdown-icon svg { width: 16px; height: 16px; color: #9B8AFF; }
+        .lang-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            padding: 3px;
+            flex-shrink: 0;
+        }
+        .lang-toggle a, .lang-toggle span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 24px;
+            border-radius: 14px;
+            font-size: 11px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .lang-toggle .lang-active {
+            background: rgba(255,255,255,0.12);
+            color: var(--text);
+        }
+        .lang-toggle a {
+            color: var(--text-muted);
+        }
+        .lang-toggle a:hover {
+            color: var(--text-secondary);
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* ─── BLOG HERO ─── */
+        .blog-hero {
+            padding: 140px 0 48px;
+            text-align: center;
+            position: relative;
+        }
+        .blog-hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, rgba(99, 102, 241, 0.04) 40%, transparent 70%);
+            pointer-events: none;
+        }
+        .blog-hero h1 {
+            font-size: clamp(32px, 6vw, 52px);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 12px;
+            background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.65) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+        .blog-hero p {
+            font-size: 17px;
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 0 auto;
+            position: relative;
+            line-height: 1.7;
+        }
+
+        /* ─── BLOG ARTICLE ─── */
+        .blog-article {
+            max-width: 720px;
+            margin: 0 auto 80px;
+            padding: 0 0 80px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+        .blog-article:last-of-type {
+            border-bottom: none;
+            margin-bottom: 40px;
+        }
+        .blog-article-header {
+            margin-bottom: 32px;
+        }
+        .blog-article h2 {
+            font-size: clamp(24px, 4vw, 36px);
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -1.5px;
+            margin-bottom: 8px;
+        }
+        .blog-article h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 40px 0 16px;
+            letter-spacing: -0.5px;
+        }
+        .blog-article p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .blog-article strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+        .blog-article ul {
+            list-style: none;
+            margin: 20px 0;
+            padding: 0;
+        }
+        .blog-article ul li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .blog-article ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #9B8AFF;
+        }
+        .blog-article ol {
+            list-style: none;
+            margin: 20px 0;
+            padding: 0;
+            counter-reset: step-counter;
+        }
+        .blog-article ol li {
+            position: relative;
+            padding-left: 40px;
+            margin-bottom: 16px;
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            counter-increment: step-counter;
+        }
+        .blog-article ol li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(155, 138, 255, 0.12);
+            border: 1px solid rgba(155, 138, 255, 0.2);
+            color: #9B8AFF;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .blog-article-cta {
+            margin-top: 48px;
+            padding: 32px;
+            background: linear-gradient(180deg, rgba(155, 138, 255, 0.08) 0%, rgba(155, 138, 255, 0.02) 100%);
+            border: 1px solid rgba(155, 138, 255, 0.15);
+            border-radius: var(--radius-lg);
+            text-align: center;
+        }
+        .blog-article-cta p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+        .blog-article-cta .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%);
+            color: #fff;
+            padding: 13px 28px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.3);
+        }
+        .blog-article-cta .btn-primary:hover {
+            box-shadow: 0 12px 40px rgba(168, 85, 247, 0.4);
+            transform: translateY(-1px);
+        }
+        .blog-article-cta .btn-primary svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ─── GRADIENT DIVIDER ─── */
+        .section-divider {
+            height: 1px;
+            max-width: 720px;
+            margin: 0 auto 60px;
+            background: linear-gradient(90deg, transparent, rgba(155, 138, 255, 0.2), transparent);
+        }
+
+        /* ─── FAQ SECTION ─── */
+        .faq-section {
+            max-width: 720px;
+            margin: 0 auto 80px;
+        }
+        .faq-section h2 {
+            font-size: clamp(24px, 4vw, 32px);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-item:hover {
+            border-color: var(--border-hover);
+        }
+        .faq-question {
+            width: 100%;
+            padding: 20px 24px;
+            background: rgba(12, 12, 16, 0.5);
+            border: none;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            transition: background 0.2s;
+        }
+        .faq-question:hover {
+            background: rgba(12, 12, 16, 0.8);
+        }
+        .faq-question svg {
+            width: 20px;
+            height: 20px;
+            color: var(--text-muted);
+            flex-shrink: 0;
+            transition: transform 0.3s;
+        }
+        .faq-item.open .faq-question svg {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-answer-inner {
+            padding: 0 24px 20px;
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 300px;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            padding: 48px 0 24px;
+            border-top: 1px solid var(--border);
+            position: relative;
+        }
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(155, 138, 255, 0.2), transparent);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 32px;
+        }
+        .footer-brand p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 12px;
+            max-width: 260px;
+            line-height: 1.6;
+        }
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+        }
+        .footer-col h4 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .footer-col a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 10px;
+            transition: color 0.2s;
+        }
+        .footer-col a:hover { color: var(--text); }
+        .footer-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 768px) {
+            nav {
+                top: 12px;
+                left: 10px;
+                right: 10px;
+                transform: none;
+                max-width: none;
+                width: auto;
+            }
+            .nav-inner { padding: 8px 8px 8px 16px; }
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; min-width: 44px; min-height: 44px; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: calc(100% + 8px);
+                left: 0;
+                right: 0;
+                background: rgba(12, 12, 16, 0.95);
+                backdrop-filter: blur(24px);
+                -webkit-backdrop-filter: blur(24px);
+                border: 1px solid rgba(255,255,255,0.08);
+                border-radius: 20px;
+                padding: 16px 24px;
+                gap: 16px;
+            }
+            .nav-dropdown-panel {
+                position: static;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+                background: rgba(255,255,255,0.03);
+                border: none;
+                padding: 4px 0;
+                min-width: auto;
+                border-radius: 10px;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                display: none;
+            }
+            .nav-dropdown.open .nav-dropdown-panel {
+                display: block;
+                transform: none;
+            }
+            .nav-dropdown:hover .nav-dropdown-panel {
+                display: none;
+                opacity: 0;
+                visibility: hidden;
+            }
+            .nav-dropdown.open:hover .nav-dropdown-panel {
+                display: block;
+                opacity: 1;
+                visibility: visible;
+            }
+            .nav-dropdown-panel a { padding: 8px 12px; font-size: 13px; }
+            .nav-dropdown-panel a .dropdown-icon { width: 28px; height: 28px; }
+            .lang-toggle span, .lang-toggle a { width: 26px; height: 22px; font-size: 10px; }
+            .blog-hero { padding: 110px 0 36px; }
+            .blog-article p { font-size: 15px; }
+            .blog-article h3 { font-size: 18px; }
+            .faq-question { padding: 16px 20px; font-size: 15px; }
+            .faq-answer-inner { padding: 0 20px 16px; font-size: 14px; }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 32px;
+            }
+            .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            .container { padding: 0 16px; }
+            .blog-article p { font-size: 14px; }
+            .blog-article h3 { font-size: 17px; }
+            .blog-article-cta { padding: 20px 16px; }
+            .faq-question { padding: 14px 16px; font-size: 14px; }
+            .faq-answer-inner { padding: 0 16px 14px; font-size: 13px; }
+            footer { padding: 32px 0 24px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 20px 16px; margin-bottom: 24px; }
+            .footer-brand { grid-column: 1 / -1; }
+            .footer-brand p { font-size: 13px; max-width: 100%; }
+            .footer-col h4 { font-size: 12px; margin-bottom: 10px; }
+            .footer-col a { font-size: 13px; margin-bottom: 8px; padding: 4px 0; }
+            .footer-bottom { padding-top: 16px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+    <div class="container">
+        <div class="nav-inner">
+            <a href="/" class="logo">
+                <div class="logo-icon">
+                    <img src="logo.png" alt="Drape">
+                </div>
+                Drape
+            </a>
+            <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+            <div class="nav-links">
+                <div class="nav-dropdown">
+                    <button class="nav-dropdown-toggle" onclick="this.parentElement.classList.toggle('open')">
+                        Prodotto
+                        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4.5L6 7.5L9 4.5"/></svg>
+                    </button>
+                    <div class="nav-dropdown-panel">
+                        <a href="/#features">
+                            <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></span>
+                            Funzionalit&agrave;
+                        </a>
+                        <a href="/#how-it-works">
+                            <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></span>
+                            Come funziona
+                        </a>
+                        <a href="changelog.html">
+                            <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+                            Changelog
+                        </a>
+                        <a href="/docs/guida-rapida.html">
+                            <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></span>
+                            Documentazione
+                        </a>
+                        <a href="/#faq">
+                            <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg></span>
+                            FAQ
+                        </a>
+                    </div>
+                </div>
+                <a href="/#pricing">Prezzi</a>
+                <a href="blog.html">Blog</a>
+                <a href="/docs/guida-rapida.html">Docs</a>
+                <div class="lang-toggle">
+                    <span class="lang-active">IT</span>
+                    <a href="/en/build-app-from-phone.html" title="English">EN</a>
+                </div>
+                <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="nav-cta">Scarica</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="blog-hero">
+    <div class="container">
+        <h1>Creare App e Siti Web dal Telefono</h1>
+        <p>Con Drape puoi creare app, siti web e progetti reali direttamente dal tuo iPhone. Descrivi la tua idea, l'AI fa il resto.</p>
+    </div>
+</section>
+
+<!-- ─── DIVIDER ─── -->
+<div class="section-divider"></div>
+
+<!-- ─── SEZIONE 1 ─── -->
+<article class="blog-article">
+    <div class="container">
+        <h2>Si pu&ograve; davvero creare un'app dal telefono?</h2>
+
+        <p>La risposta breve &egrave;: <strong>s&igrave;, assolutamente</strong>. E non stiamo parlando di app giocattolo o prototipi incompleti. Oggi &egrave; possibile costruire progetti reali &mdash; siti web, applicazioni web, API, bot e molto altro &mdash; usando soltanto il telefono che hai in tasca.</p>
+
+        <p>Fino a pochi anni fa, programmare significava sedersi davanti a un computer, aprire un IDE pesante e avere a disposizione un ambiente di sviluppo locale configurato a dovere. Ma due grandi cambiamenti hanno riscritto le regole: il <strong>cloud computing</strong> e l'<strong>intelligenza artificiale</strong>.</p>
+
+        <p>Il cloud computing ha reso possibile eseguire codice su server remoti potenti, senza bisogno di hardware locale. Il tuo telefono diventa un telecomando per una macchina virtuale che ha tutta la potenza di un computer tradizionale. L'AI, dall'altro lato, ha ridotto drasticamente la quantit&agrave; di codice che devi scrivere manualmente. Puoi descrivere quello che vuoi in italiano, e un modello di intelligenza artificiale genera il codice per te.</p>
+
+        <p>Drape unisce questi due mondi in un'unica app per iPhone. Quando apri un progetto, ti connetti a un ambiente cloud completo con terminale bash, file system, e tutti i tool che useresti su un laptop. La differenza &egrave; che lo controlli dal telefono, con un'interfaccia progettata per il touch.</p>
+    </div>
+</article>
+
+<!-- ─── SEZIONE 2 ─── -->
+<article class="blog-article">
+    <div class="container">
+        <h2>Cosa puoi creare con Drape dal telefono</h2>
+
+        <p>Non &egrave; una domanda teorica &mdash; ecco concretamente cosa puoi costruire direttamente dal tuo iPhone, senza mai toccare un laptop:</p>
+
+        <ul>
+            <li><strong>Siti web e landing page</strong> &mdash; Con React, Next.js, HTML/CSS o qualsiasi framework tu preferisca</li>
+            <li><strong>E-commerce</strong> &mdash; Store completi con catalogo prodotti, carrello e integrazione pagamenti</li>
+            <li><strong>Dashboard e pannelli di controllo</strong> &mdash; Interfacce per visualizzare dati, metriche e analytics</li>
+            <li><strong>API e backend</strong> &mdash; Server in Express, FastAPI, Django o qualsiasi tecnologia server-side</li>
+            <li><strong>Bot e automazioni</strong> &mdash; Bot per Telegram, Discord o automazioni che girano in background</li>
+            <li><strong>Portfolio personali</strong> &mdash; Siti portfolio per mostrare i tuoi lavori e progetti</li>
+            <li><strong>Blog e piattaforme di contenuti</strong> &mdash; Sistemi di pubblicazione completi con CMS</li>
+            <li><strong>Strumenti interni</strong> &mdash; Tool aziendali, form personalizzati, gestione dati</li>
+        </ul>
+
+        <p>Il punto chiave &egrave; che Drape non limita le tecnologie che puoi usare. Hai accesso a npm, pip, e qualsiasi package manager. Puoi installare librerie, framework e dipendenze esattamente come faresti da desktop. Se funziona su un server Linux, funziona su Drape.</p>
+    </div>
+</article>
+
+<!-- ─── SEZIONE 3 ─── -->
+<article class="blog-article">
+    <div class="container">
+        <h2>Come funziona: da idea a progetto in 5 minuti</h2>
+
+        <p>Il processo per creare un'app dal telefono con Drape &egrave; sorprendentemente semplice. Non servono configurazioni complesse o conoscenze tecniche avanzate. Ecco i passaggi:</p>
+
+        <ol>
+            <li><strong>Scarica Drape dall'App Store</strong> &mdash; L'app &egrave; gratuita e disponibile per iPhone. La registrazione richiede meno di un minuto.</li>
+            <li><strong>Descrivi la tua idea all'AI</strong> &mdash; Apri una nuova sessione e spiega in italiano cosa vuoi creare. Per esempio: "Voglio un sito portfolio con sezione progetti, about me e form di contatto, con design scuro e moderno."</li>
+            <li><strong>L'AI costruisce il progetto</strong> &mdash; L'AI Agent analizza la tua richiesta, sceglie le tecnologie giuste, crea i file, installa le dipendenze e scrive il codice. Puoi osservare tutto il processo in tempo reale.</li>
+            <li><strong>Anteprima e modifica</strong> &mdash; Usa la preview live per vedere il risultato. Se qualcosa non ti convince, chiedi all'AI di modificarlo oppure intervieni direttamente sul codice nell'editor integrato.</li>
+            <li><strong>Pubblica il tuo progetto</strong> &mdash; Quando sei soddisfatto, puoi pushare su GitHub, collegare un servizio di hosting o condividere il link dell'anteprima. Il tuo progetto &egrave; pronto per il mondo.</li>
+        </ol>
+
+        <p>Tutto questo avviene dal telefono. Nessun passaggio richiede un computer. L'esperienza &egrave; fluida perch&eacute; Drape &egrave; stato progettato da zero per il mobile, non &egrave; un adattamento forzato di un tool desktop.</p>
+    </div>
+</article>
+
+<!-- ─── SEZIONE 4 ─── -->
+<article class="blog-article">
+    <div class="container">
+        <h2>Serve saper programmare?</h2>
+
+        <p>Dipende da cosa vuoi ottenere, ma la risposta onesta &egrave;: <strong>per iniziare, no</strong>.</p>
+
+        <p>L'AI Agent di Drape &egrave; in grado di generare progetti completi a partire da una descrizione in linguaggio naturale. Se vuoi un sito web, una landing page o un'app semplice, puoi ottenerla senza scrivere una sola riga di codice. Descrivi quello che hai in mente, l'AI si occupa dell'implementazione tecnica.</p>
+
+        <p>Detto questo, saper programmare ti d&agrave; un vantaggio significativo. Puoi personalizzare ogni dettaglio, capire cosa sta facendo l'AI, intervenire quando serve e costruire progetti pi&ugrave; complessi. Drape &egrave; pensato per coprire l'intero spettro: dal principiante assoluto che vuole vedere la propria idea prendere forma, allo sviluppatore esperto che vuole fixare un bug o deployare un aggiornamento mentre &egrave; fuori casa.</p>
+
+        <p>Il bello &egrave; che Drape diventa anche uno strumento per <strong>imparare a programmare</strong>. Puoi osservare il codice generato dall'AI, capire come funziona, modificarlo e sperimentare. &Egrave; come avere un tutor che scrive codice davanti a te e ti spiega ogni passaggio.</p>
+    </div>
+</article>
+
+<!-- ─── SEZIONE 5 ─── -->
+<article class="blog-article">
+    <div class="container">
+        <h2>Perch&eacute; Drape &egrave; diverso dalle altre app</h2>
+
+        <p>Esistono altre app che promettono di farti "creare app dal telefono". La maggior parte, per&ograve;, offre un'esperienza estremamente limitata: editor di testo basilari, nessun terminale vero, un solo modello AI (o nessuno), e nessuna possibilit&agrave; di lavorare con progetti reali.</p>
+
+        <p>Drape &egrave; fondamentalmente diverso. Ecco perch&eacute;:</p>
+
+        <ul>
+            <li><strong>Terminale reale</strong> &mdash; Bash e Zsh completi. Puoi eseguire npm, git, python, curl, e qualsiasi comando. Non &egrave; una simulazione: &egrave; una shell vera su un server cloud.</li>
+            <li><strong>5 modelli AI integrati</strong> &mdash; Claude, GPT, Gemini, e altri. Ogni modello ha punti di forza diversi: puoi scegliere quello giusto per ogni situazione, oppure lasciare che l'AI Agent scelga per te.</li>
+            <li><strong>GitHub nativo</strong> &mdash; Importa repository, committa, pusha, crea branch. L'integrazione con GitHub &egrave; completa, non un'imitazione.</li>
+            <li><strong>Preview live</strong> &mdash; Vedi il risultato del tuo codice in tempo reale, direttamente nell'app. Ogni modifica si riflette istantaneamente.</li>
+            <li><strong>Non &egrave; un giocattolo</strong> &mdash; Drape &egrave; usato da sviluppatori professionisti per lavorare su progetti reali. L'obiettivo non &egrave; semplificare fino a togliere potenza: &egrave; dare tutta la potenza di un IDE desktop in un'interfaccia mobile.</li>
+        </ul>
+
+        <p>La differenza pi&ugrave; importante &egrave; la filosofia. Drape non cerca di nascondere la complessit&agrave; dello sviluppo software &mdash; la rende accessibile da un dispositivo nuovo. Puoi creare un sito con l'AI senza sapere nulla di codice, ma puoi anche aprire il terminale e lanciare comandi come un developer senior. Questa flessibilit&agrave; &egrave; ci&ograve; che rende Drape unico.</p>
+    </div>
+</article>
+
+<!-- ─── DIVIDER ─── -->
+<div class="section-divider"></div>
+
+<!-- ─── FAQ ─── -->
+<section class="faq-section">
+    <div class="container">
+        <h2>Domande frequenti</h2>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Si pu&ograve; davvero creare un'app dal telefono?
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    S&igrave;. Con Drape puoi creare app, siti web e progetti completi direttamente dal tuo iPhone. L'app si connette a un ambiente cloud con terminale reale, 5 modelli AI e preview live. Non serve un laptop.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Serve saper programmare per usare Drape?
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    No, per i progetti base non serve esperienza. L'AI Agent di Drape genera codice a partire dalla tua descrizione in linguaggio naturale. Per personalizzazioni avanzate, conoscere le basi di programmazione aiuta, ma non &egrave; obbligatorio.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Che tipo di app posso creare con Drape?
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    Puoi creare siti web, landing page, e-commerce, dashboard, API backend, bot, portfolio, blog e strumenti interni. Drape supporta qualsiasi tecnologia web: React, Next.js, Vue, Express, Python, e molto altro.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Drape &egrave; gratuito?
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    Drape offre un piano gratuito che include accesso al terminale, editor e funzionalit&agrave; base dell'AI. Per funzionalit&agrave; avanzate come pi&ugrave; modelli AI e sessioni illimitate, sono disponibili piani premium.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── CTA FINALE ─── -->
+<article class="blog-article" style="border-bottom: none;">
+    <div class="container">
+        <div class="blog-article-cta">
+            <p>Pronto a creare la tua prima app dal telefono? Scarica Drape gratuitamente.</p>
+            <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                Scarica su App Store
+            </a>
+        </div>
+    </div>
+</article>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="/" class="logo">
+                    <div class="logo-icon">
+                        <img src="logo.png" alt="Drape">
+                    </div>
+                    Drape
+                </a>
+                <p>L'IDE mobile per sviluppatori. Programma dal telefono come faresti dal PC.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Prodotto</h4>
+                <a href="/#features">Funzionalit&agrave;</a>
+                <a href="/#how-it-works">Come funziona</a>
+                <a href="/#pricing">Prezzi</a>
+                <a href="/#faq">FAQ</a>
+            </div>
+            <div class="footer-col">
+                <h4>Risorse</h4>
+                <a href="blog.html">Blog</a>
+                <a href="/docs/guida-rapida.html">Documentazione</a>
+                <a href="changelog.html">Changelog</a>
+                <a href="support.html">Supporto</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legale</h4>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms-of-service.html">Termini di Servizio</a>
+            </div>
+            <div class="footer-col">
+                <h4>Scarica</h4>
+                <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer">App Store</a>
+                <a href="mailto:info@drape-dev.it">Richiedi Android</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Drape. Tutti i diritti riservati.</span>
+            <span>Made in Italy</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Close nav dropdowns on outside click
+document.addEventListener('click', (e) => {
+    document.querySelectorAll('.nav-dropdown').forEach(dd => {
+        if (!dd.contains(e.target)) dd.classList.remove('open');
+    });
+});
+</script>
+</body>
+</html>

@@ -425,6 +425,46 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+  <!-- Landing: Vibe Coding IT -->
+  <url>
+    <loc>https://drape-dev.it/vibe-coding.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/vibe-coding.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/vibe-coding.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/vibe-coding.html"/>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Landing: Vibe Coding EN -->
+  <url>
+    <loc>https://drape-dev.it/en/vibe-coding.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/vibe-coding.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/vibe-coding.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/vibe-coding.html"/>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Landing: Creare App dal Telefono IT -->
+  <url>
+    <loc>https://drape-dev.it/creare-app-dal-telefono.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/creare-app-dal-telefono.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/build-app-from-phone.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/creare-app-dal-telefono.html"/>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Landing: Build App from Phone EN -->
+  <url>
+    <loc>https://drape-dev.it/en/build-app-from-phone.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/creare-app-dal-telefono.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/build-app-from-phone.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/creare-app-dal-telefono.html"/>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <!-- Privacy Policy -->
   <url>
     <loc>https://drape-dev.it/privacy-policy.html</loc>
