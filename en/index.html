@@ -1967,27 +1967,30 @@
             .hero { padding: 88px 0 32px; min-height: auto; }
             .hero > .container { padding: 0 16px; }
             .hero-badge { display: none; }
-            .hero h1 { font-size: 32px; letter-spacing: -1.5px; margin-bottom: 16px; }
+            .hero h1 { font-size: 38px; letter-spacing: -2px; margin-bottom: 20px; text-shadow: 0 0 40px rgba(155, 138, 255, 0.3); }
             .hero p.hero-sub { display: none; }
-            .hero-ctas { margin-top: 12px !important; gap: 10px; }
-            .hero-ctas .btn-primary { padding: 11px 22px; font-size: 14px; }
-            .hero-ctas .btn-android { padding: 11px 22px; font-size: 14px; }
+            .hero-ctas { margin-top: 14px !important; gap: 8px; flex-wrap: nowrap; }
+            .hero-ctas .btn-primary { padding: 6px 12px; font-size: 11px; box-shadow: 0 2px 16px rgba(155, 138, 255, 0.35); }
+            .hero-ctas .btn-primary svg { width: 12px; height: 12px; }
+            .hero-ctas .btn-android { padding: 6px 12px; font-size: 11px; border-color: rgba(255,255,255,0.15); }
+            .hero-ctas .btn-android svg { width: 12px; height: 12px; }
+            .hero-ctas .btn-android .badge { font-size: 9px; padding: 2px 6px; }
             .hero-demo { margin-top: 28px; }
             .social-proof-bar { padding: 32px 0; }
             .hero-demo::before { width: 110%; height: 120%; filter: blur(50px); }
-            .chat-welcome { padding: 16px 14px 8px; }
-            .chat-welcome-logo { width: 32px; height: 32px; }
-            .chat-welcome-logo svg { width: 16px; height: 16px; }
-            .chat-welcome h3 { font-size: 14px; margin-bottom: 0; }
-            .chat-suggestions { padding: 0 12px 12px; gap: 6px; }
-            .chat-chip { font-size: 11px; padding: 7px 12px; min-height: 32px; }
-            .chat-input-container { margin: 0 8px 8px; }
-            .chat-input-controls { padding: 8px 10px 0; height: 32px; }
-            .chat-mode { height: 24px; padding: 0 8px; font-size: 10px; }
-            .chat-mode svg { width: 11px; height: 11px; }
-            .chat-model-label { font-size: 10px; }
-            .chat-input-row { padding: 8px 10px; }
-            .chat-input-row input { font-size: 13px; }
+            .chat-welcome { padding: 12px 14px 6px; }
+            .chat-welcome-logo { width: 28px; height: 28px; }
+            .chat-welcome-logo svg { width: 14px; height: 14px; }
+            .chat-welcome h3 { font-size: 13px; margin-bottom: 0; }
+            .chat-suggestions { padding: 0 10px 8px; gap: 5px; }
+            .chat-chip { font-size: 10.5px; padding: 6px 10px; min-height: 28px; }
+            .chat-input-container { margin: 0 6px 6px; }
+            .chat-input-controls { padding: 6px 8px 0; height: 28px; }
+            .chat-mode { height: 22px; padding: 0 6px; font-size: 9px; }
+            .chat-mode svg { width: 10px; height: 10px; }
+            .chat-model-label { font-size: 9px; }
+            .chat-input-row { padding: 6px 8px; }
+            .chat-input-row input { font-size: 12px; }
             .section-desc { font-size: 16px; }
             .feature-card { padding: 24px 20px; }
             .feature-card h3 { font-size: 17px; }
@@ -2465,6 +2468,10 @@
                             <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></span>
                             Documentation
                         </a>
+                        <a href="pricing.html">
+                            <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></span>
+                            Pricing
+                        </a>
                         <a href="#faq">
                             <span class="dropdown-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg></span>
                             FAQ
@@ -2496,8 +2503,8 @@
 <section class="hero">
     <div class="container">
         <div class="hero-badge">The first mobile IDE with AI</div>
-        <h1>Your smartphone<br>is your new IDE.</h1>
-        <p class="hero-sub">Real terminal, 5 AI models and GitHub &mdash; all from your iPhone. Like working from your Mac, but anywhere.</p>
+        <h1>Code anywhere.<br>Even from your phone.</h1>
+        <p class="hero-sub">Real terminal, 5 AI models and GitHub &mdash; all from your iPhone. Describe what you want, AI builds it.</p>
         <div class="hero-ctas" style="margin-top: 16px;">
             <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="btn-primary">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
@@ -2521,11 +2528,11 @@
                         <p>Describe your idea. AI writes the code, installs dependencies and shows you the preview.</p>
                     </div>
                     <div class="chat-suggestions">
-                        <span class="chat-chip" data-prompt="Create a reporting dashboard with interactive charts, date filters and PDF export. Modern design, dark mode, smooth animations.">Reporting Dashboard</span>
-                        <span class="chat-chip" data-prompt="Create a gaming platform with lobby, matchmaking, real-time leaderboard and integrated chat. Immersive UI with animations.">Gaming Platform</span>
-                        <span class="chat-chip" data-prompt="Create an onboarding portal for new users with step-by-step wizard, progress bar, video tutorials and interactive checklist.">Onboarding Portal</span>
-                        <span class="chat-chip" data-prompt="Create a 3D room visualizer where you can place furniture, change wall and floor colors, with panoramic view.">Room Visualizer</span>
-                        <span class="chat-chip" data-prompt="Create a professional networking app with profiles, messaging, events and personalized feed. Elegant, mobile-first design.">Networking App</span>
+                        <span class="chat-chip" data-prompt="Create a dashboard with interactive charts, real-time stats, date filters and PDF export. Modern design with dark mode and smooth animations.">A Dashboard</span>
+                        <span class="chat-chip" data-prompt="Create a browser snake game with score, levels, sound effects and leaderboard. Colorful pixel art graphics and touch controls for mobile.">A Snake game</span>
+                        <span class="chat-chip" data-prompt="Create a complete e-commerce store to sell sneakers with cart, brand and size filters, product page with photo zoom and checkout.">A sneaker shop</span>
+                        <span class="chat-chip" data-prompt="Create a REST API with Express and MongoDB for user management, JWT authentication, full CRUD and Swagger documentation.">A REST API</span>
+                        <span class="chat-chip" data-prompt="Create a weather app that shows real-time forecasts, GPS location, weekly temperature charts and animations for sun, rain and snow.">A weather app</span>
                     </div>
                     <div class="chat-input-container">
                         <div class="chat-input-controls">
@@ -2576,7 +2583,7 @@
             <div class="chat-cta-overlay" id="chat-cta">
                 <div class="cta-icon">&#128241;</div>
                 <h3>Imagine doing this<br>from your iPhone.</h3>
-                <p class="cta-sub">Code anywhere. Describe, build and deploy — all from your phone.</p>
+                <p class="cta-sub">Code anywhere. Describe, build and deploy &mdash; all from your phone.</p>
                 <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer" class="cta-download">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
                     Download Drape
@@ -2862,6 +2869,24 @@
         <div class="faq-list reveal">
             <div class="faq-item">
                 <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Do I need to know how to code to use Drape?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Not at all! Drape is designed for everyone, including people who have never written a line of code. Describe your idea in English or any language and AI builds everything for you. Websites, apps, dashboards, e-commerce &mdash; just describe what you want.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span>What can I build with Drape?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Virtually anything: websites, e-commerce stores, dashboards, blogs, portfolios, bots, management apps and much more. AI handles the technical side &mdash; you focus on your idea.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
                     <span>Can I use Drape for real projects?</span>
                     <span class="faq-icon">+</span>
                 </div>
@@ -2875,7 +2900,7 @@
                     <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-answer">
-                    <p>Drape doesn't replace your desktop IDE &mdash; it extends it. It's the only complete mobile IDE with built-in AI, real terminal and GitHub integration. When you're on the train, on lunch break or on the couch, Drape lets you keep working like you would from your PC.</p>
+                    <p>Drape doesn't replace your desktop IDE &mdash; it extends it. It's the only complete mobile IDE with built-in AI, real terminal and GitHub integration. When you're on the train, on lunch break or on the couch, Drape lets you keep working like you would from your PC. If you're not familiar with these tools, think of Drape as an app that turns your ideas into real projects, right from your phone.</p>
                 </div>
             </div>
             <div class="faq-item">
@@ -3176,11 +3201,7 @@ function handleChatSend() {
     const input = document.getElementById('chat-input');
     const val = input.value.trim();
     if (!val) return;
-    input.value = '';
-    document.getElementById('send-btn').classList.remove('active');
-    setTimeout(() => {
-        document.getElementById('chat-cta').classList.add('visible');
-    }, 500);
+    window.open('https://apps.apple.com/it/app/drape/id6758354741', '_blank');
 }
 function resetChat() {
     document.getElementById('chat-cta').classList.remove('visible');
