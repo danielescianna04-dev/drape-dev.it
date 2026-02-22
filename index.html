@@ -1651,58 +1651,6 @@
             .tech-logo-item span { font-size: 13px; }
             .tech-logo-item svg { width: 20px; height: 20px; }
         }
-
-        /* ─── LANGUAGES STRIP ─── */
-        .lang-strip {
-            padding: 0 0 60px;
-            position: relative;
-        }
-        .lang-strip-label {
-            text-align: center;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2.5px;
-            color: var(--text-muted);
-            margin-bottom: 24px;
-        }
-        .lang-strip-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .lang-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 40px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            transition: all 0.2s;
-        }
-        .lang-pill:hover {
-            border-color: rgba(255,255,255,0.12);
-            background: rgba(255,255,255,0.06);
-            color: var(--text);
-        }
-        .lang-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-        @media (max-width: 768px) {
-            .lang-strip-row { gap: 8px; }
-            .lang-pill { padding: 6px 12px; font-size: 12px; }
-            .lang-dot { width: 6px; height: 6px; }
-        }
-
         /* ─── STATS SECTION ─── */
         .stats-section {
             padding: 80px 0;
@@ -2591,11 +2539,11 @@
                         <p>Descrivi la tua idea. L'AI scrive il codice, installa le dipendenze e ti mostra la preview.</p>
                     </div>
                     <div class="chat-suggestions">
-                        <span class="chat-chip" data-prompt="Crea una dashboard con grafici interattivi, statistiche in tempo reale, filtri per data e export PDF. Design moderno con dark mode e animazioni fluide.">Una Dashboard</span>
-                        <span class="chat-chip" data-prompt="Crea un gioco snake nel browser con punteggio, livelli, effetti sonori e classifica. Grafica pixel art colorata e controlli touch per mobile.">Un gioco Snake</span>
+                        <span class="chat-chip" data-prompt="Crea un'app mobile in Flutter con navigazione a tab, lista prodotti con immagini, carrello e pagina profilo. Design Material 3 con animazioni fluide.">Un'app in Flutter</span>
+                        <span class="chat-chip" data-prompt="Crea un sito web in React con homepage, sezione servizi, portfolio con filtri, form contatto e animazioni allo scroll. Design moderno e responsive.">Un sito in React</span>
                         <span class="chat-chip" data-prompt="Crea un e-commerce completo per vendere sneakers con carrello, filtri per brand e taglia, pagina prodotto con zoom foto e checkout.">Uno shop di sneakers</span>
+                        <span class="chat-chip" data-prompt="Crea un bot in Python che scrape le ultime notizie, le riassume con AI e le invia su Telegram ogni mattina. Con gestione errori e logging.">Un bot in Python</span>
                         <span class="chat-chip" data-prompt="Crea una REST API con Express e MongoDB per gestire utenti, autenticazione JWT, CRUD completo e documentazione Swagger.">Una REST API</span>
-                        <span class="chat-chip" data-prompt="Crea un'app meteo che mostra previsioni in tempo reale, posizione GPS, grafici temperatura settimanale e animazioni per sole, pioggia e neve.">Un'app meteo</span>
                     </div>
                     <div class="chat-input-container">
                         <div class="chat-input-controls">
@@ -2697,29 +2645,6 @@
     </div>
 </section>
 
-
-<!-- ─── LANGUAGES STRIP ─── -->
-<div class="lang-strip">
-    <div class="container">
-        <div class="lang-strip-label reveal">Linguaggi e framework supportati</div>
-        <div class="lang-strip-row reveal">
-            <div class="lang-pill"><div class="lang-dot" style="background:#f7df1e"></div>JavaScript</div>
-            <div class="lang-pill"><div class="lang-dot" style="background:#3178c6"></div>TypeScript</div>
-            <div class="lang-pill"><div class="lang-dot" style="background:#3572A5"></div>Python</div>
-            <div class="lang-pill"><div class="lang-dot" style="background:#e34c26"></div>HTML / CSS</div>
-            <div class="lang-pill"><div class="lang-dot" style="background:#61dafb"></div>React</div>
-            <div class="lang-pill"><div class="lang-dot" style="background:#339933"></div>Node.js</div>
-            <div class="lang-pill"><div class="lang-dot" style="background:#4FC08D"></div>Vue</div>
-            <div class="lang-pill"><div class="lang-dot" style="background:#FF3E00"></div>Svelte</div>
-            <div class="lang-pill"><div class="lang-dot" style="background:#000000"></div>Next.js</div>
-            <div class="lang-pill"><div class="lang-dot" style="background:#00ADD8"></div>Go</div>
-            <div class="lang-pill"><div class="lang-dot" style="background:#DEA584"></div>Rust</div>
-            <div class="lang-pill"><div class="lang-dot" style="background:#4F5D95"></div>PHP</div>
-            <div class="lang-pill"><div class="lang-dot" style="background:#CC342D"></div>Ruby</div>
-            <div class="lang-pill"><div class="lang-dot" style="background:#F05032"></div>Git</div>
-        </div>
-    </div>
-</div>
 
 <!-- ─── BUILD MARQUEE ─── -->
 <section class="section-glow" style="padding: 100px 0 80px;">
