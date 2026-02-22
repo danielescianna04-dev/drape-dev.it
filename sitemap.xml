@@ -465,6 +465,101 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <!-- Blog: Vibe Coding IT -->
+  <url>
+    <loc>https://drape-dev.it/blog/vibe-coding.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/blog/vibe-coding.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/blog/vibe-coding.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/blog/vibe-coding.html"/>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://drape-dev.it/en/blog/vibe-coding.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/blog/vibe-coding.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/blog/vibe-coding.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/blog/vibe-coding.html"/>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Blog: Creare App dal Telefono IT -->
+  <url>
+    <loc>https://drape-dev.it/blog/creare-app-dal-telefono.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/blog/creare-app-dal-telefono.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/blog/build-app-from-phone.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/blog/creare-app-dal-telefono.html"/>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://drape-dev.it/en/blog/build-app-from-phone.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/blog/creare-app-dal-telefono.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/blog/build-app-from-phone.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/blog/creare-app-dal-telefono.html"/>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Blog: Perche abbiamo creato Drape -->
+  <url>
+    <loc>https://drape-dev.it/blog/perche-abbiamo-creato-drape.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/blog/perche-abbiamo-creato-drape.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/blog/why-we-built-drape.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/blog/perche-abbiamo-creato-drape.html"/>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://drape-dev.it/en/blog/why-we-built-drape.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/blog/perche-abbiamo-creato-drape.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/blog/why-we-built-drape.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/blog/perche-abbiamo-creato-drape.html"/>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Blog: 5 Cose Drape Mobile -->
+  <url>
+    <loc>https://drape-dev.it/blog/5-cose-drape-mobile.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/blog/5-cose-drape-mobile.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/blog/5-things-drape-mobile.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/blog/5-cose-drape-mobile.html"/>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://drape-dev.it/en/blog/5-things-drape-mobile.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/blog/5-cose-drape-mobile.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/blog/5-things-drape-mobile.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/blog/5-cose-drape-mobile.html"/>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Blog: Futuro Mobile Development -->
+  <url>
+    <loc>https://drape-dev.it/blog/futuro-mobile-development.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/blog/futuro-mobile-development.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/blog/future-mobile-development.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/blog/futuro-mobile-development.html"/>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://drape-dev.it/en/blog/future-mobile-development.html</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://drape-dev.it/blog/futuro-mobile-development.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://drape-dev.it/en/blog/future-mobile-development.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://drape-dev.it/blog/futuro-mobile-development.html"/>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
   <!-- Privacy Policy -->
   <url>
     <loc>https://drape-dev.it/privacy-policy.html</loc>

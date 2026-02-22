@@ -1652,6 +1652,57 @@
             .tech-logo-item svg { width: 20px; height: 20px; }
         }
 
+        /* ─── LANGUAGES STRIP ─── */
+        .lang-strip {
+            padding: 0 0 60px;
+            position: relative;
+        }
+        .lang-strip-label {
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+        .lang-strip-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .lang-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+        .lang-pill:hover {
+            border-color: rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.06);
+            color: var(--text);
+        }
+        .lang-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        @media (max-width: 768px) {
+            .lang-strip-row { gap: 8px; }
+            .lang-pill { padding: 6px 12px; font-size: 12px; }
+            .lang-dot { width: 6px; height: 6px; }
+        }
+
         /* ─── STATS SECTION ─── */
         .stats-section {
             padding: 80px 0;
@@ -2646,6 +2697,29 @@
     </div>
 </section>
 
+
+<!-- ─── LANGUAGES STRIP ─── -->
+<div class="lang-strip">
+    <div class="container">
+        <div class="lang-strip-label reveal">Linguaggi e framework supportati</div>
+        <div class="lang-strip-row reveal">
+            <div class="lang-pill"><div class="lang-dot" style="background:#f7df1e"></div>JavaScript</div>
+            <div class="lang-pill"><div class="lang-dot" style="background:#3178c6"></div>TypeScript</div>
+            <div class="lang-pill"><div class="lang-dot" style="background:#3572A5"></div>Python</div>
+            <div class="lang-pill"><div class="lang-dot" style="background:#e34c26"></div>HTML / CSS</div>
+            <div class="lang-pill"><div class="lang-dot" style="background:#61dafb"></div>React</div>
+            <div class="lang-pill"><div class="lang-dot" style="background:#339933"></div>Node.js</div>
+            <div class="lang-pill"><div class="lang-dot" style="background:#4FC08D"></div>Vue</div>
+            <div class="lang-pill"><div class="lang-dot" style="background:#FF3E00"></div>Svelte</div>
+            <div class="lang-pill"><div class="lang-dot" style="background:#000000"></div>Next.js</div>
+            <div class="lang-pill"><div class="lang-dot" style="background:#00ADD8"></div>Go</div>
+            <div class="lang-pill"><div class="lang-dot" style="background:#DEA584"></div>Rust</div>
+            <div class="lang-pill"><div class="lang-dot" style="background:#4F5D95"></div>PHP</div>
+            <div class="lang-pill"><div class="lang-dot" style="background:#CC342D"></div>Ruby</div>
+            <div class="lang-pill"><div class="lang-dot" style="background:#F05032"></div>Git</div>
+        </div>
+    </div>
+</div>
 
 <!-- ─── BUILD MARQUEE ─── -->
 <section class="section-glow" style="padding: 100px 0 80px;">
