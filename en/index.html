@@ -3264,6 +3264,12 @@ document.addEventListener('click', (e) => {
     document.querySelectorAll('.nav-dropdown').forEach(dd => {
         if (!dd.contains(e.target)) dd.classList.remove('open');
     });
+    // Close mobile menu on outside click
+    const navLinks = document.querySelector('.nav-links');
+    const navInner = document.querySelector('.nav-inner');
+    if (navLinks && navLinks.classList.contains('open') && !navInner.contains(e.target)) {
+        navLinks.classList.remove('open');
+    }
 });
 
 // Smooth scroll for anchor links
