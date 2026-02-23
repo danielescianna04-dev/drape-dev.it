@@ -1,5 +1,12 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /pitch-deck.html
+Disallow: /pitch-deck-alt.html
+Disallow: /pitch-deck-backup.html
+Disallow: /investor-site.html
+Disallow: /slide4-premium.html
+Disallow: /slide4-minimal.html
+Disallow: /demo.html
 
 Sitemap: https://drape-dev.it/sitemap.xml
