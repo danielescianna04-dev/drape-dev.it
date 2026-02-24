@@ -27,7 +27,7 @@ const API_BASE_URL = 'https://drape-dev.it/admin-api';
 
 // Admin whitelist
 const ADMIN_EMAILS = [
-    'rivaslleon27@gmail.com'
+    'leonrivas27@gmail.com'
 ];
 
 // ============================================
@@ -42,13 +42,22 @@ let charts = {};
 
 // Mock data flag - must be before initDashboard
 // Set to true for local testing without backend, false for real API
-const USE_MOCK_DATA = false; // Using real Firebase data
+const USE_MOCK_DATA = false;
 
 // ============================================
 // AUTH CHECK
 // ============================================
 
 onAuthStateChanged(auth, async (user) => {
+    // Skip auth on localhost (mock mode)
+    if (USE_MOCK_DATA && !user) {
+        currentUser = { email: 'admin@localhost', displayName: 'Admin (Local)' };
+        document.getElementById('userName').textContent = 'Admin (Local)';
+        document.getElementById('userAvatar').textContent = 'A';
+        initDashboard();
+        return;
+    }
+
     if (!user || !ADMIN_EMAILS.includes(user.email)) {
         window.location.href = 'index.html';
         return;
@@ -190,6 +199,48 @@ const MOCK_DATA = {
         aiCostByModel: { labels: ['Claude', 'GPT-4', 'Gemini', 'Groq'], data: [45, 30, 15, 10] },
         operations: { labels: ['file_write', 'command_exec', 'ai_chat', 'git_commit', 'preview'], data: [150, 120, 200, 45, 80] },
         planDistribution: { labels: ['Free', 'Go', 'Starter', 'Pro', 'Team'], data: [95, 35, 15, 9, 2] }
+    },
+    '/admin/presence': {
+        onlineUsers: [
+            { uid: '1', email: 'leon.rivas@drape-dev.it', displayName: 'Leon Rivas', lastSeen: Date.now() - 60000, status: 'online' },
+            { uid: '5', email: 'user3@example.com', displayName: 'Luca Verdi', lastSeen: Date.now() - 120000, status: 'online' },
+            { uid: '3', email: 'user1@example.com', displayName: 'Marco Rossi', lastSeen: Date.now() - 300000, status: 'idle' }
+        ],
+        totalOnline: 3
+    },
+    '/admin/user-locations': [
+        { lat: 41.9028, lng: 12.4964, city: 'Roma', country: 'IT', users: 2 },
+        { lat: 45.4642, lng: 9.1900, city: 'Milano', country: 'IT', users: 1 },
+        { lat: 40.4168, lng: -3.7038, city: 'Madrid', country: 'ES', users: 1 },
+        { lat: 51.5074, lng: -0.1278, city: 'London', country: 'GB', users: 1 }
+    ],
+    '/admin/published-sites': [
+        { id: 'site-1', domain: 'portfolio-marco.drape.site', userId: 'user1@example.com', projectId: 'proj-3', publishedAt: '2026-02-20T10:30:00Z' },
+        { id: 'site-2', domain: 'landing-drape.drape.site', userId: 'daniele@drape-dev.it', projectId: 'proj-2', publishedAt: '2026-02-18T14:00:00Z' }
+    ],
+    '/admin/report': {
+        totalUsers: 156,
+        newUsersRange: 12,
+        activeUsersRange: 45,
+        peakDay: '2026-02-20',
+        dailyData: [
+            { date: '2026-02-18', newUsers: 3, activeUsers: 18, totalUsers: 144 },
+            { date: '2026-02-19', newUsers: 2, activeUsers: 22, totalUsers: 146 },
+            { date: '2026-02-20', newUsers: 4, activeUsers: 28, totalUsers: 150 },
+            { date: '2026-02-21', newUsers: 1, activeUsers: 15, totalUsers: 151 },
+            { date: '2026-02-22', newUsers: 3, activeUsers: 20, totalUsers: 154 },
+            { date: '2026-02-23', newUsers: 1, activeUsers: 19, totalUsers: 155 },
+            { date: '2026-02-24', newUsers: 1, activeUsers: 23, totalUsers: 156 }
+        ]
+    },
+    '/admin/ai-costs': {
+        totalMonth: 127.45,
+        byModel: [
+            { model: 'Claude 3.5 Sonnet', cost: 57.20, requests: 1240 },
+            { model: 'GPT-4o', cost: 38.10, requests: 890 },
+            { model: 'Gemini Pro', cost: 19.15, requests: 650 },
+            { model: 'Groq Llama', cost: 13.00, requests: 1100 }
+        ]
     }
 };
 
