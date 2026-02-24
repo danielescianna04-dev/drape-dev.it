@@ -59,7 +59,10 @@ onAuthStateChanged(auth, async (user) => {
     }
 
     if (!user || !ADMIN_EMAILS.includes(user.email)) {
-        window.location.href = 'index.html';
+        sessionStorage.setItem('authRedirectGuard', 'true');
+        sessionStorage.removeItem('adminToken');
+        sessionStorage.removeItem('adminUser');
+        window.location.replace('index.html');
         return;
     }
     currentUser = user;

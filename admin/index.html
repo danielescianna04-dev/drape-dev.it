@@ -68,12 +68,13 @@
     </div>
 
     <!-- Firebase SDK -->
-    <script type="module">
+    <script data-cfasync="false" type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
         import {
             getAuth,
             signInWithEmailAndPassword,
-            onAuthStateChanged
+            onAuthStateChanged,
+            signOut as firebaseSignOut
         } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
 
         // Firebase config - Replace with your actual config
@@ -96,10 +97,17 @@
         const auth = getAuth(app);
 
         // Check if already logged in
+        // Guard: if dashboard just kicked us here, sign out stale session to break loop
+        const cameFromDashboard = sessionStorage.getItem('authRedirectGuard');
+        if (cameFromDashboard) {
+            sessionStorage.removeItem('authRedirectGuard');
+            firebaseSignOut(auth).catch(() => {});
+        }
+
         onAuthStateChanged(auth, (user) => {
+            if (cameFromDashboard) return; // Don't auto-redirect if we just came from dashboard
             if (user && ADMIN_EMAILS.includes(user.email)) {
-                // Already logged in as admin, redirect to dashboard
-                window.location.href = 'dashboard.html';
+                window.location.replace('dashboard.html');
             }
         });
 
@@ -153,7 +161,7 @@
                 }));
 
                 // Redirect to dashboard
-                window.location.href = 'dashboard.html';
+                window.location.replace('dashboard.html');
 
             } catch (error) {
                 console.error('Login error:', error);
