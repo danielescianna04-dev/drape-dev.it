@@ -54,7 +54,7 @@
       ],
       "contactPoint": {
         "@type": "ContactPoint",
-        "email": "leon.rivas@drape-dev.it",
+        "email": "support_drape@drape.info",
         "contactType": "customer support"
       }
     }
@@ -3022,7 +3022,7 @@
             <div class="footer-col">
                 <h4>Download</h4>
                 <a href="https://apps.apple.com/it/app/drape/id6758354741" target="_blank" rel="noopener noreferrer">App Store</a>
-                <a href="mailto:info@drape-dev.it">Request Android</a>
+                <a href="mailto:support_drape@drape.info">Request Android</a>
             </div>
         </div>
         <div class="footer-bottom">
@@ -3041,7 +3041,7 @@
             <h3 class="modal-title">Request Android Version</h3>
             <p class="modal-subtitle">Send a request for the Android version of Drape and we'll notify you when it's available.</p>
 
-            <form id="androidForm" action="https://formsubmit.co/drape.dev.info@gmail.com" method="POST">
+            <form id="androidForm" action="https://formsubmit.co/support_drape@drape.info" method="POST">
                 <input type="hidden" name="_subject" value="New Android Request from Drape">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_template" value="table">
@@ -3362,7 +3362,7 @@ document.getElementById('androidForm').addEventListener('submit', async (e) => {
             throw new Error('Network response was not ok');
         }
     } catch (error) {
-        alert('An error occurred. Please try again later or email us at drape.dev.info@gmail.com');
+        alert('An error occurred. Please try again later or email us at support_drape@drape.info');
         submitBtn.disabled = false;
         submitBtn.textContent = 'Send Request';
     }
