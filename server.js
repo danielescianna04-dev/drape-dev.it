@@ -45,7 +45,7 @@ app.use(express.json());
 
 // Admin email whitelist
 const ADMIN_EMAILS = [
-  'rivaslleon27@gmail.com'
+  'leonrivas27@gmail.com'
 ];
 
 // Auth middleware: verify Firebase ID token + check admin email
@@ -326,14 +326,125 @@ app.get('/admin/stats/analytics', async (req, res) => {
       if (!usersWithMetadata.has(user.uid)) planCounts.free++;
     });
 
+    // AI cost by model (real data from ai_usage)
+    let aiCostByModel = { labels: [], data: [] };
+    try {
+      const monthStart = new Date();
+      monthStart.setDate(1);
+      monthStart.setHours(0, 0, 0, 0);
+      const aiSnapshot = await db.collection('ai_usage')
+        .where('timestamp', '>=', monthStart)
+        .get();
+      const modelCosts = {};
+      aiSnapshot.forEach(doc => {
+        const d = doc.data();
+        const model = d.model || 'Unknown';
+        // Normalize model names for display
+        let label = model;
+        if (model.includes('claude')) label = 'Claude';
+        else if (model.includes('gpt')) label = 'GPT';
+        else if (model.includes('gemini')) label = 'Gemini';
+        else if (model.includes('deepseek')) label = 'DeepSeek';
+        else if (model.includes('groq')) label = 'Groq';
+        modelCosts[label] = (modelCosts[label] || 0) + (d.costEur || 0);
+      });
+      if (Object.keys(modelCosts).length > 0) {
+        aiCostByModel = { labels: Object.keys(modelCosts), data: Object.values(modelCosts).map(v => parseFloat(v.toFixed(4))) };
+      }
+    } catch (e) { /* collection might not exist yet */ }
+
+    // Operations count (real data from ai_usage)
+    let operations = { labels: ['file_write', 'command_exec', 'ai_chat', 'git_commit', 'preview'], data: [0, 0, 0, 0, 0] };
+    try {
+      const monthStart = new Date();
+      monthStart.setDate(1);
+      monthStart.setHours(0, 0, 0, 0);
+      const opsSnapshot = await db.collection('operations')
+        .where('timestamp', '>=', monthStart)
+        .get();
+      const opsCounts = {};
+      opsSnapshot.forEach(doc => {
+        const type = doc.data().type || 'unknown';
+        opsCounts[type] = (opsCounts[type] || 0) + 1;
+      });
+      if (Object.keys(opsCounts).length > 0) {
+        operations = { labels: Object.keys(opsCounts), data: Object.values(opsCounts) };
+      }
+    } catch (e) { /* collection might not exist yet */ }
+
     res.json({
       usersByDay,
-      aiCostByModel: { labels: ['Claude', 'GPT-4', 'Gemini', 'Groq'], data: [45, 30, 15, 10] },
-      operations: { labels: ['file_write', 'command_exec', 'ai_chat', 'git_commit', 'preview'], data: [150, 120, 200, 45, 80] },
+      aiCostByModel,
+      operations,
       planDistribution: { labels: Object.keys(planCounts), data: Object.values(planCounts) }
     });
   } catch (error) {
     console.error('[Admin Analytics] Error:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// GET /admin/stats/ai-costs - Detailed AI cost breakdown
+app.get('/admin/stats/ai-costs', async (req, res) => {
+  try {
+    const monthStart = new Date();
+    monthStart.setDate(1);
+    monthStart.setHours(0, 0, 0, 0);
+
+    const aiSnapshot = await db.collection('ai_usage')
+      .where('timestamp', '>=', monthStart)
+      .get();
+
+    let totalCost = 0;
+    let totalCalls = 0;
+    const providers = {};
+    const byModel = {};
+
+    aiSnapshot.forEach(doc => {
+      const d = doc.data();
+      const model = d.model || 'Unknown';
+      const cost = d.costEur || 0;
+      const inputTokens = d.inputTokens || 0;
+      const outputTokens = d.outputTokens || 0;
+      const cachedTokens = d.cachedTokens || 0;
+
+      totalCost += cost;
+      totalCalls++;
+
+      // Determine provider from model name
+      let provider = 'Other';
+      if (model.includes('claude')) provider = 'Anthropic';
+      else if (model.includes('gpt')) provider = 'OpenAI';
+      else if (model.includes('gemini')) provider = 'Google';
+      else if (model.includes('deepseek')) provider = 'DeepSeek';
+      else if (model.includes('groq')) provider = 'Groq';
+
+      // Aggregate by provider
+      if (!providers[provider]) providers[provider] = { cost: 0, calls: 0 };
+      providers[provider].cost += cost;
+      providers[provider].calls++;
+
+      // Aggregate by model
+      if (!byModel[model]) byModel[model] = { cost: 0, calls: 0, inputTokens: 0, outputTokens: 0, cachedTokens: 0 };
+      byModel[model].cost += cost;
+      byModel[model].calls++;
+      byModel[model].inputTokens += inputTokens;
+      byModel[model].outputTokens += outputTokens;
+      byModel[model].cachedTokens += cachedTokens;
+    });
+
+    // Round values
+    totalCost = parseFloat(totalCost.toFixed(4));
+    Object.keys(providers).forEach(k => {
+      providers[k].cost = parseFloat(providers[k].cost.toFixed(4));
+    });
+    Object.keys(byModel).forEach(k => {
+      byModel[k].cost = parseFloat(byModel[k].cost.toFixed(4));
+    });
+
+    res.json({ totalCost, totalCalls, providers, byModel });
+  } catch (error) {
+    console.error('[Admin AI Costs] Error:', error.message);
     res.status(500).json({ error: error.message });
   }
 });

@@ -108,7 +108,7 @@
         onAuthStateChanged(auth, (user) => {
             if (cameFromDashboard) return; // Don't auto-redirect if we just came from dashboard
             if (user && ADMIN_EMAILS.includes(user.email)) {
-                window.location.replace('dashboard.html');
+                window.location.replace('/admin/dashboard.html');
             }
         });
 
@@ -162,7 +162,7 @@
                 }));
 
                 // Redirect to dashboard
-                window.location.replace('dashboard.html');
+                window.location.replace('/admin/dashboard.html');
 
             } catch (error) {
                 console.error('Login error:', error);

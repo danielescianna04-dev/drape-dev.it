@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drape - YouTube Banner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  .banner {
+    width: 2560px;
+    height: 1440px;
+    position: relative;
+    overflow: hidden;
+    background: #050507;
+  }
+
+  /* Deep gradient */
+  .bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 70% at 50% 50%, rgba(126, 34, 206, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 50% at 35% 55%, rgba(88, 28, 135, 0.04) 0%, transparent 55%),
+      radial-gradient(ellipse 35% 40% at 68% 42%, rgba(139, 92, 246, 0.03) 0%, transparent 50%),
+      linear-gradient(180deg, #06050c 0%, #0a0916 45%, #0c0a19 55%, #07060c 100%);
+  }
+
+  /* Soft glow */
+  .glow {
+    position: absolute;
+    width: 900px;
+    height: 500px;
+    top: 53%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse, rgba(147, 51, 234, 0.16) 0%, rgba(126, 34, 206, 0.05) 40%, transparent 70%);
+    filter: blur(80px);
+    pointer-events: none;
+  }
+
+  /* Noise */
+  .noise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.015;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+    pointer-events: none;
+  }
+
+  /* Safe zone guide (1546x423 centered) - hidden by default */
+  .safe-zone {
+    position: absolute;
+    width: 1546px;
+    height: 423px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px dashed rgba(168, 85, 247, 0.0);
+    pointer-events: none;
+    z-index: 20;
+  }
+
+  /* Content - centered in safe zone */
+  .content {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 90px;
+    gap: 44px;
+  }
+
+  .headline {
+    font-size: 114px;
+    font-weight: 800;
+    color: #f0f0f0;
+    letter-spacing: -3px;
+    line-height: 1;
+    text-align: center;
+  }
+
+  .headline .dot {
+    color: #a855f7;
+  }
+
+  .sep {
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #a855f7, transparent);
+    border-radius: 1px;
+  }
+
+  .subheadline {
+    font-size: 52px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.75);
+    letter-spacing: 6px;
+    text-align: center;
+  }
+
+  /* Download button */
+  .download-btn {
+    margin-top: 24px;
+    padding: 12px 32px;
+    background: #a855f7;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+  }
+  .download-btn:hover { background: #9333ea; }
+  .download-btn:disabled { background: #555; cursor: wait; }
+</style>
+</head>
+<body>
+
+<div style="display: flex; flex-direction: column; align-items: center;">
+<div class="banner">
+  <div class="bg"></div>
+  <div class="glow"></div>
+  <div class="noise"></div>
+  <div class="safe-zone"></div>
+
+  <div class="content">
+    <div class="headline">BUILD FROM ANYWHERE<span class="dot">.</span></div>
+    <div class="sep"></div>
+    <div class="subheadline">Write code. Use AI.</div>
+  </div>
+</div>
+
+<button class="download-btn" onclick="downloadBanner()">Download PNG (2560×1440)</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+async function downloadBanner() {
+  const btn = document.querySelector('.download-btn');
+  btn.disabled = true;
+  btn.textContent = 'Generating...';
+  try {
+    const banner = document.querySelector('.banner');
+    const canvas = await html2canvas(banner, {
+      width: 2560,
+      height: 1440,
+      scale: 1,
+      useCORS: true,
+      backgroundColor: '#050507'
+    });
+    const link = document.createElement('a');
+    link.download = 'drape-yt-banner-2560x1440.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  } catch (e) {
+    alert('Error: ' + e.message);
+  }
+  btn.disabled = false;
+  btn.textContent = 'Download PNG (2560×1440)';
+}
+</script>
+
+</body>
+</html>

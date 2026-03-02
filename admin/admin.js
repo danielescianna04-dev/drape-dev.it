@@ -49,9 +49,12 @@ const USE_MOCK_DATA = false;
 // AUTH CHECK
 // ============================================
 
-onAuthStateChanged(auth, async (user) => {
+// Use authStateReady() to wait for Firebase to load persisted auth state
+// This prevents the race condition where onAuthStateChanged fires with null
+// before IndexedDB persistence is loaded
+async function checkAuthAndInit() {
     // Skip auth on localhost (mock mode)
-    if (USE_MOCK_DATA && !user) {
+    if (USE_MOCK_DATA) {
         currentUser = { email: 'admin@localhost', displayName: 'Admin (Local)' };
         document.getElementById('userName').textContent = 'Admin (Local)';
         document.getElementById('userAvatar').textContent = 'A';
@@ -59,13 +62,23 @@ onAuthStateChanged(auth, async (user) => {
         return;
     }
 
+    // Wait for Firebase to fully load auth state from persistence
+    try {
+        await auth.authStateReady();
+    } catch (e) {
+        console.error('[Auth] authStateReady failed:', e);
+    }
+
+    const user = auth.currentUser;
+
     if (!user || !ADMIN_EMAILS.includes(user.email)) {
         sessionStorage.setItem('authRedirectGuard', 'true');
         sessionStorage.removeItem('adminToken');
         sessionStorage.removeItem('adminUser');
-        window.location.replace('index.html');
+        window.location.replace('/admin/index.html');
         return;
     }
+
     currentUser = user;
     document.getElementById('userName').textContent = user.displayName || user.email.split('@')[0];
     document.getElementById('userAvatar').textContent = (user.displayName || user.email)[0].toUpperCase();
@@ -74,12 +87,28 @@ onAuthStateChanged(auth, async (user) => {
 
     // Auto-refresh token every 50 minutes (tokens expire after 60 min)
     setInterval(async () => {
-        const freshToken = await user.getIdToken(true);
+        const freshToken = await currentUser.getIdToken(true);
         sessionStorage.setItem('adminToken', freshToken);
     }, 50 * 60 * 1000);
 
     initDashboard();
-});
+
+    // Listen for logout/session expiry (skip first invocation which is current state)
+    let authListenerReady = false;
+    onAuthStateChanged(auth, (u) => {
+        if (!authListenerReady) {
+            authListenerReady = true;
+            return;
+        }
+        if (!u) {
+            sessionStorage.removeItem('adminToken');
+            sessionStorage.removeItem('adminUser');
+            window.location.replace('/admin/index.html');
+        }
+    });
+}
+
+checkAuthAndInit();
 
 // ============================================
 // NAVIGATION
