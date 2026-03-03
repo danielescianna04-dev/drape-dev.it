@@ -6,6 +6,7 @@
 const express = require('express');
 const cors = require('cors');
 const admin = require('firebase-admin');
+const http = require('http');
 
 // Initialize Firebase with service account
 const serviceAccount = require('./serviceAccountKey.json');
@@ -20,6 +21,20 @@ const auth = admin.auth();
 
 // App backend base URL (runs on port 3001 on same server)
 const APP_BACKEND_URL = 'http://localhost:3001';
+
+// Helper: HTTP GET that works on all Node.js versions (no fetch dependency)
+function httpGet(url) {
+  return new Promise((resolve, reject) => {
+    http.get(url, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        try { resolve(JSON.parse(data)); }
+        catch (e) { reject(new Error('Invalid JSON from ' + url)); }
+      });
+    }).on('error', reject);
+  });
+}
 
 const app = express();
 
@@ -111,8 +126,7 @@ app.get('/admin/stats/overview', async (req, res) => {
       const budgetPromises = [];
       usersSnapshot.forEach(doc => {
         budgetPromises.push(
-          fetch(`${APP_BACKEND_URL}/ai/budget/${doc.id}`)
-            .then(r => r.json())
+          httpGet(`${APP_BACKEND_URL}/ai/budget/${doc.id}`)
             .then(data => data.success ? data.usage.spentEur : 0)
             .catch(() => 0)
         );
@@ -167,8 +181,7 @@ app.get('/admin/users', async (req, res) => {
     const spendingMap = {};
     try {
       const budgetPromises = listUsersResult.users.map(user =>
-        fetch(`${APP_BACKEND_URL}/ai/budget/${user.uid}`)
-          .then(r => r.json())
+        httpGet(`${APP_BACKEND_URL}/ai/budget/${user.uid}`)
           .then(data => {
             if (data.success) {
               spendingMap[user.uid] = {
@@ -411,8 +424,7 @@ app.get('/admin/stats/ai-costs', async (req, res) => {
     const budgetPromises = [];
     usersSnapshot.forEach(doc => {
       budgetPromises.push(
-        fetch(`${APP_BACKEND_URL}/ai/budget/${doc.id}`)
-          .then(r => r.json())
+        httpGet(`${APP_BACKEND_URL}/ai/budget/${doc.id}`)
           .then(data => {
             if (data.success && data.usage.spentEur > 0) {
               totalCost += data.usage.spentEur;
