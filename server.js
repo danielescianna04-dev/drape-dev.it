@@ -18,6 +18,9 @@ admin.initializeApp({
 const db = admin.firestore();
 const auth = admin.auth();
 
+// App backend base URL (runs on port 3001 on same server)
+const APP_BACKEND_URL = 'http://localhost:3001';
+
 const app = express();
 
 // CORS: only allow specific origins
@@ -101,18 +104,22 @@ app.get('/admin/stats/overview', async (req, res) => {
       }
     });
 
-    // Get AI cost (if tracked)
+    // Get AI cost from app backend (aggregates all user budgets)
     let aiCostMonth = 0;
     try {
-      const monthStart = new Date();
-      monthStart.setDate(1);
-      const aiUsageSnapshot = await db.collection('ai_usage')
-        .where('timestamp', '>=', monthStart)
-        .get();
-      aiUsageSnapshot.forEach(doc => {
-        aiCostMonth += doc.data().costEur || 0;
+      const usersSnapshot = await db.collection('users').get();
+      const budgetPromises = [];
+      usersSnapshot.forEach(doc => {
+        budgetPromises.push(
+          fetch(`${APP_BACKEND_URL}/ai/budget/${doc.id}`)
+            .then(r => r.json())
+            .then(data => data.success ? data.usage.spentEur : 0)
+            .catch(() => 0)
+        );
       });
-    } catch (e) { /* collection might not exist */ }
+      const spent = await Promise.all(budgetPromises);
+      aiCostMonth = spent.reduce((sum, v) => sum + v, 0);
+    } catch (e) { console.error('[AI Cost] Error:', e.message); }
 
     // Count users with known locations (from users collection)
     const usersMetaSnapshot = await db.collection('users').get();
@@ -156,17 +163,25 @@ app.get('/admin/users', async (req, res) => {
       userMetadata[doc.id] = doc.data();
     });
 
-    // Get AI spending for current month
-    const now = new Date();
-    const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-    const spendingSnapshot = await db.collection('user_spending')
-      .where('month', '==', currentMonth)
-      .get();
+    // Get AI spending from app backend
     const spendingMap = {};
-    spendingSnapshot.forEach(doc => {
-      const data = doc.data();
-      if (data.userId) spendingMap[data.userId] = data.totalSpentEur || 0;
-    });
+    try {
+      const budgetPromises = listUsersResult.users.map(user =>
+        fetch(`${APP_BACKEND_URL}/ai/budget/${user.uid}`)
+          .then(r => r.json())
+          .then(data => {
+            if (data.success) {
+              spendingMap[user.uid] = {
+                spent: data.usage.spentEur || 0,
+                limit: data.plan.monthlyBudgetEur || PLAN_LIMITS.free,
+                percent: data.usage.percentUsed || 0
+              };
+            }
+          })
+          .catch(() => {})
+      );
+      await Promise.all(budgetPromises);
+    } catch (e) { console.error('[AI Spending] Error:', e.message); }
 
     // Get online users from presence
     const presenceCutoff = new Date(Date.now() - 45 * 1000);
@@ -179,8 +194,9 @@ app.get('/admin/users', async (req, res) => {
     const users = listUsersResult.users.map(user => {
       const metadata = userMetadata[user.uid] || {};
       const plan = metadata.plan || metadata.subscriptionPlan || 'free';
-      const aiSpent = spendingMap[user.uid] || 0;
-      const aiLimit = PLAN_LIMITS[plan] || PLAN_LIMITS.free;
+      const budgetData = spendingMap[user.uid] || {};
+      const aiSpent = budgetData.spent || 0;
+      const aiLimit = budgetData.limit || PLAN_LIMITS[plan] || PLAN_LIMITS.free;
       const isOnline = onlineUserIds.has(user.uid);
       const lastActiveAt = metadata.lastActiveAt?.toDate?.()?.toISOString() || metadata.lastActiveAt || null;
 
@@ -198,7 +214,7 @@ app.get('/admin/users', async (req, res) => {
         isOnline,
         aiSpent,
         aiLimit,
-        aiPercent: Math.min(Math.round((aiSpent / aiLimit) * 100), 100),
+        aiPercent: budgetData.percent || Math.min(Math.round((aiSpent / aiLimit) * 100), 100),
         location,
       };
     });
@@ -384,65 +400,47 @@ app.get('/admin/stats/analytics', async (req, res) => {
   }
 });
 
-// GET /admin/stats/ai-costs - Detailed AI cost breakdown
+// GET /admin/stats/ai-costs - Detailed AI cost breakdown (aggregated from app backend)
 app.get('/admin/stats/ai-costs', async (req, res) => {
   try {
-    const monthStart = new Date();
-    monthStart.setDate(1);
-    monthStart.setHours(0, 0, 0, 0);
-
-    const aiSnapshot = await db.collection('ai_usage')
-      .where('timestamp', '>=', monthStart)
-      .get();
-
+    // Get all users and their AI budgets from app backend
+    const usersSnapshot = await db.collection('users').get();
     let totalCost = 0;
-    let totalCalls = 0;
-    const providers = {};
-    const byModel = {};
+    const userCosts = [];
 
-    aiSnapshot.forEach(doc => {
-      const d = doc.data();
-      const model = d.model || 'Unknown';
-      const cost = d.costEur || 0;
-      const inputTokens = d.inputTokens || 0;
-      const outputTokens = d.outputTokens || 0;
-      const cachedTokens = d.cachedTokens || 0;
-
-      totalCost += cost;
-      totalCalls++;
-
-      // Determine provider from model name
-      let provider = 'Other';
-      if (model.includes('claude')) provider = 'Anthropic';
-      else if (model.includes('gpt')) provider = 'OpenAI';
-      else if (model.includes('gemini')) provider = 'Google';
-      else if (model.includes('deepseek')) provider = 'DeepSeek';
-      else if (model.includes('groq')) provider = 'Groq';
-
-      // Aggregate by provider
-      if (!providers[provider]) providers[provider] = { cost: 0, calls: 0 };
-      providers[provider].cost += cost;
-      providers[provider].calls++;
-
-      // Aggregate by model
-      if (!byModel[model]) byModel[model] = { cost: 0, calls: 0, inputTokens: 0, outputTokens: 0, cachedTokens: 0 };
-      byModel[model].cost += cost;
-      byModel[model].calls++;
-      byModel[model].inputTokens += inputTokens;
-      byModel[model].outputTokens += outputTokens;
-      byModel[model].cachedTokens += cachedTokens;
+    const budgetPromises = [];
+    usersSnapshot.forEach(doc => {
+      budgetPromises.push(
+        fetch(`${APP_BACKEND_URL}/ai/budget/${doc.id}`)
+          .then(r => r.json())
+          .then(data => {
+            if (data.success && data.usage.spentEur > 0) {
+              totalCost += data.usage.spentEur;
+              userCosts.push({
+                userId: doc.id,
+                email: doc.data().email || doc.id,
+                plan: data.plan.name,
+                spent: data.usage.spentEur,
+                limit: data.plan.monthlyBudgetEur,
+                percent: data.usage.percentUsed
+              });
+            }
+          })
+          .catch(() => {})
+      );
     });
+    await Promise.all(budgetPromises);
 
-    // Round values
-    totalCost = parseFloat(totalCost.toFixed(4));
-    Object.keys(providers).forEach(k => {
-      providers[k].cost = parseFloat(providers[k].cost.toFixed(4));
-    });
-    Object.keys(byModel).forEach(k => {
-      byModel[k].cost = parseFloat(byModel[k].cost.toFixed(4));
-    });
+    // Sort by spending (highest first)
+    userCosts.sort((a, b) => b.spent - a.spent);
 
-    res.json({ totalCost, totalCalls, providers, byModel });
+    res.json({
+      totalCost: parseFloat(totalCost.toFixed(4)),
+      totalCalls: 0, // not available from budget endpoint
+      providers: {},  // not available without per-call tracking
+      byModel: {},    // not available without per-call tracking
+      byUser: userCosts // extra: per-user breakdown
+    });
   } catch (error) {
     console.error('[Admin AI Costs] Error:', error.message);
     res.status(500).json({ error: error.message });
