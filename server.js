@@ -23,17 +23,35 @@ const auth = admin.auth();
 const APP_BACKEND_URL = 'http://localhost:3001';
 
 // Helper: HTTP GET that works on all Node.js versions (no fetch dependency)
-function httpGet(url) {
+function httpGet(url, timeoutMs = 8000) {
   return new Promise((resolve, reject) => {
-    http.get(url, (res) => {
+    const req = http.get(url, (res) => {
       let data = '';
       res.on('data', chunk => data += chunk);
       res.on('end', () => {
         try { resolve(JSON.parse(data)); }
         catch (e) { reject(new Error('Invalid JSON from ' + url)); }
       });
-    }).on('error', reject);
+    });
+    req.on('error', reject);
+    req.setTimeout(timeoutMs, () => {
+      req.destroy();
+      reject(new Error('Timeout after ' + timeoutMs + 'ms for ' + url));
+    });
   });
+}
+
+// Helper: HTTP GET with retry
+async function httpGetWithRetry(url, retries = 2, timeoutMs = 8000) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      return await httpGet(url, timeoutMs);
+    } catch (err) {
+      if (attempt === retries) throw err;
+      // Wait briefly before retry (300ms, 600ms, ...)
+      await new Promise(r => setTimeout(r, attempt * 300));
+    }
+  }
 }
 
 const app = express();
@@ -121,18 +139,26 @@ app.get('/admin/stats/overview', async (req, res) => {
 
     // Get AI cost from app backend (aggregates all user budgets)
     let aiCostMonth = 0;
+    let aiFetchErrors = 0;
+    let aiFetchTotal = 0;
     try {
       const usersSnapshot = await db.collection('users').get();
+      aiFetchTotal = usersSnapshot.size;
       const budgetPromises = [];
       usersSnapshot.forEach(doc => {
         budgetPromises.push(
-          httpGet(`${APP_BACKEND_URL}/ai/budget/${doc.id}`)
+          httpGetWithRetry(`${APP_BACKEND_URL}/ai/budget/${doc.id}`)
             .then(data => data.success ? data.usage.spentEur : 0)
-            .catch(() => 0)
+            .catch(err => {
+              aiFetchErrors++;
+              if (aiFetchErrors <= 3) console.warn(`[AI Cost] Failed for ${doc.id}: ${err.message}`);
+              return 0;
+            })
         );
       });
       const spent = await Promise.all(budgetPromises);
       aiCostMonth = spent.reduce((sum, v) => sum + v, 0);
+      if (aiFetchErrors > 0) console.warn(`[AI Cost] ${aiFetchErrors}/${aiFetchTotal} budget fetches failed`);
     } catch (e) { console.error('[AI Cost] Error:', e.message); }
 
     // Count users with known locations (from users collection)
@@ -154,6 +180,8 @@ app.get('/admin/stats/overview', async (req, res) => {
       appProjects,
       activeContainers: 0,
       aiCostMonth,
+      aiDataPartial: aiFetchErrors > 0,
+      aiErrors: aiFetchErrors,
       countryDistribution,
     });
   } catch (error) {
@@ -179,9 +207,10 @@ app.get('/admin/users', async (req, res) => {
 
     // Get AI spending from app backend
     const spendingMap = {};
+    let aiSpendErrors = 0;
     try {
       const budgetPromises = listUsersResult.users.map(user =>
-        httpGet(`${APP_BACKEND_URL}/ai/budget/${user.uid}`)
+        httpGetWithRetry(`${APP_BACKEND_URL}/ai/budget/${user.uid}`)
           .then(data => {
             if (data.success) {
               spendingMap[user.uid] = {
@@ -191,9 +220,13 @@ app.get('/admin/users', async (req, res) => {
               };
             }
           })
-          .catch(() => {})
+          .catch(err => {
+            aiSpendErrors++;
+            if (aiSpendErrors <= 3) console.warn(`[AI Spending] Failed for ${user.uid}: ${err.message}`);
+          })
       );
       await Promise.all(budgetPromises);
+      if (aiSpendErrors > 0) console.warn(`[AI Spending] ${aiSpendErrors}/${listUsersResult.users.length} budget fetches failed`);
     } catch (e) { console.error('[AI Spending] Error:', e.message); }
 
     // Get online users from presence
@@ -235,7 +268,7 @@ app.get('/admin/users', async (req, res) => {
     // Sort by creation date (newest first)
     users.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-    res.json(users);
+    res.json({ users, aiDataPartial: aiSpendErrors > 0, aiErrors: aiSpendErrors });
   } catch (error) {
     console.error('[Admin Users] Error:', error.message);
     res.status(500).json({ error: error.message });
@@ -422,9 +455,10 @@ app.get('/admin/stats/ai-costs', async (req, res) => {
     const userCosts = [];
 
     const budgetPromises = [];
+    let aiCostErrors = 0;
     usersSnapshot.forEach(doc => {
       budgetPromises.push(
-        httpGet(`${APP_BACKEND_URL}/ai/budget/${doc.id}`)
+        httpGetWithRetry(`${APP_BACKEND_URL}/ai/budget/${doc.id}`)
           .then(data => {
             if (data.success && data.usage.spentEur > 0) {
               totalCost += data.usage.spentEur;
@@ -438,10 +472,14 @@ app.get('/admin/stats/ai-costs', async (req, res) => {
               });
             }
           })
-          .catch(() => {})
+          .catch(err => {
+            aiCostErrors++;
+            if (aiCostErrors <= 3) console.warn(`[AI Costs] Failed for ${doc.id}: ${err.message}`);
+          })
       );
     });
     await Promise.all(budgetPromises);
+    if (aiCostErrors > 0) console.warn(`[AI Costs] ${aiCostErrors}/${usersSnapshot.size} budget fetches failed`);
 
     // Sort by spending (highest first)
     userCosts.sort((a, b) => b.spent - a.spent);

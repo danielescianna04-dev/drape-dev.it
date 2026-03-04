@@ -327,7 +327,16 @@ async function loadOverviewData() {
         document.getElementById('totalProjects').textContent = adminStats.totalProjects || 0;
         document.getElementById('gitProjects').textContent = adminStats.gitProjects || 0;
         document.getElementById('appProjects').textContent = adminStats.appProjects || 0;
-        document.getElementById('aiCostMonth').textContent = `€${(adminStats.aiCostMonth || 0).toFixed(2)}`;
+        const aiCostEl = document.getElementById('aiCostMonth');
+        if (adminStats.aiDataPartial) {
+            aiCostEl.textContent = `€${(adminStats.aiCostMonth || 0).toFixed(2)}`;
+            aiCostEl.title = `Dati parziali: ${adminStats.aiErrors} errori di caricamento`;
+            aiCostEl.style.opacity = '0.6';
+        } else {
+            aiCostEl.textContent = `€${(adminStats.aiCostMonth || 0).toFixed(2)}`;
+            aiCostEl.title = '';
+            aiCostEl.style.opacity = '1';
+        }
         document.getElementById('usersBadge').textContent = adminStats.totalUsers || 0;
 
         // Update country distribution badge if available
@@ -462,9 +471,10 @@ async function loadSessionsTable() {
 
 async function loadUsersData() {
     const tbody = document.getElementById('usersTableBody');
-    const users = await apiCall('/admin/users');
+    const response = await apiCall('/admin/users');
+    const users = response?.users || response; // Support both new {users} and old array format
 
-    if (!users || users.length === 0) {
+    if (!users || !Array.isArray(users) || users.length === 0) {
         tbody.innerHTML = `
             <tr>
                 <td colspan="8" class="empty-state">
@@ -757,28 +767,32 @@ async function loadProjectsData() {
 async function loadAnalyticsData() {
     const analytics = await apiCall('/admin/stats/analytics');
 
+    if (!analytics) {
+        console.warn('[Analytics] Dati non disponibili');
+    }
+
     // Users chart (last 7 days)
     createLineChart('usersChart', {
-        labels: analytics?.usersByDay?.labels || ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'],
-        data: analytics?.usersByDay?.data || [12, 19, 15, 25, 22, 30, 28]
+        labels: analytics?.usersByDay?.labels || [],
+        data: analytics?.usersByDay?.data || []
     });
 
     // AI cost by model
     createDoughnutChart('aiCostChart', {
-        labels: analytics?.aiCostByModel?.labels || ['Claude', 'GPT-4', 'Gemini', 'Groq'],
-        data: analytics?.aiCostByModel?.data || [45, 30, 15, 10]
+        labels: analytics?.aiCostByModel?.labels || [],
+        data: analytics?.aiCostByModel?.data || []
     });
 
     // Operations chart
     createBarChart('operationsChart', {
-        labels: analytics?.operations?.labels || ['file_write', 'command_exec', 'ai_chat', 'git_commit', 'preview'],
-        data: analytics?.operations?.data || [150, 120, 200, 45, 80]
+        labels: analytics?.operations?.labels || [],
+        data: analytics?.operations?.data || []
     });
 
     // Plans distribution
     createDoughnutChart('plansChart', {
-        labels: analytics?.planDistribution?.labels || ['Free', 'Go', 'Starter', 'Pro', 'Team'],
-        data: analytics?.planDistribution?.data || [60, 20, 10, 8, 2]
+        labels: analytics?.planDistribution?.labels || [],
+        data: analytics?.planDistribution?.data || []
     });
 }
 
@@ -2190,7 +2204,7 @@ async function openAiCostModal() {
 
     const data = await apiCall('/admin/stats/ai-costs');
     if (!data) {
-        body.innerHTML = '<p style="color:#f87171;">Errore nel caricamento dei dati.</p>';
+        body.innerHTML = '<p style="color:#f87171;">Errore nel caricamento dei dati.</p><button onclick="openAiCostModal()" style="margin-top:12px;padding:8px 16px;background:#8b5cf6;color:white;border:none;border-radius:8px;cursor:pointer;">Riprova</button>';
         return;
     }
 
