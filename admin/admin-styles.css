@@ -33,6 +33,11 @@ body {
     color: var(--text);
     line-height: 1.6;
     min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.dashboard-layout {
+    overflow-x: hidden;
 }
 
 /* ============================================
@@ -972,6 +977,7 @@ tr:hover td {
         padding: 4px 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.04);
         font-size: 13px;
+        overflow: hidden;
     }
 
     .table-container tbody td:last-child {
@@ -987,6 +993,19 @@ tr:hover td {
         letter-spacing: 0.3px;
         min-width: 90px;
         flex-shrink: 0;
+    }
+
+    /* User cell: prevent overflow */
+    .user-cell {
+        overflow: hidden;
+        max-width: 100%;
+    }
+
+    .user-cell-name,
+    .user-cell-email {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 180px;
     }
 
     /* Filters bar: full-width */

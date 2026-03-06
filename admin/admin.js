@@ -571,7 +571,7 @@ async function loadUsersData() {
             <td data-label="Registrato">${formatDate(user.createdAt)}</td>
             <td data-label="Ultimo accesso">${formatDate(user.lastLogin)}</td>
             <td data-label="Utilizzo AI">
-                <div style="display:flex;align-items:center;gap:8px;min-width:140px;">
+                <div style="display:flex;align-items:center;gap:8px;">
                     <div class="progress-bar" style="flex:1;height:6px;">
                         <div class="progress-fill" style="width:${aiPercent}%;background:${barColor};"></div>
                     </div>
