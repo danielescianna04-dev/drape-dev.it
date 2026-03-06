@@ -128,19 +128,47 @@ function initNavigation() {
     // Mobile menu toggle
     const mobileToggle = document.getElementById('mobileMenuToggle');
     const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('sidebarBackdrop');
 
     if (mobileToggle) {
         mobileToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
+            const isOpen = sidebar.classList.toggle('open');
+            if (backdrop) backdrop.classList.toggle('active', isOpen);
         });
 
-        // Close sidebar when clicking outside on mobile
+        // Close sidebar when clicking backdrop
+        if (backdrop) {
+            backdrop.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                backdrop.classList.remove('active');
+            });
+        }
+
+        // Close sidebar when clicking outside on mobile (fallback)
         document.addEventListener('click', (e) => {
             if (window.innerWidth <= 768 &&
                 !sidebar.contains(e.target) &&
-                !mobileToggle.contains(e.target)) {
+                !mobileToggle.contains(e.target) &&
+                e.target !== backdrop) {
                 sidebar.classList.remove('open');
+                if (backdrop) backdrop.classList.remove('active');
             }
+        });
+    }
+
+    // Bottom tab bar navigation
+    document.querySelectorAll('.bottom-tab[data-page]').forEach(tab => {
+        tab.addEventListener('click', () => {
+            navigateToPage(tab.dataset.page);
+        });
+    });
+
+    // "More" button opens the sidebar
+    const bottomTabMore = document.getElementById('bottomTabMore');
+    if (bottomTabMore) {
+        bottomTabMore.addEventListener('click', () => {
+            sidebar.classList.add('open');
+            if (backdrop) backdrop.classList.add('active');
         });
     }
 }
@@ -163,8 +191,15 @@ function navigateToPage(page) {
     // Load page data
     loadPageData(page);
 
-    // Close mobile menu
+    // Close mobile menu and backdrop
     document.getElementById('sidebar')?.classList.remove('open');
+    document.getElementById('sidebarBackdrop')?.classList.remove('active');
+
+    // Sync bottom tab bar active state
+    document.querySelectorAll('.bottom-tab').forEach(tab => {
+        tab.classList.remove('active');
+        if (tab.dataset.page === page) tab.classList.add('active');
+    });
 }
 
 // ============================================
@@ -442,7 +477,7 @@ async function loadSessionsTable() {
         const userEmail = user.email || user.id || '';
         return `
             <tr>
-                <td>
+                <td data-label="Utente">
                     <div class="user-cell clickable-user" onclick="navigateToUser('${userEmail}')" style="cursor:pointer;" title="Vai al profilo">
                         <div class="user-cell-avatar">${(userEmail || 'U')[0].toUpperCase()}</div>
                         <div class="user-cell-info">
@@ -450,16 +485,16 @@ async function loadSessionsTable() {
                         </div>
                     </div>
                 </td>
-                <td>${loginStr}</td>
-                <td>${durationStr}</td>
-                <td>
+                <td data-label="Accesso">${loginStr}</td>
+                <td data-label="Online da">${durationStr}</td>
+                <td data-label="Stato">
                     <span class="status-badge active">
                         <span class="status-dot"></span>
                         Online
                     </span>
                 </td>
-                <td>${timeAgo}</td>
-                <td>-</td>
+                <td data-label="Ultimo ping">${timeAgo}</td>
+                <td data-label="Azioni">-</td>
             </tr>
         `;
     }).join('');
@@ -515,7 +550,7 @@ async function loadUsersData() {
 
         return `
         <tr data-user-email="${(user.email || '').toLowerCase()}">
-            <td>
+            <td data-label="Utente">
                 <div class="user-cell">
                     <div class="user-cell-avatar">${(user.email || 'U')[0].toUpperCase()}</div>
                     <div class="user-cell-info">
@@ -524,18 +559,18 @@ async function loadUsersData() {
                     </div>
                 </div>
             </td>
-            <td><span class="badge-plan ${user.plan || 'free'}">${user.plan || 'free'}</span></td>
-            <td>
+            <td data-label="Piano"><span class="badge-plan ${user.plan || 'free'}">${user.plan || 'free'}</span></td>
+            <td data-label="Stato">
                 <span class="status-badge ${statusClass}">
                     <span class="status-dot"></span>
                     ${user.isOnline ? 'Online' : 'Offline'}
                 </span>
                 <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">${user.isOnline ? '' : statusLabel}</div>
             </td>
-            <td>${locationHtml}</td>
-            <td>${formatDate(user.createdAt)}</td>
-            <td>${formatDate(user.lastLogin)}</td>
-            <td>
+            <td data-label="Posizione">${locationHtml}</td>
+            <td data-label="Registrato">${formatDate(user.createdAt)}</td>
+            <td data-label="Ultimo accesso">${formatDate(user.lastLogin)}</td>
+            <td data-label="Utilizzo AI">
                 <div style="display:flex;align-items:center;gap:8px;min-width:140px;">
                     <div class="progress-bar" style="flex:1;height:6px;">
                         <div class="progress-fill" style="width:${aiPercent}%;background:${barColor};"></div>
@@ -544,7 +579,7 @@ async function loadUsersData() {
                 </div>
                 <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">${aiPercent}% usato</div>
             </td>
-            <td>
+            <td data-label="Azioni">
                 <button class="action-btn" onclick="viewUserDetails('${user.id}')">Dettagli</button>
             </td>
         </tr>`;
@@ -947,13 +982,13 @@ async function loadPublishedData() {
 
         return `
         <tr>
-            <td>
+            <td data-label="Sito">
                 <div style="display:flex;flex-direction:column;gap:2px;">
                     <span style="font-weight:600;color:var(--text);">${site.slug}</span>
                     ${site.url ? `<a href="${site.url}" target="_blank" style="font-size:12px;color:var(--primary);text-decoration:none;">${site.url}</a>` : ''}
                 </div>
             </td>
-            <td>
+            <td data-label="Pubblicato da">
                 <div class="user-cell" style="gap:8px;">
                     <div class="user-cell-avatar" style="width:28px;height:28px;font-size:12px;">${ownerStr[0]?.toUpperCase() || '?'}</div>
                     <div>
@@ -962,9 +997,9 @@ async function loadPublishedData() {
                     </div>
                 </div>
             </td>
-            <td><code style="font-size:12px;color:var(--text-secondary);">${site.projectId || '-'}</code></td>
-            <td style="font-size:13px;">${pubDate}</td>
-            <td>
+            <td data-label="Progetto"><code style="font-size:12px;color:var(--text-secondary);">${site.projectId || '-'}</code></td>
+            <td data-label="Data" style="font-size:13px;">${pubDate}</td>
+            <td data-label="Azioni">
                 ${site.url ? `<a href="${site.url}" target="_blank" class="action-btn">Visita</a>` : '-'}
             </td>
         </tr>`;
@@ -1199,13 +1234,13 @@ async function loadContainersData() {
 
         return `
         <tr>
-            <td>
+            <td data-label="Container">
                 <div style="display:flex;flex-direction:column;gap:2px;">
                     <span style="font-weight:600;color:var(--text);">${c.name || '-'}</span>
                     <code style="font-size:11px;color:var(--text-secondary);">${(c.id || '').substring(0, 12)} &middot; ${c.image || '-'}</code>
                 </div>
             </td>
-            <td>
+            <td data-label="Utente">
                 <div class="user-cell clickable-user" style="gap:8px;cursor:pointer;" onclick="navigateToUser('${ownerStr}')" title="Vai al profilo">
                     <div class="user-cell-avatar" style="width:28px;height:28px;font-size:12px;">${ownerStr[0]?.toUpperCase() || '?'}</div>
                     <div>
@@ -1214,23 +1249,23 @@ async function loadContainersData() {
                     </div>
                 </div>
             </td>
-            <td>
+            <td data-label="Stato">
                 <span class="status-badge ${c.state === 'running' ? 'active' : 'inactive'}">
                     <span class="status-dot"></span>
                     ${c.state || 'unknown'}
                 </span>
             </td>
-            <td>${usageHtml}</td>
-            <td>
+            <td data-label="Utilizzo">${usageHtml}</td>
+            <td data-label="CPU">
                 <div style="font-size:13px;font-weight:600;">${stats.cpu || '-'}</div>
                 <div style="font-size:11px;color:var(--text-secondary);">limit: ${cpuLimit}</div>
             </td>
-            <td>
+            <td data-label="RAM">
                 <div style="font-size:13px;font-weight:600;">${stats.memory || '-'}</div>
                 <div style="font-size:11px;color:var(--text-secondary);">limit: ${ramLimit}</div>
             </td>
-            <td style="font-size:13px;">${stats.network || '-'}</td>
-            <td style="font-size:13px;">${containerUptime(c.startedAt)}</td>
+            <td data-label="Network" style="font-size:13px;">${stats.network || '-'}</td>
+            <td data-label="Avviato da" style="font-size:13px;">${containerUptime(c.startedAt)}</td>
         </tr>`;
     }).join('');
 }
@@ -1599,18 +1634,18 @@ function renderReportTable(days) {
 
         return `
             <tr class="report-row${isToday ? ' today' : ''}">
-                <td>
+                <td data-label="Data">
                     <div style="font-weight:600;color:var(--text);">${dateStr}</div>
                     ${isToday ? '<span style="font-size:10px;color:var(--primary);font-weight:700;">OGGI</span>' : ''}
                 </td>
-                <td>
+                <td data-label="Nuovi">
                     ${day.newUsers > 0 ? `<span class="report-count new">+${day.newUsers}</span>` : '<span style="color:var(--text-muted);">0</span>'}
                 </td>
-                <td>
+                <td data-label="Attivi">
                     ${active > 0 ? `<span class="report-count active">${active}</span>` : '<span style="color:var(--text-muted);">0</span>'}
                 </td>
-                <td style="color:var(--text);">${day.totalUsers}</td>
-                <td>
+                <td data-label="Totale" style="color:var(--text);">${day.totalUsers}</td>
+                <td data-label="Dettagli">
                     <div class="report-chips">${detailHtml || '<span style="color:var(--text-muted);font-size:12px;">-</span>'}</div>
                 </td>
             </tr>

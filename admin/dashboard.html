@@ -22,6 +22,9 @@
             </svg>
         </button>
 
+        <!-- Sidebar Backdrop -->
+        <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -438,7 +441,7 @@
                         <h3>Risorse Server</h3>
                         <span id="serverUptime" style="font-size:12px;color:var(--text-secondary);"></span>
                     </div>
-                    <div style="padding: 16px 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                    <div class="server-resources-grid" style="padding: 16px 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
                         <div>
                             <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
                                 <span style="font-size:13px;color:var(--text-secondary);">CPU</span>
@@ -532,7 +535,7 @@
 
                 <!-- Container & Server specs info -->
                 <div class="card" style="margin-bottom:24px;padding:16px 20px;">
-                    <div style="display:flex;gap:28px;flex-wrap:wrap;">
+                    <div class="container-specs-row" style="display:flex;gap:28px;flex-wrap:wrap;">
                         <!-- Risorse totali server -->
                         <div style="flex:1;min-width:180px;">
                             <div style="font-size:12px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Risorse totali server</div>
@@ -552,7 +555,7 @@
                             </div>
                         </div>
                         <!-- Divider -->
-                        <div style="width:1px;background:var(--border);align-self:stretch;"></div>
+                        <div class="specs-divider" style="width:1px;background:var(--border);align-self:stretch;"></div>
                         <!-- Uso del sistema -->
                         <div style="flex:1;min-width:180px;">
                             <div style="font-size:12px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Uso del sistema</div>
@@ -575,7 +578,7 @@
                             </div>
                         </div>
                         <!-- Divider -->
-                        <div style="width:1px;background:var(--border);align-self:stretch;"></div>
+                        <div class="specs-divider" style="width:1px;background:var(--border);align-self:stretch;"></div>
                         <!-- Per ogni container -->
                         <div style="flex:1;min-width:180px;">
                             <div style="font-size:12px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Per ogni container</div>
@@ -783,6 +786,48 @@
             </section>
 
         </main>
+
+        <!-- Bottom Mobile Tab Bar -->
+        <nav class="bottom-tab-bar" id="bottomTabBar">
+            <button class="bottom-tab active" data-page="overview" title="Overview">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+                <span>Home</span>
+            </button>
+            <button class="bottom-tab" data-page="users" title="Utenti">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                </svg>
+                <span>Utenti</span>
+            </button>
+            <button class="bottom-tab" data-page="analytics" title="Analytics">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                </svg>
+                <span>Stats</span>
+            </button>
+            <button class="bottom-tab" data-page="containers" title="Containers">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                </svg>
+                <span>Docker</span>
+            </button>
+            <button class="bottom-tab bottom-tab-more" id="bottomTabMore" title="Altro">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+                <span>Altro</span>
+            </button>
+        </nav>
     </div>
 
     <!-- Modal Utenti Online -->
