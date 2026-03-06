@@ -312,6 +312,8 @@ const MOCK_DATA = {
     }
 };
 
+const _pendingRequests = {};
+
 async function apiCall(endpoint, options = {}) {
     // Use mock data in dev mode
     if (USE_MOCK_DATA) {
@@ -320,27 +322,42 @@ async function apiCall(endpoint, options = {}) {
         return MOCK_DATA[endpoint] || null;
     }
 
+    // Deduplicate concurrent GET requests to the same endpoint
+    const method = (options.method || 'GET').toUpperCase();
+    if (method === 'GET' && _pendingRequests[endpoint]) {
+        return _pendingRequests[endpoint];
+    }
+
     const token = sessionStorage.getItem('adminToken');
 
-    try {
-        const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-            ...options,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-                ...options.headers
+    const request = (async () => {
+        try {
+            const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+                ...options,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                    ...options.headers
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`API Error: ${response.status}`);
             }
-        });
 
-        if (!response.ok) {
-            throw new Error(`API Error: ${response.status}`);
+            return await response.json();
+        } catch (error) {
+            console.error('API call failed:', error);
+            return null;
         }
+    })();
 
-        return await response.json();
-    } catch (error) {
-        console.error('API call failed:', error);
-        return null;
+    if (method === 'GET') {
+        _pendingRequests[endpoint] = request;
+        request.finally(() => { delete _pendingRequests[endpoint]; });
     }
+
+    return request;
 }
 
 // ============================================
@@ -430,8 +447,8 @@ async function loadOverviewData() {
         if (overviewEl) overviewEl.textContent = diagMaxC > 0 ? `${diagActive}/${diagMaxC}` : diagActive;
     }
 
-    // Load sessions table (now shows online users)
-    await loadSessionsTable();
+    // Load sessions table (pass presenceData to avoid duplicate fetch)
+    await loadSessionsTable(presenceData);
     updateLastRefreshTime();
 }
 
@@ -442,9 +459,9 @@ function updateLastRefreshTime() {
     }
 }
 
-async function loadSessionsTable() {
+async function loadSessionsTable(cachedPresence = null) {
     const tbody = document.getElementById('sessionsTableBody');
-    const presenceData = await apiCall('/admin/presence');
+    const presenceData = cachedPresence || await apiCall('/admin/presence');
 
     if (!presenceData || !presenceData.users || presenceData.users.length === 0) {
         tbody.innerHTML = `
@@ -2215,11 +2232,25 @@ function initDashboard() {
         window.location.href = '../index.html';
     });
 
-    // Auto-refresh every 5 seconds for near-instant presence updates
-    setInterval(() => {
+    // Lightweight presence refresh every 5 seconds
+    let _overviewFullRefreshCounter = 0;
+    setInterval(async () => {
         const activePage = document.querySelector('.nav-item.active')?.dataset.page;
         if (activePage === 'overview') {
-            loadOverviewData();
+            _overviewFullRefreshCounter++;
+            if (_overviewFullRefreshCounter >= 6) {
+                // Full overview refresh every 30 seconds (6 × 5s)
+                _overviewFullRefreshCounter = 0;
+                loadOverviewData();
+            } else {
+                // Lightweight: only refresh presence + sessions
+                const presenceData = await apiCall('/admin/presence');
+                if (presenceData) {
+                    document.getElementById('activeUsers').textContent = presenceData.count || 0;
+                    updateWorldMapCounter(presenceData.count || 0);
+                    await loadSessionsTable(presenceData);
+                }
+            }
             updateLastRefreshTime();
         } else if (activePage === 'containers') {
             loadContainersData();

@@ -54,6 +54,89 @@ async function httpGetWithRetry(url, retries = 2, timeoutMs = 8000) {
   }
 }
 
+// Shared AI budget cache (avoids hitting rate limiter when multiple endpoints load at once)
+let budgetCache = { data: null, timestamp: 0, promise: null };
+const BUDGET_CACHE_TTL = 60000; // 60 seconds (was 30s)
+
+async function getAllBudgets(userIds) {
+  const now = Date.now();
+  // Return cached data if fresh
+  if (budgetCache.data && (now - budgetCache.timestamp) < BUDGET_CACHE_TTL) {
+    return budgetCache.data;
+  }
+  // If already fetching, wait for that promise
+  if (budgetCache.promise) return budgetCache.promise;
+
+  budgetCache.promise = (async () => {
+    const result = {};
+    const BATCH_SIZE = 15; // was 5 — fewer batches = faster
+    for (let i = 0; i < userIds.length; i += BATCH_SIZE) {
+      const batch = userIds.slice(i, i + BATCH_SIZE);
+      await Promise.all(batch.map(uid =>
+        httpGetWithRetry(`${APP_BACKEND_URL}/ai/budget/${uid}`)
+          .then(data => { result[uid] = data; })
+          .catch(() => { result[uid] = null; })
+      ));
+      // Small delay between batches to avoid rate limiting
+      if (i + BATCH_SIZE < userIds.length) {
+        await new Promise(r => setTimeout(r, 50)); // was 100ms
+      }
+    }
+    budgetCache.data = result;
+    budgetCache.timestamp = Date.now();
+    budgetCache.promise = null;
+    return result;
+  })();
+
+  return budgetCache.promise;
+}
+
+// Shared cache for Firestore users metadata (avoids repeated db.collection('users').get())
+let usersMetaCache = { data: null, timestamp: 0, promise: null };
+const USERS_META_CACHE_TTL = 60000; // 60 seconds
+
+async function getCachedUsersMetadata() {
+  const now = Date.now();
+  if (usersMetaCache.data && (now - usersMetaCache.timestamp) < USERS_META_CACHE_TTL) {
+    return usersMetaCache.data;
+  }
+  if (usersMetaCache.promise) return usersMetaCache.promise;
+
+  usersMetaCache.promise = (async () => {
+    const snapshot = await db.collection('users').get();
+    const result = {};
+    snapshot.forEach(doc => { result[doc.id] = doc.data(); });
+    usersMetaCache.data = result;
+    usersMetaCache.timestamp = Date.now();
+    usersMetaCache.promise = null;
+    return result;
+  })();
+
+  return usersMetaCache.promise;
+}
+
+// Shared cache for Firebase Auth users list (avoids repeated auth.listUsers())
+let authUsersCache = { data: null, timestamp: 0, promise: null };
+const AUTH_USERS_CACHE_TTL = 60000; // 60 seconds
+
+async function getCachedAuthUsers() {
+  const now = Date.now();
+  if (authUsersCache.data && (now - authUsersCache.timestamp) < AUTH_USERS_CACHE_TTL) {
+    return authUsersCache.data;
+  }
+  if (authUsersCache.promise) return authUsersCache.promise;
+
+  authUsersCache.promise = (async () => {
+    const result = await auth.listUsers(1000);
+    authUsersCache.data = result.users;
+    authUsersCache.timestamp = Date.now();
+    authUsersCache.promise = null;
+    return result.users;
+  })();
+
+  return authUsersCache.promise;
+}
+
 const app = express();
 
 // CORS: only allow specific origins
@@ -114,13 +197,14 @@ app.use('/fly', requireAdmin);
 // GET /admin/stats/overview
 app.get('/admin/stats/overview', async (req, res) => {
   try {
-    // Get total users from Firebase Auth
-    const listUsersResult = await auth.listUsers(1000);
-    const totalUsers = listUsersResult.users.length;
+    const [authUsers, userMetadata, projectsSnapshot] = await Promise.all([
+      getCachedAuthUsers(),
+      getCachedUsersMetadata(),
+      db.collection('user_projects').get()
+    ]);
 
-    // Get projects count with Git vs App breakdown (user_projects collection)
-    const projectsSnapshot = await db.collection('user_projects').get();
-    const totalProjects = projectsSnapshot.size;
+    const totalUsers = authUsers.length;
+
     let gitProjects = 0, appProjects = 0;
     projectsSnapshot.forEach(doc => {
       if (doc.data().type === 'git') gitProjects++;
@@ -130,52 +214,42 @@ app.get('/admin/stats/overview', async (req, res) => {
     // Count active users (logged in last 7 days)
     const oneWeekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
     let activeUsers = 0;
-    listUsersResult.users.forEach(user => {
+    authUsers.forEach(user => {
       const lastSignIn = user.metadata.lastSignInTime;
       if (lastSignIn && new Date(lastSignIn).getTime() > oneWeekAgo) {
         activeUsers++;
       }
     });
 
-    // Get AI cost from app backend (aggregates all user budgets)
+    // Get AI cost from app backend (using shared cache)
     let aiCostMonth = 0;
     let aiFetchErrors = 0;
-    let aiFetchTotal = 0;
     try {
-      const usersSnapshot = await db.collection('users').get();
-      aiFetchTotal = usersSnapshot.size;
-      const budgetPromises = [];
-      usersSnapshot.forEach(doc => {
-        budgetPromises.push(
-          httpGetWithRetry(`${APP_BACKEND_URL}/ai/budget/${doc.id}`)
-            .then(data => data.success ? data.usage.spentEur : 0)
-            .catch(err => {
-              aiFetchErrors++;
-              if (aiFetchErrors <= 3) console.warn(`[AI Cost] Failed for ${doc.id}: ${err.message}`);
-              return 0;
-            })
-        );
-      });
-      const spent = await Promise.all(budgetPromises);
-      aiCostMonth = spent.reduce((sum, v) => sum + v, 0);
-      if (aiFetchErrors > 0) console.warn(`[AI Cost] ${aiFetchErrors}/${aiFetchTotal} budget fetches failed`);
+      const uids = Object.keys(userMetadata);
+      const budgets = await getAllBudgets(uids);
+      for (const uid of uids) {
+        const data = budgets[uid];
+        if (data && data.success) {
+          aiCostMonth += data.usage.spentEur || 0;
+        } else if (!data) {
+          aiFetchErrors++;
+        }
+      }
     } catch (e) { console.error('[AI Cost] Error:', e.message); }
 
-    // Count users with known locations (from users collection)
-    const usersMetaSnapshot = await db.collection('users').get();
+    // Count users with known locations (reuse cached metadata)
     const countryDistribution = {};
-    usersMetaSnapshot.forEach(doc => {
-      const data = doc.data();
+    for (const [uid, data] of Object.entries(userMetadata)) {
       if (data.lastKnownLocation && data.lastKnownLocation.country) {
         const c = data.lastKnownLocation.country;
         countryDistribution[c] = (countryDistribution[c] || 0) + 1;
       }
-    });
+    }
 
     res.json({
       totalUsers,
       activeUsers,
-      totalProjects,
+      totalProjects: projectsSnapshot.size,
       gitProjects,
       appProjects,
       activeContainers: 0,
@@ -196,37 +270,29 @@ const PLAN_LIMITS = { free: 2.00, go: 7.50, starter: 10.00, pro: 50.00, team: 20
 // GET /admin/users
 app.get('/admin/users', async (req, res) => {
   try {
-    const listUsersResult = await auth.listUsers(1000);
+    const [authUsers, userMetadata] = await Promise.all([
+      getCachedAuthUsers(),
+      getCachedUsersMetadata()
+    ]);
 
-    // Get user metadata from Firestore
-    const usersSnapshot = await db.collection('users').get();
-    const userMetadata = {};
-    usersSnapshot.forEach(doc => {
-      userMetadata[doc.id] = doc.data();
-    });
-
-    // Get AI spending from app backend
+    // Get AI spending from app backend (using shared cache)
     const spendingMap = {};
     let aiSpendErrors = 0;
     try {
-      const budgetPromises = listUsersResult.users.map(user =>
-        httpGetWithRetry(`${APP_BACKEND_URL}/ai/budget/${user.uid}`)
-          .then(data => {
-            if (data.success) {
-              spendingMap[user.uid] = {
-                spent: data.usage.spentEur || 0,
-                limit: data.plan.monthlyBudgetEur || PLAN_LIMITS.free,
-                percent: data.usage.percentUsed || 0
-              };
-            }
-          })
-          .catch(err => {
-            aiSpendErrors++;
-            if (aiSpendErrors <= 3) console.warn(`[AI Spending] Failed for ${user.uid}: ${err.message}`);
-          })
-      );
-      await Promise.all(budgetPromises);
-      if (aiSpendErrors > 0) console.warn(`[AI Spending] ${aiSpendErrors}/${listUsersResult.users.length} budget fetches failed`);
+      const uids = authUsers.map(u => u.uid);
+      const budgets = await getAllBudgets(uids);
+      for (const user of authUsers) {
+        const data = budgets[user.uid];
+        if (data && data.success) {
+          spendingMap[user.uid] = {
+            spent: data.usage.spentEur || 0,
+            limit: data.plan.monthlyBudgetEur || PLAN_LIMITS.free,
+            percent: data.usage.percentUsed || 0
+          };
+        } else if (!data) {
+          aiSpendErrors++;
+        }
+      }
     } catch (e) { console.error('[AI Spending] Error:', e.message); }
 
     // Get online users from presence
@@ -237,7 +303,7 @@ app.get('/admin/users', async (req, res) => {
     const onlineUserIds = new Set();
     presenceSnapshot.forEach(doc => onlineUserIds.add(doc.id));
 
-    const users = listUsersResult.users.map(user => {
+    const users = authUsers.map(user => {
       const metadata = userMetadata[user.uid] || {};
       const plan = metadata.plan || metadata.subscriptionPlan || 'free';
       const budgetData = spendingMap[user.uid] || {};
@@ -278,24 +344,23 @@ app.get('/admin/users', async (req, res) => {
 // GET /admin/projects
 app.get('/admin/projects', async (req, res) => {
   try {
-    const [projectsSnapshot, usersSnapshot, authUsers] = await Promise.all([
+    const [projectsSnapshot, userMetadata, authUsersList] = await Promise.all([
       db.collection('user_projects').get(),
-      db.collection('users').get(),
-      auth.listUsers(1000)
+      getCachedUsersMetadata(),
+      getCachedAuthUsers()
     ]);
 
     // Build auth email map (uid -> email/displayName)
     const authMap = {};
-    authUsers.users.forEach(u => {
+    authUsersList.forEach(u => {
       authMap[u.uid] = { email: u.email || '', displayName: u.displayName || '' };
     });
 
-    // Build Firestore user metadata map (uid -> plan)
+    // Build plan map from cached metadata
     const firestoreMeta = {};
-    usersSnapshot.forEach(doc => {
-      const d = doc.data();
-      firestoreMeta[doc.id] = { plan: d.plan || d.subscriptionPlan || 'free' };
-    });
+    for (const [uid, data] of Object.entries(userMetadata)) {
+      firestoreMeta[uid] = { plan: data.plan || data.subscriptionPlan || 'free' };
+    }
 
     const projects = [];
 
@@ -326,7 +391,7 @@ app.get('/admin/projects', async (req, res) => {
 
     // Build list of all users (including those without projects)
     const usersWithProjects = new Set(projects.map(p => p.userId));
-    const allUsers = authUsers.users.map(u => {
+    const allUsers = authUsersList.map(u => {
       const fsMeta = firestoreMeta[u.uid] || {};
       return {
         id: u.uid,
@@ -347,7 +412,10 @@ app.get('/admin/projects', async (req, res) => {
 // GET /admin/stats/analytics
 app.get('/admin/stats/analytics', async (req, res) => {
   try {
-    const listUsersResult = await auth.listUsers(1000);
+    const [authUsers, userMetadata] = await Promise.all([
+      getCachedAuthUsers(),
+      getCachedUsersMetadata()
+    ]);
 
     // Users by day (last 7 days)
     const days = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
@@ -363,7 +431,7 @@ app.get('/admin/stats/analytics', async (req, res) => {
       const dayEnd = new Date(date.setHours(23, 59, 59, 999)).getTime();
 
       let count = 0;
-      listUsersResult.users.forEach(user => {
+      authUsers.forEach(user => {
         const lastSignIn = user.metadata.lastSignInTime;
         if (lastSignIn) {
           const ts = new Date(lastSignIn).getTime();
@@ -374,17 +442,16 @@ app.get('/admin/stats/analytics', async (req, res) => {
     }
 
     // Plan distribution
-    const usersSnapshot = await db.collection('users').get();
     const planCounts = { free: 0, go: 0, starter: 0, pro: 0, team: 0 };
 
-    usersSnapshot.forEach(doc => {
-      const plan = doc.data()?.plan || doc.data()?.subscriptionPlan || 'free';
+    for (const [uid, data] of Object.entries(userMetadata)) {
+      const plan = data.plan || data.subscriptionPlan || 'free';
       planCounts[plan] = (planCounts[plan] || 0) + 1;
-    });
+    }
 
     // Count users without metadata as free
-    const usersWithMetadata = new Set(usersSnapshot.docs.map(d => d.id));
-    listUsersResult.users.forEach(user => {
+    const usersWithMetadata = new Set(Object.keys(userMetadata));
+    authUsers.forEach(user => {
       if (!usersWithMetadata.has(user.uid)) planCounts.free++;
     });
 
@@ -450,36 +517,30 @@ app.get('/admin/stats/analytics', async (req, res) => {
 app.get('/admin/stats/ai-costs', async (req, res) => {
   try {
     // Get all users and their AI budgets from app backend
-    const usersSnapshot = await db.collection('users').get();
+    const userMetadata = await getCachedUsersMetadata();
     let totalCost = 0;
     const userCosts = [];
 
-    const budgetPromises = [];
-    let aiCostErrors = 0;
-    usersSnapshot.forEach(doc => {
-      budgetPromises.push(
-        httpGetWithRetry(`${APP_BACKEND_URL}/ai/budget/${doc.id}`)
-          .then(data => {
-            if (data.success && data.usage.spentEur > 0) {
-              totalCost += data.usage.spentEur;
-              userCosts.push({
-                userId: doc.id,
-                email: doc.data().email || doc.id,
-                plan: data.plan.name,
-                spent: data.usage.spentEur,
-                limit: data.plan.monthlyBudgetEur,
-                percent: data.usage.percentUsed
-              });
-            }
-          })
-          .catch(err => {
-            aiCostErrors++;
-            if (aiCostErrors <= 3) console.warn(`[AI Costs] Failed for ${doc.id}: ${err.message}`);
-          })
-      );
-    });
-    await Promise.all(budgetPromises);
-    if (aiCostErrors > 0) console.warn(`[AI Costs] ${aiCostErrors}/${usersSnapshot.size} budget fetches failed`);
+    const uids = Object.keys(userMetadata);
+    const emailMap = {};
+    for (const [uid, data] of Object.entries(userMetadata)) {
+      emailMap[uid] = data.email || uid;
+    }
+    const budgets = await getAllBudgets(uids);
+    for (const uid of uids) {
+      const data = budgets[uid];
+      if (data && data.success && data.usage.spentEur > 0) {
+        totalCost += data.usage.spentEur;
+        userCosts.push({
+          userId: uid,
+          email: emailMap[uid],
+          plan: data.plan.name,
+          spent: data.usage.spentEur,
+          limit: data.plan.monthlyBudgetEur,
+          percent: data.usage.percentUsed
+        });
+      }
+    }
 
     // Sort by spending (highest first)
     userCosts.sort((a, b) => b.spent - a.spent);
@@ -500,15 +561,10 @@ app.get('/admin/stats/ai-costs', async (req, res) => {
 // GET /admin/stats/report - Historical user activity report
 app.get('/admin/stats/report', async (req, res) => {
   try {
-    const listUsersResult = await auth.listUsers(1000);
-    const users = listUsersResult.users;
-
-    // Build Firestore user metadata (plans)
-    const usersSnapshot = await db.collection('users').get();
-    const firestoreMeta = {};
-    usersSnapshot.forEach(doc => {
-      firestoreMeta[doc.id] = doc.data();
-    });
+    const [users, firestoreMeta] = await Promise.all([
+      getCachedAuthUsers(),
+      getCachedUsersMetadata()
+    ]);
 
     // Find oldest account creation date
     let oldestDate = new Date();
@@ -758,18 +814,17 @@ app.get('/admin/presence', async (req, res) => {
 // GET /admin/user-locations - Get all known user locations (for world map)
 app.get('/admin/user-locations', async (req, res) => {
   try {
-    const usersSnapshot = await db.collection('users').get();
+    const userMetadata = await getCachedUsersMetadata();
     const locations = [];
-    usersSnapshot.forEach(doc => {
-      const data = doc.data();
+    for (const [uid, data] of Object.entries(userMetadata)) {
       if (data.lastKnownLocation && data.lastKnownLocation.lat != null) {
         locations.push({
-          uid: doc.id,
+          uid,
           email: data.email || '',
           location: data.lastKnownLocation,
         });
       }
-    });
+    }
     res.json({ locations });
   } catch (error) {
     console.error('[User Locations] Error:', error.message);
@@ -780,32 +835,32 @@ app.get('/admin/user-locations', async (req, res) => {
 // GET /admin/published-sites
 app.get('/admin/published-sites', async (req, res) => {
   try {
-    const sitesSnapshot = await db.collection('published_sites').get();
-    const sites = [];
+    const [sitesSnapshot, authUsers] = await Promise.all([
+      db.collection('published_sites').get(),
+      getCachedAuthUsers()
+    ]);
 
-    for (const doc of sitesSnapshot.docs) {
+    // Build auth lookup map from cached users (avoids sequential auth.getUser calls)
+    const authMap = {};
+    authUsers.forEach(u => {
+      authMap[u.uid] = { userId: u.uid, email: u.email, displayName: u.displayName };
+    });
+
+    const sites = sitesSnapshot.docs.map(doc => {
       const data = doc.data();
+      const owner = data.userId
+        ? authMap[data.userId] || { userId: data.userId, email: data.userId, displayName: null }
+        : null;
 
-      // Get user info
-      let owner = null;
-      if (data.userId) {
-        try {
-          const userRecord = await auth.getUser(data.userId);
-          owner = { userId: data.userId, email: userRecord.email, displayName: userRecord.displayName };
-        } catch (e) {
-          owner = { userId: data.userId, email: data.userId, displayName: null };
-        }
-      }
-
-      sites.push({
+      return {
         id: doc.id,
         slug: data.slug || doc.id,
         url: data.url || null,
         projectId: data.projectId || null,
         publishedAt: data.publishedAt?.toDate?.()?.toISOString() || data.publishedAt || null,
         owner
-      });
-    }
+      };
+    });
 
     // Sort by publishedAt (newest first)
     sites.sort((a, b) => new Date(b.publishedAt || 0) - new Date(a.publishedAt || 0));
