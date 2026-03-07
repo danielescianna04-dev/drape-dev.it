@@ -751,8 +751,15 @@ app.get('/admin/stats/behavior/user/:email', async (req, res) => {
 
     // Find UID for this email
     let uid = null;
+    let userMeta = null;
     for (const [id, data] of Object.entries(userMetadata)) {
-      if (data.email === email) { uid = id; break; }
+      if (data.email === email) { uid = id; userMeta = data; break; }
+    }
+
+    // Get auth user info for registration date
+    let authUser = null;
+    if (uid) {
+      try { authUser = await auth.getUser(uid); } catch (e) { /* user may not exist */ }
     }
 
     // Parallel reads
@@ -839,10 +846,33 @@ app.get('/admin/stats/behavior/user/:email', async (req, res) => {
     const lastSeen = activityDays.length > 0 ? activityDays[activityDays.length - 1].date : null;
     const totalSessionMin = activityDays.reduce((sum, d) => sum + d.durationMin, 0);
 
+    // User profile info
+    const displayName = authUser?.displayName || userMeta?.displayName || '';
+    const createdAt = authUser?.metadata?.creationTime || null;
+    const lastLogin = authUser?.metadata?.lastSignInTime || null;
+    const location = userMeta?.lastKnownLocation || null;
+
+    // AI budget from app backend
+    let aiBudget = null;
+    if (uid) {
+      try {
+        aiBudget = await httpGet(`${APP_BACKEND_URL}/ai/budget/${uid}`, 5000);
+      } catch (e) { /* budget not available */ }
+    }
+
     res.json({
       email,
       uid,
-      plan: userMetadata[uid]?.plan || userMetadata[uid]?.subscriptionPlan || 'free',
+      displayName,
+      plan: userMeta?.plan || userMeta?.subscriptionPlan || 'free',
+      createdAt,
+      lastLogin,
+      location,
+      aiBudget: aiBudget?.success ? {
+        spent: aiBudget.usage?.spentEur || 0,
+        limit: aiBudget.plan?.monthlyBudgetEur || 0,
+        percent: aiBudget.usage?.percentUsed || 0
+      } : null,
       firstSeen,
       lastSeen,
       totalDaysActive: activityDays.length,

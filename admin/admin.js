@@ -620,7 +620,7 @@ async function loadUsersData() {
                 <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">${aiPercent}% usato</div>
             </td>
             <td data-label="Azioni">
-                <button class="action-btn" onclick="viewUserDetails('${user.id}')">Dettagli</button>
+                <button class="action-btn" onclick="openUserBehaviorModal('${(user.email || '').replace(/'/g, "\\'")}')">Dettagli</button>
             </td>
         </tr>`;
     }).join('');
@@ -1249,6 +1249,46 @@ window.openUserBehaviorModal = async function(email) {
     // Build modal content
     let html = '';
 
+    // User header with name + email
+    const userName = data.displayName || email.split('@')[0];
+    title.textContent = userName;
+    html += `<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <div class="user-cell-avatar" style="width:48px;height:48px;font-size:20px;">${(email || 'U')[0].toUpperCase()}</div>
+        <div>
+            <div style="font-size:16px;font-weight:700;color:var(--text);">${userName}</div>
+            <div style="font-size:13px;color:var(--text-muted);">${email}</div>
+        </div>
+    </div>`;
+
+    // Profile info row
+    const planBadge = data.plan || 'free';
+    const regDate = data.createdAt ? new Date(data.createdAt).toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric' }) : '-';
+    const lastLoginDate = data.lastLogin ? new Date(data.lastLogin).toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
+    const locStr = data.location ? `${data.location.city || ''}${data.location.city && data.location.country ? ', ' : ''}${data.location.country || ''}` : '-';
+
+    html += `<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;font-size:13px;color:var(--text-muted);">
+        <span>Piano: <span class="badge-plan ${planBadge}">${planBadge}</span></span>
+        <span>Registrato: <strong style="color:var(--text);">${regDate}</strong></span>
+        <span>Ultimo login: <strong style="color:var(--text);">${lastLoginDate}</strong></span>
+        ${locStr !== '-' ? `<span>Posizione: <strong style="color:var(--text);">${locStr}</strong></span>` : ''}
+    </div>`;
+
+    // AI Budget bar (if available)
+    if (data.aiBudget) {
+        const pct = data.aiBudget.percent || 0;
+        const barColor = pct > 80 ? '#ef4444' : pct > 50 ? '#eab308' : '#22c55e';
+        html += `<div style="margin-bottom:20px;background:var(--bg-tertiary);border-radius:8px;padding:14px;">
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">Budget AI Mensile</div>
+            <div style="display:flex;align-items:center;gap:12px;">
+                <div class="progress-bar" style="flex:1;height:8px;">
+                    <div class="progress-fill" style="width:${pct}%;background:${barColor};"></div>
+                </div>
+                <span style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;">€${data.aiBudget.spent.toFixed(2)} / €${data.aiBudget.limit.toFixed(0)}</span>
+            </div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">${pct}% utilizzato</div>
+        </div>`;
+    }
+
     // Summary cards
     html += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:20px;">
         <div style="background:var(--bg-tertiary);border-radius:8px;padding:14px;text-align:center;">
@@ -1267,14 +1307,6 @@ window.openUserBehaviorModal = async function(email) {
             <div style="font-size:22px;font-weight:700;color:var(--primary);">${(data.projects || []).length}</div>
             <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">Progetti</div>
         </div>
-    </div>`;
-
-    // Info row
-    const planBadge = data.plan || 'free';
-    html += `<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px;font-size:13px;color:var(--text-muted);">
-        <span>Piano: <span class="plan-badge plan-${planBadge}">${planBadge}</span></span>
-        <span>Primo accesso: <strong style="color:var(--text);">${data.firstSeen || '-'}</strong></span>
-        <span>Ultimo accesso: <strong style="color:var(--text);">${data.lastSeen || '-'}</strong></span>
     </div>`;
 
     // AI usage by model (doughnut)
