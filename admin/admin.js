@@ -1372,8 +1372,9 @@ window.openUserBehaviorModal = async function(email) {
             <h4 style="margin-bottom:12px;font-size:14px;color:var(--text);">Ultimi Giorni Attivi</h4>
             <div style="display:flex;gap:4px;flex-wrap:wrap;">`;
         recent.forEach(d => {
-            html += `<div style="background:rgba(168,85,247,0.3);border-radius:4px;padding:4px 10px;font-size:11px;color:var(--text);" title="${formatMin(d.durationMin)}">
-                ${new Date(d.date).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}
+            html += `<div style="background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);border-radius:6px;padding:6px 12px;text-align:center;">
+                <div style="font-size:12px;font-weight:600;color:var(--text);">${new Date(d.date).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}</div>
+                <div style="font-size:11px;color:var(--primary);margin-top:2px;">${formatMin(d.durationMin)}</div>
             </div>`;
         });
         html += `</div></div>`;
