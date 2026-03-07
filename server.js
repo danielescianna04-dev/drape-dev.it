@@ -716,10 +716,14 @@ app.get('/admin/stats/behavior', async (req, res) => {
       // === PAID USERS % ===
       let paidCount = 0;
       let totalWithPlan = 0;
-      for (const [, data] of Object.entries(userMetadata)) {
+      const paidEmails = [];
+      for (const [email, data] of Object.entries(userMetadata)) {
         totalWithPlan++;
         const plan = data.plan || data.subscriptionPlan || 'free';
-        if (plan !== 'free' && plan !== 'starter') paidCount++;
+        if (plan !== 'free' && plan !== 'starter') {
+          paidCount++;
+          paidEmails.push(email);
+        }
       }
       const paidPercent = authUsers.length > 0 ? Math.round((paidCount / authUsers.length) * 100) : 0;
 
@@ -739,6 +743,7 @@ app.get('/admin/stats/behavior', async (req, res) => {
         newUsers7d: { count: newUsers7d.length, emails: newUsersEmails },
         paidPercent,
         paidCount,
+        paidEmails,
         activity: {
           dailyActiveUsers,
           avgByDayOfWeek

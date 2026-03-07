@@ -1458,6 +1458,10 @@ window.showBehaviorUserList = function(type) {
             title = 'Nuovi Utenti (ultimi 7 giorni)';
             emails = data.newUsers7d?.emails || [];
             break;
+        case 'paid':
+            title = 'Utenti Paganti';
+            emails = data.paidEmails || [];
+            break;
     }
 
     const modal = document.getElementById('userBehaviorModal');

@@ -7,7 +7,7 @@
     <base href="/admin/">
     <title>Dashboard Admin - Drape</title>
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-    <link rel="stylesheet" href="admin-styles.css?v=10">
+    <link rel="stylesheet" href="admin-styles.css?v=11">
     <!-- Chart.js for analytics -->
     <script data-cfasync="false" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -837,14 +837,14 @@
                         <div class="stat-card-value" id="behaviorNewUsers7d">-</div>
                         <div class="stat-card-label">Nuovi (7gg)</div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card clickable" onclick="showBehaviorUserList('paid')" style="cursor:pointer;">
                         <div class="stat-card-header">
                             <div class="stat-card-icon green">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
                             </div>
                         </div>
                         <div class="stat-card-value" id="behaviorPaidPercent">-</div>
-                        <div class="stat-card-label">Utenti Paganti</div>
+                        <div class="stat-card-label">Utenti Paganti %</div>
                     </div>
                 </div>
 
@@ -1019,6 +1019,6 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="admin.js?v=10" type="module"></script>
+    <script data-cfasync="false" src="admin.js?v=11" type="module"></script>
 </body>
 </html>
