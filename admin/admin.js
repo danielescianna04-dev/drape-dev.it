@@ -2086,8 +2086,11 @@ window.killSession = async function(projectId, userId) {
 
 
 window.viewUserDetails = function(userId) {
-    // TODO: Implement user details modal
-    alert(`Dettagli utente: ${userId}\n\nFunzionalità in sviluppo.`);
+    // Redirect to behavior modal (legacy function kept for compatibility)
+    // Try to find email from the DOM
+    const row = document.querySelector(`#usersTableBody tr button[onclick*="${userId}"]`)?.closest('tr');
+    const email = row?.querySelector('.user-cell-email')?.textContent;
+    if (email) openUserBehaviorModal(email);
 };
 
 // Navigate to Users page and highlight a specific user by email
