@@ -533,12 +533,13 @@ app.get('/admin/stats/behavior', async (req, res) => {
 
     behaviorCache.promise = (async () => {
       // Parallel reads from Firestore + cached data
-      const [presenceLogSnapshot, aiUsageSnapshot, operationsSnapshot, projectsSnapshot, userMetadata] = await Promise.all([
+      const [presenceLogSnapshot, aiUsageSnapshot, operationsSnapshot, projectsSnapshot, userMetadata, authUsers] = await Promise.all([
         db.collection('presence_log').get(),
         db.collection('ai_usage').get(),
         db.collection('operations').get(),
         db.collectionGroup('projects').get().catch(() => ({ forEach: () => {} })),
-        getCachedUsersMetadata()
+        getCachedUsersMetadata(),
+        getCachedAuthUsers()
       ]);
 
       // Build email lookup from userMetadata
@@ -704,8 +705,40 @@ app.get('/admin/stats/behavior', async (req, res) => {
         score: (m.sessions * 1) + (m.aiCalls * 2) + (m.projects * 3)
       })).sort((a, b) => b.score - a.score);
 
+      // === NEW USERS (last 7 days) ===
+      const sevenDaysAgo = new Date(todayDate);
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+      const newUsers7d = authUsers.filter(u => {
+        const created = new Date(u.metadata.creationTime);
+        return created >= sevenDaysAgo;
+      });
+
+      // === PAID USERS % ===
+      let paidCount = 0;
+      let totalWithPlan = 0;
+      for (const [, data] of Object.entries(userMetadata)) {
+        totalWithPlan++;
+        const plan = data.plan || data.subscriptionPlan || 'free';
+        if (plan !== 'free' && plan !== 'starter') paidCount++;
+      }
+      const paidPercent = authUsers.length > 0 ? Math.round((paidCount / authUsers.length) * 100) : 0;
+
+      // === RETENTION: emails per card (for click-to-see-users) ===
+      const todayEmails = dailyActiveMap[todayStr] || [];
+      const wauEmails = [...wauSet];
+      const mauEmails = [...mauSet];
+      const newUsersEmails = newUsers7d.map(u => u.email || '').filter(Boolean);
+
       const result = {
-        retention: { dau, wau, mau, wauTrend },
+        retention: {
+          dau, wau, mau, wauTrend,
+          dauEmails: todayEmails,
+          wauEmails,
+          mauEmails
+        },
+        newUsers7d: { count: newUsers7d.length, emails: newUsersEmails },
+        paidPercent,
+        paidCount,
         activity: {
           dailyActiveUsers,
           avgByDayOfWeek

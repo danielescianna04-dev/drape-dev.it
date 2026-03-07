@@ -1053,10 +1053,15 @@ async function loadBehaviorData() {
     const data = await apiCall('/admin/stats/behavior');
     if (!data) return;
 
+    // Store data for click handlers
+    window._behaviorData = data;
+
     // Retention cards
     document.getElementById('behaviorDAU').textContent = data.retention?.dau || 0;
     document.getElementById('behaviorWAU').textContent = data.retention?.wau || 0;
     document.getElementById('behaviorMAU').textContent = data.retention?.mau || 0;
+    document.getElementById('behaviorNewUsers7d').textContent = data.newUsers7d?.count || 0;
+    document.getElementById('behaviorPaidPercent').textContent = (data.paidPercent || 0) + '%';
 
     const wauTrend = data.retention?.wauTrend || 0;
     const trendEl = document.getElementById('behaviorWAUTrend');
@@ -1428,7 +1433,55 @@ window.openUserBehaviorModal = async function(email) {
     }
 };
 
-// Note: user behavior modal close handlers added in initDashboard()
+// Show user list popup when clicking stat cards
+window.showBehaviorUserList = function(type) {
+    const data = window._behaviorData;
+    if (!data) return;
+
+    let title = '';
+    let emails = [];
+
+    switch (type) {
+        case 'dau':
+            title = 'Utenti Attivi Oggi';
+            emails = data.retention?.dauEmails || [];
+            break;
+        case 'wau':
+            title = 'Utenti Attivi questa Settimana';
+            emails = data.retention?.wauEmails || [];
+            break;
+        case 'mau':
+            title = 'Utenti Attivi questo Mese';
+            emails = data.retention?.mauEmails || [];
+            break;
+        case 'new':
+            title = 'Nuovi Utenti (ultimi 7 giorni)';
+            emails = data.newUsers7d?.emails || [];
+            break;
+    }
+
+    const modal = document.getElementById('userBehaviorModal');
+    const titleEl = document.getElementById('userBehaviorModalTitle');
+    const body = document.getElementById('userBehaviorModalBody');
+    if (!modal) return;
+
+    modal.style.display = 'flex';
+    titleEl.textContent = title + ' (' + emails.length + ')';
+
+    if (emails.length === 0) {
+        body.innerHTML = '<p style="color:var(--text-muted);">Nessun utente trovato.</p>';
+        return;
+    }
+
+    body.innerHTML = `<div style="display:flex;flex-direction:column;gap:6px;">
+        ${emails.map(email => `
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg-tertiary);border-radius:8px;cursor:pointer;" onclick="openUserBehaviorModal('${email.replace(/'/g, "\\'")}')">
+                <div class="user-cell-avatar" style="width:32px;height:32px;font-size:13px;">${(email || 'U')[0].toUpperCase()}</div>
+                <div style="font-size:13px;color:var(--primary);">${email}</div>
+            </div>
+        `).join('')}
+    </div>`;
+};
 
 // ============================================
 // CONTAINERS PAGE

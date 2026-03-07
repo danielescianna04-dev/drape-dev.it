@@ -107,9 +107,9 @@
         <div class="sidebar-group" data-group="github">
             <div class="sidebar-group-title">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-                GitHub
+                Git
             </div>
-            <a class="sidebar-link" href="/docs/collegare-github.html">Collegare GitHub</a>
+            <a class="sidebar-link" href="/docs/collegare-github.html">Collegare Git</a>
             <a class="sidebar-link" href="/docs/clone-import.html">Clone e import</a>
             <a class="sidebar-link" href="/docs/commit-push.html">Commit e push</a>
         </div>
@@ -137,7 +137,18 @@
             <h3>Pulsante "Fix"</h3>
             <p>Tocca il pulsante "Fix" che appare automaticamente sugli errori nel terminale &mdash; l'errore viene inviato all'AI con un solo tap.</p>
             <h3>Seleziona codice</h3>
-            <p>Seleziona codice nell'editor e chiedere all'AI di analizzarlo direttamente dal contesto.</p>
+            <p>Seleziona codice nell'editor e chiedi all'AI di analizzarlo direttamente dal contesto.</p>
+            <h3>Allega uno screenshot</h3>
+            <p>Puoi allegare <strong>screenshot</strong> di errori visivi o bug dell'interfaccia. L'AI analizza l'immagine e capisce il problema.</p>
+
+            <h2>Debug autonomo con l'agente</h2>
+            <p>L'agente AI pu&ograve; effettuare un <strong>debug autonomo</strong> del tuo progetto usando i suoi strumenti:</p>
+            <h3>Ricerca nel codice</h3>
+            <p>L'agente usa <strong>grep</strong> e <strong>glob</strong> per cercare automaticamente il codice correlato all'errore, trovare definizioni di funzioni, import mancanti e dipendenze.</p>
+            <h3>Ricerca soluzioni online</h3>
+            <p>Con lo strumento di <strong>ricerca web</strong>, l'agente pu&ograve; cercare soluzioni su Stack Overflow, documentazione ufficiale e forum per errori specifici.</p>
+            <h3>Fix multi-file</h3>
+            <p>Per bug che coinvolgono pi&ugrave; file, l'agente analizza l'intero flusso e pu&ograve; applicare fix in pi&ugrave; file contemporaneamente.</p>
 
             <h2>Fix automatici</h2>
             <p>L'AI Agent pu&ograve; <strong>applicare fix direttamente</strong> ai file del tuo progetto. Quando l'AI suggerisce una modifica, vedrai un pulsante "Applica" che sovrascrive il codice nel file corretto.</p>
@@ -154,7 +165,7 @@
             <p>Oltre alla spiegazione, l'AI pu&ograve; suggerire ottimizzazioni, best practice e pattern migliori per il tuo codice.</p>
 
             <div class="callout tip">
-                <p><strong>Suggerimento:</strong> Quando incolli un errore, includi anche il contesto (file, funzione, cosa stavi cercando di fare). Pi&ugrave; contesto dai, pi&ugrave; preciso sar&agrave; il fix.</p>
+                <p><strong>Suggerimento:</strong> Per un debug pi&ugrave; efficace, descrivi cosa stavi cercando di fare e il comportamento atteso. L'agente cercher&agrave; automaticamente nel codice e online per trovare la soluzione.</p>
             </div>
 
             <div class="media-placeholder">

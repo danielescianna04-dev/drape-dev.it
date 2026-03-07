@@ -107,9 +107,9 @@
         <div class="sidebar-group" data-group="github">
             <div class="sidebar-group-title">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-                GitHub
+                Git
             </div>
-            <a class="sidebar-link" href="/en/docs/collegare-github.html">Connect GitHub</a>
+            <a class="sidebar-link" href="/en/docs/collegare-github.html">Connect Git</a>
             <a class="sidebar-link" href="/en/docs/clone-import.html">Clone & import</a>
             <a class="sidebar-link" href="/en/docs/commit-push.html">Commit & push</a>
         </div>
@@ -130,32 +130,43 @@
             <h1>AI debugging</h1>
 <p class="doc-intro">Send errors to the AI Agent and get automatic fixes and detailed explanations.</p>
 
-<h2>Sending an error</h2>
-<p>When you encounter an error in the terminal or editor, you can:</p>
-<h3>Copy and paste</h3>
-<p>Copy the error from the terminal and paste it in the AI chat. Include context for better results.</p>
-<h3>"Fix" button</h3>
-<p>Tap the "Fix" button that appears automatically on terminal errors &mdash; the error is sent to the AI with a single tap.</p>
-<h3>Select code</h3>
-<p>Select code in the editor and ask the AI to analyze it directly from context.</p>
+            <h2>Sending an error</h2>
+            <p>When you encounter an error in the terminal or editor, you can:</p>
+            <h3>Copy and paste</h3>
+            <p>Copy the error from the terminal and paste it into the AI chat. Include context for better results.</p>
+            <h3>"Fix" button</h3>
+            <p>Tap the "Fix" button that appears automatically on errors in the terminal &mdash; the error is sent to the AI with a single tap.</p>
+            <h3>Select code</h3>
+            <p>Select code in the editor and ask the AI to analyze it directly from context.</p>
+            <h3>Attach a screenshot</h3>
+            <p>You can attach <strong>screenshots</strong> of visual errors or UI bugs. The AI analyzes the image and understands the problem.</p>
 
-<h2>Automatic fixes</h2>
-<p>The AI Agent can <strong>apply fixes directly</strong> to your project files. When the AI suggests a change, you'll see an "Apply" button that overwrites the code in the correct file.</p>
-<h3>Applying changes</h3>
-<p>The "Apply" button inserts the fix in the correct file. You can review the changes before saving them permanently.</p>
-<h3>Undoing a fix</h3>
-<p>If the fix isn't correct, you can undo the changes. The original code is preserved until confirmation.</p>
+            <h2>Autonomous debugging with the agent</h2>
+            <p>The AI agent can perform <strong>autonomous debugging</strong> of your project using its tools:</p>
+            <h3>Code search</h3>
+            <p>The agent uses <strong>grep</strong> and <strong>glob</strong> to automatically search for code related to the error, find function definitions, missing imports and dependencies.</p>
+            <h3>Online solution search</h3>
+            <p>With the <strong>web search</strong> tool, the agent can search for solutions on Stack Overflow, official documentation and forums for specific errors.</p>
+            <h3>Multi-file fixes</h3>
+            <p>For bugs involving multiple files, the agent analyzes the entire flow and can apply fixes across multiple files simultaneously.</p>
 
-<h2>Code explanations</h2>
-<p>Select a block of code and ask the AI <strong>"Explain this code"</strong>. The AI will analyze the logic, explain what each part does and suggest possible improvements.</p>
-<h3>Logic analysis</h3>
-<p>The AI breaks down the code line by line, explaining the logical flow and identifying potential issues.</p>
-<h3>Improvement suggestions</h3>
-<p>Beyond explanations, the AI can suggest optimizations, best practices and better patterns for your code.</p>
+            <h2>Automatic fixes</h2>
+            <p>The AI Agent can <strong>apply fixes directly</strong> to your project files. When the AI suggests a change, you'll see an "Apply" button that overwrites the code in the correct file.</p>
+            <h3>Applying changes</h3>
+            <p>The "Apply" button inserts the fix into the right file. You can review changes before saving them permanently.</p>
+            <h3>Undoing a fix</h3>
+            <p>If the fix isn't correct, you can undo the changes. The original code is preserved until confirmation.</p>
 
-<div class="callout tip">
-    <p><strong>Tip:</strong> When pasting an error, also include the context (file, function, what you were trying to do). The more context you give, the more accurate the fix will be.</p>
-</div>
+            <h2>Code explanations</h2>
+            <p>Select a code block and ask the AI <strong>"Explain this code"</strong>. The AI will analyze the logic, explain what each part does and suggest improvements.</p>
+            <h3>Logic analysis</h3>
+            <p>The AI breaks down the code line by line, explaining the logical flow and identifying potential issues.</p>
+            <h3>Improvement suggestions</h3>
+            <p>Beyond explanation, the AI can suggest optimizations, best practices and better patterns for your code.</p>
+
+            <div class="callout tip">
+                <p><strong>Tip:</strong> For more effective debugging, describe what you were trying to do and the expected behavior. The agent will automatically search the code and online to find the solution.</p>
+            </div>
 
 <div class="media-placeholder">
     <div class="media-placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>

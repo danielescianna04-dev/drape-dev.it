@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Collegare GitHub - Documentazione Drape</title>
-    <meta name="description" content="Connetti il tuo account GitHub per lavorare sulle tue repository dal telefono.">
-    <meta name="keywords" content="GitHub Drape, collegare GitHub, git mobile, repository telefono">
+    <title>Collegare Git - Documentazione Drape</title>
+    <meta name="description" content="Connetti GitHub, GitLab, Bitbucket o Gitea per lavorare sulle tue repository dal telefono.">
+    <meta name="keywords" content="GitHub Drape, GitLab Drape, Bitbucket Drape, Gitea Drape, collegare Git, git mobile, repository telefono">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <meta name="theme-color" content="#6F5CFF">
     <link rel="canonical" href="https://drape-dev.it/docs/collegare-github.html">
@@ -14,8 +14,8 @@
     <link rel="alternate" hreflang="x-default" href="https://drape-dev.it/docs/collegare-github.html">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://drape-dev.it/docs/collegare-github.html">
-    <meta property="og:title" content="Collegare GitHub - Documentazione Drape">
-    <meta property="og:description" content="Connetti il tuo account GitHub per lavorare sulle tue repository dal telefono.">
+    <meta property="og:title" content="Collegare Git - Documentazione Drape">
+    <meta property="og:description" content="Connetti GitHub, GitLab, Bitbucket o Gitea per lavorare sulle tue repository dal telefono.">
     <meta property="og:image" content="https://drape-dev.it/og-image-v2.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon2-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon2-16x16.png">
@@ -107,9 +107,9 @@
         <div class="sidebar-group" data-group="github">
             <div class="sidebar-group-title">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-                GitHub
+                Git
             </div>
-            <a class="sidebar-link" href="/docs/collegare-github.html">Collegare GitHub</a>
+            <a class="sidebar-link" href="/docs/collegare-github.html">Collegare Git</a>
             <a class="sidebar-link" href="/docs/clone-import.html">Clone e import</a>
             <a class="sidebar-link" href="/docs/commit-push.html">Commit e push</a>
         </div>
@@ -127,12 +127,29 @@
     <main class="docs-main">
         <div class="doc-page">
 
-            <h1>Collegare GitHub</h1>
-            <p class="doc-intro">Connetti il tuo account GitHub per lavorare sulle tue repository dal telefono.</p>
+            <h1>Collegare Git</h1>
+            <p class="doc-intro">Connetti GitHub, GitLab, Bitbucket o Gitea per lavorare sulle tue repository dal telefono.</p>
 
-            <h2>Autorizzazione OAuth</h2>
-            <p>Per collegare GitHub:</p>
-            <h3>Passaggi di configurazione</h3>
+            <h2>Provider supportati</h2>
+            <p>Drape supporta <strong>4 provider Git</strong>, permettendoti di lavorare con le repository ovunque siano ospitate.</p>
+
+            <h3>GitHub</h3>
+            <p>Connessione tramite <strong>OAuth 2.0</strong>. Tocca "Collega GitHub" nelle impostazioni: verrai reindirizzato a GitHub per autorizzare l'accesso, poi torni automaticamente nell'app.</p>
+
+            <h3>GitLab</h3>
+            <p>Connessione tramite <strong>Personal Access Token</strong>. Genera un token da GitLab &rarr; Settings &rarr; Access Tokens con permessi <code>read_repository</code> e <code>write_repository</code>, poi inseriscilo nell'app.</p>
+
+            <h3>Bitbucket</h3>
+            <p>Connessione tramite <strong>App Password</strong>. Crea una App Password da Bitbucket &rarr; Personal Settings &rarr; App passwords con permessi di lettura e scrittura sulle repository.</p>
+
+            <h3>Gitea</h3>
+            <p>Connessione tramite <strong>Access Token</strong> per server Gitea self-hosted. Inserisci l'URL del tuo server e il token di accesso per collegare le tue repository private.</p>
+
+            <h2>Account multipli</h2>
+            <p>Puoi collegare <strong>pi&ugrave; account</strong> anche dello stesso provider. Utile se hai un account personale e uno aziendale. Gestisci tutti i token dalla sezione "Account Git" nelle impostazioni.</p>
+
+            <h2>Configurazione GitHub (OAuth)</h2>
+            <h3>Passaggi</h3>
             <ol>
                 <li>Vai nelle <strong>Impostazioni</strong> dell'app</li>
                 <li>Tocca <strong>"Collega GitHub"</strong></li>
@@ -146,15 +163,24 @@
                 <li><strong>User</strong> &mdash; per identificare il tuo account nei commit</li>
             </ul>
 
+            <h2>Configurazione GitLab / Bitbucket / Gitea</h2>
+            <h3>Passaggi</h3>
+            <ol>
+                <li>Vai nelle <strong>Impostazioni</strong> &rarr; <strong>Account Git</strong></li>
+                <li>Seleziona il provider (GitLab, Bitbucket o Gitea)</li>
+                <li>Inserisci il <strong>token di accesso</strong> generato dal provider</li>
+                <li>Per Gitea, inserisci anche l'<strong>URL del server</strong></li>
+            </ol>
+
             <h2>Sicurezza</h2>
-            <p>L'autenticazione usa il protocollo <strong>OAuth 2.0</strong> standard di GitHub. Drape non salva mai la tua password. Puoi revocare l'accesso in qualsiasi momento dalle impostazioni di GitHub.</p>
+            <p>Per GitHub, l'autenticazione usa il protocollo <strong>OAuth 2.0</strong> standard. Per gli altri provider si usano token di accesso. Drape non salva mai la tua password. I token sono memorizzati in modo sicuro sul dispositivo.</p>
             <h3>Revocare l'accesso</h3>
-            <p>Puoi revocare l'accesso di Drape in qualsiasi momento da GitHub &rarr; Settings &rarr; Applications &rarr; Authorized OAuth Apps.</p>
+            <p>Puoi revocare l'accesso in qualsiasi momento dal pannello del provider: GitHub &rarr; Settings &rarr; Applications, GitLab &rarr; Access Tokens, Bitbucket &rarr; App passwords, oppure eliminando il token dalle impostazioni di Drape.</p>
             <h3>Organizzazioni</h3>
             <p>Se hai un'organizzazione GitHub, potrebbe essere necessario concedere l'accesso separatamente dalle impostazioni dell'organizzazione.</p>
 
             <div class="callout">
-                <p><strong>Nota:</strong> Supportiamo sia repository pubbliche che private. Se hai un'organizzazione GitHub, potresti dover concedere l'accesso separatamente dalle impostazioni dell'organizzazione.</p>
+                <p><strong>Nota:</strong> Supportiamo sia repository pubbliche che private su tutti e 4 i provider. Per i repository privati su Gitea, assicurati che il token abbia i permessi corretti.</p>
             </div>
 
             <div class="media-placeholder">
@@ -178,11 +204,11 @@
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">Posso collegare pi&ugrave; account GitHub?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-                    <div class="faq-answer"><div class="faq-answer-inner">Al momento supportiamo un account GitHub per utente. Il supporto multi-account &egrave; in fase di sviluppo.</div></div>
+                    <div class="faq-answer"><div class="faq-answer-inner">S&igrave;, puoi collegare pi&ugrave; account anche dello stesso provider. Gestisci tutti gli account dalla sezione "Account Git" nelle impostazioni dell'app.</div></div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">Funziona con GitLab o Bitbucket?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-                    <div class="faq-answer"><div class="faq-answer-inner">Attualmente supportiamo solo GitHub. Il supporto per GitLab e Bitbucket &egrave; previsto per un futuro aggiornamento.</div></div>
+                    <div class="faq-answer"><div class="faq-answer-inner">S&igrave;, Drape supporta GitHub, GitLab, Bitbucket e Gitea (self-hosted). Puoi collegare tutti i provider contemporaneamente tramite token di accesso.</div></div>
                 </div>
             </div>
 
