@@ -315,10 +315,9 @@ const MOCK_DATA = {
     },
     '/admin/stats/behavior': {
         retention: { dau: 5, wau: 18, mau: 42, wauTrend: 12 },
-        sessions: {
-            avgDurationMin: 47,
-            totalSessions: 312,
-            peakHoursGrid: Array.from({ length: 7 }, () => Array.from({ length: 24 }, () => Math.floor(Math.random() * 8)))
+        activity: {
+            dailyActiveUsers: { labels: Array.from({ length: 30 }, (_, i) => { const d = new Date(); d.setDate(d.getDate() - 29 + i); return d.toISOString().split('T')[0]; }), data: Array(30).fill(0).map(() => Math.floor(Math.random() * 15 + 5)) },
+            avgByDayOfWeek: [8, 14, 16, 15, 13, 12, 7]
         },
         aiModelTrend: {
             labels: Array.from({ length: 30 }, (_, i) => { const d = new Date(); d.setDate(d.getDate() - 29 + i); return d.toISOString().split('T')[0]; }),
@@ -1066,15 +1065,11 @@ async function loadBehaviorData() {
         trendEl.className = 'stat-card-trend ' + (wauTrend >= 0 ? 'up' : 'down');
     }
 
-    // Session stats
-    const avgMin = data.sessions?.avgDurationMin || 0;
-    document.getElementById('behaviorAvgSession').textContent = avgMin >= 60
-        ? Math.floor(avgMin / 60) + 'h ' + (avgMin % 60) + 'm'
-        : avgMin + 'm';
-    document.getElementById('behaviorTotalSessions').textContent = data.sessions?.totalSessions || 0;
+    // DAU chart (30 days)
+    renderDailyActiveChart(data.activity?.dailyActiveUsers || { labels: [], data: [] });
 
-    // Peak Hours Heatmap
-    renderPeakHoursHeatmap(data.sessions?.peakHoursGrid || []);
+    // Day of week chart
+    renderDayOfWeekChart(data.activity?.avgByDayOfWeek || []);
 
     // AI Model Trend chart
     renderAiModelTrendChart(data.aiModelTrend || { labels: [], datasets: {} });
@@ -1091,31 +1086,64 @@ async function loadBehaviorData() {
     renderEngagementTable(window._behaviorAllUsers);
 }
 
-function renderPeakHoursHeatmap(grid) {
-    const container = document.getElementById('peakHoursHeatmap');
-    if (!container) return;
+function renderDailyActiveChart(dailyData) {
+    const ctx = document.getElementById('dailyActiveChart')?.getContext('2d');
+    if (!ctx) return;
 
-    const dayLabels = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
-    const maxVal = Math.max(1, ...grid.flat());
+    if (charts['dailyActiveChart']) charts['dailyActiveChart'].destroy();
 
-    let html = '<div class="heatmap-header"><div class="heatmap-corner"></div>';
-    for (let h = 0; h < 24; h++) {
-        html += `<div class="heatmap-hour-label">${h}</div>`;
-    }
-    html += '</div>';
+    const labels = dailyData.labels.map(d => new Date(d).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' }));
 
-    for (let day = 0; day < 7; day++) {
-        html += `<div class="heatmap-row"><div class="heatmap-day-label">${dayLabels[day]}</div>`;
-        const row = grid[day] || Array(24).fill(0);
-        for (let h = 0; h < 24; h++) {
-            const val = row[h] || 0;
-            const alpha = (val / maxVal) * 0.8 + 0.05;
-            html += `<div class="heatmap-cell" style="background:rgba(168,85,247,${alpha.toFixed(2)});" title="${dayLabels[day]} ${h}:00 — ${val} sessioni"></div>`;
+    charts['dailyActiveChart'] = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels,
+            datasets: [{
+                data: dailyData.data,
+                backgroundColor: 'rgba(168, 85, 247, 0.5)',
+                borderColor: '#a855f7',
+                borderWidth: 1,
+                borderRadius: 4,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { display: false }, ticks: { color: '#a1a1aa', maxRotation: 45, maxTicksLimit: 10 } },
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#a1a1aa' }, beginAtZero: true }
+            }
         }
-        html += '</div>';
-    }
+    });
+}
 
-    container.innerHTML = html;
+function renderDayOfWeekChart(avgData) {
+    const ctx = document.getElementById('dayOfWeekChart')?.getContext('2d');
+    if (!ctx) return;
+
+    if (charts['dayOfWeekChart']) charts['dayOfWeekChart'].destroy();
+
+    charts['dayOfWeekChart'] = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'],
+            datasets: [{
+                data: avgData,
+                backgroundColor: ['#6366f1', '#a855f7', '#a855f7', '#a855f7', '#a855f7', '#a855f7', '#6366f1'],
+                borderRadius: 4,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { display: false }, ticks: { color: '#a1a1aa' } },
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#a1a1aa' }, beginAtZero: true }
+            }
+        }
+    });
 }
 
 function renderAiModelTrendChart(trendData) {
@@ -1290,14 +1318,10 @@ window.openUserBehaviorModal = async function(email) {
     }
 
     // Summary cards
-    html += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:20px;">
+    html += `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
         <div style="background:var(--bg-tertiary);border-radius:8px;padding:14px;text-align:center;">
             <div style="font-size:22px;font-weight:700;color:var(--primary);">${data.totalDaysActive || 0}</div>
             <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">Giorni Attivi</div>
-        </div>
-        <div style="background:var(--bg-tertiary);border-radius:8px;padding:14px;text-align:center;">
-            <div style="font-size:22px;font-weight:700;color:var(--primary);">${formatMin(data.totalSessionMin || 0)}</div>
-            <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">Tempo Totale</div>
         </div>
         <div style="background:var(--bg-tertiary);border-radius:8px;padding:14px;text-align:center;">
             <div style="font-size:22px;font-weight:700;color:var(--primary);">${data.totalAiCalls || 0}</div>
@@ -1374,7 +1398,6 @@ window.openUserBehaviorModal = async function(email) {
         recent.forEach(d => {
             html += `<div style="background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);border-radius:6px;padding:6px 12px;text-align:center;">
                 <div style="font-size:12px;font-weight:600;color:var(--text);">${new Date(d.date).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}</div>
-                <div style="font-size:11px;color:var(--primary);margin-top:2px;">${formatMin(d.durationMin)}</div>
             </div>`;
         });
         html += `</div></div>`;

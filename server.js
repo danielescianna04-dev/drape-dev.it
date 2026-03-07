@@ -589,35 +589,29 @@ app.get('/admin/stats/behavior', async (req, res) => {
       }
       const wauTrend = prevWauSet.size > 0 ? Math.round(((wau - prevWauSet.size) / prevWauSet.size) * 100) : 0;
 
-      // === SESSIONS: peak hours, avg duration ===
-      const peakHoursGrid = Array.from({ length: 7 }, () => Array(24).fill(0));
-      const sessionDurations = [];
-      let totalSessionCount = 0;
+      // === DAILY ACTIVE USERS (last 30 days) ===
+      const dailyActiveUsers = { labels: [], data: [] };
+      for (let i = 29; i >= 0; i--) {
+        const d = new Date(todayDate);
+        d.setDate(d.getDate() - i);
+        const key = d.toISOString().split('T')[0];
+        dailyActiveUsers.labels.push(key);
+        dailyActiveUsers.data.push(dailyActiveMap[key]?.length || 0);
+      }
 
+      // Average active users per day-of-week
+      const dayOfWeekCounts = Array(7).fill(0);
+      const dayOfWeekDays = Array(7).fill(0);
       presenceLogSnapshot.forEach(doc => {
-        const data = doc.data();
-        const sessions = data.userSessions || {};
         const docDate = new Date(doc.id);
-        const dayOfWeek = docDate.getDay(); // 0=Sun..6=Sat
-
-        for (const [, sess] of Object.entries(sessions)) {
-          totalSessionCount++;
-          // Each snapshot ≈ 15 min of activity
-          const durationMin = (sess.snapshots || 1) * 15;
-          sessionDurations.push(durationMin);
-
-          if (sess.firstSeen) {
-            const hour = new Date(sess.firstSeen).getHours();
-            if (dayOfWeek >= 0 && dayOfWeek < 7 && hour >= 0 && hour < 24) {
-              peakHoursGrid[dayOfWeek][hour]++;
-            }
-          }
-        }
+        const dow = docDate.getDay();
+        const count = (doc.data().activeEmails || []).length;
+        dayOfWeekCounts[dow] += count;
+        dayOfWeekDays[dow]++;
       });
-
-      const avgSessionDuration = sessionDurations.length > 0
-        ? Math.round(sessionDurations.reduce((a, b) => a + b, 0) / sessionDurations.length)
-        : 0;
+      const avgByDayOfWeek = dayOfWeekCounts.map((total, i) =>
+        dayOfWeekDays[i] > 0 ? Math.round(total / dayOfWeekDays[i]) : 0
+      );
 
       // === AI MODEL TRENDS (last 30 days) ===
       const aiByModelDate = {};
@@ -712,10 +706,9 @@ app.get('/admin/stats/behavior', async (req, res) => {
 
       const result = {
         retention: { dau, wau, mau, wauTrend },
-        sessions: {
-          avgDurationMin: avgSessionDuration,
-          totalSessions: totalSessionCount,
-          peakHoursGrid
+        activity: {
+          dailyActiveUsers,
+          avgByDayOfWeek
         },
         aiModelTrend,
         aiModelTotals: modelUsageTotals,
@@ -776,12 +769,7 @@ app.get('/admin/stats/behavior/user/:email', async (req, res) => {
       const data = doc.data();
       const emails = data.activeEmails || [];
       if (emails.includes(email)) {
-        const sess = data.userSessions?.[email];
-        activityDays.push({
-          date: doc.id,
-          snapshots: sess?.snapshots || 1,
-          durationMin: (sess?.snapshots || 1) * 15
-        });
+        activityDays.push({ date: doc.id });
       }
     });
     activityDays.sort((a, b) => a.date.localeCompare(b.date));
@@ -844,7 +832,6 @@ app.get('/admin/stats/behavior/user/:email', async (req, res) => {
     // First and last seen
     const firstSeen = activityDays.length > 0 ? activityDays[0].date : null;
     const lastSeen = activityDays.length > 0 ? activityDays[activityDays.length - 1].date : null;
-    const totalSessionMin = activityDays.reduce((sum, d) => sum + d.durationMin, 0);
 
     // User profile info
     const displayName = authUser?.displayName || userMeta?.displayName || '';
@@ -876,7 +863,6 @@ app.get('/admin/stats/behavior/user/:email', async (req, res) => {
       firstSeen,
       lastSeen,
       totalDaysActive: activityDays.length,
-      totalSessionMin,
       totalAiCalls,
       activityDays,
       aiByModel: { labels: Object.keys(aiByModel), data: Object.values(aiByModel) },

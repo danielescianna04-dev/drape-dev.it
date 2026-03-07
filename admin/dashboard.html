@@ -7,7 +7,7 @@
     <base href="/admin/">
     <title>Dashboard Admin - Drape</title>
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-    <link rel="stylesheet" href="admin-styles.css?v=8">
+    <link rel="stylesheet" href="admin-styles.css?v=10">
     <!-- Chart.js for analytics -->
     <script data-cfasync="false" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -830,38 +830,25 @@
                     </div>
                 </div>
 
-                <!-- Session Stats -->
-                <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 24px;">
-                    <div class="stat-card">
-                        <div class="stat-card-header">
-                            <div class="stat-card-icon yellow">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                            </div>
-                        </div>
-                        <div class="stat-card-value" id="behaviorAvgSession">-</div>
-                        <div class="stat-card-label">Durata Media Sessione</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-card-header">
-                            <div class="stat-card-icon green">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-                            </div>
-                        </div>
-                        <div class="stat-card-value" id="behaviorTotalSessions">-</div>
-                        <div class="stat-card-label">Sessioni Totali</div>
-                    </div>
-                </div>
-
                 <!-- Charts -->
                 <div class="charts-grid">
-                    <!-- Peak Hours Heatmap -->
+                    <!-- Daily Active Users (30 days) -->
                     <div class="card" style="grid-column: 1 / -1;">
                         <div class="card-header">
-                            <h3>Ore di Punta</h3>
-                            <span style="font-size:12px;color:var(--text-muted);">Sessioni per giorno e ora</span>
+                            <h3>Utenti Attivi Giornalieri (30gg)</h3>
                         </div>
-                        <div style="padding: 24px;">
-                            <div id="peakHoursHeatmap" class="peak-hours-grid"></div>
+                        <div class="chart-container">
+                            <canvas id="dailyActiveChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Day of Week average -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Media per Giorno della Settimana</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="dayOfWeekChart"></canvas>
                         </div>
                     </div>
 
@@ -1014,6 +1001,6 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="admin.js?v=9" type="module"></script>
+    <script data-cfasync="false" src="admin.js?v=10" type="module"></script>
 </body>
 </html>
