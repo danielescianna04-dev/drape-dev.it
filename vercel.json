@@ -12,6 +12,13 @@
       "dest": "/api/$1"
     },
     {
+      "src": "/link",
+      "status": 308,
+      "headers": {
+        "Location": "https://apps.apple.com/it/app/drape/id6758354741"
+      }
+    },
+    {
       "src": "/dashboard",
       "dest": "/admin/dashboard.html"
     }
