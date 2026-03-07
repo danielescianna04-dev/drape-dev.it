@@ -327,7 +327,7 @@ const MOCK_DATA = {
         aiModelTotals: { 'Claude': 340, 'GPT': 180, 'Gemini': 65 },
         operationsByType: { 'ai_chat': 200, 'file_write': 150, 'command_exec': 120, 'git_commit': 45, 'preview': 80 },
         frameworkPopularity: { labels: ['nextjs', 'react', 'html', 'expo', 'vue', 'python'], data: [15, 12, 8, 6, 4, 3] },
-        topUsers: [
+        allUsers: [
             { email: 'leon@drape-dev.it', sessions: 45, aiCalls: 120, projects: 8, score: 309 },
             { email: 'user@example.com', sessions: 20, aiCalls: 50, projects: 3, score: 129 }
         ],
@@ -1086,8 +1086,9 @@ async function loadBehaviorData() {
     const ops = data.operationsByType || {};
     createBarChart('behaviorOpsChart', { labels: Object.keys(ops), data: Object.values(ops) });
 
-    // Engagement table
-    renderEngagementTable(data.topUsers || []);
+    // Engagement table (all users)
+    window._behaviorAllUsers = data.allUsers || [];
+    renderEngagementTable(window._behaviorAllUsers);
 }
 
 function renderPeakHoursHeatmap(grid) {
@@ -1199,23 +1200,179 @@ function renderEngagementTable(users) {
     }
 
     tbody.innerHTML = users.map((u, i) => `
-        <tr>
-            <td style="font-weight:700;color:var(--text-muted);">${i + 1}</td>
-            <td>
+        <tr style="cursor:pointer;" onclick="openUserBehaviorModal('${u.email.replace(/'/g, "\\'")}')">
+            <td data-label="#" style="font-weight:700;color:var(--text-muted);">${i + 1}</td>
+            <td data-label="Utente">
                 <div class="user-cell" style="gap:8px;">
                     <div class="user-cell-avatar" style="width:28px;height:28px;font-size:12px;">${(u.email || 'U')[0].toUpperCase()}</div>
                     <div class="user-cell-info">
-                        <div style="font-size:13px;color:var(--text);">${u.email}</div>
+                        <div style="font-size:13px;color:var(--primary);text-decoration:underline;text-decoration-color:rgba(168,85,247,0.3);text-underline-offset:2px;">${u.email}</div>
                     </div>
                 </div>
             </td>
-            <td style="text-align:center;">${u.sessions}</td>
-            <td style="text-align:center;">${u.aiCalls}</td>
-            <td style="text-align:center;">${u.projects}</td>
-            <td style="text-align:center;"><span style="font-weight:700;color:var(--primary);">${u.score}</span></td>
+            <td data-label="Sessioni" style="text-align:center;">${u.sessions}</td>
+            <td data-label="AI Calls" style="text-align:center;">${u.aiCalls}</td>
+            <td data-label="Progetti" style="text-align:center;">${u.projects}</td>
+            <td data-label="Score" style="text-align:center;"><span style="font-weight:700;color:var(--primary);">${u.score}</span></td>
         </tr>
     `).join('');
 }
+
+// Search filter for behavior table
+window.filterBehaviorTable = function(query) {
+    const q = query.toLowerCase();
+    const filtered = (window._behaviorAllUsers || []).filter(u =>
+        u.email.toLowerCase().includes(q)
+    );
+    renderEngagementTable(filtered);
+};
+
+// User behavior detail modal
+window.openUserBehaviorModal = async function(email) {
+    const modal = document.getElementById('userBehaviorModal');
+    const title = document.getElementById('userBehaviorModalTitle');
+    const body = document.getElementById('userBehaviorModalBody');
+    if (!modal) return;
+
+    modal.style.display = 'flex';
+    title.textContent = email;
+    body.innerHTML = '<div class="loading"><div class="loading-spinner"></div> Caricamento...</div>';
+
+    const data = await apiCall('/admin/stats/behavior/user/' + encodeURIComponent(email));
+    if (!data) {
+        body.innerHTML = '<p style="color:var(--text-muted);">Errore nel caricamento dei dati.</p>';
+        return;
+    }
+
+    const formatMin = (m) => m >= 60 ? Math.floor(m / 60) + 'h ' + (m % 60) + 'm' : m + 'm';
+
+    // Build modal content
+    let html = '';
+
+    // Summary cards
+    html += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:20px;">
+        <div style="background:var(--bg-tertiary);border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-size:22px;font-weight:700;color:var(--primary);">${data.totalDaysActive || 0}</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">Giorni Attivi</div>
+        </div>
+        <div style="background:var(--bg-tertiary);border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-size:22px;font-weight:700;color:var(--primary);">${formatMin(data.totalSessionMin || 0)}</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">Tempo Totale</div>
+        </div>
+        <div style="background:var(--bg-tertiary);border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-size:22px;font-weight:700;color:var(--primary);">${data.totalAiCalls || 0}</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">AI Calls</div>
+        </div>
+        <div style="background:var(--bg-tertiary);border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-size:22px;font-weight:700;color:var(--primary);">${(data.projects || []).length}</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">Progetti</div>
+        </div>
+    </div>`;
+
+    // Info row
+    const planBadge = data.plan || 'free';
+    html += `<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px;font-size:13px;color:var(--text-muted);">
+        <span>Piano: <span class="plan-badge plan-${planBadge}">${planBadge}</span></span>
+        <span>Primo accesso: <strong style="color:var(--text);">${data.firstSeen || '-'}</strong></span>
+        <span>Ultimo accesso: <strong style="color:var(--text);">${data.lastSeen || '-'}</strong></span>
+    </div>`;
+
+    // AI usage by model (doughnut)
+    if (data.aiByModel && data.aiByModel.labels.length > 0) {
+        html += `<div style="margin-bottom:20px;">
+            <h4 style="margin-bottom:12px;font-size:14px;color:var(--text);">Modelli AI Utilizzati</h4>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">`;
+        const modelColors = { 'Claude': '#a855f7', 'GPT': '#3b82f6', 'Gemini': '#22c55e', 'DeepSeek': '#f59e0b', 'Groq': '#ef4444' };
+        data.aiByModel.labels.forEach((label, i) => {
+            const count = data.aiByModel.data[i];
+            const pct = data.totalAiCalls > 0 ? Math.round((count / data.totalAiCalls) * 100) : 0;
+            const color = modelColors[label] || '#6366f1';
+            html += `<div style="background:var(--bg-tertiary);border-radius:8px;padding:10px 16px;display:flex;align-items:center;gap:8px;">
+                <div style="width:10px;height:10px;border-radius:50%;background:${color};"></div>
+                <span style="font-size:13px;color:var(--text);">${label}</span>
+                <span style="font-size:13px;font-weight:700;color:var(--text-muted);">${count} (${pct}%)</span>
+            </div>`;
+        });
+        html += `</div></div>`;
+    }
+
+    // AI calls trend (30 days) - sparkline as bar chart
+    if (data.aiTrend && data.aiTrend.data.some(v => v > 0)) {
+        html += `<div style="margin-bottom:20px;">
+            <h4 style="margin-bottom:12px;font-size:14px;color:var(--text);">AI Calls (ultimi 30 giorni)</h4>
+            <div style="height:80px;"><canvas id="userAiTrendChart"></canvas></div>
+        </div>`;
+    }
+
+    // Operations
+    const opsEntries = Object.entries(data.operationsByType || {});
+    if (opsEntries.length > 0) {
+        html += `<div style="margin-bottom:20px;">
+            <h4 style="margin-bottom:12px;font-size:14px;color:var(--text);">Operazioni</h4>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">`;
+        opsEntries.sort((a, b) => b[1] - a[1]).forEach(([type, count]) => {
+            html += `<div style="background:var(--bg-tertiary);border-radius:6px;padding:6px 12px;font-size:12px;">
+                <span style="color:var(--text);">${type}</span>
+                <span style="color:var(--primary);font-weight:700;margin-left:6px;">${count}</span>
+            </div>`;
+        });
+        html += `</div></div>`;
+    }
+
+    // Projects
+    if (data.projects && data.projects.length > 0) {
+        html += `<div style="margin-bottom:20px;">
+            <h4 style="margin-bottom:12px;font-size:14px;color:var(--text);">Progetti</h4>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">`;
+        data.projects.forEach(p => {
+            html += `<div style="background:var(--bg-tertiary);border-radius:6px;padding:8px 14px;">
+                <div style="font-size:13px;font-weight:600;color:var(--text);">${p.name}</div>
+                <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${p.framework}</div>
+            </div>`;
+        });
+        html += `</div></div>`;
+    }
+
+    // Activity timeline (last days active)
+    if (data.activityDays && data.activityDays.length > 0) {
+        const recent = data.activityDays.slice(-14);
+        html += `<div>
+            <h4 style="margin-bottom:12px;font-size:14px;color:var(--text);">Ultimi Giorni Attivi</h4>
+            <div style="display:flex;gap:4px;flex-wrap:wrap;">`;
+        recent.forEach(d => {
+            html += `<div style="background:rgba(168,85,247,0.3);border-radius:4px;padding:4px 10px;font-size:11px;color:var(--text);" title="${formatMin(d.durationMin)}">
+                ${new Date(d.date).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}
+            </div>`;
+        });
+        html += `</div></div>`;
+    }
+
+    body.innerHTML = html;
+
+    // Render AI trend mini chart if container exists
+    const trendCtx = document.getElementById('userAiTrendChart')?.getContext('2d');
+    if (trendCtx && data.aiTrend) {
+        if (charts['userAiTrendChart']) charts['userAiTrendChart'].destroy();
+        charts['userAiTrendChart'] = new Chart(trendCtx, {
+            type: 'bar',
+            data: {
+                labels: data.aiTrend.labels.map(d => new Date(d).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })),
+                datasets: [{ data: data.aiTrend.data, backgroundColor: 'rgba(168,85,247,0.5)', borderRadius: 2 }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { display: false },
+                    y: { display: false, beginAtZero: true }
+                }
+            }
+        });
+    }
+};
+
+// Note: user behavior modal close handlers added in initDashboard()
 
 // ============================================
 // CONTAINERS PAGE
@@ -2413,6 +2570,14 @@ function initDashboard() {
         document.getElementById('aiCostModal').style.display = 'none';
     });
     document.getElementById('aiCostModal')?.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal-overlay')) e.target.style.display = 'none';
+    });
+
+    // Setup User Behavior modal
+    document.getElementById('closeUserBehaviorModal')?.addEventListener('click', () => {
+        document.getElementById('userBehaviorModal').style.display = 'none';
+    });
+    document.getElementById('userBehaviorModal')?.addEventListener('click', (e) => {
         if (e.target.classList.contains('modal-overlay')) e.target.style.display = 'none';
     });
 

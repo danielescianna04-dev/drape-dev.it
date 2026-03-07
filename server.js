@@ -724,7 +724,7 @@ app.get('/admin/stats/behavior', async (req, res) => {
           labels: topFrameworks.map(([k]) => k),
           data: topFrameworks.map(([, v]) => v)
         },
-        topUsers: engagementScores.slice(0, 10),
+        allUsers: engagementScores,
         totalEngagedUsers: engagementScores.length
       };
 
@@ -739,6 +739,123 @@ app.get('/admin/stats/behavior', async (req, res) => {
   } catch (error) {
     behaviorCache.promise = null;
     console.error('[Admin Behavior] Error:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// GET /admin/stats/behavior/user/:email - Per-user behavior detail
+app.get('/admin/stats/behavior/user/:email', async (req, res) => {
+  try {
+    const email = decodeURIComponent(req.params.email);
+    const userMetadata = await getCachedUsersMetadata();
+
+    // Find UID for this email
+    let uid = null;
+    for (const [id, data] of Object.entries(userMetadata)) {
+      if (data.email === email) { uid = id; break; }
+    }
+
+    // Parallel reads
+    const [presenceLogSnapshot, aiUsageSnapshot, operationsSnapshot, projectsSnapshot] = await Promise.all([
+      db.collection('presence_log').get(),
+      db.collection('ai_usage').get(),
+      db.collection('operations').get(),
+      db.collectionGroup('projects').get().catch(() => ({ forEach: () => {} }))
+    ]);
+
+    // Activity timeline (which days this user was active)
+    const activityDays = [];
+    presenceLogSnapshot.forEach(doc => {
+      const data = doc.data();
+      const emails = data.activeEmails || [];
+      if (emails.includes(email)) {
+        const sess = data.userSessions?.[email];
+        activityDays.push({
+          date: doc.id,
+          snapshots: sess?.snapshots || 1,
+          durationMin: (sess?.snapshots || 1) * 15
+        });
+      }
+    });
+    activityDays.sort((a, b) => a.date.localeCompare(b.date));
+
+    // AI usage breakdown by model + daily trend
+    const aiByModel = {};
+    const aiByDate = {};
+    let totalAiCalls = 0;
+    aiUsageSnapshot.forEach(doc => {
+      const d = doc.data();
+      const docUid = d.userId;
+      if (docUid !== uid && docUid !== email) return;
+      totalAiCalls++;
+      const model = d.model || 'Unknown';
+      let label = model;
+      if (model.includes('claude')) label = 'Claude';
+      else if (model.includes('gpt')) label = 'GPT';
+      else if (model.includes('gemini')) label = 'Gemini';
+      else if (model.includes('deepseek')) label = 'DeepSeek';
+      else if (model.includes('groq')) label = 'Groq';
+      aiByModel[label] = (aiByModel[label] || 0) + 1;
+
+      const ts = d.timestamp?.toDate ? d.timestamp.toDate() : new Date(d.timestamp);
+      const dateStr = ts.toISOString().split('T')[0];
+      aiByDate[dateStr] = (aiByDate[dateStr] || 0) + 1;
+    });
+
+    // Operations breakdown by type
+    const opsByType = {};
+    operationsSnapshot.forEach(doc => {
+      const d = doc.data();
+      if (d.userId !== uid && d.userId !== email) return;
+      const type = d.type || 'unknown';
+      opsByType[type] = (opsByType[type] || 0) + 1;
+    });
+
+    // Projects
+    const projects = [];
+    projectsSnapshot.forEach(doc => {
+      const d = doc.data();
+      if (d.userId !== uid && d.userId !== email) return;
+      projects.push({
+        name: d.name || doc.id,
+        framework: d.framework || d.template || d.language || '-',
+        createdAt: d.createdAt?.toDate ? d.createdAt.toDate().toISOString() : d.createdAt || null
+      });
+    });
+
+    // Build 30-day AI trend
+    const aiTrend = { labels: [], data: [] };
+    const today = new Date();
+    for (let i = 29; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(d.getDate() - i);
+      const key = d.toISOString().split('T')[0];
+      aiTrend.labels.push(key);
+      aiTrend.data.push(aiByDate[key] || 0);
+    }
+
+    // First and last seen
+    const firstSeen = activityDays.length > 0 ? activityDays[0].date : null;
+    const lastSeen = activityDays.length > 0 ? activityDays[activityDays.length - 1].date : null;
+    const totalSessionMin = activityDays.reduce((sum, d) => sum + d.durationMin, 0);
+
+    res.json({
+      email,
+      uid,
+      plan: userMetadata[uid]?.plan || userMetadata[uid]?.subscriptionPlan || 'free',
+      firstSeen,
+      lastSeen,
+      totalDaysActive: activityDays.length,
+      totalSessionMin,
+      totalAiCalls,
+      activityDays,
+      aiByModel: { labels: Object.keys(aiByModel), data: Object.values(aiByModel) },
+      aiTrend,
+      operationsByType: opsByType,
+      projects
+    });
+  } catch (error) {
+    console.error('[Admin Behavior User] Error:', error.message);
     res.status(500).json({ error: error.message });
   }
 });
