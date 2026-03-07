@@ -727,11 +727,19 @@ app.get('/admin/stats/behavior', async (req, res) => {
       }
       const paidPercent = authUsers.length > 0 ? Math.round((paidCount / authUsers.length) * 100) : 0;
 
-      // === RETENTION: emails per card (for click-to-see-users) ===
-      const todayEmails = dailyActiveMap[todayStr] || [];
-      const wauEmails = [...wauSet];
-      const mauEmails = [...mauSet];
-      const newUsersEmails = newUsers7d.map(u => u.email || '').filter(Boolean);
+      // === Build email→name lookup ===
+      const emailToName = {};
+      authUsers.forEach(u => {
+        if (u.email) emailToName[u.email] = u.displayName || '';
+      });
+      const enrichEmail = (email) => ({ email, name: emailToName[email] || '' });
+
+      // === RETENTION: users per card (for click-to-see-users) ===
+      const todayEmails = (dailyActiveMap[todayStr] || []).map(enrichEmail);
+      const wauEmails = [...wauSet].map(enrichEmail);
+      const mauEmails = [...mauSet].map(enrichEmail);
+      const newUsersEmails = newUsers7d.map(u => enrichEmail(u.email || '')).filter(u => u.email);
+      const paidUsersList = paidEmails.map(enrichEmail);
 
       const result = {
         retention: {
@@ -743,7 +751,7 @@ app.get('/admin/stats/behavior', async (req, res) => {
         newUsers7d: { count: newUsers7d.length, emails: newUsersEmails },
         paidPercent,
         paidCount,
-        paidEmails,
+        paidEmails: paidUsersList,
         activity: {
           dailyActiveUsers,
           avgByDayOfWeek

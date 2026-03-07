@@ -1439,30 +1439,33 @@ window.showBehaviorUserList = function(type) {
     if (!data) return;
 
     let title = '';
-    let emails = [];
+    let users = [];
 
     switch (type) {
         case 'dau':
             title = 'Utenti Attivi Oggi';
-            emails = data.retention?.dauEmails || [];
+            users = data.retention?.dauEmails || [];
             break;
         case 'wau':
             title = 'Utenti Attivi questa Settimana';
-            emails = data.retention?.wauEmails || [];
+            users = data.retention?.wauEmails || [];
             break;
         case 'mau':
             title = 'Utenti Attivi questo Mese';
-            emails = data.retention?.mauEmails || [];
+            users = data.retention?.mauEmails || [];
             break;
         case 'new':
             title = 'Nuovi Utenti (ultimi 7 giorni)';
-            emails = data.newUsers7d?.emails || [];
+            users = data.newUsers7d?.emails || [];
             break;
         case 'paid':
             title = 'Utenti Paganti';
-            emails = data.paidEmails || [];
+            users = data.paidEmails || [];
             break;
     }
+
+    // Normalize: support both string[] and {email,name}[] formats
+    const userList = users.map(u => typeof u === 'string' ? { email: u, name: '' } : u);
 
     const modal = document.getElementById('userBehaviorModal');
     const titleEl = document.getElementById('userBehaviorModalTitle');
@@ -1470,18 +1473,21 @@ window.showBehaviorUserList = function(type) {
     if (!modal) return;
 
     modal.style.display = 'flex';
-    titleEl.textContent = title + ' (' + emails.length + ')';
+    titleEl.textContent = title + ' (' + userList.length + ')';
 
-    if (emails.length === 0) {
+    if (userList.length === 0) {
         body.innerHTML = '<p style="color:var(--text-muted);">Nessun utente trovato.</p>';
         return;
     }
 
     body.innerHTML = `<div style="display:flex;flex-direction:column;gap:6px;">
-        ${emails.map(email => `
-            <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg-tertiary);border-radius:8px;cursor:pointer;" onclick="openUserBehaviorModal('${email.replace(/'/g, "\\'")}')">
-                <div class="user-cell-avatar" style="width:32px;height:32px;font-size:13px;">${(email || 'U')[0].toUpperCase()}</div>
-                <div style="font-size:13px;color:var(--primary);">${email}</div>
+        ${userList.map(u => `
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg-tertiary);border-radius:8px;cursor:pointer;" onclick="openUserBehaviorModal('${u.email.replace(/'/g, "\\'")}')">
+                <div class="user-cell-avatar" style="width:32px;height:32px;font-size:13px;">${(u.name || u.email || 'U')[0].toUpperCase()}</div>
+                <div style="min-width:0;">
+                    ${u.name ? `<div style="font-size:13px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${u.name}</div>` : ''}
+                    <div style="font-size:${u.name ? '11' : '13'}px;color:var(--primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${u.email}</div>
+                </div>
             </div>
         `).join('')}
     </div>`;
