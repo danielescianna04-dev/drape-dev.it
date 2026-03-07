@@ -229,6 +229,9 @@ async function loadPageData(page) {
         case 'report':
             await loadReportData();
             break;
+        case 'behavior':
+            await loadBehaviorData();
+            break;
     }
 }
 
@@ -309,6 +312,26 @@ const MOCK_DATA = {
             { model: 'Gemini Pro', cost: 19.15, requests: 650 },
             { model: 'Groq Llama', cost: 13.00, requests: 1100 }
         ]
+    },
+    '/admin/stats/behavior': {
+        retention: { dau: 5, wau: 18, mau: 42, wauTrend: 12 },
+        sessions: {
+            avgDurationMin: 47,
+            totalSessions: 312,
+            peakHoursGrid: Array.from({ length: 7 }, () => Array.from({ length: 24 }, () => Math.floor(Math.random() * 8)))
+        },
+        aiModelTrend: {
+            labels: Array.from({ length: 30 }, (_, i) => { const d = new Date(); d.setDate(d.getDate() - 29 + i); return d.toISOString().split('T')[0]; }),
+            datasets: { 'Claude': Array(30).fill(0).map(() => Math.floor(Math.random() * 20)), 'GPT': Array(30).fill(0).map(() => Math.floor(Math.random() * 10)), 'Gemini': Array(30).fill(0).map(() => Math.floor(Math.random() * 5)) }
+        },
+        aiModelTotals: { 'Claude': 340, 'GPT': 180, 'Gemini': 65 },
+        operationsByType: { 'ai_chat': 200, 'file_write': 150, 'command_exec': 120, 'git_commit': 45, 'preview': 80 },
+        frameworkPopularity: { labels: ['nextjs', 'react', 'html', 'expo', 'vue', 'python'], data: [15, 12, 8, 6, 4, 3] },
+        topUsers: [
+            { email: 'leon@drape-dev.it', sessions: 45, aiCalls: 120, projects: 8, score: 309 },
+            { email: 'user@example.com', sessions: 20, aiCalls: 50, projects: 3, score: 129 }
+        ],
+        totalEngagedUsers: 42
     }
 };
 
@@ -1021,6 +1044,177 @@ async function loadPublishedData() {
             </td>
         </tr>`;
     }).join('');
+}
+
+// ============================================
+// BEHAVIOR ANALYTICS PAGE
+// ============================================
+
+async function loadBehaviorData() {
+    const data = await apiCall('/admin/stats/behavior');
+    if (!data) return;
+
+    // Retention cards
+    document.getElementById('behaviorDAU').textContent = data.retention?.dau || 0;
+    document.getElementById('behaviorWAU').textContent = data.retention?.wau || 0;
+    document.getElementById('behaviorMAU').textContent = data.retention?.mau || 0;
+
+    const wauTrend = data.retention?.wauTrend || 0;
+    const trendEl = document.getElementById('behaviorWAUTrend');
+    if (trendEl) {
+        trendEl.textContent = (wauTrend >= 0 ? '+' : '') + wauTrend + '%';
+        trendEl.className = 'stat-card-trend ' + (wauTrend >= 0 ? 'up' : 'down');
+    }
+
+    // Session stats
+    const avgMin = data.sessions?.avgDurationMin || 0;
+    document.getElementById('behaviorAvgSession').textContent = avgMin >= 60
+        ? Math.floor(avgMin / 60) + 'h ' + (avgMin % 60) + 'm'
+        : avgMin + 'm';
+    document.getElementById('behaviorTotalSessions').textContent = data.sessions?.totalSessions || 0;
+
+    // Peak Hours Heatmap
+    renderPeakHoursHeatmap(data.sessions?.peakHoursGrid || []);
+
+    // AI Model Trend chart
+    renderAiModelTrendChart(data.aiModelTrend || { labels: [], datasets: {} });
+
+    // Framework Popularity chart
+    renderFrameworkChart(data.frameworkPopularity || { labels: [], data: [] });
+
+    // Operations breakdown
+    const ops = data.operationsByType || {};
+    createBarChart('behaviorOpsChart', { labels: Object.keys(ops), data: Object.values(ops) });
+
+    // Engagement table
+    renderEngagementTable(data.topUsers || []);
+}
+
+function renderPeakHoursHeatmap(grid) {
+    const container = document.getElementById('peakHoursHeatmap');
+    if (!container) return;
+
+    const dayLabels = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+    const maxVal = Math.max(1, ...grid.flat());
+
+    let html = '<div class="heatmap-header"><div class="heatmap-corner"></div>';
+    for (let h = 0; h < 24; h++) {
+        html += `<div class="heatmap-hour-label">${h}</div>`;
+    }
+    html += '</div>';
+
+    for (let day = 0; day < 7; day++) {
+        html += `<div class="heatmap-row"><div class="heatmap-day-label">${dayLabels[day]}</div>`;
+        const row = grid[day] || Array(24).fill(0);
+        for (let h = 0; h < 24; h++) {
+            const val = row[h] || 0;
+            const alpha = (val / maxVal) * 0.8 + 0.05;
+            html += `<div class="heatmap-cell" style="background:rgba(168,85,247,${alpha.toFixed(2)});" title="${dayLabels[day]} ${h}:00 — ${val} sessioni"></div>`;
+        }
+        html += '</div>';
+    }
+
+    container.innerHTML = html;
+}
+
+function renderAiModelTrendChart(trendData) {
+    const ctx = document.getElementById('aiModelTrendChart')?.getContext('2d');
+    if (!ctx) return;
+
+    if (charts['aiModelTrendChart']) charts['aiModelTrendChart'].destroy();
+
+    const colors = ['#a855f7', '#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#6366f1'];
+    const labels = trendData.labels.map(d => {
+        const date = new Date(d);
+        return date.toLocaleDateString('it-IT', { day: '2-digit', month: 'short' });
+    });
+
+    const datasets = Object.entries(trendData.datasets).map(([model, data], i) => ({
+        label: model,
+        data: data,
+        borderColor: colors[i % colors.length],
+        backgroundColor: colors[i % colors.length] + '26',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 0,
+        pointHoverRadius: 4,
+    }));
+
+    charts['aiModelTrendChart'] = new Chart(ctx, {
+        type: 'line',
+        data: { labels, datasets },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+                legend: { position: 'bottom', labels: { color: '#a1a1aa', usePointStyle: true } }
+            },
+            scales: {
+                x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#a1a1aa', maxRotation: 45, maxTicksLimit: 10 }, stacked: true },
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#a1a1aa' }, stacked: true, beginAtZero: true }
+            }
+        }
+    });
+}
+
+function renderFrameworkChart(frameworkData) {
+    const ctx = document.getElementById('frameworkChart')?.getContext('2d');
+    if (!ctx) return;
+
+    if (charts['frameworkChart']) charts['frameworkChart'].destroy();
+
+    charts['frameworkChart'] = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: frameworkData.labels,
+            datasets: [{
+                data: frameworkData.data,
+                backgroundColor: 'rgba(168, 85, 247, 0.6)',
+                borderColor: '#a855f7',
+                borderWidth: 1,
+                borderRadius: 4,
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#a1a1aa' }, beginAtZero: true },
+                y: { grid: { display: false }, ticks: { color: '#a1a1aa' } }
+            }
+        }
+    });
+}
+
+function renderEngagementTable(users) {
+    const tbody = document.getElementById('engagementTableBody');
+    if (!tbody) return;
+
+    if (users.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><h4>Nessun dato disponibile</h4></td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = users.map((u, i) => `
+        <tr>
+            <td style="font-weight:700;color:var(--text-muted);">${i + 1}</td>
+            <td>
+                <div class="user-cell" style="gap:8px;">
+                    <div class="user-cell-avatar" style="width:28px;height:28px;font-size:12px;">${(u.email || 'U')[0].toUpperCase()}</div>
+                    <div class="user-cell-info">
+                        <div style="font-size:13px;color:var(--text);">${u.email}</div>
+                    </div>
+                </div>
+            </td>
+            <td style="text-align:center;">${u.sessions}</td>
+            <td style="text-align:center;">${u.aiCalls}</td>
+            <td style="text-align:center;">${u.projects}</td>
+            <td style="text-align:center;"><span style="font-weight:700;color:var(--primary);">${u.score}</span></td>
+        </tr>
+    `).join('');
 }
 
 // ============================================

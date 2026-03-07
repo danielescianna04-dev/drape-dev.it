@@ -137,6 +137,10 @@ async function getCachedAuthUsers() {
   return authUsersCache.promise;
 }
 
+// Shared cache for behavior analytics (expensive aggregation)
+let behaviorCache = { data: null, timestamp: 0, promise: null };
+const BEHAVIOR_CACHE_TTL = 60000; // 60 seconds
+
 const app = express();
 
 // CORS: only allow specific origins
@@ -509,6 +513,232 @@ app.get('/admin/stats/analytics', async (req, res) => {
     });
   } catch (error) {
     console.error('[Admin Analytics] Error:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// GET /admin/stats/behavior - User behavior analytics (aggregated from existing Firestore data)
+app.get('/admin/stats/behavior', async (req, res) => {
+  try {
+    const now = Date.now();
+    // Return cached data if fresh
+    if (behaviorCache.data && (now - behaviorCache.timestamp) < BEHAVIOR_CACHE_TTL) {
+      return res.json(behaviorCache.data);
+    }
+    // If already fetching, wait for that promise
+    if (behaviorCache.promise) {
+      const cached = await behaviorCache.promise;
+      return res.json(cached);
+    }
+
+    behaviorCache.promise = (async () => {
+      // Parallel reads from Firestore + cached data
+      const [presenceLogSnapshot, aiUsageSnapshot, operationsSnapshot, projectsSnapshot, userMetadata] = await Promise.all([
+        db.collection('presence_log').get(),
+        db.collection('ai_usage').get(),
+        db.collection('operations').get(),
+        db.collectionGroup('projects').get().catch(() => ({ forEach: () => {} })),
+        getCachedUsersMetadata()
+      ]);
+
+      // Build email lookup from userMetadata
+      const uidToEmail = {};
+      for (const [uid, data] of Object.entries(userMetadata)) {
+        uidToEmail[uid] = data.email || uid;
+      }
+
+      // === RETENTION: DAU / WAU / MAU ===
+      const dailyActiveMap = {};
+      presenceLogSnapshot.forEach(doc => {
+        const data = doc.data();
+        dailyActiveMap[doc.id] = data.activeEmails || [];
+      });
+
+      const todayStr = new Date().toISOString().split('T')[0];
+      const todayDate = new Date(todayStr);
+
+      const dau = dailyActiveMap[todayStr]?.length || 0;
+
+      // WAU: unique users in last 7 days
+      const wauSet = new Set();
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(todayDate);
+        d.setDate(d.getDate() - i);
+        const key = d.toISOString().split('T')[0];
+        (dailyActiveMap[key] || []).forEach(e => wauSet.add(e));
+      }
+      const wau = wauSet.size;
+
+      // MAU: unique users in last 30 days
+      const mauSet = new Set();
+      for (let i = 0; i < 30; i++) {
+        const d = new Date(todayDate);
+        d.setDate(d.getDate() - i);
+        const key = d.toISOString().split('T')[0];
+        (dailyActiveMap[key] || []).forEach(e => mauSet.add(e));
+      }
+      const mau = mauSet.size;
+
+      // Previous week for trend comparison
+      const prevWauSet = new Set();
+      for (let i = 7; i < 14; i++) {
+        const d = new Date(todayDate);
+        d.setDate(d.getDate() - i);
+        const key = d.toISOString().split('T')[0];
+        (dailyActiveMap[key] || []).forEach(e => prevWauSet.add(e));
+      }
+      const wauTrend = prevWauSet.size > 0 ? Math.round(((wau - prevWauSet.size) / prevWauSet.size) * 100) : 0;
+
+      // === SESSIONS: peak hours, avg duration ===
+      const peakHoursGrid = Array.from({ length: 7 }, () => Array(24).fill(0));
+      const sessionDurations = [];
+      let totalSessionCount = 0;
+
+      presenceLogSnapshot.forEach(doc => {
+        const data = doc.data();
+        const sessions = data.userSessions || {};
+        const docDate = new Date(doc.id);
+        const dayOfWeek = docDate.getDay(); // 0=Sun..6=Sat
+
+        for (const [, sess] of Object.entries(sessions)) {
+          totalSessionCount++;
+          // Each snapshot ≈ 15 min of activity
+          const durationMin = (sess.snapshots || 1) * 15;
+          sessionDurations.push(durationMin);
+
+          if (sess.firstSeen) {
+            const hour = new Date(sess.firstSeen).getHours();
+            if (dayOfWeek >= 0 && dayOfWeek < 7 && hour >= 0 && hour < 24) {
+              peakHoursGrid[dayOfWeek][hour]++;
+            }
+          }
+        }
+      });
+
+      const avgSessionDuration = sessionDurations.length > 0
+        ? Math.round(sessionDurations.reduce((a, b) => a + b, 0) / sessionDurations.length)
+        : 0;
+
+      // === AI MODEL TRENDS (last 30 days) ===
+      const aiByModelDate = {};
+      const modelUsageTotals = {};
+
+      aiUsageSnapshot.forEach(doc => {
+        const d = doc.data();
+        const ts = d.timestamp?.toDate ? d.timestamp.toDate() : new Date(d.timestamp);
+        const dateStr = ts.toISOString().split('T')[0];
+        const model = d.model || 'Unknown';
+
+        let label = model;
+        if (model.includes('claude')) label = 'Claude';
+        else if (model.includes('gpt')) label = 'GPT';
+        else if (model.includes('gemini')) label = 'Gemini';
+        else if (model.includes('deepseek')) label = 'DeepSeek';
+        else if (model.includes('groq')) label = 'Groq';
+
+        if (!aiByModelDate[label]) aiByModelDate[label] = {};
+        aiByModelDate[label][dateStr] = (aiByModelDate[label][dateStr] || 0) + 1;
+        modelUsageTotals[label] = (modelUsageTotals[label] || 0) + 1;
+      });
+
+      // Build 30-day series
+      const aiModelTrend = { labels: [], datasets: {} };
+      for (let i = 29; i >= 0; i--) {
+        const d = new Date(todayDate);
+        d.setDate(d.getDate() - i);
+        aiModelTrend.labels.push(d.toISOString().split('T')[0]);
+      }
+      for (const [model, dateCounts] of Object.entries(aiByModelDate)) {
+        aiModelTrend.datasets[model] = aiModelTrend.labels.map(date => dateCounts[date] || 0);
+      }
+
+      // === OPERATIONS BY TYPE ===
+      const opsByType = {};
+      operationsSnapshot.forEach(doc => {
+        const type = doc.data().type || 'unknown';
+        opsByType[type] = (opsByType[type] || 0) + 1;
+      });
+
+      // === FRAMEWORK POPULARITY ===
+      const frameworkCounts = {};
+      projectsSnapshot.forEach(doc => {
+        const d = doc.data();
+        const key = d.framework || d.language || d.template || null;
+        if (key) {
+          const normalized = key.toLowerCase();
+          frameworkCounts[normalized] = (frameworkCounts[normalized] || 0) + 1;
+        }
+      });
+      const topFrameworks = Object.entries(frameworkCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10);
+
+      // === USER ENGAGEMENT SCORES ===
+      const userEngagement = {};
+
+      // Sessions per user from presence_log
+      presenceLogSnapshot.forEach(doc => {
+        const emails = doc.data().activeEmails || [];
+        for (const email of emails) {
+          if (!userEngagement[email]) userEngagement[email] = { sessions: 0, aiCalls: 0, projects: 0 };
+          userEngagement[email].sessions++;
+        }
+      });
+
+      // AI calls per user
+      aiUsageSnapshot.forEach(doc => {
+        const d = doc.data();
+        const email = uidToEmail[d.userId] || d.userId || 'unknown';
+        if (!userEngagement[email]) userEngagement[email] = { sessions: 0, aiCalls: 0, projects: 0 };
+        userEngagement[email].aiCalls++;
+      });
+
+      // Projects per user
+      projectsSnapshot.forEach(doc => {
+        const d = doc.data();
+        const email = uidToEmail[d.userId] || d.userId || 'unknown';
+        if (!userEngagement[email]) userEngagement[email] = { sessions: 0, aiCalls: 0, projects: 0 };
+        userEngagement[email].projects++;
+      });
+
+      // Calculate composite score and rank
+      const engagementScores = Object.entries(userEngagement).map(([email, m]) => ({
+        email,
+        sessions: m.sessions,
+        aiCalls: m.aiCalls,
+        projects: m.projects,
+        score: (m.sessions * 1) + (m.aiCalls * 2) + (m.projects * 3)
+      })).sort((a, b) => b.score - a.score);
+
+      const result = {
+        retention: { dau, wau, mau, wauTrend },
+        sessions: {
+          avgDurationMin: avgSessionDuration,
+          totalSessions: totalSessionCount,
+          peakHoursGrid
+        },
+        aiModelTrend,
+        aiModelTotals: modelUsageTotals,
+        operationsByType: opsByType,
+        frameworkPopularity: {
+          labels: topFrameworks.map(([k]) => k),
+          data: topFrameworks.map(([, v]) => v)
+        },
+        topUsers: engagementScores.slice(0, 10),
+        totalEngagedUsers: engagementScores.length
+      };
+
+      behaviorCache.data = result;
+      behaviorCache.timestamp = Date.now();
+      behaviorCache.promise = null;
+      return result;
+    })();
+
+    const data = await behaviorCache.promise;
+    res.json(data);
+  } catch (error) {
+    behaviorCache.promise = null;
+    console.error('[Admin Behavior] Error:', error.message);
     res.status(500).json({ error: error.message });
   }
 });
