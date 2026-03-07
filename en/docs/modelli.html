@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Available models - Drape Documentation</title>
-    <meta name="description" content="5 AI models to choose from, each with its own strengths.">
+    <meta name="description" content="5 AI models to choose from, each with its own strengths: Claude, GPT and Gemini.">
     <meta name="keywords" content="AI models Drape, Claude Drape, GPT Drape, Gemini Drape, AI coding">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <meta name="theme-color" content="#6F5CFF">
@@ -15,7 +15,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://drape-dev.it/en/docs/modelli.html">
     <meta property="og:title" content="Available models - Drape Documentation">
-    <meta property="og:description" content="5 AI models to choose from, each with its own strengths.">
+    <meta property="og:description" content="5 AI models to choose from, each with its own strengths: Claude, GPT and Gemini.">
     <meta property="og:image" content="https://drape-dev.it/og-image-v2.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon2-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon2-16x16.png">
@@ -107,9 +107,9 @@
         <div class="sidebar-group" data-group="github">
             <div class="sidebar-group-title">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-                GitHub
+                Git
             </div>
-            <a class="sidebar-link" href="/en/docs/collegare-github.html">Connect GitHub</a>
+            <a class="sidebar-link" href="/en/docs/collegare-github.html">Connect Git</a>
             <a class="sidebar-link" href="/en/docs/clone-import.html">Clone & import</a>
             <a class="sidebar-link" href="/en/docs/commit-push.html">Commit & push</a>
         </div>
@@ -128,45 +128,48 @@
         <div class="doc-page">
 
             <h1>Available models</h1>
-            <p class="doc-intro">5 AI models to choose from, each with its own strengths.</p>
+            <p class="doc-intro">5 AI models to choose from, each with its own strengths: Claude, GPT and Gemini.</p>
 
             <h2>The models</h2>
-            <p>Drape integrates the best available AI models. You can switch models at any time from the AI Agent chat.</p>
+            <p>Drape integrates the best available AI models. You can switch models at any time from the AI Agent chat &mdash; even within the same conversation.</p>
 
-            <h3>Claude 4.5 Sonnet</h3>
-            <p>The default model, included in the Free plan. Excellent for <strong>reasoning and complex code</strong>. Ideal for architecture, refactoring and advanced debugging. Excels at understanding the context of large projects.</p>
+            <h3>Claude 4.6 Sonnet</h3>
+            <p>Fast and accurate model by Anthropic, included in the Free plan. Excellent for <strong>reasoning and complex code</strong>. Ideal for architecture, refactoring and advanced debugging. 200K token context window.</p>
 
             <h3>Claude 4.6 Opus</h3>
-            <p>Anthropic's most powerful model for <strong>advanced tasks and deep reasoning</strong>. Ideal for complex problems requiring thorough analysis. Available with the Go plan.</p>
+            <p>Anthropic's most powerful model for <strong>advanced tasks and deep reasoning</strong>. Ideal for complex problems requiring thorough analysis and creative solutions. 200K token context window. Available with the Go plan.</p>
 
-            <h3>GPT 5.2</h3>
-            <p>OpenAI's latest model, fast and versatile. Great for <strong>rapid code generation</strong> and general tasks. Available with the Go plan.</p>
+            <h3>GPT 5.3</h3>
+            <p>OpenAI's latest model, fast and versatile. Great for <strong>rapid code generation</strong> and general tasks. 128K token context window. Available with the Go plan.</p>
 
-            <h3>Gemini 3.0 Pro</h3>
-            <p>Excels at <strong>multimodal reasoning</strong> and understanding broad contexts. Great for analyzing existing code. Available with the Go plan.</p>
+            <h3>Gemini 3.1 Pro</h3>
+            <p>Excels at <strong>multimodal reasoning</strong> and understanding broad contexts. Great for analyzing existing code and problems requiring deep reasoning. 1M token context window. Available with the Go plan.</p>
 
             <h3>Gemini 3.0 Flash</h3>
-            <p><strong>Ultra-fast</strong> for instant responses. Perfect for quick questions, completions and small edits. Included in the Free plan.</p>
+            <p><strong>Ultra-fast</strong> for instant responses. Perfect for quick questions, completions and small edits. 1M token context window. Included in the Free plan.</p>
 
             <h2>Reasoning level</h2>
-            <p>For Gemini models you can set the <strong>reasoning level</strong>, which controls how much the model "thinks" before responding:</p>
-            <h3>Minimum</h3>
-            <p>Immediate responses with no additional reasoning. Ideal for simple questions and quick completions.</p>
-            <h3>Low</h3>
-            <p>Light reasoning. Good balance between speed and accuracy for routine tasks.</p>
-            <h3>Medium</h3>
-            <p>Moderate reasoning. Recommended for most coding tasks.</p>
-            <h3>High</h3>
-            <p>Deep reasoning. Ideal for complex problems, debugging and architecture.</p>
+            <p>For some models you can set the <strong>reasoning level</strong> (thinking), which controls how much the model "thinks" before responding:</p>
+            <h3>Gemini 3.0 Flash</h3>
+            <p>Available levels: none, minimal, low, medium, high. More options to balance speed and reasoning depth.</p>
+            <h3>Gemini 3.1 Pro</h3>
+            <p>Available levels: none, low, high. Ideal for controlling analysis depth on complex tasks.</p>
+            <h3>Claude</h3>
+            <p>Claude models support integrated thinking, activated automatically when needed for advanced reasoning.</p>
+
+            <h2>Multimodal capabilities</h2>
+            <p>All models support sending <strong>images</strong> in the chat. You can attach screenshots, mockups or photos of errors and the AI will analyze them in the context of your project.</p>
 
             <h2>Plans and availability</h2>
-            <h3>Free</h3>
-            <p><strong>Claude 4.5 Sonnet</strong> and <strong>Gemini 3.0 Flash</strong> are included in the Free plan with a daily request limit.</p>
+            <h3>Starter (Free)</h3>
+            <p><strong>Claude 4.6 Sonnet</strong> and <strong>Gemini 3.0 Flash</strong> are included in the Free plan with a limited monthly AI budget.</p>
             <h3>Go</h3>
-            <p>With the Go plan you get access to all models, including <strong>Claude 4.6 Opus</strong>, <strong>GPT 5.2</strong> and <strong>Gemini 3.0 Pro</strong>, with higher request limits.</p>
+            <p>With the Go plan you get access to all 5 models, including <strong>Claude 4.6 Opus</strong>, <strong>GPT 5.3</strong> and <strong>Gemini 3.1 Pro</strong>, with a larger AI budget.</p>
+            <h3>Pro</h3>
+            <p>Unlimited AI budget with access to all models without restrictions. Ideal for professional developers who use AI intensively.</p>
 
             <div class="callout tip">
-                <p><strong>Tip:</strong> Use Claude 4.5 Sonnet for daily coding and Gemini 3.0 Flash for quick questions. Switching models is instant.</p>
+                <p><strong>Tip:</strong> Use Claude 4.6 Sonnet for daily coding and Gemini 3.0 Flash for quick questions. Switching models is instant, even mid-conversation.</p>
             </div>
 
             <div class="faq-section">
@@ -178,7 +181,7 @@
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">Which is the best model for coding?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-                    <div class="faq-answer"><div class="faq-answer-inner">Claude 4.5 Sonnet is the most accurate for complex code and advanced reasoning. For the most demanding tasks, Claude 4.6 Opus offers maximum capabilities. For quick answers, Gemini 3.0 Flash is perfect.</div></div>
+                    <div class="faq-answer"><div class="faq-answer-inner">Claude 4.6 Sonnet is the most accurate for complex code and advanced reasoning. For the most demanding tasks, Claude 4.6 Opus offers maximum capabilities. For quick answers, Gemini 3.0 Flash is perfect.</div></div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">Are models updated automatically?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>

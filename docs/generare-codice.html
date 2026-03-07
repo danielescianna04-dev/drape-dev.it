@@ -107,9 +107,9 @@
         <div class="sidebar-group" data-group="github">
             <div class="sidebar-group-title">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-                GitHub
+                Git
             </div>
-            <a class="sidebar-link" href="/docs/collegare-github.html">Collegare GitHub</a>
+            <a class="sidebar-link" href="/docs/collegare-github.html">Collegare Git</a>
             <a class="sidebar-link" href="/docs/clone-import.html">Clone e import</a>
             <a class="sidebar-link" href="/docs/commit-push.html">Commit e push</a>
         </div>
@@ -128,23 +128,50 @@
         <div class="doc-page">
 
             <h1>Generare codice</h1>
-            <p class="doc-intro">Come scrivere prompt efficaci per ottenere il massimo dall'AI Agent.</p>
+            <p class="doc-intro">Come scrivere prompt efficaci e sfruttare l'agente autonomo per ottenere il massimo dall'AI Agent.</p>
 
             <h2>Come usare l'AI Agent</h2>
             <p>Apri l'AI Agent dalla barra inferiore. Scrivi cosa vuoi costruire in linguaggio naturale &mdash; l'AI generer&agrave; il codice, creer&agrave; i file e potr&agrave; anche eseguire comandi nel terminale.</p>
             <h3>Aprire la chat AI</h3>
             <p>Tocca l'icona AI nella barra inferiore per aprire la chat. Puoi anche selezionare codice nell'editor e inviarlo direttamente all'AI per analisi o modifiche.</p>
+            <h3>Allegare immagini</h3>
+            <p>Puoi allegare <strong>screenshot, mockup o foto</strong> direttamente nella chat. L'AI analizza le immagini e genera codice coerente con il design che mostri.</p>
             <h3>Applicare il codice generato</h3>
             <p>Quando l'AI genera codice, usa il pulsante "Applica" per inserirlo direttamente nel file. Puoi anche copiarlo manualmente o chiedere modifiche prima di applicarlo.</p>
+
+            <h2>Agente autonomo</h2>
+            <p>L'AI Agent di Drape non &egrave; una semplice chat: &egrave; un <strong>agente autonomo</strong> che pu&ograve; ragionare, pianificare e agire sul tuo progetto in modo indipendente.</p>
+            <h3>Modalit&agrave; Chat</h3>
+            <p>L'agente AI autonomo che genera codice, crea e modifica file, esegue comandi e cerca soluzioni online. Usa gli strumenti automaticamente per completare i task in modo indipendente.</p>
+            <h3>Modalit&agrave; Terminale</h3>
+            <p>Accesso diretto al terminale per eseguire comandi shell. Ideale per installare dipendenze, eseguire script e gestire il progetto manualmente.</p>
+            <h3>Strumenti dell'agente</h3>
+            <p>L'agente ha accesso a strumenti potenti che usa automaticamente:</p>
+            <ul>
+                <li><strong>Ricerca file (glob)</strong> &mdash; Trova file nel progetto tramite pattern</li>
+                <li><strong>Ricerca contenuto (grep)</strong> &mdash; Cerca codice all'interno dei file con regex</li>
+                <li><strong>Ricerca web</strong> &mdash; Cerca soluzioni, documentazione e best practice online</li>
+                <li><strong>Fetch URL</strong> &mdash; Recupera contenuti da URL per analisi</li>
+                <li><strong>Task list</strong> &mdash; Gestisce una lista di task per progetti complessi</li>
+            </ul>
+
+            <h2>Gestione conversazioni</h2>
+            <p>Le conversazioni con l'AI vengono salvate automaticamente e organizzate per progetto.</p>
+            <h3>Cronologia chat</h3>
+            <p>Accedi a tutte le conversazioni precedenti dal pannello laterale. Puoi riprendere qualsiasi conversazione da dove l'avevi lasciata.</p>
+            <h3>Cartelle e pin</h3>
+            <p>Organizza le conversazioni in <strong>cartelle</strong> personalizzate e usa i <strong>pin</strong> per tenere le pi&ugrave; importanti sempre in cima.</p>
+            <h3>Cambio modello</h3>
+            <p>Puoi cambiare il modello AI in qualsiasi punto della conversazione. Ogni messaggio pu&ograve; usare un modello diverso senza perdere il contesto.</p>
 
             <h2>Scrivere prompt efficaci</h2>
             <p>Prompt migliori producono risultati migliori. Ecco alcuni consigli:</p>
             <h3>Essere specifici</h3>
             <p>"Crea un'API REST con Express che ha endpoint CRUD per gli utenti" &egrave; meglio di "Crea un backend". Pi&ugrave; dettagli dai, migliore sar&agrave; il risultato.</p>
             <h3>Dare contesto</h3>
-            <p>Menziona il framework, il linguaggio e le librerie che stai usando. L'AI pu&ograve; leggere i tuoi file per capire il contesto automaticamente.</p>
+            <p>Menziona il framework, il linguaggio e le librerie che stai usando. L'AI pu&ograve; leggere i tuoi file per capire il contesto automaticamente tramite gli strumenti di ricerca.</p>
             <h3>Dividere in step</h3>
-            <p>Per progetti complessi, dividi in task pi&ugrave; piccoli. Chiedi prima la struttura, poi l'implementazione dei singoli componenti.</p>
+            <p>Per progetti complessi, dividi in task pi&ugrave; piccoli. Chiedi prima la struttura, poi l'implementazione dei singoli componenti. L'agente pu&ograve; anche crearsi una task list da solo.</p>
 
             <h2>Esempi di prompt</h2>
             <h3>Creare un backend</h3>
@@ -156,13 +183,20 @@
             <h3>Fixare un bug</h3>
             <pre><code>"Fixxa il bug nel file utils.py alla riga 42.
 L'errore &egrave;: TypeError: cannot unpack non-sequence NoneType"</code></pre>
+            <h3>Ricerca e implementazione</h3>
+            <pre><code>"Cerca come implementare autenticazione JWT in Express
+e aggiungila al mio progetto. Cerca online le best
+practice pi&ugrave; recenti."</code></pre>
 
             <h2>Generazione di progetti interi</h2>
             <p>L'AI Agent pu&ograve; generare <strong>interi progetti</strong> da zero. Descrivi l'app che vuoi e l'AI creer&agrave; la struttura delle cartelle, i file di configurazione e il codice funzionante.</p>
             <h3>Struttura automatica</h3>
             <p>L'AI crea la struttura delle cartelle, i file di configurazione (package.json, tsconfig, ecc.) e il codice di base &mdash; tutto in un'unica richiesta.</p>
             <h3>Iterare sul progetto</h3>
-            <p>Dopo la generazione iniziale, puoi continuare a chiedere modifiche, aggiungere funzionalit&agrave; o risolvere problemi nella stessa conversazione.</p>
+            <p>Dopo la generazione iniziale, puoi continuare a chiedere modifiche, aggiungere funzionalit&agrave; o risolvere problemi nella stessa conversazione. L'agente mantiene il contesto completo del progetto.</p>
+
+            <h2>Budget AI</h2>
+            <p>Ogni piano ha un <strong>budget AI mensile</strong> che tiene conto del costo effettivo dei token utilizzati. Puoi monitorare il consumo in tempo reale nell'app.</p>
 
             <div class="callout warning">
                 <p><strong>Attenzione:</strong> Rivedi sempre il codice generato dall'AI prima di usarlo in produzione. L'AI &egrave; uno strumento potente, ma il developer sei tu.</p>
@@ -185,7 +219,7 @@ L'errore &egrave;: TypeError: cannot unpack non-sequence NoneType"</code></pre>
                 <p class="faq-intro">Clicca su una domanda per vedere la risposta.</p>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">L'AI pu&ograve; accedere ai miei file?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-                    <div class="faq-answer"><div class="faq-answer-inner">S&igrave;, l'AI Agent pu&ograve; leggere i file del tuo progetto per capire il contesto e generare codice pi&ugrave; pertinente e coerente con il tuo codebase.</div></div>
+                    <div class="faq-answer"><div class="faq-answer-inner">S&igrave;, l'AI Agent usa strumenti come glob e grep per cercare e leggere i file del tuo progetto automaticamente. In questo modo capisce il contesto e genera codice coerente con il tuo codebase.</div></div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">Posso annullare le modifiche dell'AI?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>

@@ -107,9 +107,9 @@
         <div class="sidebar-group" data-group="github">
             <div class="sidebar-group-title">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-                GitHub
+                Git
             </div>
-            <a class="sidebar-link" href="/en/docs/collegare-github.html">Connect GitHub</a>
+            <a class="sidebar-link" href="/en/docs/collegare-github.html">Connect Git</a>
             <a class="sidebar-link" href="/en/docs/clone-import.html">Clone & import</a>
             <a class="sidebar-link" href="/en/docs/commit-push.html">Commit & push</a>
         </div>
@@ -128,45 +128,79 @@
         <div class="doc-page">
 
             <h1>Generate code</h1>
-<p class="doc-intro">How to write effective prompts to get the most out of the AI Agent.</p>
+            <p class="doc-intro">How to write effective prompts and leverage the autonomous agent to get the most out of the AI Agent.</p>
 
-<h2>How to use the AI Agent</h2>
-<p>Open the AI Agent from the bottom bar. Describe what you want to build in natural language &mdash; the AI will generate code, create files and can even run commands in the terminal.</p>
-<h3>Opening the AI chat</h3>
-<p>Tap the AI icon in the bottom bar to open the chat. You can also select code in the editor and send it directly to the AI for analysis or modifications.</p>
-<h3>Applying generated code</h3>
-<p>When the AI generates code, use the "Apply" button to insert it directly into the file. You can also copy it manually or request changes before applying.</p>
+            <h2>How to use the AI Agent</h2>
+            <p>Open the AI Agent from the bottom bar. Describe what you want to build in natural language &mdash; the AI will generate code, create files and can even run commands in the terminal.</p>
+            <h3>Opening the AI chat</h3>
+            <p>Tap the AI icon in the bottom bar to open the chat. You can also select code in the editor and send it directly to the AI for analysis or modifications.</p>
+            <h3>Attach images</h3>
+            <p>You can attach <strong>screenshots, mockups or photos</strong> directly in the chat. The AI analyzes images and generates code consistent with the design you show.</p>
+            <h3>Applying generated code</h3>
+            <p>When the AI generates code, use the "Apply" button to insert it directly into the file. You can also copy it manually or request changes before applying.</p>
 
-<h2>Writing effective prompts</h2>
-<p>Better prompts produce better results. Here are some tips:</p>
-<h3>Be specific</h3>
-<p>"Create a REST API with Express that has CRUD endpoints for users" is better than "Create a backend". The more details you provide, the better the result.</p>
-<h3>Give context</h3>
-<p>Mention the framework, language and libraries you're using. The AI can read your files to understand context automatically.</p>
-<h3>Break it down</h3>
-<p>For complex projects, break down into smaller tasks. Ask for the structure first, then implement individual components.</p>
+            <h2>Autonomous agent</h2>
+            <p>Drape's AI Agent is not a simple chat: it's an <strong>autonomous agent</strong> that can reason, plan and act on your project independently.</p>
+            <h3>Chat mode</h3>
+            <p>The autonomous AI agent that generates code, creates and modifies files, runs commands and searches for solutions online. It uses tools automatically to complete tasks independently.</p>
+            <h3>Terminal mode</h3>
+            <p>Direct terminal access to run shell commands. Ideal for installing dependencies, running scripts and managing the project manually.</p>
+            <h3>Agent tools</h3>
+            <p>The agent has access to powerful tools it uses automatically:</p>
+            <ul>
+                <li><strong>File search (glob)</strong> &mdash; Find files in the project using patterns</li>
+                <li><strong>Content search (grep)</strong> &mdash; Search code inside files with regex</li>
+                <li><strong>Web search</strong> &mdash; Search for solutions, documentation and best practices online</li>
+                <li><strong>URL fetch</strong> &mdash; Retrieve content from URLs for analysis</li>
+                <li><strong>Task list</strong> &mdash; Manage a task list for complex projects</li>
+            </ul>
 
-<h2>Prompt examples</h2>
-<h3>Creating a backend</h3>
-<pre><code>"Create an Express server with TypeScript that has:
+            <h2>Conversation management</h2>
+            <p>AI conversations are saved automatically and organized by project.</p>
+            <h3>Chat history</h3>
+            <p>Access all previous conversations from the side panel. You can resume any conversation from where you left off.</p>
+            <h3>Folders and pins</h3>
+            <p>Organize conversations into custom <strong>folders</strong> and use <strong>pins</strong> to keep the most important ones always at the top.</p>
+            <h3>Model switching</h3>
+            <p>You can switch the AI model at any point in the conversation. Each message can use a different model without losing context.</p>
+
+            <h2>Writing effective prompts</h2>
+            <p>Better prompts produce better results. Here are some tips:</p>
+            <h3>Be specific</h3>
+            <p>"Create a REST API with Express that has CRUD endpoints for users" is better than "Create a backend". The more details you provide, the better the result.</p>
+            <h3>Give context</h3>
+            <p>Mention the framework, language and libraries you're using. The AI can read your files to understand context automatically through its search tools.</p>
+            <h3>Break it down</h3>
+            <p>For complex projects, break down into smaller tasks. Ask for the structure first, then implement individual components. The agent can also create its own task list.</p>
+
+            <h2>Prompt examples</h2>
+            <h3>Creating a backend</h3>
+            <pre><code>"Create an Express server with TypeScript that has:
 - GET /users endpoint to list all users
 - POST /users endpoint to create a user
 - Validation with Zod
 - SQLite connection"</code></pre>
-<h3>Fixing a bug</h3>
-<pre><code>"Fix the bug in utils.py at line 42.
+            <h3>Fixing a bug</h3>
+            <pre><code>"Fix the bug in utils.py at line 42.
 The error is: TypeError: cannot unpack non-sequence NoneType"</code></pre>
+            <h3>Research and implementation</h3>
+            <pre><code>"Search how to implement JWT authentication in Express
+and add it to my project. Search online for the latest
+best practices."</code></pre>
 
-<h2>Full project generation</h2>
-<p>The AI Agent can generate <strong>entire projects</strong> from scratch. Describe the app you want and the AI will create the folder structure, configuration files and working code.</p>
-<h3>Automatic structure</h3>
-<p>The AI creates the folder structure, configuration files (package.json, tsconfig, etc.) and base code &mdash; all in a single request.</p>
-<h3>Iterating on the project</h3>
-<p>After the initial generation, you can continue asking for changes, adding features or solving issues in the same conversation.</p>
+            <h2>Full project generation</h2>
+            <p>The AI Agent can generate <strong>entire projects</strong> from scratch. Describe the app you want and the AI will create the folder structure, configuration files and working code.</p>
+            <h3>Automatic structure</h3>
+            <p>The AI creates the folder structure, configuration files (package.json, tsconfig, etc.) and base code &mdash; all in a single request.</p>
+            <h3>Iterating on the project</h3>
+            <p>After the initial generation, you can continue asking for changes, adding features or solving issues in the same conversation. The agent maintains full project context.</p>
 
-<div class="callout warning">
-    <p><strong>Warning:</strong> Always review AI-generated code before using it in production. AI is a powerful tool, but you're the developer.</p>
-</div>
+            <h2>AI budget</h2>
+            <p>Each plan has a <strong>monthly AI budget</strong> that accounts for the actual cost of tokens used. You can monitor consumption in real time in the app.</p>
+
+            <div class="callout warning">
+                <p><strong>Warning:</strong> Always review AI-generated code before using it in production. AI is a powerful tool, but you're the developer.</p>
+            </div>
 
 <div class="media-placeholder">
     <div class="media-placeholder-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
@@ -185,7 +219,7 @@ The error is: TypeError: cannot unpack non-sequence NoneType"</code></pre>
                 <p class="faq-intro">Click a question to see the answer.</p>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">Can the AI access my files?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-                    <div class="faq-answer"><div class="faq-answer-inner">Yes, the AI Agent can read your project files to understand the context and generate more relevant code consistent with your codebase.</div></div>
+                    <div class="faq-answer"><div class="faq-answer-inner">Yes, the AI Agent uses tools like glob and grep to automatically search and read your project files. This way it understands the context and generates code consistent with your codebase.</div></div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">Can I undo AI changes?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>

@@ -107,9 +107,9 @@
         <div class="sidebar-group" data-group="github">
             <div class="sidebar-group-title">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-                GitHub
+                Git
             </div>
-            <a class="sidebar-link" href="/docs/collegare-github.html">Collegare GitHub</a>
+            <a class="sidebar-link" href="/docs/collegare-github.html">Collegare Git</a>
             <a class="sidebar-link" href="/docs/clone-import.html">Clone e import</a>
             <a class="sidebar-link" href="/docs/commit-push.html">Commit e push</a>
         </div>
@@ -131,45 +131,63 @@
             <p class="doc-intro">File explorer, editor con syntax highlighting, terminale e preview &mdash; tutto in un'unica schermata.</p>
 
             <h2>File Explorer</h2>
-            <p>Il pannello laterale sinistro mostra l'albero dei file del tuo progetto. Puoi:</p>
+            <p>Il pannello laterale mostra l'albero dei file del tuo progetto con funzionalit&agrave; avanzate:</p>
             <ul>
                 <li>Creare nuovi file e cartelle</li>
                 <li>Rinominare e spostare file</li>
                 <li>Eliminare file (con conferma)</li>
-                <li>Cercare file per nome</li>
+                <li>Cercare file per nome e contenuto</li>
+                <li><strong>Drag-and-drop</strong> per riordinare e spostare file tra cartelle</li>
             </ul>
             <h3>Gestione file</h3>
-            <p>Tocca un file per aprirlo nell'editor. Tieni premuto per le opzioni di rinomina, copia e spostamento. Le cartelle possono essere espanse o collassate per navigare rapidamente.</p>
+            <p>Tocca un file per aprirlo nell'editor. Tieni premuto per le opzioni di rinomina, copia e spostamento. Puoi anche <strong>trascinare</strong> file e cartelle per riorganizzarli.</p>
             <h3>Ricerca file</h3>
-            <p>Usa la barra di ricerca in cima al file explorer per trovare rapidamente file per nome, anche in progetti di grandi dimensioni.</p>
+            <p>Usa la barra di ricerca per trovare file per nome o cercare contenuto all'interno dei file con supporto grep e regex.</p>
 
             <h2>Editor di codice</h2>
-            <p>L'editor centrale supporta <strong>syntax highlighting</strong> per oltre 50 linguaggi. Include:</p>
+            <p>L'editor centrale supporta <strong>syntax highlighting</strong> per oltre 20 linguaggi. Include:</p>
             <ul>
                 <li><strong>Auto-indentazione</strong> intelligente</li>
                 <li><strong>Numeri di riga</strong> con indicatori di modifica</li>
                 <li><strong>Ricerca e sostituzione</strong> con regex</li>
-                <li><strong>Selezione multipla</strong> per editing veloce</li>
-                <li><strong>Minimap</strong> per navigazione rapida</li>
+                <li><strong>Autocomplete</strong> context-aware</li>
+                <li><strong>Undo/Redo</strong> con barra dedicata</li>
             </ul>
+            <h3>Tab multipli</h3>
+            <p>Lavora su pi&ugrave; file contemporaneamente con le <strong>tab</strong>. Passa rapidamente tra i file aperti toccando la tab corrispondente nella barra superiore dell'editor.</p>
             <h3>Syntax highlighting</h3>
-            <p>Supporto per JavaScript, TypeScript, Python, Rust, Go, Ruby, PHP, Java, C++, Swift e oltre 40 altri linguaggi con colorazione sintassi avanzata.</p>
-            <h3>Ricerca e sostituzione</h3>
-            <p>Cerca nel file corrente con supporto regex, case-sensitive e sostituzione multipla. Accessibile dalla toolbar dell'editor.</p>
+            <p>Supporto per JavaScript, TypeScript, Python, Rust, Go, Ruby, PHP, Java, C++, Swift e molti altri linguaggi con colorazione sintassi avanzata.</p>
+            <h3>Undo e Redo</h3>
+            <p>Ogni modifica pu&ograve; essere annullata o ripetuta con la <strong>barra Undo/Redo</strong> dedicata. Non perdi mai il lavoro fatto.</p>
+
+            <h2>Sidebar</h2>
+            <p>La sidebar in stile VS Code d&agrave; accesso rapido a tutti gli strumenti:</p>
+            <h3>Pannello Chat</h3>
+            <p>Cronologia delle conversazioni AI con <strong>cartelle</strong> e <strong>pin</strong> per organizzare le chat pi&ugrave; importanti. Cerca tra le conversazioni precedenti.</p>
+            <h3>Pannello Git</h3>
+            <p>Visualizza branch, commit, file modificati e gestisci le operazioni Git senza usare il terminale.</p>
+            <h3>Pannello Secrets</h3>
+            <p>Editor integrato per le <strong>variabili d'ambiente</strong> (.env). Aggiungi e modifica secrets direttamente dall'interfaccia.</p>
 
             <h2>Barra inferiore</h2>
             <p>La barra in basso d&agrave; accesso rapido a:</p>
             <h3>Terminal</h3>
-            <p>Un terminale bash/zsh reale con accesso completo al sistema. Fai swipe verso l'alto per espandere a tutto schermo.</p>
+            <p>Un terminale bash/zsh reale con accesso completo al sistema. Output in tempo reale con evidenziazione della sintassi.</p>
             <h3>AI Agent</h3>
-            <p>L'assistente AI che genera codice, corregge bug e risponde a domande tecniche direttamente nell'editor.</p>
+            <p>L'agente AI autonomo che genera codice, corregge bug, cerca file, naviga il web e risponde a domande tecniche.</p>
             <h3>Preview</h3>
-            <p>Anteprima live per web app con hot reload automatico. Supporta le porte pi&ugrave; comuni (3000, 5173, 8080).</p>
+            <p>Anteprima live per web app con hot reload automatico. Supporta oltre 30 framework con rilevamento automatico.</p>
             <h3>Git</h3>
-            <p>Visualizza lo stato delle modifiche, fai commit e push direttamente dall'interfaccia senza usare il terminale.</p>
+            <p>Visualizza lo stato delle modifiche, fai commit e push direttamente dall'interfaccia. Supporta GitHub, GitLab, Bitbucket e Gitea.</p>
+
+            <h2>Strumenti integrati</h2>
+            <p>Il pulsante di integrazioni (FAB) d&agrave; accesso rapido a strumenti aggiuntivi:</p>
+            <ul>
+                <li><strong>Browser</strong> &mdash; Naviga il web senza uscire dall'app per consultare documentazione e risorse</li>
+            </ul>
 
             <div class="callout tip">
-                <p><strong>Suggerimento:</strong> Fai swipe verso l'alto sulla barra inferiore per espandere il terminale a tutto schermo.</p>
+                <p><strong>Suggerimento:</strong> Usa il drag-and-drop nel file explorer per riorganizzare rapidamente la struttura del progetto.</p>
             </div>
 
             <div class="media-placeholder">

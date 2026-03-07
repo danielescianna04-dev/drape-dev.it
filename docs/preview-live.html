@@ -107,9 +107,9 @@
         <div class="sidebar-group" data-group="github">
             <div class="sidebar-group-title">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-                GitHub
+                Git
             </div>
-            <a class="sidebar-link" href="/docs/collegare-github.html">Collegare GitHub</a>
+            <a class="sidebar-link" href="/docs/collegare-github.html">Collegare Git</a>
             <a class="sidebar-link" href="/docs/clone-import.html">Clone e import</a>
             <a class="sidebar-link" href="/docs/commit-push.html">Commit e push</a>
         </div>
@@ -128,19 +128,53 @@
         <div class="doc-page">
 
             <h1>Preview live</h1>
-            <p class="doc-intro">Vedi il risultato del tuo codice in tempo reale, direttamente dall'app.</p>
+            <p class="doc-intro">Vedi il risultato del tuo codice in tempo reale, direttamente dall'app. Supporta oltre 30 framework e linguaggi.</p>
 
             <h2>Come funziona</h2>
-            <p>Quando avvii un server web nel terminale (es. <code>npm start</code>, <code>python -m http.server</code>), Drape rileva automaticamente la porta e ti offre di aprire la <strong>preview live</strong>.</p>
-            <h3>Rilevamento automatico</h3>
-            <p>Drape monitora le porte attive e mostra un avviso quando un server viene avviato. Tocca per aprire la preview.</p>
+            <p>Drape <strong>rileva automaticamente</strong> il tipo di progetto e configura il server di sviluppo. Basta premere "Preview" e il sistema installa le dipendenze, avvia il server e mostra il risultato nel browser integrato.</p>
+            <h3>Rilevamento automatico del progetto</h3>
+            <p>Drape analizza i file del progetto (package.json, requirements.txt, Cargo.toml, ecc.) e riconosce automaticamente il framework. Il comando di installazione e di avvio vengono configurati in automatico.</p>
             <h3>Browser integrato</h3>
-            <p>La preview mostra il tuo sito/app in un browser integrato che si aggiorna automaticamente a ogni modifica salvata.</p>
+            <p>La preview mostra il tuo sito/app in un browser integrato con <strong>toolbar di controllo</strong>: ricarica, indietro/avanti, e indicatore di stato del server.</p>
+
+            <h2>Framework supportati</h2>
+            <p>Drape rileva e supporta automaticamente oltre <strong>30 framework e linguaggi</strong>:</p>
+            <h3>Frontend</h3>
+            <ul>
+                <li><strong>React</strong>, <strong>Next.js</strong>, <strong>Remix</strong> &mdash; JavaScript/TypeScript</li>
+                <li><strong>Vue</strong>, <strong>Nuxt</strong> &mdash; Vue.js framework</li>
+                <li><strong>Svelte</strong>, <strong>SvelteKit</strong> &mdash; Compiler-based framework</li>
+                <li><strong>Angular</strong> &mdash; TypeScript framework</li>
+                <li><strong>Astro</strong> &mdash; Static site generator</li>
+                <li><strong>Solid</strong>, <strong>Qwik</strong> &mdash; Modern reactive frameworks</li>
+                <li><strong>Expo</strong> (web) &mdash; React Native per web</li>
+            </ul>
+            <h3>Backend</h3>
+            <ul>
+                <li><strong>Node.js</strong> (Express, Fastify, Koa) &mdash; JavaScript/TypeScript</li>
+                <li><strong>Python</strong> (Django, FastAPI, Flask) &mdash; Python</li>
+                <li><strong>Go</strong> &mdash; Go net/http, Gin, Echo</li>
+                <li><strong>Ruby on Rails</strong> &mdash; Ruby</li>
+                <li><strong>Laravel</strong> &mdash; PHP</li>
+                <li><strong>Spring Boot</strong> &mdash; Java/Kotlin</li>
+                <li><strong>Deno</strong>, <strong>Bun</strong> &mdash; Runtime JavaScript moderni</li>
+            </ul>
+            <h3>Linguaggi compilati</h3>
+            <ul>
+                <li><strong>Rust</strong> &mdash; Cargo build &amp; run</li>
+                <li><strong>C/C++</strong> &mdash; Compilazione e esecuzione</li>
+                <li><strong>C#/.NET</strong> &mdash; dotnet run</li>
+                <li><strong>Kotlin</strong>, <strong>Swift</strong>, <strong>Haskell</strong>, <strong>Elixir</strong></li>
+            </ul>
 
             <h2>Hot reload</h2>
-            <p>Per i framework che lo supportano (React, Next.js, Vite...), il <strong>hot reload</strong> funziona automaticamente. Modifica un componente, salva, e vedi il cambiamento istantaneamente senza ricaricare la pagina.</p>
-            <h3>Framework supportati</h3>
-            <p>React, Next.js, Vite, Vue CLI e qualsiasi framework con supporto HMR (Hot Module Replacement) nativo.</p>
+            <p>Per i framework che lo supportano, il <strong>hot reload</strong> funziona automaticamente. Modifica un componente, salva, e vedi il cambiamento istantaneamente senza ricaricare la pagina.</p>
+
+            <h2>Variabili d'ambiente</h2>
+            <p>Gestisci le variabili d'ambiente (file <code>.env</code>) direttamente dalla preview. L'editor di secrets integrato ti permette di aggiungere, modificare e rimuovere variabili senza toccare i file manualmente.</p>
+
+            <h2>AI Chat durante la preview</h2>
+            <p>Mentre visualizzi la preview, puoi <strong>chattare con l'AI</strong> per chiedere modifiche, segnalare problemi visivi o richiedere nuove funzionalit&agrave;. L'AI vede il contesto del progetto e pu&ograve; applicare modifiche in tempo reale.</p>
 
             <h2>Porte supportate</h2>
             <p>Drape supporta qualsiasi porta tra <code>1000</code> e <code>65535</code>. Le porte pi&ugrave; comuni vengono rilevate automaticamente:</p>
@@ -148,14 +182,17 @@
             <ul>
                 <li><code>3000</code> &mdash; React, Next.js, Express</li>
                 <li><code>5173</code> &mdash; Vite</li>
-                <li><code>8000</code> &mdash; Python, Django</li>
-                <li><code>8080</code> &mdash; Vue, generici</li>
+                <li><code>8000</code> &mdash; Python, Django, FastAPI</li>
+                <li><code>8080</code> &mdash; Vue, Go, generici</li>
+                <li><code>4200</code> &mdash; Angular</li>
+                <li><code>4321</code> &mdash; Astro</li>
             </ul>
-            <h3>Porte personalizzate</h3>
-            <p>Se usi una porta non standard, puoi configurarla manualmente nelle impostazioni della preview.</p>
+
+            <h2>Pubblicazione</h2>
+            <p>Quando sei soddisfatto del risultato, puoi <strong>pubblicare</strong> il tuo progetto su un sottodominio Drape (es. <code>drape.info/p/nome-progetto</code>) direttamente dall'app. Scegli uno slug personalizzato e il progetto diventa accessibile online in pochi secondi. Supporta solo siti statici.</p>
 
             <div class="callout">
-                <p><strong>Nota:</strong> La preview &egrave; accessibile solo da te. Il tuo progetto non &egrave; esposto a internet fino a quando non fai deploy esplicitamente.</p>
+                <p><strong>Nota:</strong> La preview &egrave; accessibile solo da te durante lo sviluppo. Il progetto diventa pubblico solo quando scegli esplicitamente di pubblicarlo.</p>
             </div>
 
             <div class="media-placeholder">
