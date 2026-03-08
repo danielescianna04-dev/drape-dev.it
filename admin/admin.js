@@ -1574,6 +1574,9 @@ window.loadUserDayTimeline = async function(email, date) {
         git_action: '🔀', git_commit: '📝', git_checkout: '🔀',
         git_auth: '🔗', git_auth_success: '✅', git_auth_error: '❌',
         git_account_remove: '🔓', git_repo_connect: '🔗', git_repo_import: '📥',
+        git_tab_switch: '📑', git_branch_create: '🌿', git_commit_view: '👁️',
+        git_select_all: '☑️', git_link_account: '🔗', git_unlink_account: '🔓',
+        git_connect_repo: '🔗', git_push: '⬆️',
         // Env vars
         env_var_add: '➕', env_var_delete: '🗑️',
         // Settings
@@ -1618,6 +1621,10 @@ window.loadUserDayTimeline = async function(email, date) {
         git_auth: 'Auth Git', git_auth_success: 'Auth Git riuscita', git_auth_error: 'Errore auth Git',
         git_account_remove: 'Account Git rimosso', git_repo_connect: 'Repo Git collegato',
         git_repo_import: 'Import repo Git',
+        git_tab_switch: 'Tab Git cambiato', git_branch_create: 'Branch creato',
+        git_commit_view: 'Commit aperto', git_select_all: 'Seleziona tutto',
+        git_link_account: 'Account Git collegato', git_unlink_account: 'Account Git scollegato',
+        git_connect_repo: 'Connetti repo', git_push: 'Git push',
         // Env vars
         env_var_add: 'Variabile aggiunta', env_var_delete: 'Variabile eliminata',
         // Settings
@@ -1719,6 +1726,10 @@ window.loadUserDayTimeline = async function(email, date) {
         if (e.type === 'git_account_remove' && e.provider) label += ' <strong style="color:var(--text);">' + e.provider + '</strong>';
         if (e.type === 'git_repo_connect' && e.repoUrl) label += ' <strong style="color:var(--primary);">' + e.repoUrl + '</strong>';
         if (e.type === 'git_repo_import' && e.repoName) label += ' <strong style="color:var(--primary);">' + e.repoName + '</strong>';
+        if (e.type === 'git_tab_switch' && e.tab) label += ' <strong style="color:var(--text);">' + e.tab + '</strong>';
+        if (e.type === 'git_branch_create' && e.branch) label += ' <strong style="color:var(--primary);">' + e.branch + '</strong>';
+        if (e.type === 'git_link_account' && e.provider) label += ' <strong style="color:var(--text);">' + e.provider + '</strong>';
+        if (e.type === 'git_unlink_account' && e.provider) label += ' <strong style="color:#ef4444;">' + e.provider + '</strong>';
         // Env vars
         if (e.type === 'env_var_add' && e.key) label += ' <strong style="color:var(--primary);">' + e.key + '</strong>';
         if (e.type === 'env_var_delete' && e.key) label += ' <strong style="color:#ef4444;">' + e.key + '</strong>';
