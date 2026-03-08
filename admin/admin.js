@@ -1546,13 +1546,21 @@ window.loadUserDayTimeline = async function(email, date) {
     const eventIcons = {
         screen_view: '📱', app_foreground: '🟢', app_background: '🔴',
         project_open: '📂', project_create: '🆕', panel_open: '🔲',
-        tab_open: '📑', chat_message: '💬', chat_terminal_command: '⌨️', error: '❌'
+        tab_open: '📑', chat_message: '💬', chat_terminal_command: '⌨️', error: '❌',
+        preview_start: '▶️', preview_ready: '✅', preview_refresh: '🔄', preview_stop: '⏹️',
+        preview_error: '🚫', preview_fix_ai: '🤖',
+        publish: '🚀', publish_success: '🎉', publish_error: '💥',
+        new_chat: '➕', chat_minimize: '🔽', model_select: '🧠', file_open: '📄'
     };
     const eventLabels = {
         screen_view: 'Ha aperto', app_foreground: 'App in primo piano', app_background: 'App in background',
         project_open: 'Ha aperto progetto', project_create: 'Ha creato progetto',
         panel_open: 'Ha aperto pannello', tab_open: 'Ha aperto tab',
-        chat_message: 'Messaggio chat', chat_terminal_command: 'Comando terminale', error: 'Errore'
+        chat_message: 'Messaggio chat', chat_terminal_command: 'Comando terminale', error: 'Errore',
+        preview_start: 'Preview avviata', preview_ready: 'Preview pronta', preview_refresh: 'Preview aggiornata',
+        preview_stop: 'Preview fermata', preview_error: 'Errore preview', preview_fix_ai: 'Fix con AI',
+        publish: 'Pubblicazione avviata', publish_success: 'Pubblicato', publish_error: 'Errore pubblicazione',
+        new_chat: 'Nuova chat', chat_minimize: 'Chat toggle', model_select: 'Cambio modello', file_open: 'File aperto'
     };
     const panelLabels = {
         files: 'File', chat: 'Chat', preview: 'Preview', terminal: 'Terminale',
@@ -1595,6 +1603,14 @@ window.loadUserDayTimeline = async function(email, date) {
         if (e.type === 'chat_message' && e.model) label += ' <span style="color:var(--text-muted);">(' + e.model + ', ' + (e.agentMode || '') + ')</span>';
         if (e.type === 'error' && e.errorMessage) label += ' <span style="color:#ef4444;font-size:11px;">' + e.errorMessage.substring(0, 80) + '</span>';
         if (e.type === 'error' && e.context) label += ' <span style="color:var(--text-muted);">in ' + e.context + '</span>';
+        if ((e.type === 'preview_start' || e.type === 'preview_ready') && e.projectName) label += ' <strong style="color:var(--primary);">' + e.projectName + '</strong>';
+        if (e.type === 'preview_error' && e.errorMessage) label += ' <span style="color:#ef4444;font-size:11px;">' + e.errorMessage.substring(0, 80) + '</span>';
+        if ((e.type === 'publish_success') && e.slug) label += ' <strong style="color:var(--primary);">' + e.slug + '</strong>';
+        if (e.type === 'publish_error' && e.errorMessage) label += ' <span style="color:#ef4444;font-size:11px;">' + e.errorMessage.substring(0, 80) + '</span>';
+        if (e.type === 'new_chat') label += ' <span style="color:var(--text-muted);">(' + (e.chatType || '') + ')</span>';
+        if (e.type === 'chat_minimize') label += ' <span style="color:var(--text-muted);">(' + (e.collapsed || '') + ')</span>';
+        if (e.type === 'model_select' && e.model) label += ' <strong style="color:var(--text);">' + e.model + '</strong>';
+        if (e.type === 'file_open' && e.fileName) label += ' <strong style="color:var(--text);">' + e.fileName + '</strong>';
 
         html += `<div style="display:flex;align-items:center;gap:8px;font-size:12px;">
             <span style="font-size:14px;">${icon}</span>
