@@ -564,15 +564,20 @@ app.get('/admin/stats/behavior', async (req, res) => {
         .select('userId', 'email', 'timestamp')
         .get();
 
-      // Group unique emails by day
+      // Group unique emails by day + track last event time per email
       const dailyActiveMap = {};
+      const lastEventTimeMap = {};
       eventsSnapshot.forEach(doc => {
         const d = doc.data();
         if (!d.timestamp) return;
         const ts = d.timestamp.toDate ? d.timestamp.toDate() : new Date(d.timestamp);
         const dayKey = localDateStr(ts);
         if (!dailyActiveMap[dayKey]) dailyActiveMap[dayKey] = new Set();
-        dailyActiveMap[dayKey].add(d.email || d.userId || 'unknown');
+        const email = d.email || d.userId || 'unknown';
+        dailyActiveMap[dayKey].add(email);
+        if (!lastEventTimeMap[email] || ts > lastEventTimeMap[email]) {
+          lastEventTimeMap[email] = ts;
+        }
       });
 
       // Convert Sets to arrays
@@ -764,7 +769,7 @@ app.get('/admin/stats/behavior', async (req, res) => {
           email,
           name: detail.name || '',
           plan: meta.plan || meta.subscriptionPlan || 'free',
-          lastLogin: detail.lastLogin || '',
+          lastLogin: lastEventTimeMap[email]?.toISOString() || detail.lastLogin || '',
           createdAt: detail.createdAt || ''
         };
       };
@@ -1046,56 +1051,51 @@ app.get('/admin/stats/behavior/user/:email', async (req, res) => {
       try { authUser = await auth.getUser(uid); } catch (e) { /* user may not exist */ }
     }
 
-    // Parallel reads
-    const [presenceLogSnapshot, aiUsageSnapshot, operationsSnapshot, projectsSnapshot] = await Promise.all([
-      db.collection('presence_log').get(),
-      db.collection('ai_usage').get(),
-      db.collection('operations').get(),
+    // Read user_events + projects in parallel
+    const [userEventsSnapshot, projectsSnapshot] = await Promise.all([
+      db.collection('user_events')
+        .where('email', '==', email)
+        .orderBy('timestamp', 'asc')
+        .get(),
       db.collectionGroup('projects').get().catch(() => ({ forEach: () => {} }))
     ]);
 
-    // Activity timeline (which days this user was active)
-    const activityDays = [];
-    presenceLogSnapshot.forEach(doc => {
-      const data = doc.data();
-      const emails = data.activeEmails || [];
-      if (emails.includes(email)) {
-        activityDays.push({ date: doc.id });
-      }
-    });
-    activityDays.sort((a, b) => a.date.localeCompare(b.date));
-
-    // AI usage breakdown by model + daily trend
+    // Process all user events
+    const activityDaysSet = {};
     const aiByModel = {};
     const aiByDate = {};
-    let totalAiCalls = 0;
-    aiUsageSnapshot.forEach(doc => {
-      const d = doc.data();
-      const docUid = d.userId;
-      if (docUid !== uid && docUid !== email) return;
-      totalAiCalls++;
-      const model = d.model || 'Unknown';
-      let label = model;
-      if (model.includes('claude')) label = 'Claude';
-      else if (model.includes('gpt')) label = 'GPT';
-      else if (model.includes('gemini')) label = 'Gemini';
-      else if (model.includes('deepseek')) label = 'DeepSeek';
-      else if (model.includes('groq')) label = 'Groq';
-      aiByModel[label] = (aiByModel[label] || 0) + 1;
-
-      const ts = d.timestamp?.toDate ? d.timestamp.toDate() : new Date(d.timestamp);
-      const dateStr = ts.toISOString().split('T')[0];
-      aiByDate[dateStr] = (aiByDate[dateStr] || 0) + 1;
-    });
-
-    // Operations breakdown by type
     const opsByType = {};
-    operationsSnapshot.forEach(doc => {
+    let totalAiCalls = 0;
+
+    userEventsSnapshot.forEach(doc => {
       const d = doc.data();
-      if (d.userId !== uid && d.userId !== email) return;
-      const type = d.type || 'unknown';
+      if (!d.timestamp) return;
+      const ts = d.timestamp.toDate ? d.timestamp.toDate() : new Date(d.timestamp);
+      const dayKey = localDateStr(ts);
+
+      // Track active days
+      activityDaysSet[dayKey] = true;
+
+      // Track event types as operations
+      const type = d.type || d.screen || 'unknown';
       opsByType[type] = (opsByType[type] || 0) + 1;
+
+      // Track AI calls
+      if (d.type === 'chat_message' && d.model) {
+        totalAiCalls++;
+        let label = d.model;
+        if (d.model.includes('claude')) label = 'Claude';
+        else if (d.model.includes('gpt')) label = 'GPT';
+        else if (d.model.includes('gemini')) label = 'Gemini';
+        else if (d.model.includes('deepseek')) label = 'DeepSeek';
+        else if (d.model.includes('groq')) label = 'Groq';
+        aiByModel[label] = (aiByModel[label] || 0) + 1;
+        const dateStr = localDateStr(ts);
+        aiByDate[dateStr] = (aiByDate[dateStr] || 0) + 1;
+      }
     });
+
+    const activityDays = Object.keys(activityDaysSet).sort().map(date => ({ date }));
 
     // Projects
     const projects = [];
@@ -1104,7 +1104,7 @@ app.get('/admin/stats/behavior/user/:email', async (req, res) => {
       if (d.userId !== uid && d.userId !== email) return;
       projects.push({
         name: d.name || doc.id,
-        framework: d.framework || d.template || d.language || '-',
+        framework: d.framework || d.template || d.language || d.technology || '-',
         createdAt: d.createdAt?.toDate ? d.createdAt.toDate().toISOString() : d.createdAt || null
       });
     });
@@ -1115,7 +1115,7 @@ app.get('/admin/stats/behavior/user/:email', async (req, res) => {
     for (let i = 29; i >= 0; i--) {
       const d = new Date(today);
       d.setDate(d.getDate() - i);
-      const key = d.toISOString().split('T')[0];
+      const key = localDateStr(d);
       aiTrend.labels.push(key);
       aiTrend.data.push(aiByDate[key] || 0);
     }

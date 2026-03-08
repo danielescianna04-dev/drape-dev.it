@@ -1273,7 +1273,7 @@ tr:hover td {
 }
 
 .modal-content {
-    background: var(--card-bg);
+    background: var(--dark-card);
     border: 1px solid var(--border);
     border-radius: 12px;
     width: 90%;

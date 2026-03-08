@@ -1590,23 +1590,30 @@ window.openUserBehaviorModal = async function(email) {
         html += `</div></div>`;
     }
 
+    // Today's date string for comparisons
+    const _tn = new Date();
+    const today = `${_tn.getFullYear()}-${String(_tn.getMonth() + 1).padStart(2, '0')}-${String(_tn.getDate()).padStart(2, '0')}`;
+
     // Activity timeline (last days active)
     if (data.activityDays && data.activityDays.length > 0) {
         const recent = data.activityDays.slice(-14);
         html += `<div style="margin-bottom:20px;">
             <h4 style="margin-bottom:12px;font-size:14px;color:var(--text);">Ultimi Giorni Attivi</h4>
             <div style="display:flex;gap:4px;flex-wrap:wrap;">`;
+        const todayStr2 = today;
         recent.forEach(d => {
-            html += `<div style="background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);border-radius:6px;padding:6px 12px;text-align:center;cursor:pointer;" onclick="loadUserDayTimeline('${email}', '${d.date}')">
-                <div style="font-size:12px;font-weight:600;color:var(--text);">${new Date(d.date).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}</div>
+            const isToday = d.date === todayStr2;
+            const bg = isToday ? 'var(--primary)' : 'rgba(168,85,247,0.15)';
+            const border = isToday ? 'var(--primary)' : 'rgba(168,85,247,0.3)';
+            const textColor = isToday ? '#fff' : 'var(--text)';
+            html += `<div class="day-chip${isToday ? ' day-chip-active' : ''}" style="background:${bg};border:1px solid ${border};border-radius:6px;padding:6px 12px;text-align:center;cursor:pointer;transition:all .2s;" onclick="document.querySelectorAll('.day-chip-active').forEach(e=>{e.style.background='rgba(168,85,247,0.15)';e.style.borderColor='rgba(168,85,247,0.3)';e.style.color='var(--text)';e.classList.remove('day-chip-active')});this.style.background='var(--primary)';this.style.borderColor='var(--primary)';this.style.color='#fff';this.classList.add('day-chip-active');loadUserDayTimeline('${email}', '${d.date}')">
+                <div style="font-size:12px;font-weight:600;color:inherit;">${new Date(d.date).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}</div>
             </div>`;
         });
         html += `</div></div>`;
     }
 
     // Daily event timeline section with date picker
-    const _tn = new Date();
-    const today = `${_tn.getFullYear()}-${String(_tn.getMonth() + 1).padStart(2, '0')}-${String(_tn.getDate()).padStart(2, '0')}`;
     html += `<div style="margin-bottom:20px;">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
             <h4 style="margin:0;font-size:14px;color:var(--text);">Timeline Giornaliera</h4>
