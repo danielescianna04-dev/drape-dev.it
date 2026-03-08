@@ -331,6 +331,21 @@ const MOCK_DATA = {
             { email: 'user@example.com', sessions: 20, aiCalls: 50, projects: 3, score: 129 }
         ],
         totalEngagedUsers: 42
+    },
+    '/admin/stats/behavior/events': {
+        topScreens: [
+            { screen: 'home', count: 150 },
+            { screen: 'terminal', count: 120 },
+            { screen: 'settings', count: 45 },
+            { screen: 'plans', count: 30 },
+            { screen: 'create', count: 25 },
+            { screen: 'allProjects', count: 20 }
+        ],
+        totalScreenViews: 390,
+        plansViews: 30,
+        avgSessionMin: 8,
+        sessionCount: 85,
+        totalEvents: 520
     }
 };
 
@@ -1089,6 +1104,67 @@ async function loadBehaviorData() {
     // Engagement table (all users)
     window._behaviorAllUsers = data.allUsers || [];
     renderEngagementTable(window._behaviorAllUsers);
+
+    // Load in-app events tracking data
+    loadEventsData();
+}
+
+async function loadEventsData() {
+    const data = await apiCall('/admin/stats/behavior/events');
+    if (!data || data.totalEvents === 0) return;
+
+    // Show events section
+    const section = document.getElementById('eventsTrackingSection');
+    if (section) section.style.display = 'block';
+
+    // Populate cards
+    const avgEl = document.getElementById('eventsAvgSession');
+    if (avgEl) avgEl.textContent = data.avgSessionMin || 0;
+    const viewsEl = document.getElementById('eventsTotalViews');
+    if (viewsEl) viewsEl.textContent = data.totalScreenViews || 0;
+    const plansEl = document.getElementById('eventsPlansViews');
+    if (plansEl) plansEl.textContent = data.plansViews || 0;
+
+    // Top screens chart
+    if (data.topScreens && data.topScreens.length > 0) {
+        renderTopScreensChart(data.topScreens);
+    }
+}
+
+function renderTopScreensChart(topScreens) {
+    const ctx = document.getElementById('topScreensChart')?.getContext('2d');
+    if (!ctx) return;
+
+    if (charts['topScreensChart']) charts['topScreensChart'].destroy();
+
+    const screenLabels = {
+        home: 'Home', terminal: 'Editor', create: 'Crea Progetto',
+        settings: 'Impostazioni', plans: 'Piani/Prezzi', allProjects: 'Tutti i Progetti',
+        auth: 'Login', onboarding: 'Onboarding'
+    };
+
+    charts['topScreensChart'] = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: topScreens.map(s => screenLabels[s.screen] || s.screen),
+            datasets: [{
+                data: topScreens.map(s => s.count),
+                backgroundColor: ['#a855f7', '#6366f1', '#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#ec4899', '#14b8a6', '#f97316'],
+                borderRadius: 8,
+                barThickness: 28
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { ticks: { color: '#999' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                y: { ticks: { color: '#ccc', font: { size: 12 } }, grid: { display: false } }
+            }
+        }
+    });
 }
 
 function renderDailyActiveChart(dailyData) {

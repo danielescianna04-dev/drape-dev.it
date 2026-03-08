@@ -782,6 +782,82 @@ app.get('/admin/stats/behavior', async (req, res) => {
   }
 });
 
+// GET /admin/stats/behavior/events - Aggregated user events from app tracking
+let eventsCache = null;
+let eventsCacheTime = 0;
+app.get('/admin/stats/behavior/events', async (req, res) => {
+  try {
+    if (eventsCache && Date.now() - eventsCacheTime < 60000) {
+      return res.json(eventsCache);
+    }
+
+    const snapshot = await db.collection('user_events')
+      .orderBy('timestamp', 'desc')
+      .limit(5000)
+      .get();
+
+    const screenCounts = {};
+    const userScreens = {};
+    const sessions = []; // foreground→background pairs
+    let totalSessionMs = 0;
+    let sessionCount = 0;
+    const userForeground = {}; // track last foreground per user
+
+    snapshot.forEach(doc => {
+      const d = doc.data();
+      const ts = d.timestamp?.toDate?.() || null;
+
+      if (d.type === 'screen_view' && d.screen) {
+        screenCounts[d.screen] = (screenCounts[d.screen] || 0) + 1;
+        if (d.email) {
+          if (!userScreens[d.email]) userScreens[d.email] = [];
+          userScreens[d.email].push({ screen: d.screen, timestamp: ts?.toISOString() });
+        }
+      }
+
+      if (d.type === 'app_foreground' && d.email && ts) {
+        userForeground[d.email] = ts.getTime();
+      }
+
+      if (d.type === 'app_background' && d.email && ts && userForeground[d.email]) {
+        const duration = ts.getTime() - userForeground[d.email];
+        if (duration > 0 && duration < 12 * 60 * 60 * 1000) { // max 12h sanity check
+          totalSessionMs += duration;
+          sessionCount++;
+        }
+        delete userForeground[d.email];
+      }
+    });
+
+    const avgSessionMin = sessionCount > 0 ? Math.round(totalSessionMs / sessionCount / 60000) : 0;
+
+    // Sort screens by count
+    const topScreens = Object.entries(screenCounts)
+      .sort((a, b) => b[1] - a[1])
+      .map(([screen, count]) => ({ screen, count }));
+
+    // Pricing funnel: how many viewed plans screen
+    const plansViews = screenCounts['plans'] || 0;
+    const totalScreenViews = Object.values(screenCounts).reduce((a, b) => a + b, 0);
+
+    const result = {
+      topScreens,
+      totalScreenViews,
+      plansViews,
+      avgSessionMin,
+      sessionCount,
+      totalEvents: snapshot.size,
+    };
+
+    eventsCache = result;
+    eventsCacheTime = Date.now();
+    res.json(result);
+  } catch (error) {
+    console.error('[Admin Events] Error:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // GET /admin/stats/behavior/user/:email - Per-user behavior detail
 app.get('/admin/stats/behavior/user/:email', async (req, res) => {
   try {
@@ -1080,8 +1156,14 @@ app.post('/admin/presence/log', async (req, res) => {
   try {
     const presenceSnapshot = await db.collection('presence').get();
     const activeEmails = [];
+    const nowMs = Date.now();
     presenceSnapshot.forEach(doc => {
       const data = doc.data();
+      // Only count users with lastSeen within 2 minutes
+      if (data.lastSeen) {
+        const lastSeenMs = data.lastSeen.toDate ? data.lastSeen.toDate().getTime() : new Date(data.lastSeen).getTime();
+        if (nowMs - lastSeenMs > 2 * 60 * 1000) return;
+      }
       if (data.email) activeEmails.push(data.email);
       else activeEmails.push(doc.id);
     });
@@ -1520,8 +1602,14 @@ app.listen(PORT, '127.0.0.1', () => {
     try {
       const presenceSnapshot = await db.collection('presence').get();
       const activeEmails = [];
+      const nowMs = Date.now();
       presenceSnapshot.forEach(doc => {
         const data = doc.data();
+        // Only count users with lastSeen within 2 minutes (safety net for stale docs)
+        if (data.lastSeen) {
+          const lastSeenMs = data.lastSeen.toDate ? data.lastSeen.toDate().getTime() : new Date(data.lastSeen).getTime();
+          if (nowMs - lastSeenMs > 2 * 60 * 1000) return; // stale, skip
+        }
         if (data.email) activeEmails.push(data.email);
         else activeEmails.push(doc.id);
 
