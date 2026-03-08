@@ -1582,7 +1582,10 @@ window.loadUserDayTimeline = async function(email, date) {
         // Plan & IAP
         plan_select: '💳', purchase_start: '🛒', purchase_success: '✅', purchase_error: '❌',
         // Publish extras
-        publish_share: '📤', publish_open_url: '🔗', unpublish: '🚫'
+        publish_share: '📤', publish_open_url: '🔗', unpublish: '🚫',
+        // Plans UI
+        plans_view: '💳', plans_close: '✖️', billing_cycle_change: '🔄', legal_view: '📜',
+        notification_toggle: '🔔'
     };
     const eventLabels = {
         screen_view: 'Ha aperto', app_foreground: 'App in primo piano', app_background: 'App in background',
@@ -1626,7 +1629,11 @@ window.loadUserDayTimeline = async function(email, date) {
         plan_select: 'Piano selezionato', purchase_start: 'Acquisto avviato',
         purchase_success: 'Acquisto completato', purchase_error: 'Errore acquisto',
         // Publish extras
-        publish_share: 'Sito condiviso', publish_open_url: 'Sito aperto', unpublish: 'Sito rimosso'
+        publish_share: 'Sito condiviso', publish_open_url: 'Sito aperto', unpublish: 'Sito rimosso',
+        // Plans UI
+        plans_view: 'Ha aperto piani', plans_close: 'Ha chiuso piani',
+        billing_cycle_change: 'Cambio ciclo', legal_view: 'Ha aperto legale',
+        notification_toggle: 'Toggle notifica'
     };
     const panelLabels = {
         files: 'File', chat: 'Chat', preview: 'Preview', terminal: 'Terminale',
@@ -1728,6 +1735,11 @@ window.loadUserDayTimeline = async function(email, date) {
         if (e.type === 'publish_share' && e.slug) label += ' <strong style="color:var(--primary);">' + e.slug + '</strong>';
         if (e.type === 'publish_open_url' && e.slug) label += ' <strong style="color:var(--primary);">' + e.slug + '</strong>';
         if (e.type === 'unpublish' && e.slug) label += ' <strong style="color:#ef4444;">' + e.slug + '</strong>';
+        // Plans UI
+        if (e.type === 'plans_view' && e.source) label += ' <span style="color:var(--text-muted);">(' + e.source + ')</span>';
+        if (e.type === 'billing_cycle_change' && e.cycle) label += ' <strong style="color:var(--text);">' + e.cycle + '</strong>';
+        if (e.type === 'legal_view' && e.legalType) label += ' <strong style="color:var(--text);">' + (e.legalType === 'privacy' ? 'Privacy Policy' : 'Termini di servizio') + '</strong>';
+        if (e.type === 'notification_toggle') { if (e.notificationType) label += ' <strong style="color:var(--text);">' + e.notificationType + '</strong>'; label += ' <span style="color:var(--text-muted);">(' + (e.enabled === 'true' ? 'attivato' : 'disattivato') + ')</span>'; }
 
         html += `<div style="display:flex;align-items:center;gap:8px;font-size:12px;">
             <span style="font-size:14px;">${icon}</span>

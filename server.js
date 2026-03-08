@@ -926,6 +926,10 @@ app.get('/admin/stats/behavior/user/:email/events', async (req, res) => {
       if (d.errorType) event.errorType = d.errorType;
       if (d.filter) event.filter = d.filter;
       if (d.count) event.count = d.count;
+      if (d.source) event.source = d.source;
+      if (d.cycle) event.cycle = d.cycle;
+      if (d.legalType) event.legalType = d.legalType;
+      if (d.notificationType) event.notificationType = d.notificationType;
       events.push(event);
 
       // Calculate active time from foreground/background pairs
