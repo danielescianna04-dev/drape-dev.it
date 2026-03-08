@@ -19,6 +19,9 @@ admin.initializeApp({
 const db = admin.firestore();
 const auth = admin.auth();
 
+// Helper: local date string (avoids timezone shift from toISOString)
+const localDateStr = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
 // App backend base URL (runs on port 3001 on same server)
 const APP_BACKEND_URL = 'http://localhost:3001';
 
@@ -533,8 +536,7 @@ app.get('/admin/stats/behavior', async (req, res) => {
 
     behaviorCache.promise = (async () => {
       // Parallel reads from Firestore + cached data
-      const [presenceLogSnapshot, aiUsageSnapshot, operationsSnapshot, projectsSnapshot, userMetadata, authUsers] = await Promise.all([
-        db.collection('presence_log').get(),
+      const [aiUsageSnapshot, operationsSnapshot, projectsSnapshot, userMetadata, authUsers] = await Promise.all([
         db.collection('ai_usage').get(),
         db.collection('operations').get(),
         db.collectionGroup('projects').get().catch(() => ({ forEach: () => {} })),
@@ -548,25 +550,46 @@ app.get('/admin/stats/behavior', async (req, res) => {
         uidToEmail[uid] = data.email || uid;
       }
 
-      // === RETENTION: DAU / WAU / MAU ===
+      // === RETENTION: DAU / WAU / MAU from user_events ===
+      const todayStr = localDateStr(new Date());
+      const todayDate = new Date();
+
+      // Query user_events for last 30 days
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      thirtyDaysAgo.setHours(0, 0, 0, 0);
+
+      const eventsSnapshot = await db.collection('user_events')
+        .where('timestamp', '>=', thirtyDaysAgo)
+        .select('userId', 'email', 'timestamp')
+        .get();
+
+      // Group unique emails by day
       const dailyActiveMap = {};
-      presenceLogSnapshot.forEach(doc => {
-        const data = doc.data();
-        dailyActiveMap[doc.id] = data.activeEmails || [];
+      eventsSnapshot.forEach(doc => {
+        const d = doc.data();
+        if (!d.timestamp) return;
+        const ts = d.timestamp.toDate ? d.timestamp.toDate() : new Date(d.timestamp);
+        const dayKey = localDateStr(ts);
+        if (!dailyActiveMap[dayKey]) dailyActiveMap[dayKey] = new Set();
+        dailyActiveMap[dayKey].add(d.email || d.userId || 'unknown');
       });
 
-      const todayStr = new Date().toISOString().split('T')[0];
-      const todayDate = new Date(todayStr);
+      // Convert Sets to arrays
+      const dailyActiveEmails = {};
+      for (const [key, set] of Object.entries(dailyActiveMap)) {
+        dailyActiveEmails[key] = [...set];
+      }
 
-      const dau = dailyActiveMap[todayStr]?.length || 0;
+      const dau = dailyActiveEmails[todayStr]?.length || 0;
 
       // WAU: unique users in last 7 days
       const wauSet = new Set();
       for (let i = 0; i < 7; i++) {
         const d = new Date(todayDate);
         d.setDate(d.getDate() - i);
-        const key = d.toISOString().split('T')[0];
-        (dailyActiveMap[key] || []).forEach(e => wauSet.add(e));
+        const key = localDateStr(d);
+        (dailyActiveEmails[key] || []).forEach(e => wauSet.add(e));
       }
       const wau = wauSet.size;
 
@@ -575,8 +598,8 @@ app.get('/admin/stats/behavior', async (req, res) => {
       for (let i = 0; i < 30; i++) {
         const d = new Date(todayDate);
         d.setDate(d.getDate() - i);
-        const key = d.toISOString().split('T')[0];
-        (dailyActiveMap[key] || []).forEach(e => mauSet.add(e));
+        const key = localDateStr(d);
+        (dailyActiveEmails[key] || []).forEach(e => mauSet.add(e));
       }
       const mau = mauSet.size;
 
@@ -585,8 +608,8 @@ app.get('/admin/stats/behavior', async (req, res) => {
       for (let i = 7; i < 14; i++) {
         const d = new Date(todayDate);
         d.setDate(d.getDate() - i);
-        const key = d.toISOString().split('T')[0];
-        (dailyActiveMap[key] || []).forEach(e => prevWauSet.add(e));
+        const key = localDateStr(d);
+        (dailyActiveEmails[key] || []).forEach(e => prevWauSet.add(e));
       }
       const wauTrend = prevWauSet.size > 0 ? Math.round(((wau - prevWauSet.size) / prevWauSet.size) * 100) : 0;
 
@@ -595,21 +618,20 @@ app.get('/admin/stats/behavior', async (req, res) => {
       for (let i = 29; i >= 0; i--) {
         const d = new Date(todayDate);
         d.setDate(d.getDate() - i);
-        const key = d.toISOString().split('T')[0];
+        const key = localDateStr(d);
         dailyActiveUsers.labels.push(key);
-        dailyActiveUsers.data.push(dailyActiveMap[key]?.length || 0);
+        dailyActiveUsers.data.push(dailyActiveEmails[key]?.length || 0);
       }
 
-      // Average active users per day-of-week
+      // Average active users per day-of-week (from user_events data)
       const dayOfWeekCounts = Array(7).fill(0);
       const dayOfWeekDays = Array(7).fill(0);
-      presenceLogSnapshot.forEach(doc => {
-        const docDate = new Date(doc.id);
+      for (const [dateStr, emails] of Object.entries(dailyActiveEmails)) {
+        const docDate = new Date(dateStr);
         const dow = docDate.getDay();
-        const count = (doc.data().activeEmails || []).length;
-        dayOfWeekCounts[dow] += count;
+        dayOfWeekCounts[dow] += emails.length;
         dayOfWeekDays[dow]++;
-      });
+      }
       const avgByDayOfWeek = dayOfWeekCounts.map((total, i) =>
         dayOfWeekDays[i] > 0 ? Math.round(total / dayOfWeekDays[i]) : 0
       );
@@ -671,14 +693,13 @@ app.get('/admin/stats/behavior', async (req, res) => {
       // === USER ENGAGEMENT SCORES ===
       const userEngagement = {};
 
-      // Sessions per user from presence_log
-      presenceLogSnapshot.forEach(doc => {
-        const emails = doc.data().activeEmails || [];
+      // Sessions per user from user_events
+      for (const [, emails] of Object.entries(dailyActiveEmails)) {
         for (const email of emails) {
           if (!userEngagement[email]) userEngagement[email] = { sessions: 0, aiCalls: 0, projects: 0 };
           userEngagement[email].sessions++;
         }
-      });
+      }
 
       // AI calls per user
       aiUsageSnapshot.forEach(doc => {
@@ -713,29 +734,43 @@ app.get('/admin/stats/behavior', async (req, res) => {
         return created >= sevenDaysAgo;
       });
 
-      // === PAID USERS % ===
+      // === PAID USERS % (only real IAP purchases with active subscription) ===
       let paidCount = 0;
-      let totalWithPlan = 0;
       const paidEmails = [];
       for (const [email, data] of Object.entries(userMetadata)) {
-        totalWithPlan++;
-        const plan = data.plan || data.subscriptionPlan || 'free';
-        if (plan !== 'free' && plan !== 'starter') {
+        const sub = data.subscription;
+        if (sub && sub.isActive && sub.originalTransactionId) {
           paidCount++;
           paidEmails.push(email);
         }
       }
       const paidPercent = authUsers.length > 0 ? Math.round((paidCount / authUsers.length) * 100) : 0;
 
-      // === Build email→name lookup ===
-      const emailToName = {};
+      // === Build email→detail lookup ===
+      const emailToDetail = {};
       authUsers.forEach(u => {
-        if (u.email) emailToName[u.email] = u.displayName || '';
+        if (u.email) {
+          emailToDetail[u.email] = {
+            name: u.displayName || '',
+            lastLogin: u.metadata.lastSignInTime || '',
+            createdAt: u.metadata.creationTime || ''
+          };
+        }
       });
-      const enrichEmail = (email) => ({ email, name: emailToName[email] || '' });
+      const enrichEmail = (email) => {
+        const detail = emailToDetail[email] || {};
+        const meta = userMetadata[email] || {};
+        return {
+          email,
+          name: detail.name || '',
+          plan: meta.plan || meta.subscriptionPlan || 'free',
+          lastLogin: detail.lastLogin || '',
+          createdAt: detail.createdAt || ''
+        };
+      };
 
       // === RETENTION: users per card (for click-to-see-users) ===
-      const todayEmails = (dailyActiveMap[todayStr] || []).map(enrichEmail);
+      const todayEmails = (dailyActiveEmails[todayStr] || []).map(enrichEmail);
       const wauEmails = [...wauSet].map(enrichEmail);
       const mauEmails = [...mauSet].map(enrichEmail);
       const newUsersEmails = newUsers7d.map(u => enrichEmail(u.email || '')).filter(u => u.email);
@@ -797,56 +832,66 @@ app.get('/admin/stats/behavior/events', async (req, res) => {
       .get();
 
     const screenCounts = {};
-    const userScreens = {};
-    const sessions = []; // foreground→background pairs
-    let totalSessionMs = 0;
-    let sessionCount = 0;
-    const userForeground = {}; // track last foreground per user
+    const typeCounts = {};
+    let todayChatMessages = 0;
+    let todayProjectOpens = 0;
+    let todayErrors = 0;
+    const todayStr = localDateStr(new Date());
+    const topFeatures = {};
+    const deviceCounts = {};
+    const platformCounts = {};
 
     snapshot.forEach(doc => {
       const d = doc.data();
       const ts = d.timestamp?.toDate?.() || null;
+      const dayKey = ts ? localDateStr(ts) : null;
+      const isToday = dayKey === todayStr;
+
+      // Count event types
+      if (d.type) typeCounts[d.type] = (typeCounts[d.type] || 0) + 1;
 
       if (d.type === 'screen_view' && d.screen) {
         screenCounts[d.screen] = (screenCounts[d.screen] || 0) + 1;
-        if (d.email) {
-          if (!userScreens[d.email]) userScreens[d.email] = [];
-          userScreens[d.email].push({ screen: d.screen, timestamp: ts?.toISOString() });
-        }
       }
 
-      if (d.type === 'app_foreground' && d.email && ts) {
-        userForeground[d.email] = ts.getTime();
+      // Today's key metrics
+      if (isToday) {
+        if (d.type === 'chat_message') todayChatMessages++;
+        if (d.type === 'project_open') todayProjectOpens++;
+        if (d.type === 'error') todayErrors++;
       }
 
-      if (d.type === 'app_background' && d.email && ts && userForeground[d.email]) {
-        const duration = ts.getTime() - userForeground[d.email];
-        if (duration > 0 && duration < 12 * 60 * 60 * 1000) { // max 12h sanity check
-          totalSessionMs += duration;
-          sessionCount++;
-        }
-        delete userForeground[d.email];
+      // Feature usage (panels, actions)
+      if (['panel_open', 'chat_message', 'file_open', 'preview_start', 'git_action', 'git_commit', 'publish'].includes(d.type)) {
+        const key = d.type === 'panel_open' ? (d.panel || 'unknown') : d.type;
+        topFeatures[key] = (topFeatures[key] || 0) + 1;
       }
+
+      // Device tracking
+      if (d.deviceType) deviceCounts[d.deviceType] = (deviceCounts[d.deviceType] || 0) + 1;
+      if (d.platform) platformCounts[d.platform] = (platformCounts[d.platform] || 0) + 1;
     });
-
-    const avgSessionMin = sessionCount > 0 ? Math.round(totalSessionMs / sessionCount / 60000) : 0;
 
     // Sort screens by count
     const topScreens = Object.entries(screenCounts)
       .sort((a, b) => b[1] - a[1])
       .map(([screen, count]) => ({ screen, count }));
 
-    // Pricing funnel: how many viewed plans screen
-    const plansViews = screenCounts['plans'] || 0;
-    const totalScreenViews = Object.values(screenCounts).reduce((a, b) => a + b, 0);
+    // Sort features by usage
+    const topFeaturesList = Object.entries(topFeatures)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .map(([feature, count]) => ({ feature, count }));
 
     const result = {
       topScreens,
-      totalScreenViews,
-      plansViews,
-      avgSessionMin,
-      sessionCount,
+      topFeatures: topFeaturesList,
+      todayChatMessages,
+      todayProjectOpens,
+      todayErrors,
       totalEvents: snapshot.size,
+      devices: deviceCounts,
+      platforms: platformCounts,
     };
 
     eventsCache = result;
@@ -933,6 +978,8 @@ app.get('/admin/stats/behavior/user/:email/events', async (req, res) => {
       if (d.notificationType) event.notificationType = d.notificationType;
       if (d.query) event.query = d.query;
       if (d.modal) event.modal = d.modal;
+      if (d.deviceType) event.deviceType = d.deviceType;
+      if (d.platform) event.platform = d.platform;
       events.push(event);
 
       // Calculate active time from foreground/background pairs
@@ -1200,7 +1247,7 @@ app.get('/admin/stats/report', async (req, res) => {
     });
 
     // Helper: local date string YYYY-MM-DD (avoids UTC shift from toISOString)
-    const localDateStr = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    // localDateStr is now a top-level helper
 
     // Build daily timeline
     const days = [];

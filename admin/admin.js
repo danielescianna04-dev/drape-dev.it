@@ -1133,12 +1133,12 @@ async function loadEventsData() {
     if (section) section.style.display = 'block';
 
     // Populate cards
-    const avgEl = document.getElementById('eventsAvgSession');
-    if (avgEl) avgEl.textContent = data.avgSessionMin || 0;
-    const viewsEl = document.getElementById('eventsTotalViews');
-    if (viewsEl) viewsEl.textContent = data.totalScreenViews || 0;
-    const plansEl = document.getElementById('eventsPlansViews');
-    if (plansEl) plansEl.textContent = data.plansViews || 0;
+    const chatEl = document.getElementById('eventsChatMessages');
+    if (chatEl) chatEl.textContent = data.todayChatMessages || 0;
+    const projEl = document.getElementById('eventsProjectOpens');
+    if (projEl) projEl.textContent = data.todayProjectOpens || 0;
+    const errEl = document.getElementById('eventsErrors');
+    if (errEl) errEl.textContent = data.todayErrors || 0;
 
     // Top screens chart
     if (data.topScreens && data.topScreens.length > 0) {

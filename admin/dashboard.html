@@ -800,34 +800,34 @@
 
                 <!-- In-App Tracking (from user_events) -->
                 <div id="eventsTrackingSection" style="display:none;">
-                    <h3 style="margin-bottom:16px;color:var(--text-primary);font-size:16px;">Tracking In-App</h3>
+                    <h3 style="margin-bottom:16px;color:var(--text-primary);font-size:16px;">Attività Oggi</h3>
                     <div class="stats-grid" style="margin-bottom:24px;">
                         <div class="stat-card">
                             <div class="stat-card-header">
-                                <div class="stat-card-icon blue">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                </div>
-                            </div>
-                            <div class="stat-card-value" id="eventsAvgSession">-</div>
-                            <div class="stat-card-label">Sessione Media (min)</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-card-header">
                                 <div class="stat-card-icon purple">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                                 </div>
                             </div>
-                            <div class="stat-card-value" id="eventsTotalViews">-</div>
-                            <div class="stat-card-label">Screen Views Totali</div>
+                            <div class="stat-card-value" id="eventsChatMessages">-</div>
+                            <div class="stat-card-label">Messaggi AI</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-card-header">
-                                <div class="stat-card-icon yellow">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                <div class="stat-card-icon blue">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
                                 </div>
                             </div>
-                            <div class="stat-card-value" id="eventsPlansViews">-</div>
-                            <div class="stat-card-label">Visite Pagina Prezzi</div>
+                            <div class="stat-card-value" id="eventsProjectOpens">-</div>
+                            <div class="stat-card-label">Progetti Aperti</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <div class="stat-card-icon red">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                                </div>
+                            </div>
+                            <div class="stat-card-value" id="eventsErrors">-</div>
+                            <div class="stat-card-label">Errori</div>
                         </div>
                     </div>
                     <!-- Top Screens Chart -->
@@ -1004,6 +1004,6 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="admin.js?v=26" type="module"></script>
+    <script data-cfasync="false" src="admin.js?v=27" type="module"></script>
 </body>
 </html>
