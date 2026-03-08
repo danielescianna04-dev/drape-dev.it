@@ -70,14 +70,6 @@
                         </svg>
                         Progetti
                     </a>
-                    <a class="nav-item" data-page="analytics">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="18" y1="20" x2="18" y2="10"></line>
-                            <line x1="12" y1="20" x2="12" y2="4"></line>
-                            <line x1="6" y1="20" x2="6" y2="14"></line>
-                        </svg>
-                        Analytics
-                    </a>
                     <a class="nav-item" data-page="report">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -388,51 +380,6 @@
                 </div>
             </section>
 
-            <!-- ANALYTICS PAGE -->
-            <section class="page-section" id="page-analytics">
-                <div class="page-header">
-                    <h2>Analytics</h2>
-                    <p>Statistiche e metriche della piattaforma</p>
-                </div>
-
-                <div class="charts-grid">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Utenti Attivi (7 giorni)</h3>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="usersChart"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Costi AI per Modello</h3>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="aiCostChart"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Operazioni Frequenti</h3>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="operationsChart"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Distribuzione Piani</h3>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="plansChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             <!-- CONTAINERS PAGE -->
             <section class="page-section" id="page-containers">
@@ -1001,14 +948,6 @@
                 </svg>
                 <span>Utenti</span>
             </button>
-            <button class="bottom-tab" data-page="analytics" title="Analytics">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="20" x2="18" y2="10"></line>
-                    <line x1="12" y1="20" x2="12" y2="4"></line>
-                    <line x1="6" y1="20" x2="6" y2="14"></line>
-                </svg>
-                <span>Stats</span>
-            </button>
             <button class="bottom-tab" data-page="containers" title="Containers">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
@@ -1065,6 +1004,6 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="admin.js?v=25" type="module"></script>
+    <script data-cfasync="false" src="admin.js?v=26" type="module"></script>
 </body>
 </html>
