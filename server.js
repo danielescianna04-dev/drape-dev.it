@@ -386,7 +386,7 @@ app.get('/admin/projects', async (req, res) => {
         type: data.type || 'personal',
         repositoryUrl: data.repositoryUrl || '',
         template: data.template || '',
-        language: data.language || '',
+        language: data.language || data.technology || '',
         framework: data.framework || '',
         createdAt: data.createdAt?.toDate?.()?.toISOString() || data.createdAt,
         status: data.status || 'unknown',
@@ -643,7 +643,7 @@ app.get('/admin/stats/behavior', async (req, res) => {
       aiUsageSnapshot.forEach(doc => {
         const d = doc.data();
         const ts = d.timestamp?.toDate ? d.timestamp.toDate() : new Date(d.timestamp);
-        const dateStr = ts.toISOString().split('T')[0];
+        const dateStr = localDateStr(ts);
         const model = d.model || 'Unknown';
 
         let label = model;
@@ -663,7 +663,7 @@ app.get('/admin/stats/behavior', async (req, res) => {
       for (let i = 29; i >= 0; i--) {
         const d = new Date(todayDate);
         d.setDate(d.getDate() - i);
-        aiModelTrend.labels.push(d.toISOString().split('T')[0]);
+        aiModelTrend.labels.push(localDateStr(d));
       }
       for (const [model, dateCounts] of Object.entries(aiByModelDate)) {
         aiModelTrend.datasets[model] = aiModelTrend.labels.map(date => dateCounts[date] || 0);

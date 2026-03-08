@@ -680,6 +680,16 @@ const TEMPLATE_LANG_MAP = {
     'laravel': { name: 'PHP', color: '#FF2D20' },
     'ruby': { name: 'Ruby', color: '#CC342D' },
     'rails': { name: 'Ruby', color: '#CC342D' },
+    'astro': { name: 'Astro', color: '#BC52EE' },
+    'remix': { name: 'Remix', color: '#E8F2FF' },
+    'solid': { name: 'Solid.js', color: '#2C4F7C' },
+    'fastapi': { name: 'FastAPI', color: '#009688' },
+    'flutter': { name: 'Flutter', color: '#02569B' },
+    'python-console': { name: 'Python', color: '#3776AB' },
+    'javascript-console': { name: 'JavaScript', color: '#F7DF1E' },
+    'c-lang': { name: 'C', color: '#A8B9CC' },
+    'cpp': { name: 'C++', color: '#00599C' },
+    'c++': { name: 'C++', color: '#00599C' },
 };
 
 function detectLanguage(project) {
@@ -1112,9 +1122,7 @@ async function loadBehaviorData() {
     // Framework Popularity chart
     renderFrameworkChart(data.frameworkPopularity || { labels: [], data: [] });
 
-    // Operations breakdown
-    const ops = data.operationsByType || {};
-    createBarChart('behaviorOpsChart', { labels: Object.keys(ops), data: Object.values(ops) });
+    // Top features chart will be populated by loadEventsData
 
     // Engagement table (all users)
     window._behaviorAllUsers = data.allUsers || [];
@@ -1144,6 +1152,11 @@ async function loadEventsData() {
     if (data.topScreens && data.topScreens.length > 0) {
         renderTopScreensChart(data.topScreens);
     }
+
+    // Top features chart
+    if (data.topFeatures && data.topFeatures.length > 0) {
+        renderTopFeaturesChart(data.topFeatures);
+    }
 }
 
 function renderTopScreensChart(topScreens) {
@@ -1165,6 +1178,43 @@ function renderTopScreensChart(topScreens) {
             datasets: [{
                 data: topScreens.map(s => s.count),
                 backgroundColor: ['#a855f7', '#6366f1', '#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#ec4899', '#14b8a6', '#f97316'],
+                borderRadius: 8,
+                barThickness: 28
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { ticks: { color: '#999' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                y: { ticks: { color: '#ccc', font: { size: 12 } }, grid: { display: false } }
+            }
+        }
+    });
+}
+
+function renderTopFeaturesChart(features) {
+    const ctx = document.getElementById('topFeaturesChart')?.getContext('2d');
+    if (!ctx) return;
+
+    if (charts['topFeaturesChart']) charts['topFeaturesChart'].destroy();
+
+    const featureLabels = {
+        chat_message: 'Chat AI', file_open: 'Apri File', preview_start: 'Preview',
+        git_action: 'Git Action', git_commit: 'Git Commit', publish: 'Pubblica',
+        chat: 'Chat', files: 'File Explorer', terminal: 'Logs', preview: 'Preview',
+        git: 'Git', envVars: 'Env Vars'
+    };
+
+    charts['topFeaturesChart'] = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: features.map(f => featureLabels[f.feature] || f.feature),
+            datasets: [{
+                data: features.map(f => f.count),
+                backgroundColor: ['#a855f7', '#6366f1', '#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#ec4899', '#14b8a6', '#f97316', '#84cc16'],
                 borderRadius: 8,
                 barThickness: 28
             }]
