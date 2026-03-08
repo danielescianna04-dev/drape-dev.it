@@ -749,23 +749,6 @@
                     <p>Analisi di sessioni, retention e engagement degli utenti</p>
                 </div>
 
-                <!-- Time Range Controls -->
-                <div class="report-controls" style="margin-bottom:16px;">
-                    <div class="report-range-buttons">
-                        <button class="report-btn" data-behavior-range="today">Oggi</button>
-                        <button class="report-btn active" data-behavior-range="7d">7 giorni</button>
-                        <button class="report-btn" data-behavior-range="30d">30 giorni</button>
-                        <button class="report-btn" data-behavior-range="90d">3 mesi</button>
-                        <button class="report-btn" data-behavior-range="all">Tutto</button>
-                    </div>
-                    <div class="report-date-range">
-                        <input type="date" id="behaviorDateFrom" class="report-date-input">
-                        <span style="color:var(--text-muted);">→</span>
-                        <input type="date" id="behaviorDateTo" class="report-date-input">
-                        <button class="report-btn" id="behaviorApplyDates">Applica</button>
-                    </div>
-                </div>
-
                 <!-- Retention + Key Metrics -->
                 <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
                     <div class="stat-card clickable" onclick="showBehaviorUserList('dau')" style="cursor:pointer;">
@@ -816,9 +799,26 @@
                     </div>
                 </div>
 
+                <!-- Time Range Controls -->
+                <div class="report-controls" style="margin:20px 0 16px;">
+                    <div class="report-range-buttons">
+                        <button class="report-btn" data-behavior-range="today">Oggi</button>
+                        <button class="report-btn active" data-behavior-range="7d">7 giorni</button>
+                        <button class="report-btn" data-behavior-range="30d">30 giorni</button>
+                        <button class="report-btn" data-behavior-range="90d">3 mesi</button>
+                        <button class="report-btn" data-behavior-range="all">Tutto</button>
+                    </div>
+                    <div class="report-date-range">
+                        <input type="date" id="behaviorDateFrom" class="report-date-input">
+                        <span style="color:var(--text-muted);">→</span>
+                        <input type="date" id="behaviorDateTo" class="report-date-input">
+                        <button class="report-btn" id="behaviorApplyDates">Applica</button>
+                    </div>
+                </div>
+
                 <!-- In-App Tracking (from user_events) -->
                 <div id="eventsTrackingSection" style="display:none;">
-                    <h3 style="margin-bottom:16px;color:var(--text-primary);font-size:16px;">Attività Oggi</h3>
+                    <h3 style="margin-bottom:16px;color:var(--text-primary);font-size:16px;" id="eventsTrackingTitle">Attività Oggi</h3>
                     <div class="stats-grid" style="margin-bottom:24px;">
                         <div class="stat-card">
                             <div class="stat-card-header">
@@ -1022,6 +1022,6 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="admin.js?v=29" type="module"></script>
+    <script data-cfasync="false" src="admin.js?v=30" type="module"></script>
 </body>
 </html>

@@ -1156,6 +1156,8 @@ function setupBehaviorRangeButtons() {
                 document.getElementById('behaviorDateFrom').value = fmtDate(from);
                 document.getElementById('behaviorDateTo').value = fmtDate(to);
             }
+            const rangeLabels = { today: 'Oggi', '7d': 'Ultimi 7 Giorni', '30d': 'Ultimi 30 Giorni', '90d': 'Ultimi 3 Mesi', all: 'Totale' };
+            updateEventsTitle(rangeLabels[range] || 'Oggi');
             loadEventsData(range === 'all' ? null : fmtDate(from), range === 'all' ? null : fmtDate(to));
         });
     });
@@ -1164,8 +1166,15 @@ function setupBehaviorRangeButtons() {
         document.querySelectorAll('.report-btn[data-behavior-range]').forEach(b => b.classList.remove('active'));
         const from = document.getElementById('behaviorDateFrom').value;
         const to = document.getElementById('behaviorDateTo').value;
+        const fmtShort = (d) => { const p = d.split('-'); return p[2] + '/' + p[1]; };
+        updateEventsTitle(from && to ? fmtShort(from) + ' – ' + fmtShort(to) : 'Personalizzato');
         loadEventsData(from || null, to || null);
     });
+}
+
+function updateEventsTitle(label) {
+    const el = document.getElementById('eventsTrackingTitle');
+    if (el) el.textContent = 'Attività: ' + label;
 }
 
 async function loadEventsData(from, to) {
@@ -1183,11 +1192,11 @@ async function loadEventsData(from, to) {
 
     // Populate cards
     const chatEl = document.getElementById('eventsChatMessages');
-    if (chatEl) chatEl.textContent = data.todayChatMessages || 0;
+    if (chatEl) chatEl.textContent = data.chatMessages || 0;
     const projEl = document.getElementById('eventsProjectOpens');
-    if (projEl) projEl.textContent = data.todayProjectOpens || 0;
+    if (projEl) projEl.textContent = data.projectOpens || 0;
     const errEl = document.getElementById('eventsErrors');
-    if (errEl) errEl.textContent = data.todayErrors || 0;
+    if (errEl) errEl.textContent = data.errors || 0;
 
     // Top screens chart
     if (data.topScreens && data.topScreens.length > 0) {

@@ -837,19 +837,15 @@ app.get('/admin/stats/behavior/events', async (req, res) => {
 
     const screenCounts = {};
     const typeCounts = {};
-    let todayChatMessages = 0;
-    let todayProjectOpens = 0;
-    let todayErrors = 0;
-    const todayStr = localDateStr(new Date());
+    let chatMessages = 0;
+    let projectOpens = 0;
+    let errors = 0;
     const topFeatures = {};
     const deviceCounts = {};
     const platformCounts = {};
 
     snapshot.forEach(doc => {
       const d = doc.data();
-      const ts = d.timestamp?.toDate?.() || null;
-      const dayKey = ts ? localDateStr(ts) : null;
-      const isToday = dayKey === todayStr;
 
       // Count event types
       if (d.type) typeCounts[d.type] = (typeCounts[d.type] || 0) + 1;
@@ -858,12 +854,10 @@ app.get('/admin/stats/behavior/events', async (req, res) => {
         screenCounts[d.screen] = (screenCounts[d.screen] || 0) + 1;
       }
 
-      // Today's key metrics
-      if (isToday) {
-        if (d.type === 'chat_message') todayChatMessages++;
-        if (d.type === 'project_open') todayProjectOpens++;
-        if (d.type === 'error') todayErrors++;
-      }
+      // Key metrics (all events in range)
+      if (d.type === 'chat_message') chatMessages++;
+      if (d.type === 'project_open') projectOpens++;
+      if (d.type === 'error') errors++;
 
       // Feature usage (panels, actions)
       if (['panel_open', 'chat_message', 'file_open', 'preview_start', 'git_action', 'git_commit', 'publish'].includes(d.type)) {
@@ -890,9 +884,9 @@ app.get('/admin/stats/behavior/events', async (req, res) => {
     const result = {
       topScreens,
       topFeatures: topFeaturesList,
-      todayChatMessages,
-      todayProjectOpens,
-      todayErrors,
+      chatMessages,
+      projectOpens,
+      errors,
       totalEvents: snapshot.size,
       devices: deviceCounts,
       platforms: platformCounts,
