@@ -2462,12 +2462,13 @@ function renderReportTable(days) {
     tbody.innerHTML = days.map(day => {
         const date = new Date(day.date);
         const dateStr = date.toLocaleDateString('it-IT', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' });
-        const active = day.loggedActiveUsers || day.activeUsers;
-        const isToday = day.date === new Date().toISOString().split('T')[0];
+        const active = day.activeUsers;
+        const _now = new Date();
+        const isToday = day.date === `${_now.getFullYear()}-${String(_now.getMonth() + 1).padStart(2, '0')}-${String(_now.getDate()).padStart(2, '0')}`;
 
         // Build detail chips
         const newEmails = day.newUserEmails || [];
-        const activeEmails = day.loggedActiveEmails || day.activeUserEmails || [];
+        const activeEmails = day.activeUserEmails || [];
         const sessions = day.userSessions || {};
 
         let detailHtml = '';

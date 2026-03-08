@@ -1194,6 +1194,9 @@ app.get('/admin/stats/report', async (req, res) => {
       };
     });
 
+    // Helper: local date string YYYY-MM-DD (avoids UTC shift from toISOString)
+    const localDateStr = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
     // Build daily timeline
     const days = [];
     const current = new Date(startDate);
@@ -1208,41 +1211,75 @@ app.get('/admin/stats/report', async (req, res) => {
         u.createdAt >= dayStart && u.createdAt <= dayEnd
       );
 
-      // Users who signed in this day (based on lastSignInTime - only accurate for last login)
-      const activeUsers = userData.filter(u =>
-        u.lastSignIn && u.lastSignIn >= dayStart && u.lastSignIn <= dayEnd
-      );
-
       // Cumulative total users up to this day
       const totalUsers = userData.filter(u => u.createdAt <= dayEnd).length;
 
-      // Check presence_log for this day (logged data)
-      const dateStr = dayStart.toISOString().split('T')[0]; // YYYY-MM-DD
+      const dateStr = localDateStr(dayStart);
 
       days.push({
         date: dateStr,
         newUsers: newUsers.length,
-        activeUsers: activeUsers.length,
+        activeUsers: 0,
         totalUsers,
         newUserEmails: newUsers.map(u => u.email),
-        activeUserEmails: activeUsers.map(u => u.email),
+        activeUserEmails: [],
       });
 
       current.setDate(current.getDate() + 1);
     }
 
-    // Load presence_log data if available (for logged daily active users)
+    // Count REAL active users from user_events (unique users who generated events each day)
+    try {
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      thirtyDaysAgo.setHours(0, 0, 0, 0);
+      const eventsSnapshot = await db.collection('user_events')
+        .where('timestamp', '>=', thirtyDaysAgo)
+        .select('userId', 'email', 'timestamp')
+        .get();
+
+      // Group unique users by day
+      const dailyUsers = {};
+      eventsSnapshot.forEach(doc => {
+        const d = doc.data();
+        if (!d.timestamp || !d.userId) return;
+        const ts = d.timestamp.toDate ? d.timestamp.toDate() : new Date(d.timestamp);
+        const dayKey = localDateStr(ts);
+        if (!dailyUsers[dayKey]) dailyUsers[dayKey] = new Map();
+        dailyUsers[dayKey].set(d.userId, d.email || d.userId);
+      });
+
+      // Merge into days
+      days.forEach(day => {
+        if (dailyUsers[day.date]) {
+          const users = dailyUsers[day.date];
+          day.activeUsers = users.size;
+          day.activeUserEmails = Array.from(users.values());
+        }
+      });
+    } catch (e) {
+      console.error('[Admin Report] user_events query error:', e.message);
+      // Fallback: use lastSignInTime
+      days.forEach(day => {
+        const dayStart = new Date(day.date + 'T00:00:00');
+        const dayEnd = new Date(day.date + 'T23:59:59.999');
+        const active = userData.filter(u =>
+          u.lastSignIn && u.lastSignIn >= dayStart && u.lastSignIn <= dayEnd
+        );
+        day.activeUsers = active.length;
+        day.activeUserEmails = active.map(u => u.email);
+      });
+    }
+
+    // Load presence_log data if available (for session details)
     try {
       const logSnapshot = await db.collection('presence_log').get();
       const logData = {};
       logSnapshot.forEach(doc => {
         logData[doc.id] = doc.data();
       });
-      // Merge logged data into days
       days.forEach(day => {
         if (logData[day.date]) {
-          day.loggedActiveUsers = logData[day.date].activeCount || 0;
-          day.loggedActiveEmails = logData[day.date].activeEmails || [];
           day.userSessions = logData[day.date].userSessions || {};
         }
       });
@@ -1285,7 +1322,8 @@ app.post('/admin/presence/log', async (req, res) => {
       else activeEmails.push(doc.id);
     });
 
-    const today = new Date().toISOString().split('T')[0];
+    const now = new Date();
+    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
     const logRef = db.collection('presence_log').doc(today);
     const existing = await logRef.get();
 
