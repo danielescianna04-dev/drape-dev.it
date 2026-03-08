@@ -1588,9 +1588,11 @@ window.loadUserDayTimeline = async function(email, date) {
     });
     html += `</div>`;
 
-    // Event timeline
-    html += `<div style="border-left:2px solid var(--border);padding-left:16px;display:flex;flex-direction:column;gap:8px;">`;
-    data.events.forEach(e => {
+    // Event timeline — compute durations between foreground/background pairs
+    const events = data.events;
+    html += `<div style="border-left:2px solid var(--border);padding-left:16px;display:flex;flex-direction:column;gap:4px;">`;
+    for (let i = 0; i < events.length; i++) {
+        const e = events[i];
         const icon = eventIcons[e.type] || '•';
         let label = eventLabels[e.type] || e.type;
         if (e.type === 'screen_view') label += ' <strong style="color:var(--text);">' + (screenLabels[e.screen] || e.screen) + '</strong>';
@@ -1617,7 +1619,61 @@ window.loadUserDayTimeline = async function(email, date) {
             <span style="color:var(--text-muted);font-family:monospace;min-width:60px;">${e.time || ''}</span>
             <span style="color:var(--text);">${label}</span>
         </div>`;
-    });
+
+        // Show duration between background/foreground pairs
+        if (e.type === 'app_background' && e.timestamp) {
+            const next = events[i + 1];
+            if (next && next.type === 'app_foreground' && next.timestamp) {
+                const bgMs = new Date(next.timestamp) - new Date(e.timestamp);
+                const bgMin = Math.round(bgMs / 60000);
+                const bgLabel = bgMin >= 60 ? Math.floor(bgMin / 60) + 'h ' + (bgMin % 60) + 'min' : bgMin + ' min';
+                html += `<div style="display:flex;align-items:center;gap:8px;font-size:11px;padding:2px 0 2px 30px;color:var(--text-muted);font-style:italic;">
+                    <span>~ ${bgLabel} in background</span>
+                </div>`;
+            } else if (!next || next.type !== 'app_foreground') {
+                // Last event is background with no foreground after — probably closed
+                html += `<div style="display:flex;align-items:center;gap:8px;font-size:11px;padding:4px 0 4px 30px;">
+                    <span style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:4px;padding:2px 8px;color:#f87171;font-weight:600;">Probabilmente chiusa</span>
+                </div>`;
+            }
+        }
+        // Show active session duration when going to background
+        if (e.type === 'app_foreground' && e.timestamp) {
+            // Find next background event
+            let nextBg = null;
+            for (let j = i + 1; j < events.length; j++) {
+                if (events[j].type === 'app_background') { nextBg = events[j]; break; }
+                if (events[j].type === 'app_foreground') break;
+            }
+            if (nextBg && nextBg.timestamp) {
+                const activeMs = new Date(nextBg.timestamp) - new Date(e.timestamp);
+                const activeMin = Math.round(activeMs / 60000);
+                if (activeMin > 0) {
+                    const activeLabel = activeMin >= 60 ? Math.floor(activeMin / 60) + 'h ' + (activeMin % 60) + 'min' : activeMin + ' min';
+                    html += `<div style="display:flex;align-items:center;gap:8px;font-size:11px;padding:2px 0 2px 30px;color:var(--text-muted);font-style:italic;">
+                        <span>~ ${activeLabel} di sessione attiva</span>
+                    </div>`;
+                }
+            }
+        }
+    }
+
+    // Final status indicator
+    if (events.length > 0) {
+        const lastEvent = events[events.length - 1];
+        if (lastEvent.type === 'app_background') {
+            html += `<div style="margin-top:8px;padding:8px 12px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:6px;font-size:11px;color:var(--text-muted);">
+                <strong style="color:#f87171;">Probabilmente chiusa</strong> — L'ultimo evento della giornata è "App in background" senza un successivo ritorno in primo piano.
+                iOS/Android non inviano notifiche quando l'utente chiude l'app (swipe), quindi non possiamo distinguere tra "in background" e "chiusa".
+                Se non ci sono altri eventi dopo, l'utente ha probabilmente chiuso l'app.
+            </div>`;
+        } else if (lastEvent.type === 'app_foreground') {
+            html += `<div style="margin-top:8px;padding:8px 12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:6px;font-size:11px;color:var(--text-muted);">
+                <strong style="color:#10b981;">Sessione ancora attiva</strong> — L'ultimo evento è "App in primo piano" senza un successivo background.
+            </div>`;
+        }
+    }
+
     html += `</div>`;
 
     container.innerHTML = html;
