@@ -1137,9 +1137,14 @@ async function loadBehaviorData() {
 function setupBehaviorRangeButtons() {
     const fmtDate = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
     const now = new Date();
-    document.getElementById('behaviorDateTo').value = fmtDate(now);
+    const todayStr = fmtDate(now);
+    const fromEl = document.getElementById('behaviorDateFrom');
+    const toEl = document.getElementById('behaviorDateTo');
+    toEl.value = todayStr;
+    toEl.max = todayStr;
+    fromEl.max = todayStr;
     const weekAgo = new Date(now); weekAgo.setDate(now.getDate() - 6);
-    document.getElementById('behaviorDateFrom').value = fmtDate(weekAgo);
+    fromEl.value = fmtDate(weekAgo);
 
     document.querySelectorAll('.report-btn[data-behavior-range]').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -2432,6 +2437,10 @@ async function loadReportData() {
 
     // Set date inputs to range
     const days = data.days;
+    const rFmtDate = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    const rToday = rFmtDate(new Date());
+    document.getElementById('reportDateFrom').max = rToday;
+    document.getElementById('reportDateTo').max = rToday;
     if (days.length > 0) {
         document.getElementById('reportDateFrom').value = days[0].date;
         document.getElementById('reportDateTo').value = days[days.length - 1].date;
