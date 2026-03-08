@@ -23,7 +23,7 @@ jobs:
       - name: Add server to known hosts
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -H 77.42.1.116 >> ~/.ssh/known_hosts
+          ssh-keyscan -p 49222 -H 77.42.1.116 >> ~/.ssh/known_hosts
 
       - name: Deploy to server
         run: |
@@ -40,7 +40,7 @@ jobs:
             --exclude='server.js' \
             --exclude='package.json' \
             --exclude='serviceAccountKey.json' \
-            -e "ssh -o StrictHostKeyChecking=no" \
+            -e "ssh -p 49222 -o StrictHostKeyChecking=no" \
             ./ \
             root@77.42.1.116:/var/www/drape-dev.it/
 

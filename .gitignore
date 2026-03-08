@@ -4,6 +4,7 @@ Screenshot*.png
 
 # Secrets - MAI committare
 serviceAccountKey.json
+.backup-server/
 *.pem
 *.p12
 .env
