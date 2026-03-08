@@ -858,6 +858,80 @@ app.get('/admin/stats/behavior/events', async (req, res) => {
   }
 });
 
+// GET /admin/stats/behavior/user/:email/events?date=YYYY-MM-DD - Per-user daily event timeline
+app.get('/admin/stats/behavior/user/:email/events', async (req, res) => {
+  try {
+    const email = decodeURIComponent(req.params.email);
+    const date = req.query.date || new Date().toISOString().split('T')[0];
+
+    // Query user_events for this email on this date
+    const dayStart = new Date(date + 'T00:00:00Z');
+    const dayEnd = new Date(date + 'T23:59:59.999Z');
+
+    const snapshot = await db.collection('user_events')
+      .where('email', '==', email)
+      .where('timestamp', '>=', dayStart)
+      .where('timestamp', '<=', dayEnd)
+      .orderBy('timestamp', 'asc')
+      .get();
+
+    const events = [];
+    let totalActiveMs = 0;
+    let lastForeground = null;
+
+    snapshot.forEach(doc => {
+      const d = doc.data();
+      const ts = d.timestamp?.toDate?.() || null;
+      events.push({
+        type: d.type,
+        screen: d.screen || null,
+        timestamp: ts?.toISOString() || null,
+        time: ts ? ts.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : null
+      });
+
+      // Calculate active time from foreground/background pairs
+      if (d.type === 'app_foreground' && ts) {
+        lastForeground = ts.getTime();
+      }
+      if (d.type === 'app_background' && ts && lastForeground) {
+        const duration = ts.getTime() - lastForeground;
+        if (duration > 0 && duration < 12 * 60 * 60 * 1000) {
+          totalActiveMs += duration;
+        }
+        lastForeground = null;
+      }
+    });
+
+    // If user is still in foreground (no background event yet), count until now
+    if (lastForeground && date === new Date().toISOString().split('T')[0]) {
+      const sinceOpen = Date.now() - lastForeground;
+      if (sinceOpen > 0 && sinceOpen < 12 * 60 * 60 * 1000) {
+        totalActiveMs += sinceOpen;
+      }
+    }
+
+    // Count screens visited
+    const screenCounts = {};
+    events.filter(e => e.type === 'screen_view').forEach(e => {
+      screenCounts[e.screen] = (screenCounts[e.screen] || 0) + 1;
+    });
+
+    const totalActiveMin = Math.round(totalActiveMs / 60000);
+
+    res.json({
+      email,
+      date,
+      totalEvents: events.length,
+      totalActiveMin,
+      screenCounts,
+      events
+    });
+  } catch (error) {
+    console.error('[Admin User Events] Error:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // GET /admin/stats/behavior/user/:email - Per-user behavior detail
 app.get('/admin/stats/behavior/user/:email', async (req, res) => {
   try {

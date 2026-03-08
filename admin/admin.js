@@ -1473,16 +1473,28 @@ window.openUserBehaviorModal = async function(email) {
     // Activity timeline (last days active)
     if (data.activityDays && data.activityDays.length > 0) {
         const recent = data.activityDays.slice(-14);
-        html += `<div>
+        html += `<div style="margin-bottom:20px;">
             <h4 style="margin-bottom:12px;font-size:14px;color:var(--text);">Ultimi Giorni Attivi</h4>
             <div style="display:flex;gap:4px;flex-wrap:wrap;">`;
         recent.forEach(d => {
-            html += `<div style="background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);border-radius:6px;padding:6px 12px;text-align:center;">
+            html += `<div style="background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);border-radius:6px;padding:6px 12px;text-align:center;cursor:pointer;" onclick="loadUserDayTimeline('${email}', '${d.date}')">
                 <div style="font-size:12px;font-weight:600;color:var(--text);">${new Date(d.date).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}</div>
             </div>`;
         });
         html += `</div></div>`;
     }
+
+    // Daily event timeline section with date picker
+    const today = new Date().toISOString().split('T')[0];
+    html += `<div style="margin-bottom:20px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+            <h4 style="margin:0;font-size:14px;color:var(--text);">Timeline Giornaliera</h4>
+            <input type="date" id="userTimelineDate" value="${today}" max="${today}"
+                style="background:var(--bg-tertiary);border:1px solid var(--border);border-radius:6px;padding:4px 8px;color:var(--text);font-size:12px;"
+                onchange="loadUserDayTimeline('${email.replace(/'/g, "\\'")}', this.value)">
+        </div>
+        <div id="userDayTimeline" style="color:var(--text-muted);font-size:13px;">Seleziona un giorno per vedere le attività.</div>
+    </div>`;
 
     body.innerHTML = html;
 
@@ -1507,6 +1519,74 @@ window.openUserBehaviorModal = async function(email) {
             }
         });
     }
+};
+
+// Load per-user daily event timeline
+window.loadUserDayTimeline = async function(email, date) {
+    const container = document.getElementById('userDayTimeline');
+    if (!container) return;
+
+    // Update date picker if called from day chip
+    const datePicker = document.getElementById('userTimelineDate');
+    if (datePicker) datePicker.value = date;
+
+    container.innerHTML = '<div class="loading"><div class="loading-spinner"></div></div>';
+
+    const data = await apiCall('/admin/stats/behavior/user/' + encodeURIComponent(email) + '/events?date=' + date);
+    if (!data || data.totalEvents === 0) {
+        container.innerHTML = '<p style="color:var(--text-muted);font-size:13px;">Nessuna attività registrata per questo giorno.</p>';
+        return;
+    }
+
+    const screenLabels = {
+        home: 'Home', terminal: 'Editor', create: 'Crea Progetto',
+        settings: 'Impostazioni', plans: 'Piani/Prezzi', allProjects: 'Tutti i Progetti',
+        auth: 'Login', onboarding: 'Onboarding'
+    };
+    const eventIcons = {
+        screen_view: '📱', app_foreground: '🟢', app_background: '🔴'
+    };
+    const eventLabels = {
+        screen_view: 'Ha aperto', app_foreground: 'App in primo piano', app_background: 'App in background'
+    };
+
+    let html = '';
+
+    // Summary bar
+    html += `<div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
+        <div style="background:var(--bg-tertiary);border-radius:6px;padding:8px 14px;font-size:12px;">
+            <span style="color:var(--text-muted);">Tempo attivo:</span>
+            <strong style="color:var(--primary);margin-left:4px;">${data.totalActiveMin > 0 ? data.totalActiveMin + ' min' : '-'}</strong>
+        </div>
+        <div style="background:var(--bg-tertiary);border-radius:6px;padding:8px 14px;font-size:12px;">
+            <span style="color:var(--text-muted);">Eventi:</span>
+            <strong style="color:var(--text);margin-left:4px;">${data.totalEvents}</strong>
+        </div>`;
+    // Screen counts
+    Object.entries(data.screenCounts || {}).forEach(([screen, count]) => {
+        html += `<div style="background:var(--bg-tertiary);border-radius:6px;padding:8px 14px;font-size:12px;">
+            <span style="color:var(--text-muted);">${screenLabels[screen] || screen}:</span>
+            <strong style="color:var(--text);margin-left:4px;">${count}x</strong>
+        </div>`;
+    });
+    html += `</div>`;
+
+    // Event timeline
+    html += `<div style="border-left:2px solid var(--border);padding-left:16px;display:flex;flex-direction:column;gap:8px;">`;
+    data.events.forEach(e => {
+        const icon = eventIcons[e.type] || '•';
+        let label = eventLabels[e.type] || e.type;
+        if (e.type === 'screen_view') label += ' <strong style="color:var(--text);">' + (screenLabels[e.screen] || e.screen) + '</strong>';
+
+        html += `<div style="display:flex;align-items:center;gap:8px;font-size:12px;">
+            <span style="font-size:14px;">${icon}</span>
+            <span style="color:var(--text-muted);font-family:monospace;min-width:60px;">${e.time || ''}</span>
+            <span style="color:var(--text);">${label}</span>
+        </div>`;
+    });
+    html += `</div>`;
+
+    container.innerHTML = html;
 };
 
 // Show user list popup when clicking stat cards
