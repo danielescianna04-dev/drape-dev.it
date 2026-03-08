@@ -1485,7 +1485,8 @@ window.openUserBehaviorModal = async function(email) {
     }
 
     // Daily event timeline section with date picker
-    const today = new Date().toISOString().split('T')[0];
+    const _tn = new Date();
+    const today = `${_tn.getFullYear()}-${String(_tn.getMonth() + 1).padStart(2, '0')}-${String(_tn.getDate()).padStart(2, '0')}`;
     html += `<div style="margin-bottom:20px;">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
             <h4 style="margin:0;font-size:14px;color:var(--text);">Timeline Giornaliera</h4>
@@ -1588,7 +1589,15 @@ window.loadUserDayTimeline = async function(email, date) {
         publish_share: '📤', publish_open_url: '🔗', unpublish: '🚫',
         // Plans UI
         plans_view: '💳', plans_close: '✖️', billing_cycle_change: '🔄', legal_view: '📜',
-        notification_toggle: '🔔'
+        notification_toggle: '🔔',
+        // Panel close
+        panel_close: '✖️',
+        // Git import
+        git_import_cancel: '❌', git_import_confirm: '✅',
+        // File search
+        file_search: '🔍', browse_files: '📂',
+        // Settings modals
+        settings_modal_open: '⚙️', settings_modal_close: '✖️'
     };
     const eventLabels = {
         screen_view: 'Ha aperto', app_foreground: 'App in primo piano', app_background: 'App in background',
@@ -1610,7 +1619,7 @@ window.loadUserDayTimeline = async function(email, date) {
         project_duplicate: 'Progetto duplicato', project_share: 'Progetto condiviso',
         project_filter: 'Filtro progetti', project_bulk_delete: 'Eliminazione multipla',
         // Tab management
-        tab_switch: 'Cambio tab', tab_close: 'Tab chiuso',
+        tab_switch: 'Cambio tab log', tab_close: 'Tab chiuso',
         // Chat operations
         chat_select: 'Chat selezionata', chat_delete: 'Chat eliminata',
         chat_rename: 'Chat rinominata', chat_pin: 'Chat fissata', chat_move_folder: 'Chat spostata in cartella',
@@ -1640,10 +1649,18 @@ window.loadUserDayTimeline = async function(email, date) {
         // Plans UI
         plans_view: 'Ha aperto piani', plans_close: 'Ha chiuso piani',
         billing_cycle_change: 'Cambio ciclo', legal_view: 'Ha aperto legale',
-        notification_toggle: 'Toggle notifica'
+        notification_toggle: 'Toggle notifica',
+        // Panel close
+        panel_close: 'Pannello chiuso',
+        // Git import
+        git_import_cancel: 'Import Git annullato', git_import_confirm: 'Import Git confermato',
+        // File search
+        file_search: 'Ricerca file', browse_files: 'Sfoglia file locali',
+        // Settings modals
+        settings_modal_open: 'Modale aperta', settings_modal_close: 'Modale chiusa'
     };
     const panelLabels = {
-        files: 'File', chat: 'Chat', preview: 'Preview', terminal: 'Terminale',
+        files: 'File', chat: 'Chat', preview: 'Preview', terminal: 'Logs',
         git: 'Git', envVars: 'Variabili Ambiente'
     };
 
@@ -1751,6 +1768,11 @@ window.loadUserDayTimeline = async function(email, date) {
         if (e.type === 'billing_cycle_change' && e.cycle) label += ' <strong style="color:var(--text);">' + e.cycle + '</strong>';
         if (e.type === 'legal_view' && e.legalType) label += ' <strong style="color:var(--text);">' + (e.legalType === 'privacy' ? 'Privacy Policy' : 'Termini di servizio') + '</strong>';
         if (e.type === 'notification_toggle') { if (e.notificationType) label += ' <strong style="color:var(--text);">' + e.notificationType + '</strong>'; label += ' <span style="color:var(--text-muted);">(' + (e.enabled === 'true' ? 'attivato' : 'disattivato') + ')</span>'; }
+        if (e.type === 'panel_close' && e.panel) label += ' <strong style="color:var(--text);">' + (panelLabels[e.panel] || e.panel) + '</strong>';
+        if (e.type === 'git_import_confirm' && e.repoUrl) label += ' <strong style="color:var(--primary);">' + e.repoUrl + '</strong>';
+        if (e.type === 'file_search' && e.query) label += ' <strong style="color:var(--text);">"' + e.query + '"</strong>' + (e.mode ? ' <span style="color:var(--text-muted);">(' + e.mode + ')</span>' : '');
+        if (e.type === 'settings_modal_open' && e.modal) label += ' <strong style="color:var(--text);">' + e.modal + '</strong>';
+        if (e.type === 'settings_modal_close' && e.modal) label += ' <strong style="color:var(--text);">' + e.modal + '</strong>';
 
         html += `<div style="display:flex;align-items:center;gap:8px;font-size:12px;">
             <span style="font-size:14px;">${icon}</span>
@@ -1813,6 +1835,13 @@ window.loadUserDayTimeline = async function(email, date) {
     }
 
     html += `</div>`;
+
+    // Refresh button at bottom of timeline
+    html += `<div style="margin-top:16px;text-align:center;">
+        <button onclick="loadUserDayTimeline('${email.replace(/'/g, "\\'")}', document.getElementById('userTimelineDate').value)"
+            style="background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;padding:8px 20px;color:var(--text);font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;"
+            title="Aggiorna timeline">🔄 Aggiorna</button>
+    </div>`;
 
     container.innerHTML = html;
 };

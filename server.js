@@ -862,7 +862,8 @@ app.get('/admin/stats/behavior/events', async (req, res) => {
 app.get('/admin/stats/behavior/user/:email/events', async (req, res) => {
   try {
     const email = decodeURIComponent(req.params.email);
-    const date = req.query.date || new Date().toISOString().split('T')[0];
+    const _now = new Date();
+    const date = req.query.date || `${_now.getFullYear()}-${String(_now.getMonth() + 1).padStart(2, '0')}-${String(_now.getDate()).padStart(2, '0')}`;
 
     // Query user_events for this email on this date
     const dayStart = new Date(date + 'T00:00:00Z');
@@ -930,6 +931,8 @@ app.get('/admin/stats/behavior/user/:email/events', async (req, res) => {
       if (d.cycle) event.cycle = d.cycle;
       if (d.legalType) event.legalType = d.legalType;
       if (d.notificationType) event.notificationType = d.notificationType;
+      if (d.query) event.query = d.query;
+      if (d.modal) event.modal = d.modal;
       events.push(event);
 
       // Calculate active time from foreground/background pairs
@@ -946,7 +949,9 @@ app.get('/admin/stats/behavior/user/:email/events', async (req, res) => {
     });
 
     // If user is still in foreground (no background event yet), count until now
-    if (lastForeground && date === new Date().toISOString().split('T')[0]) {
+    const _todayCheck = new Date();
+    const _todayStr = `${_todayCheck.getFullYear()}-${String(_todayCheck.getMonth() + 1).padStart(2, '0')}-${String(_todayCheck.getDate()).padStart(2, '0')}`;
+    if (lastForeground && date === _todayStr) {
       const sinceOpen = Date.now() - lastForeground;
       if (sinceOpen > 0 && sinceOpen < 12 * 60 * 60 * 1000) {
         totalActiveMs += sinceOpen;
