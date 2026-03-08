@@ -1851,12 +1851,15 @@ window.showBehaviorUserList = function(type) {
     const data = window._behaviorData;
     if (!data) return;
 
+    const today = new Date();
+    const todayStr = today.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
     let title = '';
     let users = [];
 
     switch (type) {
         case 'dau':
-            title = 'Utenti Attivi Oggi';
+            title = 'Utenti Attivi Oggi — ' + todayStr;
             users = data.retention?.dauEmails || [];
             break;
         case 'wau':
@@ -1878,7 +1881,7 @@ window.showBehaviorUserList = function(type) {
     }
 
     // Normalize: support both string[] and {email,name}[] formats
-    const userList = users.map(u => typeof u === 'string' ? { email: u, name: '' } : u);
+    const userList = users.map(u => typeof u === 'string' ? { email: u, name: '', plan: 'free', lastLogin: '', createdAt: '' } : u);
 
     const modal = document.getElementById('userBehaviorModal');
     const titleEl = document.getElementById('userBehaviorModalTitle');
@@ -1893,16 +1896,41 @@ window.showBehaviorUserList = function(type) {
         return;
     }
 
+    const formatRelative = (dateStr) => {
+        if (!dateStr) return '';
+        const d = new Date(dateStr);
+        const diff = Date.now() - d.getTime();
+        const mins = Math.floor(diff / 60000);
+        if (mins < 1) return 'adesso';
+        if (mins < 60) return mins + ' min fa';
+        const hrs = Math.floor(mins / 60);
+        if (hrs < 24) return hrs + 'h fa';
+        const days = Math.floor(hrs / 24);
+        if (days < 7) return days + 'g fa';
+        return d.toLocaleDateString('it-IT', { day: '2-digit', month: 'short' });
+    };
+
+    const planColors = { free: '#71717a', starter: '#71717a', go: '#3b82f6', pro: '#a855f7' };
+
     body.innerHTML = `<div style="display:flex;flex-direction:column;gap:6px;">
-        ${userList.map(u => `
-            <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg-tertiary);border-radius:8px;cursor:pointer;" onclick="openUserBehaviorModal('${u.email.replace(/'/g, "\\'")}')">
-                <div class="user-cell-avatar" style="width:32px;height:32px;font-size:13px;">${(u.name || u.email || 'U')[0].toUpperCase()}</div>
-                <div style="min-width:0;">
-                    ${u.name ? `<div style="font-size:13px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${u.name}</div>` : ''}
-                    <div style="font-size:${u.name ? '11' : '13'}px;color:var(--primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${u.email}</div>
+        ${userList.map(u => {
+            const plan = u.plan || 'free';
+            const planColor = planColors[plan] || '#71717a';
+            return `
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-tertiary);border-radius:8px;cursor:pointer;" onclick="openUserBehaviorModal('${u.email.replace(/'/g, "\\'")}')">
+                <div class="user-cell-avatar" style="width:36px;height:36px;font-size:14px;">${(u.name || u.email || 'U')[0].toUpperCase()}</div>
+                <div style="flex:1;min-width:0;">
+                    <div style="display:flex;align-items:center;gap:6px;">
+                        <span style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${u.name || u.email?.split('@')[0] || 'Unknown'}</span>
+                        <span style="font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;background:${planColor}20;color:${planColor};text-transform:uppercase;flex-shrink:0;">${plan}</span>
+                    </div>
+                    <div style="font-size:11px;color:var(--primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${u.email}</div>
                 </div>
-            </div>
-        `).join('')}
+                <div style="text-align:right;flex-shrink:0;">
+                    ${u.lastLogin ? `<div style="font-size:11px;color:var(--text-muted);">${formatRelative(u.lastLogin)}</div>` : ''}
+                </div>
+            </div>`;
+        }).join('')}
     </div>`;
 };
 
