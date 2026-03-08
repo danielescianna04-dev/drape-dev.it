@@ -1128,12 +1128,53 @@ async function loadBehaviorData() {
     window._behaviorAllUsers = data.allUsers || [];
     renderEngagementTable(window._behaviorAllUsers);
 
-    // Load in-app events tracking data
+    // Load in-app events tracking data + setup range buttons
+    setupBehaviorRangeButtons();
     loadEventsData();
 }
 
-async function loadEventsData() {
-    const data = await apiCall('/admin/stats/behavior/events');
+// Behavior range filter
+function setupBehaviorRangeButtons() {
+    const fmtDate = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    const now = new Date();
+    document.getElementById('behaviorDateTo').value = fmtDate(now);
+    const weekAgo = new Date(now); weekAgo.setDate(now.getDate() - 6);
+    document.getElementById('behaviorDateFrom').value = fmtDate(weekAgo);
+
+    document.querySelectorAll('.report-btn[data-behavior-range]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.report-btn[data-behavior-range]').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const range = btn.dataset.behaviorRange;
+            const to = new Date();
+            let from = null;
+            if (range === 'today') { from = new Date(to); }
+            else if (range === '7d') { from = new Date(to); from.setDate(to.getDate() - 6); }
+            else if (range === '30d') { from = new Date(to); from.setDate(to.getDate() - 29); }
+            else if (range === '90d') { from = new Date(to); from.setDate(to.getDate() - 89); }
+            if (from) {
+                document.getElementById('behaviorDateFrom').value = fmtDate(from);
+                document.getElementById('behaviorDateTo').value = fmtDate(to);
+            }
+            loadEventsData(range === 'all' ? null : fmtDate(from), range === 'all' ? null : fmtDate(to));
+        });
+    });
+
+    document.getElementById('behaviorApplyDates')?.addEventListener('click', () => {
+        document.querySelectorAll('.report-btn[data-behavior-range]').forEach(b => b.classList.remove('active'));
+        const from = document.getElementById('behaviorDateFrom').value;
+        const to = document.getElementById('behaviorDateTo').value;
+        loadEventsData(from || null, to || null);
+    });
+}
+
+async function loadEventsData(from, to) {
+    let url = '/admin/stats/behavior/events';
+    const params = [];
+    if (from) params.push('from=' + from);
+    if (to) params.push('to=' + to);
+    if (params.length) url += '?' + params.join('&');
+    const data = await apiCall(url);
     if (!data || data.totalEvents === 0) return;
 
     // Show events section

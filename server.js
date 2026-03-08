@@ -822,14 +822,18 @@ let eventsCache = null;
 let eventsCacheTime = 0;
 app.get('/admin/stats/behavior/events', async (req, res) => {
   try {
-    if (eventsCache && Date.now() - eventsCacheTime < 60000) {
+    const fromDate = req.query.from ? new Date(req.query.from + 'T00:00:00') : null;
+    const toDate = req.query.to ? new Date(req.query.to + 'T23:59:59.999') : null;
+    const hasFilters = fromDate || toDate;
+
+    if (!hasFilters && eventsCache && Date.now() - eventsCacheTime < 60000) {
       return res.json(eventsCache);
     }
 
-    const snapshot = await db.collection('user_events')
-      .orderBy('timestamp', 'desc')
-      .limit(5000)
-      .get();
+    let query = db.collection('user_events').orderBy('timestamp', 'desc');
+    if (fromDate) query = query.where('timestamp', '>=', fromDate);
+    if (toDate) query = query.where('timestamp', '<=', toDate);
+    const snapshot = await query.limit(10000).get();
 
     const screenCounts = {};
     const typeCounts = {};
@@ -894,8 +898,10 @@ app.get('/admin/stats/behavior/events', async (req, res) => {
       platforms: platformCounts,
     };
 
-    eventsCache = result;
-    eventsCacheTime = Date.now();
+    if (!hasFilters) {
+      eventsCache = result;
+      eventsCacheTime = Date.now();
+    }
     res.json(result);
   } catch (error) {
     console.error('[Admin Events] Error:', error.message);
