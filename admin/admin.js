@@ -1558,7 +1558,31 @@ window.loadUserDayTimeline = async function(email, date) {
         publish: '🚀', publish_success: '🎉', publish_error: '💥',
         new_chat: '➕', chat_minimize: '🔽', model_select: '🧠', file_open: '📄',
         grid_button: '⊞', chat_open_preview: '💬', inspect_mode: '🔍',
-        element_selected: '🎯', viewport_change: '🖥️', git_import: '📥'
+        element_selected: '🎯', viewport_change: '🖥️', git_import: '📥',
+        // Auth
+        login: '🔑', register: '📝', forgot_password: '🔐', logout: '🚪', delete_account: '🗑️',
+        // Project operations
+        project_delete: '🗑️', project_rename: '✏️', project_duplicate: '📋', project_share: '📤',
+        project_filter: '🔍', project_bulk_delete: '🗑️',
+        // Tab management
+        tab_switch: '🔀', tab_close: '✖️',
+        // Chat operations
+        chat_select: '💬', chat_delete: '🗑️', chat_rename: '✏️', chat_pin: '📌', chat_move_folder: '📁',
+        // File operations
+        file_create: '📄', file_delete: '🗑️', file_rename: '✏️',
+        // Git operations
+        git_action: '🔀', git_commit: '📝', git_checkout: '🔀',
+        git_auth: '🔗', git_auth_success: '✅', git_auth_error: '❌',
+        git_account_remove: '🔓', git_repo_connect: '🔗', git_repo_import: '📥',
+        // Env vars
+        env_var_add: '➕', env_var_delete: '🗑️',
+        // Settings
+        language_change: '🌐', password_change: '🔒', password_change_error: '❌',
+        email_change: '✉️', email_change_error: '❌', name_change: '👤', restore_purchases: '🔄',
+        // Plan & IAP
+        plan_select: '💳', purchase_start: '🛒', purchase_success: '✅', purchase_error: '❌',
+        // Publish extras
+        publish_share: '📤', publish_open_url: '🔗', unpublish: '🚫'
     };
     const eventLabels = {
         screen_view: 'Ha aperto', app_foreground: 'App in primo piano', app_background: 'App in background',
@@ -1571,7 +1595,38 @@ window.loadUserDayTimeline = async function(email, date) {
         new_chat: 'Nuova chat', chat_minimize: 'Chat toggle', model_select: 'Cambio modello', file_open: 'File aperto',
         grid_button: 'Tasto 4 quadratini', chat_open_preview: 'Chat aperta da preview',
         inspect_mode: 'Seleziona elemento', element_selected: 'Elemento selezionato',
-        viewport_change: 'Cambio vista', git_import: 'Import da Git'
+        viewport_change: 'Cambio vista', git_import: 'Import da Git',
+        // Auth
+        login: 'Login', register: 'Registrazione', forgot_password: 'Password dimenticata',
+        logout: 'Logout', delete_account: 'Account eliminato',
+        // Project operations
+        project_delete: 'Progetto eliminato', project_rename: 'Progetto rinominato',
+        project_duplicate: 'Progetto duplicato', project_share: 'Progetto condiviso',
+        project_filter: 'Filtro progetti', project_bulk_delete: 'Eliminazione multipla',
+        // Tab management
+        tab_switch: 'Cambio tab', tab_close: 'Tab chiuso',
+        // Chat operations
+        chat_select: 'Chat selezionata', chat_delete: 'Chat eliminata',
+        chat_rename: 'Chat rinominata', chat_pin: 'Chat fissata', chat_move_folder: 'Chat spostata in cartella',
+        // File operations
+        file_create: 'File creato', file_delete: 'File eliminato', file_rename: 'File rinominato',
+        // Git operations
+        git_action: 'Azione Git', git_commit: 'Git commit', git_checkout: 'Git checkout',
+        git_auth: 'Auth Git', git_auth_success: 'Auth Git riuscita', git_auth_error: 'Errore auth Git',
+        git_account_remove: 'Account Git rimosso', git_repo_connect: 'Repo Git collegato',
+        git_repo_import: 'Import repo Git',
+        // Env vars
+        env_var_add: 'Variabile aggiunta', env_var_delete: 'Variabile eliminata',
+        // Settings
+        language_change: 'Lingua cambiata', password_change: 'Password cambiata',
+        password_change_error: 'Errore cambio password', email_change: 'Email cambiata',
+        email_change_error: 'Errore cambio email', name_change: 'Nome cambiato',
+        restore_purchases: 'Ripristino acquisti',
+        // Plan & IAP
+        plan_select: 'Piano selezionato', purchase_start: 'Acquisto avviato',
+        purchase_success: 'Acquisto completato', purchase_error: 'Errore acquisto',
+        // Publish extras
+        publish_share: 'Sito condiviso', publish_open_url: 'Sito aperto', unpublish: 'Sito rimosso'
     };
     const panelLabels = {
         files: 'File', chat: 'Chat', preview: 'Preview', terminal: 'Terminale',
@@ -1628,6 +1683,51 @@ window.loadUserDayTimeline = async function(email, date) {
         if (e.type === 'inspect_mode') label += ' <span style="color:var(--text-muted);">(' + (e.enabled === 'true' ? 'attivato' : 'disattivato') + ')</span>';
         if (e.type === 'element_selected' && e.selector) label += ' <strong style="color:var(--text);">' + e.selector + '</strong>';
         if (e.type === 'viewport_change' && e.mode) label += ' <strong style="color:var(--text);">' + (e.mode === 'desktop' ? '🖥️ Computer' : '📱 Telefono') + '</strong>';
+        // Auth
+        if (e.type === 'login' && e.method) label += ' <span style="color:var(--text-muted);">(' + e.method + ')</span>';
+        // Project operations
+        if (e.type === 'project_delete' && e.projectName) label += ' <strong style="color:#ef4444;">' + e.projectName + '</strong>';
+        if (e.type === 'project_rename') { if (e.oldName) label += ' <span style="color:var(--text-muted);">' + e.oldName + '</span> → <strong style="color:var(--primary);">' + (e.newName || '') + '</strong>'; }
+        if (e.type === 'project_duplicate' && e.projectName) label += ' <strong style="color:var(--primary);">' + e.projectName + '</strong>';
+        if (e.type === 'project_share' && e.projectName) label += ' <strong style="color:var(--primary);">' + e.projectName + '</strong>';
+        if (e.type === 'project_filter' && e.filter) label += ' <strong style="color:var(--text);">' + e.filter + '</strong>';
+        if (e.type === 'project_bulk_delete' && e.count) label += ' <span style="color:#ef4444;">(' + e.count + ' progetti)</span>';
+        // Tab management
+        if (e.type === 'tab_switch' && e.tabType) label += ' <strong style="color:var(--text);">' + e.tabType + '</strong>';
+        if (e.type === 'tab_close' && e.tabType) label += ' <strong style="color:var(--text);">' + e.tabType + '</strong>';
+        // Chat operations
+        if (e.type === 'chat_select' && e.chatTitle) label += ' <strong style="color:var(--text);">' + e.chatTitle + '</strong>';
+        if (e.type === 'chat_rename' && e.newTitle) label += ' → <strong style="color:var(--primary);">' + e.newTitle + '</strong>';
+        if (e.type === 'chat_pin') label += ' <span style="color:var(--text-muted);">(' + (e.pinned === 'true' ? 'fissata' : 'sfissata') + ')</span>';
+        // File operations
+        if (e.type === 'file_create') { label += (e.fileType === 'folder' ? ' 📁' : ' 📄'); if (e.fileName) label += ' <strong style="color:var(--primary);">' + e.fileName + '</strong>'; }
+        if (e.type === 'file_delete' && e.fileName) label += ' <strong style="color:#ef4444;">' + e.fileName + '</strong>';
+        if (e.type === 'file_rename') { if (e.oldName) label += ' <span style="color:var(--text-muted);">' + e.oldName + '</span> → <strong style="color:var(--primary);">' + (e.newName || '') + '</strong>'; }
+        // Git operations
+        if (e.type === 'git_action' && e.action) label += ' <strong style="color:var(--text);">' + e.action + '</strong>';
+        if (e.type === 'git_checkout' && e.branch) label += ' <strong style="color:var(--primary);">' + e.branch + '</strong>';
+        if (e.type === 'git_auth' && e.provider) label += ' <strong style="color:var(--text);">' + e.provider + '</strong>';
+        if (e.type === 'git_auth_success' && e.provider) label += ' <strong style="color:#22c55e;">' + e.provider + '</strong>';
+        if (e.type === 'git_auth_error') { if (e.provider) label += ' <strong style="color:#ef4444;">' + e.provider + '</strong>'; if (e.errorMessage) label += ' <span style="color:#ef4444;font-size:11px;">' + e.errorMessage.substring(0, 80) + '</span>'; }
+        if (e.type === 'git_account_remove' && e.provider) label += ' <strong style="color:var(--text);">' + e.provider + '</strong>';
+        if (e.type === 'git_repo_connect' && e.repoUrl) label += ' <strong style="color:var(--primary);">' + e.repoUrl + '</strong>';
+        if (e.type === 'git_repo_import' && e.repoName) label += ' <strong style="color:var(--primary);">' + e.repoName + '</strong>';
+        // Env vars
+        if (e.type === 'env_var_add' && e.key) label += ' <strong style="color:var(--primary);">' + e.key + '</strong>';
+        if (e.type === 'env_var_delete' && e.key) label += ' <strong style="color:#ef4444;">' + e.key + '</strong>';
+        // Settings
+        if (e.type === 'language_change' && e.language) label += ' <strong style="color:var(--text);">' + e.language + '</strong>';
+        if (e.type === 'password_change_error' && e.errorMessage) label += ' <span style="color:#ef4444;font-size:11px;">' + e.errorMessage.substring(0, 80) + '</span>';
+        if (e.type === 'email_change_error' && e.errorMessage) label += ' <span style="color:#ef4444;font-size:11px;">' + e.errorMessage.substring(0, 80) + '</span>';
+        // Plan & IAP
+        if (e.type === 'plan_select' && e.plan) label += ' <strong style="color:var(--primary);">' + e.plan + '</strong>';
+        if (e.type === 'purchase_start' && e.productId) label += ' <span style="color:var(--text-muted);">(' + e.productId + ')</span>';
+        if (e.type === 'purchase_success') { if (e.plan) label += ' <strong style="color:#22c55e;">' + e.plan + '</strong>'; if (e.productId) label += ' <span style="color:var(--text-muted);">(' + e.productId + ')</span>'; }
+        if (e.type === 'purchase_error') { if (e.productId) label += ' <span style="color:var(--text-muted);">(' + e.productId + ')</span>'; if (e.errorType) label += ' <span style="color:#ef4444;font-size:11px;">' + e.errorType + '</span>'; }
+        // Publish extras
+        if (e.type === 'publish_share' && e.slug) label += ' <strong style="color:var(--primary);">' + e.slug + '</strong>';
+        if (e.type === 'publish_open_url' && e.slug) label += ' <strong style="color:var(--primary);">' + e.slug + '</strong>';
+        if (e.type === 'unpublish' && e.slug) label += ' <strong style="color:#ef4444;">' + e.slug + '</strong>';
 
         html += `<div style="display:flex;align-items:center;gap:8px;font-size:12px;">
             <span style="font-size:14px;">${icon}</span>

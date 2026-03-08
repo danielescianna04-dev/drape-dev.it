@@ -882,12 +882,51 @@ app.get('/admin/stats/behavior/user/:email/events', async (req, res) => {
     snapshot.forEach(doc => {
       const d = doc.data();
       const ts = d.timestamp?.toDate?.() || null;
-      events.push({
+      const event = {
         type: d.type,
         screen: d.screen || null,
         timestamp: ts?.toISOString() || null,
         time: ts ? ts.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : null
-      });
+      };
+      if (d.projectName) event.projectName = d.projectName;
+      if (d.language) event.language = d.language;
+      if (d.mode) event.mode = d.mode;
+      if (d.panel) event.panel = d.panel;
+      if (d.tab) event.tab = d.tab;
+      if (d.model) event.model = d.model;
+      if (d.agentMode) event.agentMode = d.agentMode;
+      if (d.errorMessage) event.errorMessage = d.errorMessage;
+      if (d.context) event.context = d.context;
+      if (d.slug) event.slug = d.slug;
+      if (d.url) event.url = d.url;
+      if (d.chatType) event.chatType = d.chatType;
+      if (d.collapsed) event.collapsed = d.collapsed;
+      if (d.fileName) event.fileName = d.fileName;
+      if (d.description) event.description = d.description;
+      if (d.enabled) event.enabled = d.enabled;
+      if (d.selector) event.selector = d.selector;
+      // New tracking fields
+      if (d.method) event.method = d.method;
+      if (d.oldName) event.oldName = d.oldName;
+      if (d.newName) event.newName = d.newName;
+      if (d.fileType) event.fileType = d.fileType;
+      if (d.tabType) event.tabType = d.tabType;
+      if (d.chatTitle) event.chatTitle = d.chatTitle;
+      if (d.newTitle) event.newTitle = d.newTitle;
+      if (d.pinned) event.pinned = d.pinned;
+      if (d.action) event.action = d.action;
+      if (d.branch) event.branch = d.branch;
+      if (d.provider) event.provider = d.provider;
+      if (d.repoUrl) event.repoUrl = d.repoUrl;
+      if (d.repoName) event.repoName = d.repoName;
+      if (d.key) event.key = d.key;
+      if (d.language) event.language = d.language;
+      if (d.productId) event.productId = d.productId;
+      if (d.plan) event.plan = d.plan;
+      if (d.errorType) event.errorType = d.errorType;
+      if (d.filter) event.filter = d.filter;
+      if (d.count) event.count = d.count;
+      events.push(event);
 
       // Calculate active time from foreground/background pairs
       if (d.type === 'app_foreground' && ts) {
