@@ -1492,6 +1492,9 @@ window.openUserBehaviorModal = async function(email) {
             <input type="date" id="userTimelineDate" value="${today}" max="${today}"
                 style="background:var(--bg-tertiary);border:1px solid var(--border);border-radius:6px;padding:4px 8px;color:var(--text);font-size:12px;"
                 onchange="loadUserDayTimeline('${email.replace(/'/g, "\\'")}', this.value)">
+            <button onclick="loadUserDayTimeline('${email.replace(/'/g, "\\'")}', document.getElementById('userTimelineDate').value)"
+                style="background:var(--bg-tertiary);border:1px solid var(--border);border-radius:6px;padding:4px 10px;color:var(--text);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:4px;"
+                title="Aggiorna timeline">🔄 Aggiorna</button>
         </div>
         <div id="userDayTimeline" style="color:var(--text-muted);font-size:13px;">Seleziona un giorno per vedere le attività.</div>
     </div>`;
@@ -1519,6 +1522,9 @@ window.openUserBehaviorModal = async function(email) {
             }
         });
     }
+
+    // Auto-load today's timeline
+    loadUserDayTimeline(email, today);
 };
 
 // Load per-user daily event timeline
@@ -1550,17 +1556,22 @@ window.loadUserDayTimeline = async function(email, date) {
         preview_start: '▶️', preview_ready: '✅', preview_refresh: '🔄', preview_stop: '⏹️',
         preview_error: '🚫', preview_fix_ai: '🤖',
         publish: '🚀', publish_success: '🎉', publish_error: '💥',
-        new_chat: '➕', chat_minimize: '🔽', model_select: '🧠', file_open: '📄'
+        new_chat: '➕', chat_minimize: '🔽', model_select: '🧠', file_open: '📄',
+        grid_button: '⊞', chat_open_preview: '💬', inspect_mode: '🔍',
+        element_selected: '🎯', viewport_change: '🖥️', git_import: '📥'
     };
     const eventLabels = {
         screen_view: 'Ha aperto', app_foreground: 'App in primo piano', app_background: 'App in background',
-        project_open: 'Ha aperto progetto', project_create: 'Ha creato progetto',
+        project_open: 'Ha aperto progetto', project_create: 'Progetto creato',
         panel_open: 'Ha aperto pannello', tab_open: 'Ha aperto tab',
         chat_message: 'Messaggio chat', chat_terminal_command: 'Comando terminale', error: 'Errore',
         preview_start: 'Preview avviata', preview_ready: 'Preview pronta', preview_refresh: 'Preview aggiornata',
         preview_stop: 'Preview fermata', preview_error: 'Errore preview', preview_fix_ai: 'Fix con AI',
         publish: 'Pubblicazione avviata', publish_success: 'Pubblicato', publish_error: 'Errore pubblicazione',
-        new_chat: 'Nuova chat', chat_minimize: 'Chat toggle', model_select: 'Cambio modello', file_open: 'File aperto'
+        new_chat: 'Nuova chat', chat_minimize: 'Chat toggle', model_select: 'Cambio modello', file_open: 'File aperto',
+        grid_button: 'Tasto 4 quadratini', chat_open_preview: 'Chat aperta da preview',
+        inspect_mode: 'Seleziona elemento', element_selected: 'Elemento selezionato',
+        viewport_change: 'Cambio vista', git_import: 'Import da Git'
     };
     const panelLabels = {
         files: 'File', chat: 'Chat', preview: 'Preview', terminal: 'Terminale',
@@ -1600,6 +1611,7 @@ window.loadUserDayTimeline = async function(email, date) {
         if (e.type === 'project_create') {
             if (e.projectName) label += ' <strong style="color:var(--primary);">' + e.projectName + '</strong>';
             if (e.language) label += ' <span style="color:var(--text-muted);">(' + e.language + ', ' + (e.mode || 'default') + ')</span>';
+            if (e.description) label += '<br/><span style="color:var(--text-muted);font-size:11px;margin-left:82px;">📝 ' + e.description.substring(0, 100) + '</span>';
         }
         if (e.type === 'panel_open' && e.panel) label += ' <strong style="color:var(--text);">' + (panelLabels[e.panel] || e.panel) + '</strong>';
         if (e.type === 'chat_message' && e.model) label += ' <span style="color:var(--text-muted);">(' + e.model + ', ' + (e.agentMode || '') + ')</span>';
@@ -1613,6 +1625,9 @@ window.loadUserDayTimeline = async function(email, date) {
         if (e.type === 'chat_minimize') label += ' <span style="color:var(--text-muted);">(' + (e.collapsed || '') + ')</span>';
         if (e.type === 'model_select' && e.model) label += ' <strong style="color:var(--text);">' + e.model + '</strong>';
         if (e.type === 'file_open' && e.fileName) label += ' <strong style="color:var(--text);">' + e.fileName + '</strong>';
+        if (e.type === 'inspect_mode') label += ' <span style="color:var(--text-muted);">(' + (e.enabled === 'true' ? 'attivato' : 'disattivato') + ')</span>';
+        if (e.type === 'element_selected' && e.selector) label += ' <strong style="color:var(--text);">' + e.selector + '</strong>';
+        if (e.type === 'viewport_change' && e.mode) label += ' <strong style="color:var(--text);">' + (e.mode === 'desktop' ? '🖥️ Computer' : '📱 Telefono') + '</strong>';
 
         html += `<div style="display:flex;align-items:center;gap:8px;font-size:12px;">
             <span style="font-size:14px;">${icon}</span>
