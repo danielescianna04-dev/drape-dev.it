@@ -1078,6 +1078,21 @@ async function loadBehaviorData() {
     document.getElementById('behaviorNewUsers7d').textContent = data.newUsers7d?.count || 0;
     document.getElementById('behaviorPaidPercent').textContent = (data.paidPercent || 0) + '%';
 
+    // Date labels on cards
+    const now = new Date();
+    const fmtShort = (d) => d.getDate() + '/' + (d.getMonth() + 1);
+
+    const dauLabel = document.getElementById('behaviorDAULabel');
+    if (dauLabel) dauLabel.textContent = 'Attivi Oggi — ' + now.getDate() + '/' + (now.getMonth() + 1);
+
+    const weekStart = new Date(now); weekStart.setDate(now.getDate() - 6);
+    const wauLabel = document.getElementById('behaviorWAULabel');
+    if (wauLabel) wauLabel.textContent = 'Attivi Settimana — ' + fmtShort(weekStart) + ' – ' + fmtShort(now);
+
+    const monthStart = new Date(now); monthStart.setDate(now.getDate() - 29);
+    const mauLabel = document.getElementById('behaviorMAULabel');
+    if (mauLabel) mauLabel.textContent = 'Attivi Mese — ' + fmtShort(monthStart) + ' – ' + fmtShort(now);
+
     const wauTrend = data.retention?.wauTrend || 0;
     const trendEl = document.getElementById('behaviorWAUTrend');
     if (trendEl) {
@@ -1926,8 +1941,9 @@ window.showBehaviorUserList = function(type) {
                     </div>
                     <div style="font-size:11px;color:var(--primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${u.email}</div>
                 </div>
-                <div style="text-align:right;flex-shrink:0;">
+                <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
                     ${u.lastLogin ? `<div style="font-size:11px;color:var(--text-muted);">${formatRelative(u.lastLogin)}</div>` : ''}
+                    <button onclick="event.stopPropagation(); openUserBehaviorModal('${u.email.replace(/'/g, "\\'")}')" style="background:var(--primary);color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;">Dettagli</button>
                 </div>
             </div>`;
         }).join('')}
