@@ -1544,10 +1544,19 @@ window.loadUserDayTimeline = async function(email, date) {
         auth: 'Login', onboarding: 'Onboarding'
     };
     const eventIcons = {
-        screen_view: '📱', app_foreground: '🟢', app_background: '🔴'
+        screen_view: '📱', app_foreground: '🟢', app_background: '🔴',
+        project_open: '📂', project_create: '🆕', panel_open: '🔲',
+        tab_open: '📑', chat_message: '💬', chat_terminal_command: '⌨️', error: '❌'
     };
     const eventLabels = {
-        screen_view: 'Ha aperto', app_foreground: 'App in primo piano', app_background: 'App in background'
+        screen_view: 'Ha aperto', app_foreground: 'App in primo piano', app_background: 'App in background',
+        project_open: 'Ha aperto progetto', project_create: 'Ha creato progetto',
+        panel_open: 'Ha aperto pannello', tab_open: 'Ha aperto tab',
+        chat_message: 'Messaggio chat', chat_terminal_command: 'Comando terminale', error: 'Errore'
+    };
+    const panelLabels = {
+        files: 'File', chat: 'Chat', preview: 'Preview', terminal: 'Terminale',
+        git: 'Git', envVars: 'Variabili Ambiente'
     };
 
     let html = '';
@@ -1577,6 +1586,15 @@ window.loadUserDayTimeline = async function(email, date) {
         const icon = eventIcons[e.type] || '•';
         let label = eventLabels[e.type] || e.type;
         if (e.type === 'screen_view') label += ' <strong style="color:var(--text);">' + (screenLabels[e.screen] || e.screen) + '</strong>';
+        if (e.type === 'project_open' && e.projectName) label += ' <strong style="color:var(--primary);">' + e.projectName + '</strong>';
+        if (e.type === 'project_create') {
+            if (e.projectName) label += ' <strong style="color:var(--primary);">' + e.projectName + '</strong>';
+            if (e.language) label += ' <span style="color:var(--text-muted);">(' + e.language + ', ' + (e.mode || 'default') + ')</span>';
+        }
+        if (e.type === 'panel_open' && e.panel) label += ' <strong style="color:var(--text);">' + (panelLabels[e.panel] || e.panel) + '</strong>';
+        if (e.type === 'chat_message' && e.model) label += ' <span style="color:var(--text-muted);">(' + e.model + ', ' + (e.agentMode || '') + ')</span>';
+        if (e.type === 'error' && e.errorMessage) label += ' <span style="color:#ef4444;font-size:11px;">' + e.errorMessage.substring(0, 80) + '</span>';
+        if (e.type === 'error' && e.context) label += ' <span style="color:var(--text-muted);">in ' + e.context + '</span>';
 
         html += `<div style="display:flex;align-items:center;gap:8px;font-size:12px;">
             <span style="font-size:14px;">${icon}</span>
