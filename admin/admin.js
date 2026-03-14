@@ -574,12 +574,12 @@ async function loadUsersData() {
         return;
     }
 
-    // Sort: online first, then ascending by lastLogin (least recently active first)
+    // Sort: online first, then descending by lastLogin (most recently active first)
     users.sort((a, b) => {
         if (a.isOnline !== b.isOnline) return a.isOnline ? -1 : 1;
         const aT = a.lastLogin ? new Date(a.lastLogin).getTime() : 0;
         const bT = b.lastLogin ? new Date(b.lastLogin).getTime() : 0;
-        return aT - bT;
+        return bT - aT;
     });
 
     // Country code to flag emoji helper
@@ -631,7 +631,7 @@ async function loadUsersData() {
             </td>
             <td data-label="Posizione">${locationHtml}</td>
             <td data-label="Registrato">${formatDate(user.createdAt)}</td>
-            <td data-label="Ultimo accesso">${formatDate(user.lastLogin)}</td>
+            <td data-label="Ultimo accesso">${user.lastLogin ? new Date(user.lastLogin).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-'}</td>
             <td data-label="Utilizzo AI">
                 <div style="display:flex;align-items:center;gap:8px;">
                     <div class="progress-bar" style="flex:1;height:6px;">
