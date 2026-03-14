@@ -558,31 +558,56 @@ async function loadSessionsTable(cachedPresence = null) {
 // USERS PAGE
 // ============================================
 
-async function loadUsersData() {
-    const tbody = document.getElementById('usersTableBody');
-    const response = await apiCall('/admin/users');
-    const users = response?.users || response; // Support both new {users} and old array format
+function applyUsersFilters() {
+    const users = window._allUsersData || [];
+    const search = (document.getElementById('userSearch')?.value || '').toLowerCase();
+    const plan = document.getElementById('planFilter')?.value || '';
+    const status = document.getElementById('statusFilter')?.value || '';
+    const activity = document.getElementById('activityFilter')?.value || '';
+    const sort = document.getElementById('sortFilter')?.value || 'newest';
 
-    if (!users || !Array.isArray(users) || users.length === 0) {
-        tbody.innerHTML = `
-            <tr>
-                <td colspan="8" class="empty-state">
-                    <h4>Nessun utente trovato</h4>
-                </td>
-            </tr>
-        `;
+    let filtered = users.filter(u => {
+        if (search && !(u.email || '').toLowerCase().includes(search) && !(u.displayName || '').toLowerCase().includes(search)) return false;
+        if (plan && (u.plan || 'free').toLowerCase() !== plan) return false;
+        if (status === 'online' && !u.isOnline) return false;
+        if (status === 'offline' && u.isOnline) return false;
+        if (activity === 'active' && !u.hasActivity) return false;
+        if (activity === 'inactive' && u.hasActivity) return false;
+        return true;
+    });
+
+    if (sort === 'newest') {
+        filtered.sort((a, b) => {
+            const aT = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+            const bT = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+            return bT - aT;
+        });
+    } else if (sort === 'oldest') {
+        filtered.sort((a, b) => {
+            const aT = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+            const bT = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+            return aT - bT;
+        });
+    } else if (sort === 'active') {
+        filtered.sort((a, b) => {
+            if (a.isOnline !== b.isOnline) return a.isOnline ? -1 : 1;
+            const aT = a.lastLogin ? new Date(a.lastLogin).getTime() : 0;
+            const bT = b.lastLogin ? new Date(b.lastLogin).getTime() : 0;
+            return bT - aT;
+        });
+    }
+
+    renderUsersTable(filtered);
+}
+
+function renderUsersTable(users) {
+    const tbody = document.getElementById('usersTableBody');
+    if (!tbody) return;
+    if (users.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="empty-state"><h4>Nessun utente trovato</h4></td></tr>';
         return;
     }
 
-    // Sort: online first, then descending by lastLogin (most recently active first)
-    users.sort((a, b) => {
-        if (a.isOnline !== b.isOnline) return a.isOnline ? -1 : 1;
-        const aT = a.lastLogin ? new Date(a.lastLogin).getTime() : 0;
-        const bT = b.lastLogin ? new Date(b.lastLogin).getTime() : 0;
-        return bT - aT;
-    });
-
-    // Country code to flag emoji helper
     function countryFlag(code) {
         if (!code || code.length !== 2) return '';
         return String.fromCodePoint(...[...code.toUpperCase()].map(c => 0x1F1E6 + c.charCodeAt(0) - 65));
@@ -594,7 +619,6 @@ async function loadUsersData() {
         const statusLabel = user.isOnline ? 'Online' : (user.lastActiveAt ? formatTimeAgo(new Date(user.lastActiveAt)) : formatDate(user.lastLogin));
         const statusClass = user.isOnline ? 'active' : 'inactive';
 
-        // Location display
         const loc = user.location;
         let locationHtml = '<span style="color:var(--text-muted);font-size:12px;">-</span>';
         if (loc && (loc.city || loc.country)) {
@@ -646,11 +670,32 @@ async function loadUsersData() {
             </td>
         </tr>`;
     }).join('');
+}
 
-    // Setup search
-    document.getElementById('userSearch')?.addEventListener('input', (e) => {
-        filterTable('usersTableBody', e.target.value);
+async function loadUsersData() {
+    const tbody = document.getElementById('usersTableBody');
+    const response = await apiCall('/admin/users');
+    const users = response?.users || response;
+
+    if (!users || !Array.isArray(users) || users.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="empty-state"><h4>Nessun utente trovato</h4></td></tr>';
+        return;
+    }
+
+    // Mark users with any activity (lastLogin more than just registration)
+    users.forEach(u => {
+        u.hasActivity = !!(u.lastActiveAt || (u.lastLogin && u.createdAt && u.lastLogin !== u.createdAt));
     });
+
+    window._allUsersData = users;
+
+    // Wire up all filters
+    ['userSearch', 'planFilter', 'statusFilter', 'activityFilter', 'sortFilter'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener(id === 'userSearch' ? 'input' : 'change', applyUsersFilters);
+    });
+
+    applyUsersFilters();
 }
 
 // ============================================

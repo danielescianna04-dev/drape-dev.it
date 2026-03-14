@@ -1151,6 +1151,39 @@ app.get('/admin/stats/behavior/user/:email', async (req, res) => {
       }
     });
 
+    // If no user_events, fall back to legacy collections
+    if (userEventsSnapshot.size === 0) {
+      const [presenceLogSnapshot, aiUsageSnapshot, operationsSnapshot] = await Promise.all([
+        db.collection('presence_log').get(),
+        db.collection('ai_usage').get(),
+        db.collection('operations').get()
+      ]);
+      presenceLogSnapshot.forEach(doc => {
+        const emails = doc.data().activeEmails || [];
+        if (emails.includes(email)) activityDaysSet[doc.id] = true;
+      });
+      aiUsageSnapshot.forEach(doc => {
+        const d = doc.data();
+        if (d.userId !== uid && d.userId !== email) return;
+        totalAiCalls++;
+        const model = d.model || 'Unknown';
+        let label = model;
+        if (model.includes('claude')) label = 'Claude';
+        else if (model.includes('gpt')) label = 'GPT';
+        else if (model.includes('gemini')) label = 'Gemini';
+        else if (model.includes('deepseek')) label = 'DeepSeek';
+        else if (model.includes('groq')) label = 'Groq';
+        aiByModel[label] = (aiByModel[label] || 0) + 1;
+        const ts = d.timestamp?.toDate ? d.timestamp.toDate() : new Date(d.timestamp);
+        aiByDate[localDateStr(ts)] = (aiByDate[localDateStr(ts)] || 0) + 1;
+      });
+      operationsSnapshot.forEach(doc => {
+        const d = doc.data();
+        if (d.userId !== uid && d.userId !== email) return;
+        opsByType[d.type || 'unknown'] = (opsByType[d.type || 'unknown'] || 0) + 1;
+      });
+    }
+
     const activityDays = Object.keys(activityDaysSet).sort().map(date => ({ date }));
 
     // Projects

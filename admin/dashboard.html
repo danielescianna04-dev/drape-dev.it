@@ -319,6 +319,21 @@
                         <option value="pro">Pro</option>
                         <option value="team">Team</option>
                     </select>
+                    <select class="filter-select" id="statusFilter">
+                        <option value="">Tutti gli stati</option>
+                        <option value="online">Online</option>
+                        <option value="offline">Offline</option>
+                    </select>
+                    <select class="filter-select" id="activityFilter">
+                        <option value="">Tutta l'attività</option>
+                        <option value="active">Con attività</option>
+                        <option value="inactive">Senza attività</option>
+                    </select>
+                    <select class="filter-select" id="sortFilter">
+                        <option value="newest">Ultimi registrati</option>
+                        <option value="oldest">Primi registrati</option>
+                        <option value="active">Più recentemente attivi</option>
+                    </select>
                 </div>
 
                 <div class="card">
@@ -1022,6 +1037,6 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="admin.js?v=36" type="module"></script>
+    <script data-cfasync="false" src="admin.js?v=37" type="module"></script>
 </body>
 </html>
