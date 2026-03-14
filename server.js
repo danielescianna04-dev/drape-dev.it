@@ -940,9 +940,10 @@ app.get('/admin/stats/behavior/user/:email/events', async (req, res) => {
     const _now = new Date();
     const date = req.query.date || `${_now.getFullYear()}-${String(_now.getMonth() + 1).padStart(2, '0')}-${String(_now.getDate()).padStart(2, '0')}`;
 
-    // Query user_events for this email on this date
-    const dayStart = new Date(date + 'T00:00:00Z');
-    const dayEnd = new Date(date + 'T23:59:59.999Z');
+    // Query user_events for this email on this date (use local time to match localDateStr)
+    const [y, m, d] = date.split('-').map(Number);
+    const dayStart = new Date(y, m - 1, d, 0, 0, 0, 0);
+    const dayEnd = new Date(y, m - 1, d, 23, 59, 59, 999);
 
     const snapshot = await db.collection('user_events')
       .where('email', '==', email)
