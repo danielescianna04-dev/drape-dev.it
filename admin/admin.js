@@ -1126,6 +1126,7 @@ async function loadBehaviorData() {
 
     // Engagement table (all users)
     window._behaviorAllUsers = data.allUsers || [];
+    window._behaviorOnlineEmails = new Set((data.retention?.dauEmails || []).map(u => u.email));
     renderEngagementTable(window._behaviorAllUsers);
 
     // Load in-app events tracking data + setup range buttons
@@ -1428,23 +1429,27 @@ function renderEngagementTable(users) {
         return;
     }
 
-    tbody.innerHTML = users.map((u, i) => `
+    const onlineSet = window._behaviorOnlineEmails || new Set();
+    tbody.innerHTML = users.map((u, i) => {
+        const isOnline = onlineSet.has(u.email);
+        const lastLoginStr = u.lastLogin ? new Date(u.lastLogin).toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: '2-digit' }) : '—';
+        return `
         <tr style="cursor:pointer;" onclick="openUserBehaviorModal('${u.email.replace(/'/g, "\\'")}')">
             <td data-label="#" style="font-weight:700;color:var(--text-muted);">${i + 1}</td>
             <td data-label="Utente">
                 <div class="user-cell" style="gap:8px;">
                     <div class="user-cell-avatar" style="width:28px;height:28px;font-size:12px;">${(u.email || 'U')[0].toUpperCase()}</div>
                     <div class="user-cell-info">
-                        <div style="font-size:13px;color:var(--primary);text-decoration:underline;text-decoration-color:rgba(168,85,247,0.3);text-underline-offset:2px;">${u.email}</div>
+                        <div style="font-size:13px;color:var(--primary);text-decoration:underline;text-decoration-color:rgba(168,85,247,0.3);text-underline-offset:2px;">${u.email}${isOnline ? ' <span style="display:inline-block;width:7px;height:7px;background:#22c55e;border-radius:50%;vertical-align:middle;margin-left:4px;" title="Online oggi"></span>' : ''}</div>
                     </div>
                 </div>
             </td>
             <td data-label="Sessioni" style="text-align:center;">${u.sessions}</td>
             <td data-label="AI Calls" style="text-align:center;">${u.aiCalls}</td>
             <td data-label="Progetti" style="text-align:center;">${u.projects}</td>
-            <td data-label="Score" style="text-align:center;"><span style="font-weight:700;color:var(--primary);">${u.score}</span></td>
-        </tr>
-    `).join('');
+            <td data-label="Ultimo accesso" style="text-align:center;font-size:12px;color:var(--text-muted);">${lastLoginStr}</td>
+        </tr>`;
+    }).join('');
 }
 
 // Search filter for behavior table

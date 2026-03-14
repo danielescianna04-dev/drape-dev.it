@@ -722,14 +722,15 @@ app.get('/admin/stats/behavior', async (req, res) => {
         userEngagement[email].projects++;
       });
 
-      // Calculate composite score and rank
+      // Calculate composite score (sort deferred until after emailToDetail is built)
       const engagementScores = Object.entries(userEngagement).map(([email, m]) => ({
         email,
         sessions: m.sessions,
         aiCalls: m.aiCalls,
         projects: m.projects,
-        score: (m.sessions * 1) + (m.aiCalls * 2) + (m.projects * 3)
-      })).sort((a, b) => b.score - a.score);
+        score: (m.sessions * 1) + (m.aiCalls * 2) + (m.projects * 3),
+        lastLogin: ''
+      }));
 
       // === NEW USERS (last 7 days) ===
       const sevenDaysAgo = new Date(todayDate);
@@ -781,6 +782,30 @@ app.get('/admin/stats/behavior', async (req, res) => {
       const newUsersEmails = newUsers7d.map(u => enrichEmail(u.email || '')).filter(u => u.email);
       const paidUsersList = paidEmails.map(enrichEmail);
 
+      // Enrich scores with lastLogin + include all auth users (score=0 for inactive)
+      const engagedEmailsSet = new Set(engagementScores.map(u => u.email));
+      engagementScores.forEach(u => {
+        u.lastLogin = (emailToDetail[u.email] || {}).lastLogin || '';
+      });
+      authUsers.forEach(u => {
+        if (u.email && !engagedEmailsSet.has(u.email)) {
+          engagementScores.push({
+            email: u.email, sessions: 0, aiCalls: 0, projects: 0, score: 0,
+            lastLogin: (emailToDetail[u.email] || {}).lastLogin || ''
+          });
+        }
+      });
+      // Sort: online today first, then ascending by lastLogin (least recently active first)
+      const todayEmailsSet = new Set(todayEmails.map(u => u.email));
+      engagementScores.sort((a, b) => {
+        const aOn = todayEmailsSet.has(a.email) ? 0 : 1;
+        const bOn = todayEmailsSet.has(b.email) ? 0 : 1;
+        if (aOn !== bOn) return aOn - bOn;
+        const aT = a.lastLogin ? new Date(a.lastLogin).getTime() : 0;
+        const bT = b.lastLogin ? new Date(b.lastLogin).getTime() : 0;
+        return aT - bT;
+      });
+
       const result = {
         retention: {
           dau, wau, mau, wauTrend,
@@ -804,7 +829,7 @@ app.get('/admin/stats/behavior', async (req, res) => {
           data: topFrameworks.map(([, v]) => v)
         },
         allUsers: engagementScores,
-        totalEngagedUsers: engagementScores.length
+        totalEngagedUsers: engagementScores.filter(u => u.score > 0).length
       };
 
       behaviorCache.data = result;
@@ -1008,6 +1033,36 @@ app.get('/admin/stats/behavior/user/:email/events', async (req, res) => {
       if (sinceOpen > 0 && sinceOpen < 12 * 60 * 60 * 1000) {
         totalActiveMs += sinceOpen;
       }
+    }
+
+    // Fallback: if no user_events, read from legacy ai_usage + operations
+    if (events.length === 0) {
+      const userMetadata = await getCachedUsersMetadata();
+      let uid = null;
+      for (const [id, data] of Object.entries(userMetadata)) {
+        if (data.email === email) { uid = id; break; }
+      }
+      const [aiSnap, opsSnap] = await Promise.all([
+        db.collection('ai_usage').where('timestamp', '>=', dayStart).where('timestamp', '<=', dayEnd).get(),
+        db.collection('operations').where('timestamp', '>=', dayStart).where('timestamp', '<=', dayEnd).get()
+      ]);
+      aiSnap.forEach(doc => {
+        const d = doc.data();
+        if (d.userId !== uid && d.userId !== email) return;
+        const ts = d.timestamp?.toDate?.() || null;
+        events.push({ type: 'chat_message', model: d.model || null,
+          timestamp: ts?.toISOString() || null,
+          time: ts ? ts.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : null });
+      });
+      opsSnap.forEach(doc => {
+        const d = doc.data();
+        if (d.userId !== uid && d.userId !== email) return;
+        const ts = d.timestamp?.toDate?.() || null;
+        events.push({ type: d.type || 'operation',
+          timestamp: ts?.toISOString() || null,
+          time: ts ? ts.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : null });
+      });
+      events.sort((a, b) => (a.timestamp || '').localeCompare(b.timestamp || ''));
     }
 
     // Count screens visited
