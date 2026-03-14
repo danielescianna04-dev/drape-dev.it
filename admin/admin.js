@@ -574,6 +574,14 @@ async function loadUsersData() {
         return;
     }
 
+    // Sort: online first, then ascending by lastLogin (least recently active first)
+    users.sort((a, b) => {
+        if (a.isOnline !== b.isOnline) return a.isOnline ? -1 : 1;
+        const aT = a.lastLogin ? new Date(a.lastLogin).getTime() : 0;
+        const bT = b.lastLogin ? new Date(b.lastLogin).getTime() : 0;
+        return aT - bT;
+    });
+
     // Country code to flag emoji helper
     function countryFlag(code) {
         if (!code || code.length !== 2) return '';
