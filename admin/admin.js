@@ -597,6 +597,11 @@ function applyUsersFilters() {
         });
     }
 
+    // Update count in table header
+    const total = (window._allUsersData || []).length;
+    const header = document.querySelector('#users-page .card-header h3');
+    if (header) header.textContent = filtered.length === total ? `Lista Utenti (${total})` : `Lista Utenti (${filtered.length} / ${total})`;
+
     renderUsersTable(filtered);
 }
 

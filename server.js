@@ -302,13 +302,29 @@ app.get('/admin/users', async (req, res) => {
       }
     } catch (e) { console.error('[AI Spending] Error:', e.message); }
 
-    // Get online users from presence
+    // Get online users from presence + last event times in parallel
     const presenceCutoff = new Date(Date.now() - 45 * 1000);
-    const presenceSnapshot = await db.collection('presence')
-      .where('lastSeen', '>=', presenceCutoff)
-      .get();
+    const [presenceSnapshot, recentEventsSnapshot] = await Promise.all([
+      db.collection('presence')
+        .where('lastSeen', '>=', presenceCutoff)
+        .get(),
+      db.collection('user_events')
+        .orderBy('timestamp', 'desc')
+        .limit(1000)
+        .select('email', 'timestamp')
+        .get()
+    ]);
     const onlineUserIds = new Set();
     presenceSnapshot.forEach(doc => onlineUserIds.add(doc.id));
+
+    // Build map of last event time per email
+    const lastEventMap = {};
+    recentEventsSnapshot.forEach(doc => {
+      const d = doc.data();
+      const email = d.email;
+      if (!email || lastEventMap[email]) return; // already have most recent (ordered desc)
+      lastEventMap[email] = d.timestamp?.toDate ? d.timestamp.toDate() : new Date(d.timestamp);
+    });
 
     const users = authUsers.map(user => {
       const metadata = userMetadata[user.uid] || {};
@@ -319,6 +335,10 @@ app.get('/admin/users', async (req, res) => {
       const isOnline = onlineUserIds.has(user.uid);
       const lastActiveAt = metadata.lastActiveAt?.toDate?.()?.toISOString() || metadata.lastActiveAt || null;
 
+      // Use latest event time, falling back to lastActiveAt, then Firebase lastSignInTime
+      const lastEvent = lastEventMap[user.email];
+      const lastLogin = lastEvent?.toISOString() || lastActiveAt || user.metadata.lastSignInTime;
+
       const location = metadata.lastKnownLocation || null;
 
       return {
@@ -328,7 +348,7 @@ app.get('/admin/users', async (req, res) => {
         photoURL: user.photoURL,
         plan,
         createdAt: user.metadata.creationTime,
-        lastLogin: user.metadata.lastSignInTime,
+        lastLogin,
         lastActiveAt,
         isOnline,
         aiSpent,
