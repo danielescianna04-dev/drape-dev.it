@@ -389,26 +389,38 @@ app.get('/admin/users', async (req, res) => {
     });
 
     // Orphaned Firestore users (deleted from Auth but data still in Firestore)
+    // Deduplicate by email — same email with multiple orphan UIDs = one entry
+    const orphanByEmail = {};
     for (const [uid, meta] of Object.entries(userMetadata)) {
       if (authUidSet.has(uid)) continue;
       const email = meta.email || meta.emailAddress || null;
-      const plan = meta.plan || meta.subscriptionPlan || 'free';
+      const key = email || uid; // use UID as key if no email
       const createdAt = meta.createdAt?.toDate?.()?.toISOString() || meta.createdAt || null;
-      users.push(buildUser(uid, email, meta.displayName || meta.name, plan, createdAt, false));
+      // Keep the most recent orphan per email
+      if (!orphanByEmail[key] || (createdAt && (!orphanByEmail[key].createdAt || createdAt > orphanByEmail[key].createdAt))) {
+        orphanByEmail[key] = { uid, email, displayName: meta.displayName || meta.name, plan: meta.plan || meta.subscriptionPlan || 'free', createdAt };
+      }
+    }
+    for (const o of Object.values(orphanByEmail)) {
+      users.push(buildUser(o.uid, o.email, o.displayName, o.plan, o.createdAt, false));
     }
 
     // Fully deleted accounts (not in Auth, not in Firestore users, but have delete_account events)
+    // Deduplicate by email — same email deleted multiple times = one entry
     const includedUids = new Set(users.map(u => u.id));
+    const includedEmails = new Set(users.map(u => u.email).filter(Boolean));
     const deletedFromEvents = {};
     deleteEventsSnapshot.forEach(doc => {
       const d = doc.data();
-      if (!d.userId || includedUids.has(d.userId)) return;
-      if (!deletedFromEvents[d.userId]) {
-        deletedFromEvents[d.userId] = { email: d.email, ts: d.timestamp?.toDate?.()?.toISOString() || null };
+      if (!d.userId || !d.email || includedUids.has(d.userId) || includedEmails.has(d.email)) return;
+      const ts = d.timestamp?.toDate ? d.timestamp.toDate() : new Date(d.timestamp);
+      // Keep the most recent delete event per email
+      if (!deletedFromEvents[d.email] || ts > deletedFromEvents[d.email].ts) {
+        deletedFromEvents[d.email] = { uid: d.userId, ts, email: d.email };
       }
     });
-    for (const [uid, info] of Object.entries(deletedFromEvents)) {
-      users.push(buildUser(uid, info.email, null, 'free', null, false));
+    for (const info of Object.values(deletedFromEvents)) {
+      users.push(buildUser(info.uid, info.email, null, 'free', null, false));
     }
 
     // Sort by creation date (newest first)
