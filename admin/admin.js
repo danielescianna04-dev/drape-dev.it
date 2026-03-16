@@ -2015,6 +2015,11 @@ window.loadUserDayTimeline = async function(email, date) {
     html += `</div>`;
 
     // Refresh button at bottom of timeline
+    html += `<div style="margin-top:16px;text-align:center;">
+        <button onclick="loadUserDayTimeline('${email.replace(/'/g, "\\'")}', document.getElementById('userTimelineDate').value)"
+            style="background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;padding:8px 20px;color:var(--text);font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;"
+            title="Aggiorna timeline">🔄 Aggiorna</button>
+    </div>`;
     container.innerHTML = html;
 };
 

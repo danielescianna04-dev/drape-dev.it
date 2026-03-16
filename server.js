@@ -99,12 +99,15 @@ async function getAllBudgets(userIds) {
       // Single batch call instead of 134+ sequential requests
       const resp = await httpPost(`${APP_BACKEND_URL}/ai/budgets`, { uids: userIds }, 30000);
       if (resp && typeof resp === 'object') {
-        // Extract successful entries
+        const keys = Object.keys(resp);
+        console.log(`[Budget Batch] OK: ${keys.length}/${userIds.length} users`);
         for (const [uid, data] of Object.entries(resp)) {
           if (data && data.success !== false) {
             result[uid] = { success: true, usage: data.usage || data, plan: data.plan || {} };
           }
         }
+      } else {
+        console.error('[Budget Batch] Invalid response:', typeof resp);
       }
     } catch (e) {
       console.error('[Budget Batch] Error:', e.message, '— falling back to individual calls');
@@ -320,6 +323,16 @@ app.get('/admin/users', async (req, res) => {
     try {
       const uids = authUsers.map(u => u.uid);
       const budgets = await getAllBudgets(uids);
+      // Fill missing UIDs from individual calls
+      const missingUids = uids.filter(uid => !budgets[uid]);
+      if (missingUids.length > 0) {
+        for (const uid of missingUids) {
+          try {
+            const data = await httpGet(`${APP_BACKEND_URL}/ai/budget/${uid}`, 5000);
+            if (data && data.success) budgets[uid] = data;
+          } catch (e) { /* skip */ }
+        }
+      }
       for (const user of authUsers) {
         const data = budgets[user.uid];
         if (data && data.success) {
