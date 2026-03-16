@@ -1587,26 +1587,25 @@ window.openUserBehaviorModal = async function(email) {
 
     // Onboarding answers
     const ob = data.onboarding || {};
-    if (ob.completed || ob.experienceLevel || ob.referralSource) {
-        const expLabels = { never_coded: '🧑‍🎓 Mai programmato', no_code: '🧩 Uso tool no-code', developer: '👨‍💻 Sviluppatore' };
-        const refLabels = { tiktok: '🎵 TikTok', instagram: '📸 Instagram', youtube: '▶️ YouTube', friend: '🤝 Amico/Passaparola', appstore: '🍎 App Store', other: '🌐 Altro' };
-        const expText = expLabels[ob.experienceLevel] || ob.experienceLevel || '-';
-        const refText = refLabels[ob.referralSource] || ob.referralSource || '-';
-        const completedDate = ob.completedAt ? new Date(ob.completedAt).toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric' }) : null;
-        html += `<div style="background:var(--bg-tertiary);border-radius:8px;padding:14px;margin-bottom:20px;border-left:3px solid #a855f7;">
-            <div style="font-size:12px;font-weight:600;color:#a855f7;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;">🎯 Risposte Onboarding${completedDate ? ` <span style="font-weight:400;color:var(--text-muted);text-transform:none;">(completato il ${completedDate})</span>` : ''}</div>
-            <div style="display:flex;gap:20px;flex-wrap:wrap;">
-                <div>
-                    <div style="font-size:11px;color:var(--text-muted);margin-bottom:3px;">② Esperienza</div>
-                    <div style="font-size:13px;font-weight:600;color:var(--text);">${expText}</div>
-                </div>
-                <div>
-                    <div style="font-size:11px;color:var(--text-muted);margin-bottom:3px;">③ Da dove ci ha conosciuti</div>
-                    <div style="font-size:13px;font-weight:600;color:var(--text);">${refText}</div>
-                </div>
+    const expLabels = { never_coded: '🧑‍🎓 Mai programmato', no_code: '🧩 Uso tool no-code', developer: '👨‍💻 Sviluppatore' };
+    const refLabels = { tiktok: '🎵 TikTok', instagram: '📸 Instagram', youtube: '▶️ YouTube', friend: '🤝 Amico/Passaparola', appstore: '🍎 App Store', other: '🌐 Altro' };
+    const expText = expLabels[ob.experienceLevel] || ob.experienceLevel || '<span style="color:var(--text-muted);">non disponibile</span>';
+    const refText = refLabels[ob.referralSource] || ob.referralSource || '<span style="color:var(--text-muted);">non disponibile</span>';
+    const completedDate = ob.completedAt ? new Date(ob.completedAt).toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric' }) : null;
+    const obStatus = ob.completed ? `<span style="color:#22c55e;font-weight:600;">✅ Completato${completedDate ? ' il ' + completedDate : ''}</span>` : `<span style="color:#f59e0b;font-weight:600;">⏳ Non completato</span>`;
+    html += `<div style="background:var(--bg-tertiary);border-radius:8px;padding:14px;margin-bottom:20px;border-left:3px solid #a855f7;">
+        <div style="font-size:12px;font-weight:600;color:#a855f7;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;">🎯 Risposte Onboarding &nbsp; ${obStatus}</div>
+        <div style="display:flex;gap:20px;flex-wrap:wrap;">
+            <div>
+                <div style="font-size:11px;color:var(--text-muted);margin-bottom:3px;">② Esperienza</div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);">${expText}</div>
             </div>
-        </div>`;
-    }
+            <div>
+                <div style="font-size:11px;color:var(--text-muted);margin-bottom:3px;">③ Da dove ci ha conosciuti</div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);">${refText}</div>
+            </div>
+        </div>
+    </div>`;
 
     // Summary cards
     html += `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
