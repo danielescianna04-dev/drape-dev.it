@@ -57,32 +57,34 @@ async function httpGetWithRetry(url, retries = 2, timeoutMs = 8000) {
   }
 }
 
-// Shared AI budget cache (avoids hitting rate limiter when multiple endpoints load at once)
+// Shared AI budget cache
 let budgetCache = { data: null, timestamp: 0, promise: null };
-const BUDGET_CACHE_TTL = 60000; // 60 seconds (was 30s)
+const BUDGET_CACHE_TTL = 300000; // 5 minutes — backend rate-limits aggressively
 
 async function getAllBudgets(userIds) {
   const now = Date.now();
-  // Return cached data if fresh
   if (budgetCache.data && (now - budgetCache.timestamp) < BUDGET_CACHE_TTL) {
     return budgetCache.data;
   }
-  // If already fetching, wait for that promise
   if (budgetCache.promise) return budgetCache.promise;
 
   budgetCache.promise = (async () => {
     const result = {};
-    const BATCH_SIZE = 15; // was 5 — fewer batches = faster
+    const BATCH_SIZE = 3; // small batches to avoid rate limiting
+    const BATCH_DELAY = 500; // 500ms between batches
     for (let i = 0; i < userIds.length; i += BATCH_SIZE) {
       const batch = userIds.slice(i, i + BATCH_SIZE);
       await Promise.all(batch.map(uid =>
-        httpGetWithRetry(`${APP_BACKEND_URL}/ai/budget/${uid}`)
-          .then(data => { result[uid] = data; })
+        httpGetWithRetry(`${APP_BACKEND_URL}/ai/budget/${uid}`, 2, 5000)
+          .then(data => {
+            // Only store successful responses, not rate-limit errors
+            if (data && data.success) result[uid] = data;
+            else result[uid] = null;
+          })
           .catch(() => { result[uid] = null; })
       ));
-      // Small delay between batches to avoid rate limiting
       if (i + BATCH_SIZE < userIds.length) {
-        await new Promise(r => setTimeout(r, 50)); // was 100ms
+        await new Promise(r => setTimeout(r, BATCH_DELAY));
       }
     }
     budgetCache.data = result;
