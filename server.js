@@ -1160,17 +1160,20 @@ app.get('/admin/stats/behavior/user/:email', async (req, res) => {
     const email = decodeURIComponent(req.params.email);
     const userMetadata = await getCachedUsersMetadata();
 
-    // Find UID for this email
+    // Find user by email - try Auth first (most reliable), then Firestore
     let uid = null;
-    let userMeta = null;
-    for (const [id, data] of Object.entries(userMetadata)) {
-      if (data.email === email) { uid = id; userMeta = data; break; }
-    }
-
-    // Get auth user info for registration date
     let authUser = null;
-    if (uid) {
-      try { authUser = await auth.getUser(uid); } catch (e) { /* user may not exist */ }
+    let userMeta = null;
+
+    try { authUser = await auth.getUserByEmail(email); } catch (e) { /* not found */ }
+    if (authUser) {
+      uid = authUser.uid;
+      userMeta = userMetadata[uid] || null;
+    } else {
+      // Fallback: search Firestore metadata
+      for (const [id, data] of Object.entries(userMetadata)) {
+        if (data.email === email || data.emailAddress === email) { uid = id; userMeta = data; break; }
+      }
     }
 
     // Read user_events + projects in parallel
