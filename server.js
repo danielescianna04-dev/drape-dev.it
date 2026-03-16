@@ -390,11 +390,25 @@ app.get('/admin/users', async (req, res) => {
 
     // Orphaned Firestore users (deleted from Auth but data still in Firestore)
     for (const [uid, meta] of Object.entries(userMetadata)) {
-      if (authUidSet.has(uid)) continue; // already included
+      if (authUidSet.has(uid)) continue;
       const email = meta.email || meta.emailAddress || null;
       const plan = meta.plan || meta.subscriptionPlan || 'free';
       const createdAt = meta.createdAt?.toDate?.()?.toISOString() || meta.createdAt || null;
       users.push(buildUser(uid, email, meta.displayName || meta.name, plan, createdAt, false));
+    }
+
+    // Fully deleted accounts (not in Auth, not in Firestore users, but have delete_account events)
+    const includedUids = new Set(users.map(u => u.id));
+    const deletedFromEvents = {};
+    deleteEventsSnapshot.forEach(doc => {
+      const d = doc.data();
+      if (!d.userId || includedUids.has(d.userId)) return;
+      if (!deletedFromEvents[d.userId]) {
+        deletedFromEvents[d.userId] = { email: d.email, ts: d.timestamp?.toDate?.()?.toISOString() || null };
+      }
+    });
+    for (const [uid, info] of Object.entries(deletedFromEvents)) {
+      users.push(buildUser(uid, info.email, null, 'free', null, false));
     }
 
     // Sort by creation date (newest first)
