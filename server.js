@@ -70,22 +70,13 @@ async function getAllBudgets(userIds) {
 
   budgetCache.promise = (async () => {
     const result = {};
-    const BATCH_SIZE = 3; // small batches to avoid rate limiting
-    const BATCH_DELAY = 500; // 500ms between batches
-    for (let i = 0; i < userIds.length; i += BATCH_SIZE) {
-      const batch = userIds.slice(i, i + BATCH_SIZE);
-      await Promise.all(batch.map(uid =>
-        httpGetWithRetry(`${APP_BACKEND_URL}/ai/budget/${uid}`, 2, 5000)
-          .then(data => {
-            // Only store successful responses, not rate-limit errors
-            if (data && data.success) result[uid] = data;
-            else result[uid] = null;
-          })
-          .catch(() => { result[uid] = null; })
-      ));
-      if (i + BATCH_SIZE < userIds.length) {
-        await new Promise(r => setTimeout(r, BATCH_DELAY));
-      }
+    // Sequential: 1 request at a time with 150ms delay to avoid rate limiting
+    for (const uid of userIds) {
+      try {
+        const data = await httpGet(`${APP_BACKEND_URL}/ai/budget/${uid}`, 5000);
+        if (data && data.success) result[uid] = data;
+      } catch (e) { /* skip */ }
+      await new Promise(r => setTimeout(r, 150));
     }
     budgetCache.data = result;
     budgetCache.timestamp = Date.now();
