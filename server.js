@@ -302,16 +302,30 @@ app.get('/admin/users', async (req, res) => {
       }
     } catch (e) { console.error('[AI Spending] Error:', e.message); }
 
-    // Get ALL presence data + last event times in parallel
+    // Get ALL presence data + last event times + deleted accounts in parallel
     const presenceCutoff = new Date(Date.now() - 45 * 1000);
-    const [allPresenceSnapshot, recentEventsSnapshot] = await Promise.all([
+    const [allPresenceSnapshot, recentEventsSnapshot, deleteEventsSnapshot] = await Promise.all([
       db.collection('presence').get(),
       db.collection('user_events')
         .orderBy('timestamp', 'desc')
         .limit(1000)
         .select('email', 'timestamp')
+        .get(),
+      db.collection('user_events')
+        .where('type', '==', 'delete_account')
         .get()
     ]);
+
+    // Build map of last delete_account event per email
+    const deletedAccountMap = {};
+    deleteEventsSnapshot.forEach(doc => {
+      const d = doc.data();
+      if (!d.email || !d.timestamp) return;
+      const ts = d.timestamp.toDate ? d.timestamp.toDate() : new Date(d.timestamp);
+      if (!deletedAccountMap[d.email] || ts > deletedAccountMap[d.email]) {
+        deletedAccountMap[d.email] = ts;
+      }
+    });
     const onlineUserIds = new Set();
     const presenceLastSeen = {}; // uid → Date
     allPresenceSnapshot.forEach(doc => {
@@ -349,6 +363,11 @@ app.get('/admin/users', async (req, res) => {
       // AI budget: only real data from app backend, no fallback
       const hasRealBudget = budgetData.spent !== undefined;
 
+      // Deleted: user triggered delete_account AFTER their current registration
+      const deleteTs = deletedAccountMap[user.email];
+      const createdTs = user.metadata.creationTime ? new Date(user.metadata.creationTime) : null;
+      const deleted = !!(deleteTs && createdTs && deleteTs > createdTs);
+
       const location = metadata.lastKnownLocation || null;
 
       return {
@@ -360,6 +379,7 @@ app.get('/admin/users', async (req, res) => {
         createdAt: user.metadata.creationTime,
         lastLogin,
         isOnline,
+        deleted,
         aiSpent: hasRealBudget ? budgetData.spent : null,
         aiLimit: hasRealBudget ? budgetData.limit : null,
         aiPercent: hasRealBudget ? (budgetData.percent || Math.min(Math.round((budgetData.spent / budgetData.limit) * 100), 100)) : null,

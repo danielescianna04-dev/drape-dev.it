@@ -573,6 +573,7 @@ function applyUsersFilters() {
         if (status === 'offline' && u.isOnline) return false;
         if (activity === 'active' && !u.hasActivity) return false;
         if (activity === 'inactive' && u.hasActivity) return false;
+        if (activity === 'deleted' && !u.deleted) return false;
         return true;
     });
 
@@ -651,12 +652,12 @@ function renderUsersTable(users) {
             : '<span style="color:var(--text-muted);font-size:12px;">-</span>';
 
         return `
-        <tr data-user-email="${(user.email || '').toLowerCase()}">
+        <tr data-user-email="${(user.email || '').toLowerCase()}" ${user.deleted ? 'style="background:rgba(239,68,68,0.1);"' : ''}>
             <td data-label="Utente">
                 <div class="user-cell">
-                    <div class="user-cell-avatar">${(user.email || 'U')[0].toUpperCase()}</div>
+                    <div class="user-cell-avatar" ${user.deleted ? 'style="background:#ef4444;"' : ''}>${(user.email || 'U')[0].toUpperCase()}</div>
                     <div class="user-cell-info">
-                        <div class="user-cell-name">${user.displayName || user.email?.split('@')[0] || 'Unknown'}</div>
+                        <div class="user-cell-name">${user.displayName || user.email?.split('@')[0] || 'Unknown'}${user.deleted ? ' <span style="color:#ef4444;font-size:11px;font-weight:600;">Eliminato</span>' : ''}</div>
                         <div class="user-cell-email">${user.email || '-'}</div>
                     </div>
                 </div>
