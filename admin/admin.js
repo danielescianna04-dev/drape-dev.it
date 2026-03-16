@@ -619,7 +619,8 @@ function renderUsersTable(users) {
     }
 
     tbody.innerHTML = users.map(user => {
-        const aiPercent = user.aiPercent || 0;
+        const hasAiData = user.aiSpent !== null && user.aiLimit !== null;
+        const aiPercent = hasAiData ? (user.aiPercent || 0) : 0;
         const barColor = aiPercent > 80 ? '#ef4444' : aiPercent > 50 ? '#eab308' : '#22c55e';
         const statusLabel = user.isOnline ? 'Online' : (user.lastLogin ? formatTimeAgo(new Date(user.lastLogin)) : '-');
         const statusClass = user.isOnline ? 'active' : 'inactive';
@@ -638,6 +639,16 @@ function renderUsersTable(users) {
                 </div>
             </div>`;
         }
+
+        const aiHtml = hasAiData
+            ? `<div style="display:flex;align-items:center;gap:8px;">
+                    <div class="progress-bar" style="flex:1;height:6px;">
+                        <div class="progress-fill" style="width:${aiPercent}%;background:${barColor};"></div>
+                    </div>
+                    <span style="font-size:12px;color:var(--text);white-space:nowrap;">€${user.aiSpent.toFixed(2)} / €${user.aiLimit.toFixed(0)}</span>
+                </div>
+                <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">${aiPercent}% usato</div>`
+            : '<span style="color:var(--text-muted);font-size:12px;">-</span>';
 
         return `
         <tr data-user-email="${(user.email || '').toLowerCase()}">
@@ -661,15 +672,7 @@ function renderUsersTable(users) {
             <td data-label="Posizione">${locationHtml}</td>
             <td data-label="Registrato">${formatDate(user.createdAt)}</td>
             <td data-label="Ultimo accesso">${user.lastLogin ? new Date(user.lastLogin).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-'}</td>
-            <td data-label="Utilizzo AI">
-                <div style="display:flex;align-items:center;gap:8px;">
-                    <div class="progress-bar" style="flex:1;height:6px;">
-                        <div class="progress-fill" style="width:${aiPercent}%;background:${barColor};"></div>
-                    </div>
-                    <span style="font-size:12px;color:var(--text);white-space:nowrap;">€${(user.aiSpent || 0).toFixed(2)} / €${(user.aiLimit || 0).toFixed(0)}</span>
-                </div>
-                <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">${aiPercent}% usato</div>
-            </td>
+            <td data-label="Utilizzo AI">${aiHtml}</td>
             <td data-label="Azioni">
                 <button class="action-btn" onclick="openUserBehaviorModal('${(user.email || '').replace(/'/g, "\\'")}')">Dettagli</button>
             </td>

@@ -335,20 +335,19 @@ app.get('/admin/users', async (req, res) => {
       const metadata = userMetadata[user.uid] || {};
       const plan = metadata.plan || metadata.subscriptionPlan || 'free';
       const budgetData = spendingMap[user.uid] || {};
-      const aiSpent = budgetData.spent || 0;
-      const aiLimit = budgetData.limit || PLAN_LIMITS[plan] || PLAN_LIMITS.free;
       const isOnline = onlineUserIds.has(user.uid);
 
-      // Use the most recent timestamp among ALL sources
+      // Last activity: only REAL sources (presence heartbeat + tracked events)
       const candidates = [
         lastEventMap[user.email],
-        presenceLastSeen[user.uid],
-        metadata.lastActiveAt?.toDate ? metadata.lastActiveAt.toDate() : (metadata.lastActiveAt ? new Date(metadata.lastActiveAt) : null),
-        user.metadata.lastSignInTime ? new Date(user.metadata.lastSignInTime) : null
+        presenceLastSeen[user.uid]
       ].filter(d => d && !isNaN(d.getTime()));
       const lastLogin = candidates.length > 0
         ? new Date(Math.max(...candidates.map(d => d.getTime()))).toISOString()
         : null;
+
+      // AI budget: only real data from app backend, no fallback
+      const hasRealBudget = budgetData.spent !== undefined;
 
       const location = metadata.lastKnownLocation || null;
 
@@ -361,9 +360,9 @@ app.get('/admin/users', async (req, res) => {
         createdAt: user.metadata.creationTime,
         lastLogin,
         isOnline,
-        aiSpent,
-        aiLimit,
-        aiPercent: budgetData.percent || Math.min(Math.round((aiSpent / aiLimit) * 100), 100),
+        aiSpent: hasRealBudget ? budgetData.spent : null,
+        aiLimit: hasRealBudget ? budgetData.limit : null,
+        aiPercent: hasRealBudget ? (budgetData.percent || Math.min(Math.round((budgetData.spent / budgetData.limit) * 100), 100)) : null,
         location,
       };
     });
