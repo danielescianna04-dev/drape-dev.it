@@ -610,7 +610,7 @@ function renderUsersTable(users) {
     const tbody = document.getElementById('usersTableBody');
     if (!tbody) return;
     if (users.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" class="empty-state"><h4>Nessun utente trovato</h4></td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" class="empty-state"><h4>Nessun utente trovato</h4></td></tr>';
         return;
     }
 
@@ -625,21 +625,6 @@ function renderUsersTable(users) {
         const barColor = aiPercent > 80 ? '#ef4444' : aiPercent > 50 ? '#eab308' : '#22c55e';
         const statusLabel = user.isOnline ? 'Online' : (user.lastLogin ? formatTimeAgo(new Date(user.lastLogin)) : '-');
         const statusClass = user.isOnline ? 'active' : 'inactive';
-
-        const loc = user.location;
-        let locationHtml = '<span style="color:var(--text-muted);font-size:12px;">-</span>';
-        if (loc && (loc.city || loc.country)) {
-            const flag = countryFlag(loc.country);
-            const city = loc.city || '';
-            const country = loc.country || '';
-            locationHtml = `<div style="display:flex;align-items:center;gap:6px;">
-                ${flag ? `<span style="font-size:16px;">${flag}</span>` : ''}
-                <div>
-                    <div style="font-size:13px;color:var(--text);white-space:nowrap;">${city || country}</div>
-                    ${city && country ? `<div style="font-size:11px;color:var(--text-secondary);">${country}</div>` : ''}
-                </div>
-            </div>`;
-        }
 
         const aiHtml = hasAiData
             ? `<div style="display:flex;align-items:center;gap:8px;">
@@ -670,10 +655,9 @@ function renderUsersTable(users) {
                 </span>
                 <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">${user.isOnline ? '' : statusLabel}</div>
             </td>
-            <td data-label="Posizione">${locationHtml}</td>
-            <td data-label="Registrato">${formatDate(user.createdAt)}</td>
-            <td data-label="Ultimo accesso">${user.lastLogin ? new Date(user.lastLogin).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-'}</td>
             <td data-label="Utilizzo AI">${aiHtml}</td>
+            <td data-label="Ultimo accesso">${user.lastLogin ? new Date(user.lastLogin).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-'}</td>
+            <td data-label="Registrato">${formatDate(user.createdAt)}</td>
             <td data-label="Azioni">
                 <button class="action-btn" onclick="openUserBehaviorModal('${(user.email || '').replace(/'/g, "\\'")}')">Dettagli</button>
             </td>
@@ -687,7 +671,7 @@ async function loadUsersData() {
     const users = response?.users || response;
 
     if (!users || !Array.isArray(users) || users.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" class="empty-state"><h4>Nessun utente trovato</h4></td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" class="empty-state"><h4>Nessun utente trovato</h4></td></tr>';
         return;
     }
 
@@ -2291,7 +2275,7 @@ async function loadContainersData() {
     if (containers.length === 0) {
         tbody.innerHTML = `
             <tr>
-                <td colspan="8" class="empty-state">
+                <td colspan="7" class="empty-state">
                     <h4>Nessun container</h4>
                 </td>
             </tr>
