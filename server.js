@@ -271,8 +271,8 @@ app.get('/admin/stats/overview', async (req, res) => {
   }
 });
 
-// Plan AI spending limits (EUR/month) - aligned with app budgets
-const PLAN_LIMITS = { free: 2.00, go: 7.50, starter: 10.00, pro: 50.00, team: 200.00 };
+// Plan AI spending limits (EUR/month) - aligned with app backend budgets
+const PLAN_LIMITS = { free: 1.00, go: 10.00, pro: 50.00 };
 
 // GET /admin/users
 app.get('/admin/users', async (req, res) => {
@@ -302,12 +302,10 @@ app.get('/admin/users', async (req, res) => {
       }
     } catch (e) { console.error('[AI Spending] Error:', e.message); }
 
-    // Get online users from presence + last event times in parallel
+    // Get ALL presence data + last event times in parallel
     const presenceCutoff = new Date(Date.now() - 45 * 1000);
-    const [presenceSnapshot, recentEventsSnapshot] = await Promise.all([
-      db.collection('presence')
-        .where('lastSeen', '>=', presenceCutoff)
-        .get(),
+    const [allPresenceSnapshot, recentEventsSnapshot] = await Promise.all([
+      db.collection('presence').get(),
       db.collection('user_events')
         .orderBy('timestamp', 'desc')
         .limit(1000)
@@ -315,7 +313,14 @@ app.get('/admin/users', async (req, res) => {
         .get()
     ]);
     const onlineUserIds = new Set();
-    presenceSnapshot.forEach(doc => onlineUserIds.add(doc.id));
+    const presenceLastSeen = {}; // uid → Date
+    allPresenceSnapshot.forEach(doc => {
+      const data = doc.data();
+      if (!data.lastSeen) return;
+      const ts = data.lastSeen.toDate ? data.lastSeen.toDate() : new Date(data.lastSeen);
+      presenceLastSeen[doc.id] = ts;
+      if (ts >= presenceCutoff) onlineUserIds.add(doc.id);
+    });
 
     // Build map of last event time per email
     const lastEventMap = {};
@@ -333,11 +338,17 @@ app.get('/admin/users', async (req, res) => {
       const aiSpent = budgetData.spent || 0;
       const aiLimit = budgetData.limit || PLAN_LIMITS[plan] || PLAN_LIMITS.free;
       const isOnline = onlineUserIds.has(user.uid);
-      const lastActiveAt = metadata.lastActiveAt?.toDate?.()?.toISOString() || metadata.lastActiveAt || null;
 
-      // Use latest event time, falling back to lastActiveAt, then Firebase lastSignInTime
-      const lastEvent = lastEventMap[user.email];
-      const lastLogin = lastEvent?.toISOString() || lastActiveAt || user.metadata.lastSignInTime;
+      // Use the most recent timestamp among ALL sources
+      const candidates = [
+        lastEventMap[user.email],
+        presenceLastSeen[user.uid],
+        metadata.lastActiveAt?.toDate ? metadata.lastActiveAt.toDate() : (metadata.lastActiveAt ? new Date(metadata.lastActiveAt) : null),
+        user.metadata.lastSignInTime ? new Date(user.metadata.lastSignInTime) : null
+      ].filter(d => d && !isNaN(d.getTime()));
+      const lastLogin = candidates.length > 0
+        ? new Date(Math.max(...candidates.map(d => d.getTime()))).toISOString()
+        : null;
 
       const location = metadata.lastKnownLocation || null;
 
@@ -349,7 +360,6 @@ app.get('/admin/users', async (req, res) => {
         plan,
         createdAt: user.metadata.creationTime,
         lastLogin,
-        lastActiveAt,
         isOnline,
         aiSpent,
         aiLimit,

@@ -621,7 +621,7 @@ function renderUsersTable(users) {
     tbody.innerHTML = users.map(user => {
         const aiPercent = user.aiPercent || 0;
         const barColor = aiPercent > 80 ? '#ef4444' : aiPercent > 50 ? '#eab308' : '#22c55e';
-        const statusLabel = user.isOnline ? 'Online' : (user.lastActiveAt ? formatTimeAgo(new Date(user.lastActiveAt)) : formatDate(user.lastLogin));
+        const statusLabel = user.isOnline ? 'Online' : (user.lastLogin ? formatTimeAgo(new Date(user.lastLogin)) : '-');
         const statusClass = user.isOnline ? 'active' : 'inactive';
 
         const loc = user.location;
@@ -687,9 +687,12 @@ async function loadUsersData() {
         return;
     }
 
-    // Mark users with any activity (lastLogin more than just registration)
+    // Mark users with any activity (lastLogin differs from registration = had real activity)
     users.forEach(u => {
-        u.hasActivity = !!(u.lastActiveAt || (u.lastLogin && u.createdAt && u.lastLogin !== u.createdAt));
+        if (!u.lastLogin || !u.createdAt) { u.hasActivity = false; return; }
+        const loginTime = new Date(u.lastLogin).getTime();
+        const createdTime = new Date(u.createdAt).getTime();
+        u.hasActivity = Math.abs(loginTime - createdTime) > 60000; // more than 1 min difference
     });
 
     window._allUsersData = users;
