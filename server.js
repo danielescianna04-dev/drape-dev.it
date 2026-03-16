@@ -345,38 +345,39 @@ app.get('/admin/users', async (req, res) => {
       lastEventMap[email] = d.timestamp?.toDate ? d.timestamp.toDate() : new Date(d.timestamp);
     });
 
-    const users = authUsers.map(user => {
-      const metadata = userMetadata[user.uid] || {};
-      const plan = metadata.plan || metadata.subscriptionPlan || 'free';
-      const budgetData = spendingMap[user.uid] || {};
-      const isOnline = onlineUserIds.has(user.uid);
+    // Build set of Auth UIDs
+    const authUidSet = new Set(authUsers.map(u => u.uid));
 
-      // Last activity: only REAL sources (presence heartbeat + tracked events)
+    const buildUser = (uid, email, displayName, plan, createdAt, isAuth) => {
+      const budgetData = spendingMap[uid] || {};
+      const isOnline = onlineUserIds.has(uid);
+
       const candidates = [
-        lastEventMap[user.email],
-        presenceLastSeen[user.uid]
+        email ? lastEventMap[email] : null,
+        presenceLastSeen[uid]
       ].filter(d => d && !isNaN(d.getTime()));
       const lastLogin = candidates.length > 0
         ? new Date(Math.max(...candidates.map(d => d.getTime()))).toISOString()
         : null;
 
-      // AI budget: only real data from app backend, no fallback
       const hasRealBudget = budgetData.spent !== undefined;
-
-      // Deleted: user triggered delete_account AFTER their current registration
-      const deleteTs = deletedAccountMap[user.email];
-      const createdTs = user.metadata.creationTime ? new Date(user.metadata.creationTime) : null;
-      const deleted = !!(deleteTs && createdTs && deleteTs > createdTs);
-
+      const metadata = userMetadata[uid] || {};
       const location = metadata.lastKnownLocation || null;
 
+      // Deleted: not in Auth, or has delete_account event after registration
+      let deleted = !isAuth;
+      if (isAuth && email) {
+        const deleteTs = deletedAccountMap[email];
+        const createdTs = createdAt ? new Date(createdAt) : null;
+        if (deleteTs && createdTs && deleteTs > createdTs) deleted = true;
+      }
+
       return {
-        id: user.uid,
-        email: user.email,
-        displayName: user.displayName || user.email?.split('@')[0],
-        photoURL: user.photoURL,
+        id: uid,
+        email,
+        displayName: displayName || email?.split('@')[0],
         plan,
-        createdAt: user.metadata.creationTime,
+        createdAt,
         lastLogin,
         isOnline,
         deleted,
@@ -385,10 +386,26 @@ app.get('/admin/users', async (req, res) => {
         aiPercent: hasRealBudget ? (budgetData.percent || Math.min(Math.round((budgetData.spent / budgetData.limit) * 100), 100)) : null,
         location,
       };
+    };
+
+    // Active Auth users
+    const users = authUsers.map(user => {
+      const metadata = userMetadata[user.uid] || {};
+      const plan = metadata.plan || metadata.subscriptionPlan || 'free';
+      return buildUser(user.uid, user.email, user.displayName, plan, user.metadata.creationTime, true);
     });
 
+    // Orphaned Firestore users (deleted from Auth but data still in Firestore)
+    for (const [uid, meta] of Object.entries(userMetadata)) {
+      if (authUidSet.has(uid)) continue; // already included
+      const email = meta.email || meta.emailAddress || null;
+      const plan = meta.plan || meta.subscriptionPlan || 'free';
+      const createdAt = meta.createdAt?.toDate?.()?.toISOString() || meta.createdAt || null;
+      users.push(buildUser(uid, email, meta.displayName || meta.name, plan, createdAt, false));
+    }
+
     // Sort by creation date (newest first)
-    users.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    users.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
 
     res.json({ users, aiDataPartial: aiSpendErrors > 0, aiErrors: aiSpendErrors });
   } catch (error) {
