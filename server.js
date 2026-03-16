@@ -1377,6 +1377,12 @@ app.get('/admin/stats/behavior/user/:email', async (req, res) => {
       createdAt,
       lastLogin,
       location,
+      onboarding: {
+        completed: userMeta?.onboardingCompleted || false,
+        completedAt: userMeta?.onboardingCompletedAt || null,
+        experienceLevel: userMeta?.experienceLevel || null,
+        referralSource: userMeta?.referralSource || null
+      },
       aiBudget: aiBudget?.success ? {
         spent: aiBudget.usage?.spentEur || 0,
         limit: aiBudget.plan?.monthlyBudgetEur || 0,
