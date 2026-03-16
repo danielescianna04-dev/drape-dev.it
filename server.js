@@ -380,13 +380,15 @@ app.get('/admin/users', async (req, res) => {
     // Build set of Auth UIDs
     const authUidSet = new Set(authUsers.map(u => u.uid));
 
-    const buildUser = (uid, email, displayName, plan, createdAt, isAuth) => {
+    const buildUser = (uid, email, displayName, plan, createdAt, isAuth, authLastSignIn) => {
       const budgetData = spendingMap[uid] || {};
       const isOnline = onlineUserIds.has(uid);
 
+      // Real sources: user_events, presence, then Firebase Auth lastSignInTime as last resort
       const candidates = [
         email ? lastEventMap[email] : null,
-        presenceLastSeen[uid]
+        presenceLastSeen[uid],
+        authLastSignIn ? new Date(authLastSignIn) : null
       ].filter(d => d && !isNaN(d.getTime()));
       const lastLogin = candidates.length > 0
         ? new Date(Math.max(...candidates.map(d => d.getTime()))).toISOString()
@@ -424,7 +426,7 @@ app.get('/admin/users', async (req, res) => {
     const users = authUsers.map(user => {
       const metadata = userMetadata[user.uid] || {};
       const plan = metadata.plan || metadata.subscriptionPlan || 'free';
-      return buildUser(user.uid, user.email, user.displayName, plan, user.metadata.creationTime, true);
+      return buildUser(user.uid, user.email, user.displayName, plan, user.metadata.creationTime, true, user.metadata.lastSignInTime);
     });
 
     // Orphaned Firestore users (deleted from Auth but data still in Firestore)
@@ -441,7 +443,7 @@ app.get('/admin/users', async (req, res) => {
       }
     }
     for (const o of Object.values(orphanByEmail)) {
-      users.push(buildUser(o.uid, o.email, o.displayName, o.plan, o.createdAt, false));
+      users.push(buildUser(o.uid, o.email, o.displayName, o.plan, o.createdAt, false, null));
     }
 
     // Fully deleted accounts (not in Auth, not in Firestore users, but have delete_account events)
@@ -459,7 +461,7 @@ app.get('/admin/users', async (req, res) => {
       }
     });
     for (const info of Object.values(deletedFromEvents)) {
-      users.push(buildUser(info.uid, info.email, null, 'free', null, false));
+      users.push(buildUser(info.uid, info.email, null, 'free', null, false, null));
     }
 
     // Sort by creation date (newest first)
