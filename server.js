@@ -51,15 +51,40 @@ async function httpGetWithRetry(url, retries = 2, timeoutMs = 8000) {
       return await httpGet(url, timeoutMs);
     } catch (err) {
       if (attempt === retries) throw err;
-      // Wait briefly before retry (300ms, 600ms, ...)
       await new Promise(r => setTimeout(r, attempt * 300));
     }
   }
 }
 
+// Helper: HTTP POST with JSON body
+function httpPost(url, body, timeoutMs = 15000) {
+  return new Promise((resolve, reject) => {
+    const postData = JSON.stringify(body);
+    const urlObj = new URL(url);
+    const req = http.request({
+      hostname: urlObj.hostname,
+      port: urlObj.port,
+      path: urlObj.pathname,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(postData) }
+    }, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        try { resolve(JSON.parse(data)); }
+        catch (e) { reject(new Error('Invalid JSON from ' + url)); }
+      });
+    });
+    req.on('error', reject);
+    req.setTimeout(timeoutMs, () => { req.destroy(); reject(new Error('Timeout')); });
+    req.write(postData);
+    req.end();
+  });
+}
+
 // Shared AI budget cache
 let budgetCache = { data: null, timestamp: 0, promise: null };
-const BUDGET_CACHE_TTL = 300000; // 5 minutes — backend rate-limits aggressively
+const BUDGET_CACHE_TTL = 300000; // 5 minutes
 
 async function getAllBudgets(userIds) {
   const now = Date.now();
@@ -69,14 +94,28 @@ async function getAllBudgets(userIds) {
   if (budgetCache.promise) return budgetCache.promise;
 
   budgetCache.promise = (async () => {
-    const result = {};
-    // Sequential: 1 request at a time with 150ms delay to avoid rate limiting
-    for (const uid of userIds) {
-      try {
-        const data = await httpGet(`${APP_BACKEND_URL}/ai/budget/${uid}`, 5000);
-        if (data && data.success) result[uid] = data;
-      } catch (e) { /* skip */ }
-      await new Promise(r => setTimeout(r, 150));
+    let result = {};
+    try {
+      // Single batch call instead of 134+ sequential requests
+      const resp = await httpPost(`${APP_BACKEND_URL}/ai/budgets`, { uids: userIds }, 30000);
+      if (resp && typeof resp === 'object') {
+        // Extract successful entries
+        for (const [uid, data] of Object.entries(resp)) {
+          if (data && data.success !== false) {
+            result[uid] = { success: true, usage: data.usage || data, plan: data.plan || {} };
+          }
+        }
+      }
+    } catch (e) {
+      console.error('[Budget Batch] Error:', e.message, '— falling back to individual calls');
+      // Fallback to sequential individual calls if batch endpoint not available
+      for (const uid of userIds) {
+        try {
+          const data = await httpGet(`${APP_BACKEND_URL}/ai/budget/${uid}`, 5000);
+          if (data && data.success) result[uid] = data;
+        } catch (err) { /* skip */ }
+        await new Promise(r => setTimeout(r, 150));
+      }
     }
     budgetCache.data = result;
     budgetCache.timestamp = Date.now();
