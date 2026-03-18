@@ -1079,13 +1079,26 @@ app.get('/admin/stats/behavior/user/:email/events', async (req, res) => {
     const _now = new Date();
     const date = req.query.date || `${_now.getFullYear()}-${String(_now.getMonth() + 1).padStart(2, '0')}-${String(_now.getDate()).padStart(2, '0')}`;
 
-    // Query user_events for this email on this date (use local time to match localDateStr)
+    // Query user_events for this user on this date (use local time to match localDateStr)
+    // user_events stores userId (Firebase UID), never email — resolve uid first
     const [y, m, d] = date.split('-').map(Number);
     const dayStart = new Date(y, m - 1, d, 0, 0, 0, 0);
     const dayEnd = new Date(y, m - 1, d, 23, 59, 59, 999);
 
-    const snapshot = await db.collection('user_events')
-      .where('email', '==', email)
+    let uid = null;
+    try { const authUser = await auth.getUserByEmail(email); uid = authUser.uid; } catch (e) {}
+    if (!uid) {
+      const userMetadata = await getCachedUsersMetadata();
+      for (const [id, data] of Object.entries(userMetadata)) {
+        if (data.email === email || data.emailAddress === email) { uid = id; break; }
+      }
+    }
+
+    const eventsQuery = uid
+      ? db.collection('user_events').where('userId', '==', uid)
+      : db.collection('user_events').where('email', '==', email);
+
+    const snapshot = await eventsQuery
       .where('timestamp', '>=', dayStart)
       .where('timestamp', '<=', dayEnd)
       .orderBy('timestamp', 'asc')
@@ -1250,11 +1263,13 @@ app.get('/admin/stats/behavior/user/:email', async (req, res) => {
     }
 
     // Read user_events + projects in parallel
+    // user_events stores userId (Firebase UID), never email — query by userId first
+    const eventsQuery = uid
+      ? db.collection('user_events').where('userId', '==', uid).orderBy('timestamp', 'asc').get()
+      : db.collection('user_events').where('email', '==', email).orderBy('timestamp', 'asc').get();
+
     const [userEventsSnapshot, projectsSnapshot] = await Promise.all([
-      db.collection('user_events')
-        .where('email', '==', email)
-        .orderBy('timestamp', 'asc')
-        .get(),
+      eventsQuery,
       db.collectionGroup('projects').get().catch(() => ({ forEach: () => {} }))
     ]);
 
