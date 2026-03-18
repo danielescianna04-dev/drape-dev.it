@@ -468,6 +468,26 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
 
   // App lifecycle
   app_primo_piano:             { icon: '▶️', label: 'App in primo piano',             color: 'text-blue-400' },
+
+  // ── Errori critici ──────────────────────────────────
+  errore_login:                { icon: '❌', label: 'Errore login',                    color: 'text-red-400',    detail: d => [d.metodo, d.messaggio].filter(Boolean).map(String).join(': ').slice(0, 80) },
+  errore_registrazione:        { icon: '❌', label: 'Errore registrazione',            color: 'text-red-400',    detail: d => d.messaggio ? String(d.messaggio).slice(0, 80) : '' },
+  errore_apertura_progetto:    { icon: '❌', label: 'Errore apertura progetto',        color: 'text-red-400',    detail: d => [d.nome, d.messaggio].filter(Boolean).map(String).join(': ').slice(0, 80) },
+  errore_creazione_progetto:   { icon: '❌', label: 'Errore creazione progetto',       color: 'text-red-400',    detail: d => d.messaggio ? String(d.messaggio).slice(0, 80) : '' },
+  errore_risposta_ai:          { icon: '❌', label: 'Errore risposta AI',              color: 'text-red-400',    detail: d => [d.modello, d.messaggio].filter(Boolean).map(String).join(': ').slice(0, 80) },
+
+  // ── Git operazioni complete ─────────────────────────
+  pull_effettuato:             { icon: '⬇️', label: 'Pull effettuato',               color: 'text-green-400' },
+  errore_pull:                 { icon: '❌', label: 'Errore pull',                     color: 'text-red-400',    detail: d => d.messaggio ? String(d.messaggio).slice(0, 80) : '' },
+  errore_push:                 { icon: '❌', label: 'Errore push',                     color: 'text-red-400',    detail: d => d.messaggio ? String(d.messaggio).slice(0, 80) : '' },
+  errore_commit:               { icon: '❌', label: 'Errore commit',                   color: 'text-red-400',    detail: d => d.messaggio ? String(d.messaggio).slice(0, 80) : '' },
+  merge_effettuato:            { icon: '🔀', label: 'Merge effettuato',                color: 'text-green-400',  detail: d => d.branch ? String(d.branch) : '' },
+  errore_merge:                { icon: '❌', label: 'Errore merge',                    color: 'text-red-400',    detail: d => [d.branch, d.messaggio].filter(Boolean).map(String).join(': ').slice(0, 80) },
+  stash_creato:                { icon: '📦', label: 'Stash creato',                    color: 'text-orange-400' },
+  stash_applicato:             { icon: '📦', label: 'Stash applicato',                 color: 'text-green-400' },
+  errore_stash:                { icon: '❌', label: 'Errore stash',                    color: 'text-red-400',    detail: d => d.messaggio ? String(d.messaggio).slice(0, 80) : '' },
+  errore_cambio_branch:        { icon: '❌', label: 'Errore cambio branch',            color: 'text-red-400',    detail: d => [d.branch, d.messaggio].filter(Boolean).map(String).join(': ').slice(0, 80) },
+  errore_creazione_branch:     { icon: '❌', label: 'Errore creazione branch',         color: 'text-red-400',    detail: d => [d.branch, d.messaggio].filter(Boolean).map(String).join(': ').slice(0, 80) },
 };
 
 function formatEvent(evt: { type: string; screen?: string; data?: Record<string, unknown>; [k: string]: unknown }): FormattedEvent {
