@@ -847,128 +847,281 @@ function UserDetailModal({
         </div>
       )}
 
-      {/* ── Tab: Attivita ──────────────────────────────────────────── */}
+      {/* ── Tab: Attivita (redesigned) ─────────────────────────────── */}
       {activeTab === 'activity' && (
         <div className="space-y-5">
           {detailLoading ? (
             <p className="text-sm text-zinc-500">Caricamento...</p>
           ) : (
             <>
-              {/* Day chips */}
-              <div>
-                <p className="text-xs text-zinc-500 uppercase tracking-wide mb-2">
-                  Giorni attivi (ultimi 14)
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {activityDays.length === 0 && (
-                    <span className="text-sm text-zinc-500">Nessuna attivita registrata</span>
-                  )}
-                  {activityDays.map((day) => {
-                    const d = new Date(day);
-                    const dayNames = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
-                    const label = `${dayNames[d.getDay()]} ${d.getDate()}/${d.getMonth() + 1}`;
-                    return (
-                      <button
-                        key={day}
-                        onClick={() => setSelectedDay(day)}
-                        className={cn(
-                          'px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors',
-                          selectedDay === day
-                            ? 'bg-purple-500/20 border-purple-500 text-purple-300'
-                            : 'border-white/10 text-zinc-400 hover:border-purple-500/40',
-                        )}
-                      >
-                        {label}
-                      </button>
-                    );
-                  })}
-                </div>
+              {/* Day selector */}
+              <div className="flex items-center gap-2 flex-wrap">
+                {activityDays.length === 0 && (
+                  <span className="text-sm text-zinc-500">Nessuna attivita registrata</span>
+                )}
+                {activityDays.map((day) => {
+                  const d = new Date(day);
+                  const dayNames = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+                  const isToday = new Date().toISOString().slice(0, 10) === day;
+                  const label = isToday ? 'Oggi' : `${dayNames[d.getDay()]} ${d.getDate()}/${d.getMonth() + 1}`;
+                  return (
+                    <button
+                      key={day}
+                      onClick={() => setSelectedDay(day)}
+                      className={cn(
+                        'px-3 py-1.5 rounded-lg text-xs font-medium border transition-all',
+                        selectedDay === day
+                          ? 'bg-purple-500/20 border-purple-500 text-purple-300 shadow-[0_0_12px_rgba(168,85,247,0.15)]'
+                          : 'border-white/10 text-zinc-400 hover:border-purple-500/40',
+                      )}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
               </div>
 
-              {/* Screen counts */}
-              {events && events.screenCounts && Object.keys(events.screenCounts).length > 0 && (
-                <div>
-                  <p className="text-xs text-zinc-500 uppercase tracking-wide mb-3">
-                    Pagine visitate
-                  </p>
-                  <div className="space-y-2">
-                    {(() => {
-                      const sorted = Object.entries(events.screenCounts)
-                        .sort((a, b) => b[1] - a[1]);
-                      const max = sorted[0]?.[1] ?? 1;
-                      return sorted.map(([screen, count]) => (
-                        <div key={screen} className="flex items-center gap-3">
-                          <span className="text-xs text-zinc-300 w-[130px] truncate flex-shrink-0 text-right">
-                            {translateScreen(screen)}
-                          </span>
-                          <div className="flex-1 h-5 bg-white/[0.04] rounded overflow-hidden">
-                            <div
-                              className="h-full bg-purple-500/70 rounded"
-                              style={{ width: `${Math.max(8, (count / max) * 100)}%` }}
-                            />
-                          </div>
-                          <span className="text-xs font-medium text-white w-8 text-right flex-shrink-0">
-                            {count}
-                          </span>
+              {/* Day stats + breakdown */}
+              {selectedDay && events && !eventsLoading && (
+                <>
+                  {/* Stat cards row */}
+                  {(() => {
+                    const evts = events.events || [];
+                    const totalActions = evts.length;
+                    const errorCount = evts.filter((e: any) => e.type?.includes('errore') || e.type?.includes('error')).length;
+                    const chatCount = evts.filter((e: any) => e.type === 'messaggio_chat' || e.type === 'chat_message').length;
+                    void (events.screenCounts); // used by category breakdown below
+
+                    // Calculate active time from foreground/background pairs
+                    let activeMs = 0;
+                    let lastFg: number | null = null;
+                    evts.forEach((e: any) => {
+                      const ts = new Date(e.timestamp).getTime();
+                      if (e.type === 'app_foreground' || e.type === 'app_primo_piano') lastFg = ts;
+                      if ((e.type === 'app_background') && lastFg) {
+                        const d = ts - lastFg;
+                        if (d > 0 && d < 12 * 3600000) activeMs += d;
+                        lastFg = null;
+                      }
+                    });
+                    // If still in foreground, count until now (same day only)
+                    if (lastFg && selectedDay === new Date().toISOString().slice(0, 10)) {
+                      const d = Date.now() - lastFg;
+                      if (d > 0 && d < 12 * 3600000) activeMs += d;
+                    }
+
+                    const fmtDuration = (ms: number) => {
+                      if (ms <= 0) return '0s';
+                      const s = Math.floor(ms / 1000);
+                      if (s < 60) return `${s}s`;
+                      const m = Math.floor(s / 60);
+                      if (m < 60) return `${m}m`;
+                      return `${Math.floor(m / 60)}h ${m % 60}m`;
+                    };
+
+                    return (
+                      <div className="grid grid-cols-4 gap-3">
+                        <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-3 text-center">
+                          <div className="text-xl font-bold text-white">{fmtDuration(activeMs)}</div>
+                          <div className="text-[10px] text-zinc-500 uppercase tracking-wide mt-1">Tempo attivo</div>
                         </div>
-                      ));
-                    })()}
+                        <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-3 text-center">
+                          <div className="text-xl font-bold text-white">{totalActions}</div>
+                          <div className="text-[10px] text-zinc-500 uppercase tracking-wide mt-1">Azioni</div>
+                        </div>
+                        <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-3 text-center">
+                          <div className="text-xl font-bold text-purple-400">{chatCount}</div>
+                          <div className="text-[10px] text-zinc-500 uppercase tracking-wide mt-1">Messaggi AI</div>
+                        </div>
+                        <div className={cn(
+                          'border rounded-xl p-3 text-center',
+                          errorCount > 0 ? 'bg-red-500/5 border-red-500/20' : 'bg-white/[0.03] border-white/[0.06]'
+                        )}>
+                          <div className={cn('text-xl font-bold', errorCount > 0 ? 'text-red-400' : 'text-white')}>{errorCount}</div>
+                          <div className="text-[10px] text-zinc-500 uppercase tracking-wide mt-1">Errori</div>
+                        </div>
+                      </div>
+                    );
+                  })()}
+
+                  {/* Category breakdown — compact horizontal stacked bar */}
+                  {(() => {
+                    const evts = events.events || [];
+                    if (evts.length === 0) return null;
+
+                    // Map events to categories
+                    const catMap: Record<string, { label: string; color: string; count: number }> = {};
+                    const catColors: Record<string, { label: string; color: string }> = {
+                      chat: { label: 'Chat AI', color: '#a855f7' },
+                      project: { label: 'Progetti', color: '#22c55e' },
+                      editor: { label: 'Editor', color: '#3b82f6' },
+                      preview: { label: 'Anteprima', color: '#06b6d4' },
+                      git: { label: 'Git', color: '#f97316' },
+                      navigation: { label: 'Navigazione', color: '#6366f1' },
+                      onboarding: { label: 'Onboarding', color: '#14b8a6' },
+                      settings: { label: 'Impostazioni', color: '#8b5cf6' },
+                      billing: { label: 'Piani', color: '#eab308' },
+                      auth: { label: 'Auth', color: '#a855f7' },
+                      publish: { label: 'Pubblicazione', color: '#ec4899' },
+                      error: { label: 'Errori', color: '#ef4444' },
+                      other: { label: 'Altro', color: '#64748b' },
+                    };
+
+                    evts.forEach((e: any) => {
+                      const t = e.type || '';
+                      let cat = 'other';
+                      if (t.includes('chat') || t.includes('messaggio') || t.includes('modello') || t === 'nuova_chat') cat = 'chat';
+                      else if (t.includes('progetto') || t.includes('project')) cat = 'project';
+                      else if (t.includes('file') || t.includes('tab') || t.includes('pannello') || t.includes('panel') || t === 'layout_griglia' || t === 'sidebar_toggle' || t === 'copia_codice' || t.includes('viewport') || t.includes('ispettore') || t.includes('elemento') || t.includes('ricerca')) cat = 'editor';
+                      else if (t.includes('anteprima') || t.includes('preview')) cat = 'preview';
+                      else if (t.includes('git') || t.includes('commit') || t.includes('branch') || t.includes('push') || t.includes('pull') || t.includes('merge') || t.includes('stash') || t.includes('repo')) cat = 'git';
+                      else if (t.includes('schermata') || t === 'screen_view' || t.includes('app_') || t === 'app_primo_piano') cat = 'navigation';
+                      else if (t.includes('onboarding') || t.includes('tutorial')) cat = 'onboarding';
+                      else if (t.includes('impostazioni') || t.includes('settings') || t.includes('lingua') || t.includes('password') || t.includes('email_cambiata') || t.includes('nome_cambiato') || t.includes('notifiche') || t.includes('tema') || t.includes('var_ambiente')) cat = 'settings';
+                      else if (t.includes('piano') || t.includes('acquisto') || t.includes('piani') || t.includes('fatturazione') || t.includes('plan') || t.includes('purchase')) cat = 'billing';
+                      else if (t.includes('login') || t.includes('registrazione') || t.includes('logout') || t === 'register') cat = 'auth';
+                      else if (t.includes('pubblicazione') || t.includes('publish') || t === 'de_pubblicato') cat = 'publish';
+                      if (t.includes('errore') || t.includes('error')) cat = 'error';
+
+                      if (!catMap[cat]) {
+                        const info = catColors[cat] || catColors.other;
+                        catMap[cat] = { label: info.label, color: info.color, count: 0 };
+                      }
+                      catMap[cat].count++;
+                    });
+
+                    const cats = Object.values(catMap).sort((a, b) => b.count - a.count);
+                    const total = evts.length;
+
+                    return (
+                      <div>
+                        {/* Stacked bar */}
+                        <div className="h-2.5 rounded-full overflow-hidden flex bg-white/[0.04]">
+                          {cats.map((c, i) => (
+                            <div
+                              key={i}
+                              className="h-full transition-all first:rounded-l-full last:rounded-r-full"
+                              style={{ width: `${Math.max(2, (c.count / total) * 100)}%`, backgroundColor: c.color }}
+                              title={`${c.label}: ${c.count}`}
+                            />
+                          ))}
+                        </div>
+                        {/* Legend */}
+                        <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2">
+                          {cats.map((c, i) => (
+                            <span key={i} className="flex items-center gap-1.5 text-[11px] text-zinc-400">
+                              <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: c.color }} />
+                              {c.label} <span className="text-zinc-600">{c.count}</span>
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })()}
+
+                  {/* Event timeline — grouped */}
+                  <div>
+                    <p className="text-xs text-zinc-500 uppercase tracking-wide mb-3">
+                      Cronologia
+                    </p>
+                    {eventsLoading ? (
+                      <p className="text-sm text-zinc-500">Caricamento...</p>
+                    ) : !events || events.events.length === 0 ? (
+                      <p className="text-sm text-zinc-500">Nessuna azione per questo giorno</p>
+                    ) : (
+                      <div className="max-h-[420px] overflow-y-auto -mx-1 px-1">
+                        {/* Group consecutive same-type events */}
+                        {(() => {
+                          const evts = events.events;
+                          const groups: { events: typeof evts; formatted: ReturnType<typeof formatEvent> }[] = [];
+                          let currentGroup: typeof evts = [];
+                          let currentType = '';
+
+                          evts.forEach((evt: any) => {
+                            const isSessionMarker = evt.type === 'app_foreground' || evt.type === 'app_background' || evt.type === 'app_primo_piano';
+                            if (evt.type === currentType && !isSessionMarker && currentGroup.length < 5) {
+                              currentGroup.push(evt);
+                            } else {
+                              if (currentGroup.length > 0) {
+                                groups.push({ events: [...currentGroup], formatted: formatEvent(currentGroup[0]) });
+                              }
+                              currentGroup = [evt];
+                              currentType = isSessionMarker ? '' : evt.type;
+                            }
+                          });
+                          if (currentGroup.length > 0) {
+                            groups.push({ events: [...currentGroup], formatted: formatEvent(currentGroup[0]) });
+                          }
+
+                          return groups.map((group, gi) => {
+                            const firstEvt = group.events[0];
+                            const isError = firstEvt.type?.includes('errore') || firstEvt.type?.includes('error');
+                            const isSession = firstEvt.type === 'app_foreground' || firstEvt.type === 'app_primo_piano';
+                            const isSessionEnd = firstEvt.type === 'app_background';
+                            const { icon, label, detail, color } = group.formatted;
+                            const count = group.events.length;
+
+                            const timeStr = firstEvt.time || (() => {
+                              const t = new Date(firstEvt.timestamp);
+                              return `${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}:${String(t.getSeconds()).padStart(2,'0')}`;
+                            })();
+
+                            // Session markers get special treatment
+                            if (isSession || isSessionEnd) {
+                              return (
+                                <div key={gi} className="flex items-center gap-3 py-1.5 my-1">
+                                  <span className="text-[11px] text-zinc-700 font-mono w-14 flex-shrink-0">{timeStr}</span>
+                                  <div className="flex-1 h-px bg-white/[0.06]" />
+                                  <span className="text-[10px] text-zinc-600 uppercase tracking-wider px-2 flex-shrink-0">
+                                    {isSession ? '▶ Sessione iniziata' : '⏸ Sessione terminata'}
+                                  </span>
+                                  <div className="flex-1 h-px bg-white/[0.06]" />
+                                </div>
+                              );
+                            }
+
+                            return (
+                              <div
+                                key={gi}
+                                className={cn(
+                                  'flex items-start gap-3 py-2 px-3 rounded-lg transition-colors',
+                                  isError
+                                    ? 'bg-red-500/[0.04] border-l-2 border-red-500/60 hover:bg-red-500/[0.08]'
+                                    : 'hover:bg-white/[0.03] border-l-2 border-transparent',
+                                )}
+                              >
+                                <span className="text-[11px] text-zinc-600 font-mono w-14 flex-shrink-0 pt-0.5">
+                                  {timeStr}
+                                </span>
+                                <span className="w-5 text-center flex-shrink-0 pt-0.5" style={{ fontSize: 14 }}>
+                                  {icon}
+                                </span>
+                                <div className="min-w-0 flex-1">
+                                  <span className={cn('text-[13px] font-medium', color)}>
+                                    {label}
+                                  </span>
+                                  {count > 1 && (
+                                    <span className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-white/[0.06] text-zinc-400 font-medium">
+                                      ×{count}
+                                    </span>
+                                  )}
+                                  {detail && (
+                                    <span className="text-[12px] text-zinc-500 ml-2">{detail}</span>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          });
+                        })()}
+                      </div>
+                    )}
                   </div>
-                </div>
+                </>
               )}
 
-              {/* Event timeline */}
-              {selectedDay && (
-                <div>
-                  <p className="text-xs text-zinc-500 uppercase tracking-wide mb-2">
-                    Cronologia{' '}
-                    {(() => {
-                      const d = new Date(selectedDay);
-                      return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
-                    })()}
-                    {events && (
-                      <span className="ml-2 text-zinc-600">({events.totalEvents} azioni)</span>
-                    )}
-                  </p>
-                  {eventsLoading ? (
-                    <p className="text-sm text-zinc-500">Caricamento...</p>
-                  ) : !events || events.events.length === 0 ? (
-                    <p className="text-sm text-zinc-500">Nessuna azione per questo giorno</p>
-                  ) : (
-                    <div className="max-h-80 overflow-y-auto space-y-0.5">
-                      {events.events.map((evt, i) => {
-                        const timeStr = evt.time || (() => {
-                          const t = new Date(evt.timestamp);
-                          return `${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}:${String(t.getSeconds()).padStart(2,'0')}`;
-                        })();
-                        const { icon, label, detail, color } = formatEvent(evt);
-                        return (
-                          <div
-                            key={i}
-                            className="flex items-start gap-3 py-2 px-3 rounded-lg hover:bg-white/[0.03] group"
-                          >
-                            <span className="text-[11px] text-zinc-600 font-mono w-14 flex-shrink-0 pt-0.5">
-                              {timeStr}
-                            </span>
-                            <span className="w-5 text-center flex-shrink-0 pt-0.5" style={{ fontSize: 14 }}>
-                              {icon}
-                            </span>
-                            <div className="min-w-0 flex-1">
-                              <span className={cn('text-[13px] font-medium', color)}>
-                                {label}
-                              </span>
-                              {detail && (
-                                <span className="text-[12px] text-zinc-500 ml-2">
-                                  {detail}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
+              {/* Loading state for events */}
+              {selectedDay && eventsLoading && (
+                <p className="text-sm text-zinc-500 text-center py-8">Caricamento eventi...</p>
               )}
             </>
           )}
