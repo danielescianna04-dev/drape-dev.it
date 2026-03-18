@@ -182,81 +182,183 @@ interface FormattedEvent {
   color: string;
 }
 
+/** Complete event registry — all 79 analytics event types with Italian labels */
+const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: string; detail?: (d: Record<string, unknown>) => string }> = {
+  // ── Auth ────────────────────────────────────────────
+  login:                 { icon: '🔑', label: 'Accesso effettuato',               color: 'text-green-400',  detail: d => d.method ? `Metodo: ${String(d.method)}` : '' },
+  register:              { icon: '🆕', label: 'Registrazione account',            color: 'text-green-400' },
+  forgot_password:       { icon: '🔒', label: 'Richiesta reset password',         color: 'text-amber-300' },
+  logout:                { icon: '🚪', label: 'Disconnesso',                      color: 'text-zinc-400' },
+  delete_account:        { icon: '🗑️', label: 'Account eliminato',               color: 'text-red-400' },
+
+  // ── Navigation ──────────────────────────────────────
+  app_foreground:        { icon: '▶️', label: 'App in primo piano',              color: 'text-blue-400' },
+  app_background:        { icon: '⏸️', label: 'App in background',               color: 'text-zinc-500' },
+
+  // ── Projects ────────────────────────────────────────
+  project_create:        { icon: '🚀', label: 'Progetto creato',                  color: 'text-green-400',  detail: d => [d.projectName, d.language].filter(Boolean).map(String).join(' · ') },
+  project_open:          { icon: '📂', label: 'Progetto aperto',                  color: 'text-white',      detail: d => d.projectName ? String(d.projectName) : '' },
+  project_delete:        { icon: '🗑️', label: 'Progetto eliminato',              color: 'text-red-400',    detail: d => d.projectName ? String(d.projectName) : '' },
+  project_rename:        { icon: '✏️', label: 'Progetto rinominato',             color: 'text-blue-300',   detail: d => d.oldName && d.newName ? `${d.oldName} → ${d.newName}` : '' },
+  project_duplicate:     { icon: '📋', label: 'Progetto duplicato',               color: 'text-blue-300',   detail: d => d.projectName ? String(d.projectName) : '' },
+  project_share:         { icon: '🔗', label: 'Progetto condiviso',               color: 'text-blue-300',   detail: d => d.projectName ? String(d.projectName) : '' },
+  project_filter:        { icon: '🔍', label: 'Filtro progetti applicato',        color: 'text-zinc-300',   detail: d => d.filter ? String(d.filter) : '' },
+  project_bulk_delete:   { icon: '🗑️', label: 'Eliminazione multipla progetti',  color: 'text-red-400',    detail: d => d.count ? `${d.count} progetti` : '' },
+
+  // ── Editor / Panels / Tabs ──────────────────────────
+  panel_open:            { icon: '📌', label: 'Pannello aperto',                  color: 'text-blue-300',   detail: d => d.panel ? String(d.panel) : '' },
+  panel_close:           { icon: '📌', label: 'Pannello chiuso',                  color: 'text-zinc-400',   detail: d => d.panel ? String(d.panel) : '' },
+  tab_open:              { icon: '📑', label: 'Tab aperto',                       color: 'text-blue-300',   detail: d => d.tab ? String(d.tab) : '' },
+  tab_switch:            { icon: '🔄', label: 'Cambio tab',                       color: 'text-zinc-300',   detail: d => d.tabType ? String(d.tabType) : '' },
+  tab_close:             { icon: '✖️', label: 'Tab chiuso',                       color: 'text-zinc-400',   detail: d => d.tabType ? String(d.tabType) : '' },
+  file_open:             { icon: '📄', label: 'File aperto',                      color: 'text-white',      detail: d => d.fileName ? String(d.fileName) : '' },
+  file_create:           { icon: '📝', label: 'File creato',                      color: 'text-green-300',  detail: d => d.fileName ? String(d.fileName) : '' },
+  file_delete:           { icon: '🗑️', label: 'File eliminato',                  color: 'text-red-400',    detail: d => d.fileName ? String(d.fileName) : '' },
+  file_rename:           { icon: '✏️', label: 'File rinominato',                 color: 'text-blue-300',   detail: d => d.oldName && d.newName ? `${d.oldName} → ${d.newName}` : '' },
+  file_edit:             { icon: '📝', label: 'File modificato',                  color: 'text-zinc-300',   detail: d => d.fileName ? String(d.fileName) : '' },
+  file_save:             { icon: '💾', label: 'File salvato',                     color: 'text-zinc-300',   detail: d => d.fileName ? String(d.fileName) : '' },
+  file_search:           { icon: '🔎', label: 'Ricerca file',                     color: 'text-zinc-300',   detail: d => d.query ? String(d.query) : '' },
+  browse_files:          { icon: '📁', label: 'Esplorazione file',                color: 'text-zinc-300' },
+  inspect_mode:          { icon: '🔬', label: 'Modalità ispettore',               color: 'text-blue-300',   detail: d => d.enabled === 'true' ? 'Attivato' : d.enabled === 'false' ? 'Disattivato' : '' },
+  element_selected:      { icon: '👆', label: 'Elemento selezionato',             color: 'text-blue-300',   detail: d => d.selector ? String(d.selector) : '' },
+  viewport_change:       { icon: '📐', label: 'Cambio viewport',                  color: 'text-blue-300',   detail: d => d.mode ? String(d.mode) : '' },
+  grid_button:           { icon: '⊞',  label: 'Layout griglia',                   color: 'text-zinc-300' },
+
+  // ── AI & Chat ───────────────────────────────────────
+  chat_message:          { icon: '💬', label: 'Messaggio chat AI',                color: 'text-purple-300', detail: d => [d.model, d.agentMode].filter(Boolean).map(String).join(' · ') },
+  chat_send:             { icon: '💬', label: 'Messaggio chat AI',                color: 'text-purple-300' },
+  chat_terminal_command: { icon: '⌨️', label: 'Comando terminale via chat',      color: 'text-purple-300' },
+  new_chat:              { icon: '💬', label: 'Nuova conversazione',              color: 'text-purple-300', detail: d => d.chatType ? String(d.chatType) : '' },
+  chat_minimize:         { icon: '➖', label: 'Chat minimizzata',                 color: 'text-zinc-400' },
+  chat_select:           { icon: '💬', label: 'Chat selezionata',                 color: 'text-purple-300', detail: d => d.chatTitle ? String(d.chatTitle) : '' },
+  chat_delete:           { icon: '🗑️', label: 'Chat eliminata',                  color: 'text-red-400' },
+  chat_rename:           { icon: '✏️', label: 'Chat rinominata',                 color: 'text-purple-300', detail: d => d.newTitle ? String(d.newTitle) : '' },
+  chat_pin:              { icon: '📌', label: 'Chat fissata',                     color: 'text-purple-300', detail: d => d.pinned === 'true' ? 'Fissata' : 'Rimossa' },
+  chat_move_folder:      { icon: '📁', label: 'Chat spostata in cartella',        color: 'text-purple-300' },
+  chat_open_preview:     { icon: '👁️', label: 'Anteprima aperta da chat',        color: 'text-purple-300' },
+  chat_welcome_dismissed:{ icon: '👋', label: 'Welcome chat chiuso',              color: 'text-zinc-400' },
+  model_select:          { icon: '🤖', label: 'Modello AI selezionato',           color: 'text-purple-300', detail: d => d.model ? String(d.model) : '' },
+
+  // ── Preview ─────────────────────────────────────────
+  preview_start:         { icon: '▶️', label: 'Anteprima avviata',               color: 'text-cyan-400',   detail: d => d.projectName ? String(d.projectName) : '' },
+  preview_ready:         { icon: '✅', label: 'Anteprima pronta',                 color: 'text-green-400',  detail: d => d.projectName ? String(d.projectName) : '' },
+  preview_refresh:       { icon: '🔄', label: 'Anteprima aggiornata',             color: 'text-cyan-400' },
+  preview_stop:          { icon: '⏹️', label: 'Anteprima fermata',               color: 'text-zinc-400' },
+  preview_error:         { icon: '❌', label: 'Errore anteprima',                 color: 'text-red-400',    detail: d => d.errorMessage ? String(d.errorMessage).slice(0, 80) : '' },
+  preview_fix_ai:        { icon: '🔧', label: 'Fix AI per errore anteprima',      color: 'text-amber-400' },
+
+  // ── Publish ─────────────────────────────────────────
+  publish:               { icon: '🌐', label: 'Pubblicazione avviata',            color: 'text-pink-400',   detail: d => d.slug ? String(d.slug) : '' },
+  publish_success:       { icon: '🎉', label: 'Pubblicazione riuscita',           color: 'text-green-400',  detail: d => d.slug ? String(d.slug) : '' },
+  publish_error:         { icon: '❌', label: 'Errore pubblicazione',             color: 'text-red-400',    detail: d => d.errorMessage ? String(d.errorMessage).slice(0, 80) : '' },
+  publish_share:         { icon: '🔗', label: 'Link pubblicazione condiviso',     color: 'text-pink-400',   detail: d => d.slug ? String(d.slug) : '' },
+  publish_open_url:      { icon: '🔗', label: 'URL pubblicazione aperto',         color: 'text-pink-400',   detail: d => d.slug ? String(d.slug) : '' },
+  unpublish:             { icon: '🚫', label: 'Progetto de-pubblicato',           color: 'text-zinc-400',   detail: d => d.slug ? String(d.slug) : '' },
+  site_publish:          { icon: '🌐', label: 'Sito pubblicato',                  color: 'text-green-400',  detail: d => d.slug ? String(d.slug) : '' },
+
+  // ── Git ─────────────────────────────────────────────
+  git_action:            { icon: '🔀', label: 'Azione Git',                       color: 'text-orange-400', detail: d => d.action ? String(d.action) : '' },
+  git_commit:            { icon: '✅', label: 'Commit creato',                    color: 'text-green-400' },
+  git_checkout:          { icon: '🔀', label: 'Cambio branch',                    color: 'text-orange-400', detail: d => d.branch ? String(d.branch) : '' },
+  git_push:              { icon: '⬆️', label: 'Push effettuato',                 color: 'text-orange-400' },
+  git_auth:              { icon: '🔑', label: 'Autenticazione Git',               color: 'text-orange-400', detail: d => d.provider ? String(d.provider) : '' },
+  git_auth_success:      { icon: '✅', label: 'Autenticazione Git riuscita',      color: 'text-green-400',  detail: d => d.provider ? String(d.provider) : '' },
+  git_auth_error:        { icon: '❌', label: 'Errore autenticazione Git',        color: 'text-red-400',    detail: d => d.provider ? String(d.provider) : '' },
+  git_account_remove:    { icon: '🗑️', label: 'Account Git rimosso',            color: 'text-zinc-400',   detail: d => d.provider ? String(d.provider) : '' },
+  git_repo_connect:      { icon: '🔗', label: 'Repository connesso',              color: 'text-orange-400', detail: d => d.repoUrl ? String(d.repoUrl) : '' },
+  git_repo_import:       { icon: '📥', label: 'Repository importato',             color: 'text-orange-400', detail: d => d.repoName ? String(d.repoName) : '' },
+  git_import:            { icon: '📥', label: 'Import Git avviato',               color: 'text-orange-400' },
+  git_import_cancel:     { icon: '✖️', label: 'Import Git annullato',             color: 'text-zinc-400' },
+  git_import_confirm:    { icon: '✅', label: 'Import Git confermato',            color: 'text-green-400',  detail: d => d.repoUrl ? String(d.repoUrl) : '' },
+  git_tab_switch:        { icon: '🔄', label: 'Cambio tab Git',                   color: 'text-orange-400', detail: d => d.tab ? String(d.tab) : '' },
+  git_branch_create:     { icon: '🌿', label: 'Branch creato',                    color: 'text-green-400',  detail: d => d.branch ? String(d.branch) : '' },
+  git_commit_view:       { icon: '📜', label: 'Cronologia commit',                color: 'text-orange-400' },
+  git_select_all:        { icon: '☑️', label: 'Seleziona tutto per commit',       color: 'text-orange-400' },
+  git_link_account:      { icon: '🔗', label: 'Account Git collegato',            color: 'text-orange-400', detail: d => d.provider ? String(d.provider) : '' },
+  git_unlink_account:    { icon: '🔗', label: 'Account Git scollegato',           color: 'text-zinc-400',   detail: d => d.provider ? String(d.provider) : '' },
+  git_connect_repo:      { icon: '🔗', label: 'Connessione repository',           color: 'text-orange-400' },
+  git_clone:             { icon: '📥', label: 'Clone repository',                 color: 'text-orange-400', detail: d => d.repoName ? String(d.repoName) : '' },
+
+  // ── Settings ────────────────────────────────────────
+  settings_modal_open:   { icon: '⚙️', label: 'Impostazioni aperte',            color: 'text-violet-300', detail: d => d.modal ? String(d.modal) : '' },
+  settings_modal_close:  { icon: '⚙️', label: 'Impostazioni chiuse',            color: 'text-zinc-400',   detail: d => d.modal ? String(d.modal) : '' },
+  language_change:       { icon: '🌍', label: 'Lingua cambiata',                  color: 'text-violet-300', detail: d => d.language ? String(d.language) : '' },
+  password_change:       { icon: '🔐', label: 'Password cambiata',                color: 'text-green-400' },
+  password_change_error: { icon: '❌', label: 'Errore cambio password',           color: 'text-red-400' },
+  email_change:          { icon: '📧', label: 'Email cambiata',                   color: 'text-green-400' },
+  email_change_error:    { icon: '❌', label: 'Errore cambio email',              color: 'text-red-400' },
+  name_change:           { icon: '👤', label: 'Nome profilo cambiato',             color: 'text-violet-300' },
+  env_var_add:           { icon: '🔧', label: 'Variabile ambiente aggiunta',       color: 'text-violet-300', detail: d => d.key ? String(d.key) : '' },
+  env_var_delete:        { icon: '🔧', label: 'Variabile ambiente rimossa',        color: 'text-zinc-400',   detail: d => d.key ? String(d.key) : '' },
+  notification_toggle:   { icon: '🔔', label: 'Notifiche attivate/disattivate',   color: 'text-violet-300', detail: d => d.notificationType ? String(d.notificationType) : '' },
+  restore_purchases:     { icon: '💳', label: 'Acquisti ripristinati',             color: 'text-amber-300' },
+  notification_received: { icon: '🔔', label: 'Notifica ricevuta',                color: 'text-zinc-400' },
+  push_token:            { icon: '🔔', label: 'Push token registrato',            color: 'text-zinc-400' },
+
+  // ── Onboarding ──────────────────────────────────────
+  onboarding_step_completed:      { icon: '✅', label: 'Step onboarding completato',     color: 'text-teal-400', detail: d => d.step ? String(d.step) : '' },
+  onboarding_step:                { icon: '✅', label: 'Step onboarding completato',     color: 'text-teal-400' },
+  onboarding_step_complete:       { icon: '✅', label: 'Step onboarding completato',     color: 'text-teal-400' },
+  onboarding_skip:                { icon: '⏭️', label: 'Step onboarding saltato',        color: 'text-zinc-400', detail: d => d.step ? String(d.step) : '' },
+  onboarding_experience_selected: { icon: '🎓', label: 'Livello esperienza selezionato', color: 'text-teal-400', detail: d => d.experienceLevel ? String(d.experienceLevel) : '' },
+  onboarding_experience:          { icon: '🎓', label: 'Ha scelto esperienza',           color: 'text-teal-400', detail: d => (d.experienceLevel || d.experience) ? String(d.experienceLevel || d.experience) : '' },
+  onboarding_experience_select:   { icon: '🎓', label: 'Ha scelto esperienza',           color: 'text-teal-400', detail: d => d.experience ? String(d.experience) : '' },
+  onboarding_referral_selected:   { icon: '📢', label: 'Fonte scoperta selezionata',     color: 'text-teal-400', detail: d => d.referralSource ? String(d.referralSource) : '' },
+  onboarding_referral:            { icon: '📢', label: 'Referral selezionato',           color: 'text-teal-400', detail: d => (d.referralSource || d.referral) ? String(d.referralSource || d.referral) : '' },
+  onboarding_referral_select:     { icon: '📢', label: 'Referral selezionato',           color: 'text-teal-400', detail: d => d.referral ? String(d.referral) : '' },
+  onboarding_completed:           { icon: '🎉', label: 'Onboarding completato',          color: 'text-green-400' },
+  onboarding_complete:            { icon: '🎉', label: 'Onboarding completato',          color: 'text-green-400' },
+  onboarding_plan_selected:       { icon: '💰', label: 'Piano scelto in onboarding',     color: 'text-amber-400', detail: d => d.plan ? String(d.plan) : '' },
+  onboarding_back:                { icon: '⬅️', label: 'Tornato indietro in onboarding', color: 'text-zinc-400',  detail: d => d.fromStep ? String(d.fromStep) : '' },
+  tutorial_step_advance:          { icon: '📖', label: 'Step tutorial avanzato',          color: 'text-teal-400',  detail: d => d.stepName ? String(d.stepName) : '' },
+  tutorial_skip:                  { icon: '⏭️', label: 'Tutorial saltato',               color: 'text-zinc-400' },
+
+  // ── Billing ─────────────────────────────────────────
+  plan_select:           { icon: '💰', label: 'Piano visualizzato',               color: 'text-amber-300', detail: d => d.plan ? String(d.plan) : '' },
+  plan_view:             { icon: '💳', label: 'Ha visualizzato i piani',           color: 'text-amber-300' },
+  purchase_start:        { icon: '🛒', label: 'Acquisto avviato',                 color: 'text-amber-300', detail: d => d.productId ? String(d.productId) : '' },
+  purchase_success:      { icon: '✅', label: 'Acquisto completato',              color: 'text-green-400', detail: d => [d.productId, d.plan].filter(Boolean).map(String).join(' · ') },
+  purchase_error:        { icon: '❌', label: 'Errore acquisto',                  color: 'text-red-400',   detail: d => [d.productId, d.errorType].filter(Boolean).map(String).join(' · ') },
+  plan_purchase:         { icon: '⭐', label: 'Abbonamento attivato',             color: 'text-amber-400', detail: d => d.plan ? String(d.plan) : '' },
+  subscription_start:    { icon: '⭐', label: 'Abbonamento attivato',             color: 'text-amber-400', detail: d => d.plan ? String(d.plan) : '' },
+  plans_view:            { icon: '👁️', label: 'Pagina piani visualizzata',       color: 'text-amber-300', detail: d => d.source ? `Da: ${String(d.source)}` : '' },
+  plans_close:           { icon: '✖️', label: 'Pagina piani chiusa',              color: 'text-zinc-400' },
+  billing_cycle_change:  { icon: '🔄', label: 'Ciclo fatturazione cambiato',      color: 'text-amber-300', detail: d => d.cycle ? String(d.cycle) : '' },
+  legal_view:            { icon: '📜', label: 'Documento legale visualizzato',     color: 'text-zinc-300',  detail: d => d.legalType ? String(d.legalType) : '' },
+
+  // ── Deploy (legacy) ─────────────────────────────────
+  deploy:                { icon: '🚀', label: 'Deploy avviato',                   color: 'text-amber-400' },
+  deploy_start:          { icon: '🚀', label: 'Deploy avviato',                   color: 'text-amber-400' },
+  deploy_success:        { icon: '🚀', label: 'Deploy completato',                color: 'text-green-400' },
+  deploy_error:          { icon: '❌', label: 'Deploy fallito',                   color: 'text-red-400',   detail: d => d.errorMessage ? String(d.errorMessage).slice(0, 80) : '' },
+
+  // ── System ──────────────────────────────────────────
+  error:                 { icon: '⚠️', label: 'Errore app',                      color: 'text-red-400',   detail: d => [d.context, d.errorMessage].filter(Boolean).map(String).join(': ').slice(0, 80) },
+  app_error:             { icon: '⚠️', label: 'Errore app',                      color: 'text-red-400',   detail: d => d.errorMessage ? String(d.errorMessage).slice(0, 80) : '' },
+};
+
 function formatEvent(evt: { type: string; screen?: string; data?: Record<string, unknown>; [k: string]: unknown }): FormattedEvent {
   const screen = evt.screen ? translateScreen(String(evt.screen)) : '';
   const data = (evt.data || evt) as Record<string, unknown>;
 
-  switch (evt.type) {
-    case 'screen_view':
-      return { icon: '\uD83D\uDCF1', label: `Ha aperto ${screen || 'una pagina'}`, detail: '', color: 'text-white' };
-    case 'login':
-      return { icon: '\uD83D\uDD11', label: 'Accesso effettuato', detail: '', color: 'text-green-400' };
-    case 'logout':
-      return { icon: '\uD83D\uDEAA', label: 'Disconnesso', detail: '', color: 'text-zinc-400' };
-    case 'app_foreground':
-      return { icon: '\u25B6\uFE0F', label: 'App in primo piano', detail: '', color: 'text-blue-400' };
-    case 'app_background':
-      return { icon: '\u23F8\uFE0F', label: 'App in background', detail: '', color: 'text-zinc-500' };
-    case 'onboarding_step':
-    case 'onboarding_step_complete':
-      return { icon: '\uD83D\uDCCB', label: 'Passo onboarding completato', detail: screen, color: 'text-blue-300' };
-    case 'onboarding_experience':
-    case 'onboarding_experience_select':
-      return { icon: '\uD83C\uDF93', label: 'Ha scelto esperienza', detail: data.experience ? String(data.experience) : '', color: 'text-blue-300' };
-    case 'onboarding_referral':
-    case 'onboarding_referral_select':
-      return { icon: '\uD83D\uDCE2', label: 'Referral selezionato', detail: data.referral ? String(data.referral) : '', color: 'text-blue-300' };
-    case 'onboarding_complete':
-    case 'onboarding_completed':
-      return { icon: '\u2705', label: 'Onboarding completato', detail: '', color: 'text-green-400' };
-    case 'chat_message':
-    case 'chat_send':
-      return { icon: '\uD83D\uDCAC', label: 'Messaggio chat AI', detail: data.chatTitle ? String(data.chatTitle) : '', color: 'text-purple-300' };
-    case 'project_create':
-    case 'project_created':
-      return { icon: '\uD83D\uDCC1', label: 'Progetto creato', detail: data.projectName ? String(data.projectName) : '', color: 'text-green-400' };
-    case 'project_open':
-      return { icon: '\uD83D\uDCC2', label: 'Progetto aperto', detail: data.projectName ? String(data.projectName) : '', color: 'text-white' };
-    case 'project_delete':
-      return { icon: '\uD83D\uDDD1\uFE0F', label: 'Progetto eliminato', detail: data.projectName ? String(data.projectName) : '', color: 'text-red-400' };
-    case 'file_edit':
-    case 'file_save':
-      return { icon: '\uD83D\uDCDD', label: 'File modificato', detail: data.fileName ? String(data.fileName) : '', color: 'text-zinc-300' };
-    case 'file_create':
-      return { icon: '\uD83D\uDCC4', label: 'File creato', detail: data.fileName ? String(data.fileName) : '', color: 'text-green-300' };
-    case 'deploy':
-    case 'deploy_start':
-      return { icon: '\uD83D\uDE80', label: 'Deploy avviato', detail: '', color: 'text-amber-400' };
-    case 'deploy_success':
-      return { icon: '\uD83D\uDE80', label: 'Deploy completato', detail: '', color: 'text-green-400' };
-    case 'deploy_error':
-      return { icon: '\u274C', label: 'Deploy fallito', detail: data.errorMessage ? String(data.errorMessage) : '', color: 'text-red-400' };
-    case 'publish':
-    case 'site_publish':
-      return { icon: '\uD83C\uDF10', label: 'Sito pubblicato', detail: data.slug ? String(data.slug) : '', color: 'text-green-400' };
-    case 'git_auth':
-    case 'git_auth_success':
-      return { icon: '\uD83D\uDD17', label: 'Autenticazione Git', detail: data.provider ? String(data.provider) : '', color: 'text-blue-300' };
-    case 'git_clone':
-      return { icon: '\uD83D\uDCE5', label: 'Clone repository', detail: data.repoName ? String(data.repoName) : '', color: 'text-blue-300' };
-    case 'plan_view':
-      return { icon: '\uD83D\uDCB3', label: 'Ha visualizzato i piani', detail: '', color: 'text-amber-300' };
-    case 'plan_purchase':
-    case 'subscription_start':
-      return { icon: '\u2B50', label: 'Abbonamento attivato', detail: data.plan ? String(data.plan) : '', color: 'text-amber-400' };
-    case 'error':
-    case 'app_error':
-      return { icon: '\u26A0\uFE0F', label: 'Errore app', detail: data.errorMessage ? String(data.errorMessage).slice(0, 50) : '', color: 'text-red-400' };
-    case 'notification_received':
-      return { icon: '\uD83D\uDD14', label: 'Notifica ricevuta', detail: '', color: 'text-zinc-400' };
-    case 'push_token':
-      return { icon: '\uD83D\uDD14', label: 'Push token registrato', detail: '', color: 'text-zinc-400' };
-    default: {
-      // Fallback: make type readable
-      const readable = evt.type.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
-      return { icon: '\u2022', label: readable, detail: screen, color: 'text-zinc-300' };
-    }
+  // screen_view is special — includes translated screen name in label
+  if (evt.type === 'screen_view') {
+    return { icon: '📱', label: `Ha aperto ${screen || 'una pagina'}`, detail: '', color: 'text-white' };
   }
+
+  const entry = EVENT_REGISTRY[evt.type];
+  if (entry) {
+    return {
+      icon: entry.icon,
+      label: entry.label,
+      detail: entry.detail ? entry.detail(data) : '',
+      color: entry.color,
+    };
+  }
+
+  // Fallback: make type readable
+  const readable = evt.type.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  return { icon: '•', label: readable, detail: screen, color: 'text-zinc-300' };
 }
 
 // ─── User Detail Modal ──────────────────────────────────────────────────────
@@ -926,6 +1028,31 @@ export default function UsersPage() {
             label={row._retention.label}
           />
         ),
+      },
+      {
+        key: 'aiPercent',
+        header: 'Utilizzo AI',
+        sortable: true,
+        render: (row: EnrichedUser) => {
+          const pct = Math.min(100, row.aiPercent ?? 0);
+          const spent = row.aiSpent ?? 0;
+          const limit = row.aiLimit ?? 0;
+          const hasData = row.aiSpent != null;
+          const barColor = pct > 80 ? 'bg-red-500' : pct > 50 ? 'bg-amber-500' : 'bg-green-500';
+          return hasData ? (
+            <div className="w-28">
+              <div className="flex items-center justify-between text-[11px] mb-1">
+                <span className="text-zinc-400">{formatCurrency(spent)}</span>
+                <span className="text-zinc-600">/ {formatCurrency(limit)}</span>
+              </div>
+              <div className="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                <div className={cn('h-full rounded-full transition-all', barColor)} style={{ width: `${pct}%` }} />
+              </div>
+            </div>
+          ) : (
+            <span className="text-xs text-zinc-600">—</span>
+          );
+        },
       },
       {
         key: '_projectCount',
