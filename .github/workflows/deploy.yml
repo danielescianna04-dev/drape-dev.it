@@ -40,6 +40,8 @@ jobs:
             --exclude='server.js' \
             --exclude='package.json' \
             --exclude='serviceAccountKey.json' \
+            --exclude='admin/new' \
+            --exclude='admin-ui' \
             -e "ssh -p 49222 -o StrictHostKeyChecking=no" \
             ./ \
             root@77.42.1.116:/var/www/drape-dev.it/
