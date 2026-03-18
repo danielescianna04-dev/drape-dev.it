@@ -335,15 +335,149 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
   // ── System ──────────────────────────────────────────
   error:                 { icon: '⚠️', label: 'Errore app',                      color: 'text-red-400',   detail: d => [d.context, d.errorMessage].filter(Boolean).map(String).join(': ').slice(0, 80) },
   app_error:             { icon: '⚠️', label: 'Errore app',                      color: 'text-red-400',   detail: d => d.errorMessage ? String(d.errorMessage).slice(0, 80) : '' },
+
+  // ── Italian event types (new app versions) ──────────
+  // Auth
+  registrazione:         { icon: '🆕', label: 'Registrazione account',            color: 'text-green-400' },
+  reset_password:        { icon: '🔒', label: 'Richiesta reset password',          color: 'text-amber-300' },
+  elimina_account:       { icon: '🗑️', label: 'Account eliminato',               color: 'text-red-400' },
+  errore_app:            { icon: '⚠️', label: 'Errore app',                      color: 'text-red-400',   detail: d => [d.contesto, d.messaggio].filter(Boolean).map(String).join(': ').slice(0, 80) },
+
+  // Projects
+  progetto_creato:           { icon: '🚀', label: 'Progetto creato',                   color: 'text-green-400',  detail: d => [d.nome, d.linguaggio].filter(Boolean).map(String).join(' · ') },
+  progetto_aperto:           { icon: '📂', label: 'Progetto aperto',                   color: 'text-white',      detail: d => d.nome ? String(d.nome) : '' },
+  progetto_eliminato:        { icon: '🗑️', label: 'Progetto eliminato',              color: 'text-red-400',    detail: d => d.nome ? String(d.nome) : '' },
+  progetto_rinominato:       { icon: '✏️', label: 'Progetto rinominato',             color: 'text-blue-300',   detail: d => d.vecchio_nome && d.nuovo_nome ? `${d.vecchio_nome} → ${d.nuovo_nome}` : '' },
+  progetto_duplicato:        { icon: '📋', label: 'Progetto duplicato',               color: 'text-blue-300',   detail: d => d.nome ? String(d.nome) : '' },
+  progetto_condiviso:        { icon: '🔗', label: 'Progetto condiviso',               color: 'text-blue-300',   detail: d => d.nome ? String(d.nome) : '' },
+  progetto_filtro:           { icon: '🔍', label: 'Filtro progetti applicato',        color: 'text-zinc-300',   detail: d => d.filtro ? String(d.filtro) : '' },
+  progetto_elimina_multipli: { icon: '🗑️', label: 'Eliminazione multipla progetti',  color: 'text-red-400',    detail: d => d.quantita ? `${d.quantita} progetti` : '' },
+  progetto_importato:        { icon: '📥', label: 'Progetto importato',               color: 'text-orange-400', detail: d => [d.nome, d.url_repo].filter(Boolean).map(String).join(' · ') },
+
+  // Chat & AI
+  messaggio_chat:          { icon: '💬', label: 'Messaggio chat AI',                color: 'text-purple-300', detail: d => [d.modello, d.modalita_agente].filter(Boolean).map(String).join(' · ') },
+  comando_terminale_chat:  { icon: '⌨️', label: 'Comando terminale via chat',      color: 'text-purple-300' },
+  nuova_chat:              { icon: '💬', label: 'Nuova conversazione',              color: 'text-purple-300', detail: d => d.tipo ? String(d.tipo) : '' },
+  chat_minimizzata:        { icon: '➖', label: 'Chat minimizzata',                 color: 'text-zinc-400' },
+  chat_selezionata:        { icon: '💬', label: 'Chat selezionata',                 color: 'text-purple-300', detail: d => d.titolo ? String(d.titolo) : '' },
+  chat_eliminata:          { icon: '🗑️', label: 'Chat eliminata',                  color: 'text-red-400' },
+  chat_rinominata:         { icon: '✏️', label: 'Chat rinominata',                 color: 'text-purple-300', detail: d => d.nuovo_titolo ? String(d.nuovo_titolo) : '' },
+  chat_fissata:            { icon: '📌', label: 'Chat fissata',                     color: 'text-purple-300', detail: d => d.fissata === 'true' ? 'Fissata' : 'Rimossa' },
+  chat_spostata_cartella:  { icon: '📁', label: 'Chat spostata in cartella',        color: 'text-purple-300' },
+  anteprima_da_chat:       { icon: '👁️', label: 'Anteprima aperta da chat',        color: 'text-purple-300' },
+  chat_benvenuto_chiuso:   { icon: '👋', label: 'Welcome chat chiuso',              color: 'text-zinc-400' },
+  modello_selezionato:     { icon: '🤖', label: 'Modello AI selezionato',           color: 'text-purple-300', detail: d => d.modello ? String(d.modello) : '' },
+  immagine_caricata:       { icon: '📷', label: 'Immagine caricata in chat',        color: 'text-purple-300', detail: d => d.sorgente ? String(d.sorgente) : '' },
+  modalita_chat_cambiata:  { icon: '🔄', label: 'Modalita chat cambiata',           color: 'text-purple-300', detail: d => d.modalita ? String(d.modalita) : '' },
+  piano_approvato_agente:  { icon: '✅', label: 'Piano agente approvato',           color: 'text-green-400' },
+
+  // Editor
+  pannello_aperto:         { icon: '📌', label: 'Pannello aperto',                  color: 'text-blue-300',   detail: d => d.pannello ? String(d.pannello) : '' },
+  pannello_chiuso:         { icon: '📌', label: 'Pannello chiuso',                  color: 'text-zinc-400',   detail: d => d.pannello ? String(d.pannello) : '' },
+  tab_aperto:              { icon: '📑', label: 'Tab aperto',                       color: 'text-blue-300',   detail: d => d.tab ? String(d.tab) : '' },
+  tab_cambiato:            { icon: '🔄', label: 'Cambio tab',                       color: 'text-zinc-300',   detail: d => d.tipo_tab ? String(d.tipo_tab) : '' },
+  tab_chiuso:              { icon: '✖️', label: 'Tab chiuso',                       color: 'text-zinc-400',   detail: d => d.tipo_tab ? String(d.tipo_tab) : '' },
+  file_aperto:             { icon: '📄', label: 'File aperto',                      color: 'text-white',      detail: d => d.nome_file ? String(d.nome_file) : '' },
+  file_creato:             { icon: '📝', label: 'File creato',                      color: 'text-green-300',  detail: d => d.nome_file ? String(d.nome_file) : '' },
+  file_eliminato:          { icon: '🗑️', label: 'File eliminato',                  color: 'text-red-400',    detail: d => d.nome_file ? String(d.nome_file) : '' },
+  file_rinominato:         { icon: '✏️', label: 'File rinominato',                 color: 'text-blue-300',   detail: d => d.vecchio_nome && d.nuovo_nome ? `${d.vecchio_nome} → ${d.nuovo_nome}` : '' },
+  ricerca_file:            { icon: '🔎', label: 'Ricerca file',                     color: 'text-zinc-300',   detail: d => d.query ? String(d.query) : '' },
+  esplora_file:            { icon: '📁', label: 'Esplorazione file',                color: 'text-zinc-300' },
+  layout_griglia:          { icon: '⊞',  label: 'Layout griglia',                   color: 'text-zinc-300' },
+  modalita_ispettore:      { icon: '🔬', label: 'Modalita ispettore',               color: 'text-blue-300',   detail: d => d.attivo === 'true' ? 'Attivato' : 'Disattivato' },
+  elemento_selezionato:    { icon: '👆', label: 'Elemento selezionato',             color: 'text-blue-300',   detail: d => d.selettore ? String(d.selettore) : '' },
+  cambio_viewport:         { icon: '📐', label: 'Cambio viewport',                  color: 'text-blue-300',   detail: d => d.modalita ? String(d.modalita) : '' },
+  sidebar_toggle:          { icon: '📋', label: 'Sidebar aperta/chiusa',            color: 'text-zinc-300',   detail: d => d.aperta === 'true' ? 'Aperta' : 'Chiusa' },
+  copia_codice:            { icon: '📋', label: 'Codice copiato',                   color: 'text-zinc-300' },
+
+  // Preview
+  anteprima_avviata:       { icon: '▶️', label: 'Anteprima avviata',               color: 'text-cyan-400',   detail: d => d.nome_progetto ? String(d.nome_progetto) : '' },
+  anteprima_pronta:        { icon: '✅', label: 'Anteprima pronta',                 color: 'text-green-400',  detail: d => d.nome_progetto ? String(d.nome_progetto) : '' },
+  anteprima_aggiornata:    { icon: '🔄', label: 'Anteprima aggiornata',             color: 'text-cyan-400' },
+  anteprima_fermata:       { icon: '⏹️', label: 'Anteprima fermata',               color: 'text-zinc-400' },
+  errore_anteprima:        { icon: '❌', label: 'Errore anteprima',                 color: 'text-red-400',    detail: d => d.messaggio_errore ? String(d.messaggio_errore).slice(0, 80) : '' },
+  fix_ai_anteprima:        { icon: '🔧', label: 'Fix AI per errore anteprima',      color: 'text-amber-400' },
+
+  // Publish
+  pubblicazione_avviata:         { icon: '🌐', label: 'Pubblicazione avviata',            color: 'text-pink-400',   detail: d => d.slug ? String(d.slug) : '' },
+  pubblicazione_riuscita:        { icon: '🎉', label: 'Pubblicazione riuscita',           color: 'text-green-400',  detail: d => d.slug ? String(d.slug) : '' },
+  errore_pubblicazione:          { icon: '❌', label: 'Errore pubblicazione',             color: 'text-red-400',    detail: d => d.messaggio_errore ? String(d.messaggio_errore).slice(0, 80) : '' },
+  link_pubblicazione_condiviso:  { icon: '🔗', label: 'Link pubblicazione condiviso',     color: 'text-pink-400',   detail: d => d.slug ? String(d.slug) : '' },
+  url_pubblicazione_aperto:      { icon: '🔗', label: 'URL pubblicazione aperto',         color: 'text-pink-400',   detail: d => d.slug ? String(d.slug) : '' },
+  de_pubblicato:                 { icon: '🚫', label: 'Progetto de-pubblicato',           color: 'text-zinc-400',   detail: d => d.slug ? String(d.slug) : '' },
+
+  // Git
+  azione_git:              { icon: '🔀', label: 'Azione Git',                       color: 'text-orange-400', detail: d => d.azione ? String(d.azione) : '' },
+  commit_creato:           { icon: '✅', label: 'Commit creato',                    color: 'text-green-400' },
+  cambio_branch:           { icon: '🔀', label: 'Cambio branch',                    color: 'text-orange-400', detail: d => d.branch ? String(d.branch) : '' },
+  push_effettuato:         { icon: '⬆️', label: 'Push effettuato',                 color: 'text-orange-400' },
+  auth_git:                { icon: '🔑', label: 'Autenticazione Git',               color: 'text-orange-400', detail: d => d.provider ? String(d.provider) : '' },
+  auth_git_riuscita:       { icon: '✅', label: 'Auth Git riuscita',                color: 'text-green-400',  detail: d => d.provider ? String(d.provider) : '' },
+  errore_auth_git:         { icon: '❌', label: 'Errore auth Git',                  color: 'text-red-400',    detail: d => d.provider ? String(d.provider) : '' },
+  account_git_rimosso:     { icon: '🗑️', label: 'Account Git rimosso',            color: 'text-zinc-400',   detail: d => d.provider ? String(d.provider) : '' },
+  repo_connesso:           { icon: '🔗', label: 'Repository connesso',              color: 'text-orange-400', detail: d => d.url_repo ? String(d.url_repo) : '' },
+  repo_importato:          { icon: '📥', label: 'Repository importato',             color: 'text-orange-400', detail: d => d.nome_repo ? String(d.nome_repo) : '' },
+  import_git_avviato:      { icon: '📥', label: 'Import Git avviato',               color: 'text-orange-400' },
+  import_git_annullato:    { icon: '✖️', label: 'Import Git annullato',             color: 'text-zinc-400' },
+  import_git_confermato:   { icon: '✅', label: 'Import Git confermato',            color: 'text-green-400',  detail: d => d.url_repo ? String(d.url_repo) : '' },
+  tab_git_cambiato:        { icon: '🔄', label: 'Cambio tab Git',                   color: 'text-orange-400', detail: d => d.tab ? String(d.tab) : '' },
+  branch_creato:           { icon: '🌿', label: 'Branch creato',                    color: 'text-green-400',  detail: d => d.branch ? String(d.branch) : '' },
+  cronologia_commit:       { icon: '📜', label: 'Cronologia commit',                color: 'text-orange-400' },
+  seleziona_tutto_git:     { icon: '☑️', label: 'Seleziona tutto per commit',       color: 'text-orange-400' },
+  account_git_collegato:   { icon: '🔗', label: 'Account Git collegato',            color: 'text-orange-400', detail: d => d.provider ? String(d.provider) : '' },
+  account_git_scollegato:  { icon: '🔗', label: 'Account Git scollegato',           color: 'text-zinc-400',   detail: d => d.provider ? String(d.provider) : '' },
+  connetti_repo:           { icon: '🔗', label: 'Connessione repository',           color: 'text-orange-400' },
+
+  // Settings
+  impostazioni_aperte:         { icon: '⚙️', label: 'Impostazioni aperte',          color: 'text-violet-300', detail: d => d.modale ? String(d.modale) : '' },
+  impostazioni_chiuse:         { icon: '⚙️', label: 'Impostazioni chiuse',          color: 'text-zinc-400',   detail: d => d.modale ? String(d.modale) : '' },
+  lingua_cambiata:             { icon: '🌍', label: 'Lingua cambiata',               color: 'text-violet-300', detail: d => d.lingua ? String(d.lingua) : '' },
+  password_cambiata:           { icon: '🔐', label: 'Password cambiata',             color: 'text-green-400' },
+  errore_cambio_password:      { icon: '❌', label: 'Errore cambio password',        color: 'text-red-400' },
+  email_cambiata:              { icon: '📧', label: 'Email cambiata',                color: 'text-green-400' },
+  errore_cambio_email:         { icon: '❌', label: 'Errore cambio email',           color: 'text-red-400' },
+  nome_cambiato:               { icon: '👤', label: 'Nome profilo cambiato',          color: 'text-violet-300' },
+  var_ambiente_aggiunta:       { icon: '🔧', label: 'Variabile ambiente aggiunta',   color: 'text-violet-300', detail: d => d.chiave ? String(d.chiave) : '' },
+  var_ambiente_rimossa:        { icon: '🔧', label: 'Variabile ambiente rimossa',    color: 'text-zinc-400',   detail: d => d.chiave ? String(d.chiave) : '' },
+  notifiche_toggle:            { icon: '🔔', label: 'Notifiche attivate/disattivate', color: 'text-violet-300', detail: d => d.tipo ? String(d.tipo) : '' },
+  acquisti_ripristinati:       { icon: '💳', label: 'Acquisti ripristinati',          color: 'text-amber-300' },
+  documento_legale_visto:      { icon: '📜', label: 'Documento legale visto',         color: 'text-zinc-300',   detail: d => d.tipo ? String(d.tipo) : '' },
+  tema_cambiato:               { icon: '🎨', label: 'Tema cambiato',                  color: 'text-violet-300', detail: d => d.tema ? String(d.tema) : '' },
+
+  // Plans
+  piano_visualizzato:          { icon: '💰', label: 'Piano visualizzato',             color: 'text-amber-300', detail: d => d.piano ? String(d.piano) : '' },
+  acquisto_avviato:            { icon: '🛒', label: 'Acquisto avviato',               color: 'text-amber-300', detail: d => d.prodotto ? String(d.prodotto) : '' },
+  acquisto_completato:         { icon: '✅', label: 'Acquisto completato',            color: 'text-green-400', detail: d => [d.prodotto, d.piano].filter(Boolean).map(String).join(' · ') },
+  errore_acquisto:             { icon: '❌', label: 'Errore acquisto',                color: 'text-red-400',   detail: d => [d.prodotto, d.tipo_errore].filter(Boolean).map(String).join(' · ') },
+  pagina_piani_vista:          { icon: '👁️', label: 'Pagina piani visualizzata',     color: 'text-amber-300', detail: d => d.sorgente ? `Da: ${String(d.sorgente)}` : '' },
+  pagina_piani_chiusa:         { icon: '✖️', label: 'Pagina piani chiusa',            color: 'text-zinc-400' },
+  ciclo_fatturazione_cambiato: { icon: '🔄', label: 'Ciclo fatturazione cambiato',    color: 'text-amber-300', detail: d => d.ciclo ? String(d.ciclo) : '' },
+
+  // Onboarding
+  onboarding_step_completato:  { icon: '✅', label: 'Step onboarding completato',     color: 'text-teal-400',  detail: d => d.step ? String(d.step) : '' },
+  onboarding_step_saltato:     { icon: '⏭️', label: 'Step onboarding saltato',        color: 'text-zinc-400',  detail: d => d.step ? String(d.step) : '' },
+  onboarding_esperienza_scelta:{ icon: '🎓', label: 'Livello esperienza selezionato', color: 'text-teal-400',  detail: d => d.livello ? String(d.livello) : '' },
+  onboarding_scoperta_scelta:  { icon: '📢', label: 'Fonte scoperta selezionata',     color: 'text-teal-400',  detail: d => d.fonte ? String(d.fonte) : '' },
+  onboarding_completato:       { icon: '🎉', label: 'Onboarding completato',          color: 'text-green-400' },
+  onboarding_piano_scelto:     { icon: '💰', label: 'Piano scelto in onboarding',     color: 'text-amber-400', detail: d => d.piano ? String(d.piano) : '' },
+  onboarding_indietro:         { icon: '⬅️', label: 'Tornato indietro in onboarding', color: 'text-zinc-400',  detail: d => d.da_step ? String(d.da_step) : '' },
+  onboarding_scelta_progetto:  { icon: '🎯', label: 'Scelta primo progetto',           color: 'text-teal-400',  detail: d => d.scelta ? String(d.scelta) : '' },
+  onboarding_idea_chip:        { icon: '💡', label: 'Template idea selezionato',       color: 'text-teal-400',  detail: d => d.idea ? String(d.idea) : '' },
+  tutorial_step_avanzato:      { icon: '📖', label: 'Step tutorial avanzato',          color: 'text-teal-400',  detail: d => d.nome_step ? String(d.nome_step) : '' },
+  tutorial_saltato:            { icon: '⏭️', label: 'Tutorial saltato',               color: 'text-zinc-400' },
+
+  // App lifecycle
+  app_primo_piano:             { icon: '▶️', label: 'App in primo piano',             color: 'text-blue-400' },
 };
 
 function formatEvent(evt: { type: string; screen?: string; data?: Record<string, unknown>; [k: string]: unknown }): FormattedEvent {
   const screen = evt.screen ? translateScreen(String(evt.screen)) : '';
   const data = (evt.data || evt) as Record<string, unknown>;
 
-  // screen_view is special — includes translated screen name in label
-  if (evt.type === 'screen_view') {
-    return { icon: '📱', label: `Ha aperto ${screen || 'una pagina'}`, detail: '', color: 'text-white' };
+  // screen_view / schermata are special — includes translated screen name in label
+  if (evt.type === 'screen_view' || evt.type === 'schermata') {
+    const screenName = evt.type === 'schermata' ? String((data as any).schermata || '') : screen;
+    return { icon: '📱', label: `Ha aperto ${screenName || 'una pagina'}`, detail: '', color: 'text-white' };
   }
 
   const entry = EVENT_REGISTRY[evt.type];
@@ -363,7 +497,7 @@ function formatEvent(evt: { type: string; screen?: string; data?: Record<string,
 
 // ─── User Detail Modal ──────────────────────────────────────────────────────
 
-type ModalTab = 'overview' | 'activity' | 'ai' | 'projects';
+type ModalTab = 'overview' | 'activity' | 'projects';
 
 function UserDetailModal({
   user,
@@ -416,7 +550,6 @@ function UserDetailModal({
   const tabs: { key: ModalTab; label: string }[] = [
     { key: 'overview', label: 'Panoramica' },
     { key: 'activity', label: 'Attivit\u00e0' },
-    { key: 'ai', label: 'AI & Budget' },
     { key: 'projects', label: 'Progetti' },
   ];
 
@@ -445,16 +578,41 @@ function UserDetailModal({
       {/* ── Tab: Panoramica ─────────────────────────────────────────── */}
       {activeTab === 'overview' && (
         <div className="space-y-6">
-          {/* User header */}
-          <div className="flex items-center gap-4">
-            <UserAvatar name={user.displayName} size={48} />
-            <div>
-              <h3 className="text-lg font-semibold text-white">
-                {user.displayName || 'Senza nome'}
-              </h3>
-              <p className="text-sm text-zinc-400">{user.email}</p>
-            </div>
-          </div>
+          {/* User header + onboarding answers */}
+          {(() => {
+            const ob = (detail?.onboarding || {}) as Record<string, unknown>;
+            const expLabels: Record<string, string> = { beginner: 'Principiante', developer: 'Sviluppatore', student: 'Studente', curious: 'Curioso' };
+            const refLabels: Record<string, string> = { tiktok: 'TikTok', instagram: 'Instagram', youtube: 'YouTube', friend: 'Amico', search: 'Ricerca', twitter: 'Twitter/X', other: 'Altro' };
+            const exp = ob.experienceLevel ? String(ob.experienceLevel) : null;
+            const ref = ob.referralSource ? String(ob.referralSource) : null;
+            return (
+              <div className="flex items-start justify-between gap-6">
+                <div className="flex items-center gap-4">
+                  <UserAvatar name={user.displayName} size={48} />
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">
+                      {user.displayName || 'Senza nome'}
+                    </h3>
+                    <p className="text-sm text-zinc-400">{user.email}</p>
+                  </div>
+                </div>
+                <div className="flex gap-4 shrink-0">
+                  <div className="text-right">
+                    <p className="text-[10px] text-zinc-600 uppercase tracking-wide">Esperienza</p>
+                    <p className="text-sm text-zinc-300">
+                      {(detailLoading || !detail) ? '...' : exp ? (expLabels[exp] || exp) : <span className="text-zinc-600">—</span>}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[10px] text-zinc-600 uppercase tracking-wide">Scoperta</p>
+                    <p className="text-sm text-zinc-300">
+                      {(detailLoading || !detail) ? '...' : ref ? (refLabels[ref] || ref) : <span className="text-zinc-600">—</span>}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
 
           {/* Meta row */}
           <div className="flex flex-wrap items-center gap-3">
@@ -466,46 +624,86 @@ function UserDetailModal({
           </div>
 
           {/* Funnel progress */}
-          <div>
-            <p className="text-xs text-zinc-500 uppercase tracking-wide mb-3">
-              Funnel
-            </p>
-            <div className="flex items-center gap-2">
-              {FUNNEL_STEPS.map((step, i) => {
-                const completed = i <= funnelIdx;
-                return (
-                  <div key={step.key} className="flex items-center gap-2">
-                    <div
-                      className={cn(
-                        'w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold border',
-                        completed
-                          ? 'bg-purple-500/20 border-purple-500 text-purple-400'
-                          : 'border-white/10 text-zinc-600',
-                      )}
-                    >
-                      {completed ? <Check className="w-3.5 h-3.5" /> : i + 1}
-                    </div>
-                    <span
-                      className={cn(
-                        'text-xs',
-                        completed ? 'text-zinc-300' : 'text-zinc-600',
-                      )}
-                    >
-                      {step.label}
-                    </span>
-                    {i < FUNNEL_STEPS.length - 1 && (
-                      <div
-                        className={cn(
-                          'w-6 h-px',
-                          i < funnelIdx ? 'bg-purple-500' : 'bg-white/10',
+          {(() => {
+            const ob = (detail?.onboarding || {}) as Record<string, unknown>;
+            const obCompleted = !!ob.completed;
+            const hasProjects = (detail?.projects?.length ?? 0) > 0;
+
+            // Determine onboarding sub-label from events when detail is loaded
+            let obSubLabel = '';
+            if (detail && !obCompleted) {
+              // Check events to see where user stopped
+              const days = detail.activityDays || [];
+              if (days.length > 0) obSubLabel = 'Iniziato';
+            }
+            if (obCompleted) obSubLabel = 'Completato';
+
+            // Determine project sub-label
+            let projSubLabel = '';
+            if (hasProjects) {
+              const count = detail?.projects?.length ?? 0;
+              const hasOnboardingProject = !!ob.completed; // if onboarding completed, first project was from onboarding
+              if (hasOnboardingProject) {
+                projSubLabel = count > 1 ? `Da onboarding + ${count - 1} creati` : 'Da onboarding';
+              } else {
+                projSubLabel = `${count} creati`;
+              }
+            }
+
+            const stepDetails: Record<string, string> = {
+              onboarded: obSubLabel,
+              project: projSubLabel,
+            };
+
+            return (
+              <div>
+                <p className="text-xs text-zinc-500 uppercase tracking-wide mb-3">
+                  Funnel
+                </p>
+                <div className="flex items-center gap-2">
+                  {FUNNEL_STEPS.map((step, i) => {
+                    const completed = i <= funnelIdx;
+                    const sub = stepDetails[step.key] || '';
+                    return (
+                      <div key={step.key} className="flex items-center gap-2">
+                        <div
+                          className={cn(
+                            'w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold border',
+                            completed
+                              ? 'bg-purple-500/20 border-purple-500 text-purple-400'
+                              : 'border-white/10 text-zinc-600',
+                          )}
+                        >
+                          {completed ? <Check className="w-3.5 h-3.5" /> : i + 1}
+                        </div>
+                        <div className="flex flex-col">
+                          <span
+                            className={cn(
+                              'text-xs',
+                              completed ? 'text-zinc-300' : 'text-zinc-600',
+                            )}
+                          >
+                            {step.label}
+                          </span>
+                          {sub && (
+                            <span className="text-[10px] text-zinc-500">{sub}</span>
+                          )}
+                        </div>
+                        {i < FUNNEL_STEPS.length - 1 && (
+                          <div
+                            className={cn(
+                              'w-6 h-px',
+                              i < funnelIdx ? 'bg-purple-500' : 'bg-white/10',
+                            )}
+                          />
                         )}
-                      />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })()}
 
           {/* Retention */}
           <div>
@@ -522,6 +720,110 @@ function UserDetailModal({
               </span>
             </div>
           </div>
+
+          {/* AI & Budget (inline) */}
+          {detailLoading ? (
+            <div className="text-xs text-zinc-500">Caricamento dati AI...</div>
+          ) : (
+            <div className="space-y-4">
+              <div>
+                <p className="text-xs text-zinc-500 uppercase tracking-wide mb-2">
+                  Budget AI
+                </p>
+                <div className="flex items-center gap-4 mb-2">
+                  <span className="text-lg font-bold text-white">
+                    {formatCurrency(user.aiSpent ?? 0)}
+                  </span>
+                  <span className="text-sm text-zinc-500">
+                    / {formatCurrency(user.aiLimit ?? 0)}
+                  </span>
+                  <span className="text-xs text-zinc-400 ml-auto">
+                    {(user.aiPercent ?? 0).toFixed(1)}%
+                  </span>
+                </div>
+                <div className="w-full h-2 rounded-full bg-white/[0.06] overflow-hidden">
+                  <div
+                    className={cn(
+                      'h-full rounded-full transition-all',
+                      (user.aiPercent ?? 0) > 80
+                        ? 'bg-red-500'
+                        : (user.aiPercent ?? 0) > 50
+                          ? 'bg-amber-500'
+                          : 'bg-purple-500',
+                    )}
+                    style={{ width: `${Math.min(100, user.aiPercent ?? 0)}%` }}
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <Cpu className="w-4 h-4 text-purple-400" />
+                <span className="text-sm text-white font-medium">
+                  {detail?.totalAiCalls ?? 0} chiamate AI totali
+                </span>
+              </div>
+
+              {detail?.aiByModel && (detail.aiByModel as any).labels?.length > 0 && (
+                <div>
+                  <p className="text-xs text-zinc-500 uppercase tracking-wide mb-2">
+                    AI per modello
+                  </p>
+                  {(() => {
+                    const abm = detail.aiByModel as { labels: string[]; data: number[] };
+                    const total = abm.data.reduce((s, n) => s + n, 0);
+                    const chartData = abm.labels.map((model, i) => ({
+                      model,
+                      count: abm.data[i] ?? 0,
+                      pct: total > 0 ? (((abm.data[i] ?? 0) / total) * 100).toFixed(1) : '0',
+                    })).sort((a, b) => b.count - a.count);
+
+                    return (
+                      <ResponsiveContainer width="100%" height={chartData.length * 32 + 16}>
+                        <BarChart
+                          data={chartData}
+                          layout="vertical"
+                          margin={{ left: 0, right: 48, top: 4, bottom: 4 }}
+                        >
+                          <XAxis type="number" hide />
+                          <YAxis
+                            type="category"
+                            dataKey="model"
+                            width={140}
+                            tick={{ fill: '#a1a1aa', fontSize: 11 }}
+                            axisLine={false}
+                            tickLine={false}
+                          />
+                          <Tooltip
+                            contentStyle={{
+                              backgroundColor: '#111',
+                              border: '1px solid rgba(255,255,255,0.06)',
+                              borderRadius: 8,
+                              color: '#fff',
+                              fontSize: 12,
+                            }}
+                            cursor={false}
+                            formatter={(value: any, _name: any, props: any) => [
+                              `${value} (${props.payload?.pct ?? 0}%)`,
+                              'Chiamate',
+                            ]}
+                          />
+                          <Bar dataKey="count" fill="#a855f7" radius={[0, 4, 4, 0]} maxBarSize={16}>
+                            {chartData.map((_: any, i: number) => (
+                              <Cell
+                                key={i}
+                                fill={i === 0 ? '#a855f7' : 'rgba(168,85,247,0.4)'}
+                              />
+                            ))}
+                          </Bar>
+                        </BarChart>
+                      </ResponsiveContainer>
+                    );
+                  })()}
+                </div>
+              )}
+            </div>
+          )}
+
         </div>
       )}
 
@@ -653,116 +955,6 @@ function UserDetailModal({
         </div>
       )}
 
-      {/* ── Tab: AI & Budget ────────────────────────────────────────── */}
-      {activeTab === 'ai' && (
-        <div className="space-y-5">
-          {detailLoading ? (
-            <p className="text-sm text-zinc-500">Caricamento...</p>
-          ) : (
-            <>
-              {/* Budget bar */}
-              <div>
-                <p className="text-xs text-zinc-500 uppercase tracking-wide mb-2">
-                  Budget AI
-                </p>
-                <div className="flex items-center gap-4 mb-2">
-                  <span className="text-lg font-bold text-white">
-                    {formatCurrency(user.aiSpent ?? 0)}
-                  </span>
-                  <span className="text-sm text-zinc-500">
-                    / {formatCurrency(user.aiLimit ?? 0)}
-                  </span>
-                  <span className="text-xs text-zinc-400 ml-auto">
-                    {(user.aiPercent ?? 0).toFixed(1)}%
-                  </span>
-                </div>
-                <div className="w-full h-2 rounded-full bg-white/[0.06] overflow-hidden">
-                  <div
-                    className={cn(
-                      'h-full rounded-full transition-all',
-                      (user.aiPercent ?? 0) > 80
-                        ? 'bg-red-500'
-                        : (user.aiPercent ?? 0) > 50
-                          ? 'bg-amber-500'
-                          : 'bg-purple-500',
-                    )}
-                    style={{ width: `${Math.min(100, user.aiPercent ?? 0)}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* Total AI calls */}
-              <div className="flex items-center gap-3">
-                <Cpu className="w-4 h-4 text-purple-400" />
-                <span className="text-sm text-white font-medium">
-                  {detail?.totalAiCalls ?? 0} chiamate AI totali
-                </span>
-              </div>
-
-              {/* AI by model */}
-              {detail?.aiByModel && (detail.aiByModel as any).labels?.length > 0 && (
-                <div>
-                  <p className="text-xs text-zinc-500 uppercase tracking-wide mb-2">
-                    AI per modello
-                  </p>
-                  {(() => {
-                    // API returns { labels: string[], data: number[] }
-                    const abm = detail.aiByModel as { labels: string[]; data: number[] };
-                    const total = abm.data.reduce((s, n) => s + n, 0);
-                    const chartData = abm.labels.map((model, i) => ({
-                      model,
-                      count: abm.data[i] ?? 0,
-                      pct: total > 0 ? (((abm.data[i] ?? 0) / total) * 100).toFixed(1) : '0',
-                    })).sort((a, b) => b.count - a.count);
-
-                    return (
-                      <ResponsiveContainer width="100%" height={chartData.length * 32 + 16}>
-                        <BarChart
-                          data={chartData}
-                          layout="vertical"
-                          margin={{ left: 0, right: 48, top: 4, bottom: 4 }}
-                        >
-                          <XAxis type="number" hide />
-                          <YAxis
-                            type="category"
-                            dataKey="model"
-                            width={140}
-                            tick={{ fill: '#a1a1aa', fontSize: 11 }}
-                            axisLine={false}
-                            tickLine={false}
-                          />
-                          <Tooltip
-                            contentStyle={{
-                              backgroundColor: '#111',
-                              border: '1px solid rgba(255,255,255,0.06)',
-                              borderRadius: 8,
-                              color: '#fff',
-                              fontSize: 12,
-                            }}
-                            cursor={false}
-                            formatter={(value: any, _name: any, props: any) => [
-                              `${value} (${props.payload?.pct ?? 0}%)`,
-                              'Chiamate',
-                            ]}
-                          />
-                          <Bar dataKey="count" fill="#a855f7" radius={[0, 4, 4, 0]} maxBarSize={16}>
-                            {chartData.map((_, i) => (
-                              <Cell
-                                key={i}
-                                fill={i === 0 ? '#a855f7' : 'rgba(168,85,247,0.4)'}
-                              />
-                            ))}
-                          </Bar>
-                        </BarChart>
-                      </ResponsiveContainer>
-                    );
-                  })()}
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      )}
 
       {/* ── Tab: Progetti ───────────────────────────────────────────── */}
       {activeTab === 'projects' && (
