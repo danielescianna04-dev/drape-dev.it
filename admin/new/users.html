@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drape Admin - Utenti</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Auth gate -->
+  <div id="authGate" style="display:none;">
+    <div class="auth-card">
+      <h1>Drape Admin</h1>
+      <p>Accesso non autorizzato. <a href="/admin/">Vai al login</a></p>
+    </div>
+  </div>
+
+  <!-- Main app -->
+  <div id="app" style="display:none;">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="brand-icon">D</span>
+        <span class="brand-text">Drape</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/admin/dashboard.html" class="nav-item">Dashboard</a>
+        <a href="/admin/new/users.html" class="nav-item active">Utenti</a>
+      </nav>
+      <div class="sidebar-footer">
+        <button id="logoutBtn" class="nav-item logout">Esci</button>
+      </div>
+    </aside>
+
+    <!-- Content -->
+    <main class="main">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-left">
+          <h1>Gestione Utenti</h1>
+          <span id="userCount" class="badge">0</span>
+        </div>
+        <div class="header-right">
+          <div class="search-box">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="searchInput" placeholder="Cerca utente...">
+          </div>
+          <select id="filterPlan" class="filter-select">
+            <option value="">Tutti i piani</option>
+            <option value="free">Free</option>
+            <option value="go">Go</option>
+            <option value="pro">Pro</option>
+          </select>
+          <select id="filterSort" class="filter-select">
+            <option value="recent">Ultimi registrati</option>
+            <option value="oldest">Primi registrati</option>
+            <option value="active">Ultimi attivi</option>
+          </select>
+        </div>
+      </header>
+
+      <!-- Users table -->
+      <div class="table-wrap">
+        <table id="usersTable">
+          <thead>
+            <tr>
+              <th>Utente</th>
+              <th>Piano</th>
+              <th>Budget AI</th>
+              <th>Ultimo accesso</th>
+              <th>Registrato</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="usersBody">
+            <tr><td colspan="6" class="loading-row"><div class="spinner"></div> Caricamento...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <!-- User detail modal -->
+  <div id="userModal" class="modal-overlay" style="display:none;">
+    <div class="modal">
+      <button class="modal-close" id="closeModal">&times;</button>
+      <div id="modalContent">
+        <div class="loading-row"><div class="spinner"></div> Caricamento...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Event legend modal -->
+  <div id="legendModal" class="modal-overlay" style="display:none;">
+    <div class="modal modal-sm">
+      <button class="modal-close" id="closeLegend">&times;</button>
+      <div id="legendContent"></div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
