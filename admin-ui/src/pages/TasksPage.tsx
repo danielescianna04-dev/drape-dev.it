@@ -52,7 +52,7 @@ function TaskCard({ task, onClick, onDragStart }: {
       draggable
       onDragStart={(e) => onDragStart(e, task.id)}
       onClick={onClick}
-      className="group bg-[#1a1a1e] border border-white/[0.08] rounded-xl p-3.5 cursor-pointer hover:border-white/[0.16] hover:bg-[#1e1e23] transition-all active:cursor-grabbing shadow-sm hover:shadow-md hover:shadow-black/30"
+      className="group task-card p-3.5 cursor-pointer"
       style={{ borderLeftWidth: 3, borderLeftColor: pri.color }}
     >
       <div className="flex items-start gap-2.5">
@@ -233,11 +233,12 @@ function DetailPanel({ task, columns, team, onUpdate, onDelete, onClose }: {
 
 // ─── Column Header ──────────────────────────────────────────────────────────
 
-function ColHeader({ col, count, onRename, onDelete, onColorChange }: {
+function ColHeader({ col, count, onRename, onDelete, onColorChange, onDragStart }: {
   col: TaskColumn; count: number;
   onRename: (id: string, nome: string) => void;
   onDelete: (id: string) => void;
   onColorChange: (id: string, colore: string) => void;
+  onDragStart?: (e: React.DragEvent, colId: string) => void;
 }) {
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState(col.nome);
@@ -249,7 +250,11 @@ function ColHeader({ col, count, onRename, onDelete, onColorChange }: {
   const save = () => { if (name.trim() && name !== col.nome) onRename(col.id, name.trim()); setEditing(false); };
 
   return (
-    <div className="flex items-center justify-between px-1 mb-3">
+    <div
+      className="flex items-center justify-between px-1 mb-3 cursor-grab active:cursor-grabbing"
+      draggable
+      onDragStart={e => { e.stopPropagation(); onDragStart?.(e, col.id); }}
+    >
       <div className="flex items-center gap-2.5">
         <div className="w-3 h-3 rounded" style={{ backgroundColor: col.colore }} />
         {editing ? (
@@ -303,7 +308,7 @@ function QuickAdd({ onSubmit, onCancel }: { onSubmit: (titolo: string) => void; 
   const ref = useRef<HTMLInputElement>(null);
   useEffect(() => { ref.current?.focus(); }, []);
   return (
-    <div className="bg-[#1a1a1e] border border-purple-500/30 rounded-xl p-3">
+    <div className="task-card p-3" style={{ borderColor: 'rgba(139,92,246,0.3)' }}>
       <div className="flex items-center gap-2">
         <Circle className="w-4 h-4 text-zinc-600 flex-shrink-0" />
         <input ref={ref} value={val} onChange={e => setVal(e.target.value)}
@@ -331,6 +336,8 @@ export default function TasksPage() {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [dragOver, setDragOver] = useState<string | null>(null);
   const [draggedId, setDraggedId] = useState<string | null>(null);
+  const [draggedColId, setDraggedColId] = useState<string | null>(null);
+  const [dragOverColId, setDragOverColId] = useState<string | null>(null);
 
   const { data: colsData } = useQuery({ queryKey: ['admin','task-columns'], queryFn: () => apiCall<{columns:TaskColumn[]}>('/admin/tasks/columns'), staleTime: 30000 });
   const { data: tasksData } = useQuery({ queryKey: ['admin','tasks'], queryFn: () => apiCall<{tasks:Task[]}>('/admin/tasks'), staleTime: 30000 });
@@ -367,81 +374,136 @@ export default function TasksPage() {
     if (selectedTask?.id === id) setSelectedTask(prev => prev ? { ...prev, ...data } : prev);
   };
 
-  // Drag handlers
+  // Drag handlers — tasks
   const onDragStart = (_e: React.DragEvent, id: string) => setDraggedId(id);
+
+  // Drag handlers — columns
+  const onColDragStart = (e: React.DragEvent, colId: string) => {
+    setDraggedColId(colId);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+  const onColDragOver = (e: React.DragEvent, colId: string) => {
+    if (!draggedColId || draggedColId === colId) return;
+    e.preventDefault();
+    setDragOverColId(colId);
+  };
+  const reorderCols = useMutation({
+    mutationFn: (ids: string[]) => taskPost('/admin/tasks/columns/reorder', { ids }),
+    onSuccess: inv,
+  });
+
+  const onColDrop = (e: React.DragEvent, targetColId: string) => {
+    e.preventDefault();
+    setDragOverColId(null);
+    if (!draggedColId || draggedColId === targetColId) return;
+    // Move dragged column to target position
+    const ids = columns.map(c => c.id);
+    const srcIdx = ids.indexOf(draggedColId);
+    const tgtIdx = ids.indexOf(targetColId);
+    if (srcIdx === -1 || tgtIdx === -1) return;
+    ids.splice(srcIdx, 1);
+    ids.splice(tgtIdx, 0, draggedColId);
+    reorderCols.mutate(ids);
+    setDraggedColId(null);
+  };
+
   useEffect(() => {
-    const h = () => { setDragOver(null); setDraggedId(null); };
+    const h = () => { setDragOver(null); setDraggedId(null); setDraggedColId(null); setDragOverColId(null); };
     document.addEventListener('dragend', h);
     return () => document.removeEventListener('dragend', h);
   }, []);
 
   return (
-    <div className="h-full flex flex-col">
-      <div className="flex items-center justify-between mb-5">
+    <div className="h-full flex flex-col task-board-bg -m-6 p-6 rounded-xl">
+      <div className="flex items-center justify-between mb-6 pb-5 border-b border-purple-500/10">
         <div>
           <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-            <Flag className="w-6 h-6 text-purple-400" /> Task Board
+            <div className="w-8 h-8 rounded-lg bg-purple-500/15 flex items-center justify-center">
+              <Flag className="w-4 h-4 text-purple-400" />
+            </div>
+            Task Board
           </h1>
           <p className="text-sm text-zinc-500 mt-1">Gestisci le attivita del team</p>
         </div>
         <div className="flex items-center gap-2">
-          {team.map(m => <Avatar key={m.email} name={m.displayName} size={28} />)}
+          {team.map(m => (
+            <div key={m.email} title={m.displayName} className="ring-2 ring-purple-500/20 rounded-full">
+              <Avatar name={m.displayName} size={30} />
+            </div>
+          ))}
         </div>
       </div>
 
-      <div className="flex-1 overflow-x-auto -mx-2">
-        <div className="flex gap-4 h-full min-h-[500px] px-2 pb-4">
-          {columns.map(col => (
-            <div
-              key={col.id}
-              className={cn(
-                'w-80 flex-shrink-0 flex flex-col rounded-xl transition-all',
-                dragOver === col.id
-                  ? 'bg-purple-500/[0.05] ring-1 ring-purple-500/30'
-                  : 'bg-white/[0.015]',
-              )}
-              onDragOver={e => { e.preventDefault(); setDragOver(col.id); }}
-              onDragLeave={() => setDragOver(null)}
-              onDrop={e => {
-                e.preventDefault(); setDragOver(null);
-                if (draggedId) {
-                  const t = tasks.find(t => t.id === draggedId);
-                  if (t && t.stato !== col.id) updateTask.mutate({ id: draggedId, stato: col.id });
-                  setDraggedId(null);
-                }
-              }}
-            >
-              <div className="p-3 pb-0">
-                <ColHeader col={col} count={byCol[col.id]?.length ?? 0}
-                  onRename={(id,nome) => updateCol.mutate({id,nome})}
-                  onDelete={id => deleteCol.mutate(id)}
-                  onColorChange={(id,colore) => updateCol.mutate({id,colore})} />
-              </div>
-
-              <div className="flex-1 overflow-y-auto px-3 pb-3 space-y-2">
-                {(byCol[col.id] ?? []).map(task => (
-                  <TaskCard key={task.id} task={task} onClick={() => setSelectedTask(task)}
-                    onDragStart={onDragStart} />
-                ))}
-
-                {addingIn === col.id ? (
-                  <QuickAdd
-                    onSubmit={titolo => { createTask.mutate({ titolo, stato: col.id, priorita: 'media' }); setAddingIn(null); }}
-                    onCancel={() => setAddingIn(null)} />
-                ) : (
-                  <button onClick={() => setAddingIn(col.id)}
-                    className="w-full flex items-center gap-2 text-xs text-zinc-600 hover:text-zinc-300 py-2.5 px-3 rounded-xl hover:bg-white/[0.03] transition-colors">
-                    <Plus className="w-4 h-4" /> Aggiungi attivita
-                  </button>
+      <div className="flex-1 overflow-x-auto">
+        <div className="flex gap-5 h-full min-h-[500px] pb-4">
+          {columns.map(col => {
+            const colTasks = byCol[col.id] ?? [];
+            const isDragTarget = dragOver === col.id;
+            return (
+              <div
+                key={col.id}
+                className={cn(
+                  'w-80 flex-shrink-0 flex flex-col rounded-2xl task-column',
+                  isDragTarget && 'drag-over',
+                  dragOverColId === col.id && 'drag-over',
+                  draggedColId === col.id && 'dragging',
                 )}
+                onDragOver={e => {
+                  e.preventDefault();
+                  if (draggedColId) { onColDragOver(e, col.id); }
+                  else { setDragOver(col.id); }
+                }}
+                onDragLeave={() => { setDragOver(null); setDragOverColId(null); }}
+                onDrop={e => {
+                  e.preventDefault(); setDragOver(null);
+                  if (draggedColId) {
+                    onColDrop(e, col.id);
+                  } else if (draggedId) {
+                    const t = tasks.find(t => t.id === draggedId);
+                    if (t && t.stato !== col.id) updateTask.mutate({ id: draggedId, stato: col.id });
+                    setDraggedId(null);
+                  }
+                }}
+              >
+                {/* Column top border accent */}
+                <div className="column-top-bar" style={{ backgroundColor: col.colore }} />
+
+                <div className="p-4 pb-2">
+                  <ColHeader col={col} count={colTasks.length}
+                    onRename={(id,nome) => updateCol.mutate({id,nome})}
+                    onDelete={id => deleteCol.mutate(id)}
+                    onColorChange={(id,colore) => updateCol.mutate({id,colore})}
+                    onDragStart={onColDragStart} />
+                </div>
+
+                <div className="flex-1 overflow-y-auto px-3 pb-3 space-y-2.5">
+                  {colTasks.map(task => (
+                    <TaskCard key={task.id} task={task} onClick={() => setSelectedTask(task)}
+                      onDragStart={onDragStart} />
+                  ))}
+
+                  {addingIn === col.id ? (
+                    <QuickAdd
+                      onSubmit={titolo => { createTask.mutate({ titolo, stato: col.id, priorita: 'media' }); setAddingIn(null); }}
+                      onCancel={() => setAddingIn(null)} />
+                  ) : (
+                    <button onClick={() => setAddingIn(col.id)}
+                      className="w-full flex items-center justify-center gap-2 text-[11px] text-zinc-500 hover:text-purple-300 py-3 px-3 rounded-xl border border-dashed border-white/[0.06] hover:border-purple-500/25 hover:bg-purple-500/[0.04] transition-all font-medium">
+                      <Plus className="w-3.5 h-3.5" /> Aggiungi attivita
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
 
           <button onClick={() => { const i = columns.length % COL_COLORS.length; createCol.mutate({nome:'Nuova colonna',colore:COL_COLORS[i]}); }}
-            className="w-80 flex-shrink-0 flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-white/[0.06] hover:border-purple-500/30 hover:bg-purple-500/[0.02] transition-all cursor-pointer min-h-[200px] group">
-            <Plus className="w-6 h-6 text-zinc-700 group-hover:text-purple-400 transition-colors" />
-            <span className="text-xs text-zinc-700 group-hover:text-purple-400 mt-2 font-medium transition-colors">Aggiungi colonna</span>
+            className="w-80 flex-shrink-0 flex flex-col items-center justify-center rounded-2xl add-column-btn cursor-pointer min-h-[200px] group">
+            <div className="w-12 h-12 rounded-2xl bg-purple-500/8 border border-purple-500/15 flex items-center justify-center group-hover:bg-purple-500/15 group-hover:border-purple-500/30 transition-all mb-3">
+              <Plus className="w-5 h-5 text-purple-500/40 group-hover:text-purple-400 transition-colors" />
+            </div>
+            <span className="text-sm text-zinc-600 group-hover:text-purple-300 font-medium transition-colors">Aggiungi colonna</span>
+            <span className="text-[11px] text-zinc-700 group-hover:text-zinc-500 mt-1 transition-colors">Clicca per creare</span>
           </button>
         </div>
       </div>

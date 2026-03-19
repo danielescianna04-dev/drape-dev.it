@@ -230,7 +230,7 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
   chat_pin:              { icon: '📌', label: 'Chat fissata',                     color: 'text-purple-300', detail: d => d.pinned === 'true' ? 'Fissata' : 'Rimossa' },
   chat_move_folder:      { icon: '📁', label: 'Chat spostata in cartella',        color: 'text-purple-300' },
   chat_open_preview:     { icon: '👁️', label: 'Anteprima aperta da chat',        color: 'text-purple-300' },
-  chat_welcome_dismissed:{ icon: '👋', label: 'Welcome chat chiuso',              color: 'text-zinc-400' },
+  chat_welcome_dismissed:{ icon: '👆', label: 'Ha premuto "Ho capito!" nel modale', color: 'text-teal-400' },
   model_select:          { icon: '🤖', label: 'Modello AI selezionato',           color: 'text-purple-300', detail: d => d.model ? String(d.model) : '' },
 
   // ── Preview ─────────────────────────────────────────
@@ -338,12 +338,12 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
   errore_app:            { icon: '⚠️', label: 'Errore app',                      color: 'text-red-400',   detail: d => [d.contesto, d.messaggio].filter(Boolean).map(String).join(': ').slice(0, 80) },
 
   // Projects - creation flow
-  continua_premuto:          { icon: '➡️', label: 'Ha premuto Continua',               color: 'text-blue-300',   detail: d => d.da_step ? String(d.da_step) : '' },
-  linguaggio_selezionato:    { icon: '🔧', label: 'Ha selezionato linguaggio',         color: 'text-teal-400',   detail: d => [d.linguaggio, d.consigliato === 'sì' ? '(consigliato)' : ''].filter(Boolean).join(' ') },
-  nome_progetto_inserito:    { icon: '✏️', label: 'Ha inserito nome progetto',         color: 'text-blue-300',   detail: d => d.nome ? String(d.nome) : '' },
+  continua_premuto:          { icon: '👆', label: 'Ha premuto Continua in',            color: 'text-teal-400',   detail: d => d.da_step ? String(d.da_step) : '' },
+  linguaggio_selezionato:    { icon: '👆', label: 'Ha selezionato linguaggio:',        color: 'text-teal-400',   detail: d => [d.linguaggio, d.consigliato === 'sì' ? '(ha usato quello consigliato)' : '(ha scelto un linguaggio diverso da quello consigliato)'].filter(Boolean).join(' ') },
+  nome_progetto_inserito:    { icon: '✏️', label: 'Ha dato il nome al progetto:',      color: 'text-blue-300',   detail: d => d.nome ? String(d.nome) : '' },
   generazione_avviata:       { icon: '⚡', label: 'Ha avviato generazione progetto',   color: 'text-amber-400',  detail: d => [d.nome, d.linguaggio].filter(Boolean).map(String).join(' · ') },
   progetto_creato:           { icon: '🚀', label: 'Progetto creato con successo',      color: 'text-green-400',  detail: d => [d.nome, d.linguaggio].filter(Boolean).map(String).join(' · ') },
-  entrato_nel_progetto:      { icon: '🏠', label: 'È entrato nel progetto',            color: 'text-green-300',  detail: d => d.nome ? String(d.nome) : '' },
+  entrato_nel_progetto:      { icon: '🏠', label: 'È entrato nel progetto con successo', color: 'text-green-300',  detail: d => d.nome ? String(d.nome) : '' },
   progetto_aperto:           { icon: '📂', label: 'Progetto aperto',                   color: 'text-white',      detail: d => d.nome ? String(d.nome) : '' },
   progetto_eliminato:        { icon: '🗑️', label: 'Progetto eliminato',              color: 'text-red-400',    detail: d => d.nome ? String(d.nome) : '' },
   progetto_rinominato:       { icon: '✏️', label: 'Progetto rinominato',             color: 'text-blue-300',   detail: d => d.vecchio_nome && d.nuovo_nome ? `${d.vecchio_nome} → ${d.nuovo_nome}` : '' },
@@ -364,7 +364,7 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
   chat_fissata:            { icon: '📌', label: 'Chat fissata',                     color: 'text-purple-300', detail: d => d.fissata === 'true' ? 'Fissata' : 'Rimossa' },
   chat_spostata_cartella:  { icon: '📁', label: 'Chat spostata in cartella',        color: 'text-purple-300' },
   anteprima_da_chat:       { icon: '👁️', label: 'Anteprima aperta da chat',        color: 'text-purple-300' },
-  chat_benvenuto_chiuso:   { icon: '👋', label: 'Welcome chat chiuso',              color: 'text-zinc-400' },
+  chat_benvenuto_chiuso:   { icon: '👆', label: 'Ha premuto "Ho capito!" nel modale', color: 'text-teal-400' },
   modello_selezionato:     { icon: '🤖', label: 'Modello AI selezionato',           color: 'text-purple-300', detail: d => d.modello ? String(d.modello) : '' },
   immagine_caricata:       { icon: '📷', label: 'Immagine caricata in chat',        color: 'text-purple-300', detail: d => d.sorgente ? String(d.sorgente) : '' },
   modalita_chat_cambiata:  { icon: '🔄', label: 'Modalita chat cambiata',           color: 'text-purple-300', detail: d => d.modalita ? String(d.modalita) : '' },
@@ -461,8 +461,11 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
   onboarding_piano_scelto:     { icon: '💰', label: 'Piano scelto in onboarding',     color: 'text-amber-400', detail: d => d.piano ? String(d.piano) : '' },
   onboarding_indietro:         { icon: '⬅️', label: 'Tornato indietro in onboarding', color: 'text-zinc-400',  detail: d => d.da_step ? String(d.da_step) : '' },
   navigazione_indietro:        { icon: '⬅️', label: 'È tornato indietro',             color: 'text-zinc-400',  detail: d => d.a_schermata ? String(d.a_schermata) : '' },
-  onboarding_scelta_progetto:  { icon: '🎯', label: 'Scelta primo progetto',           color: 'text-teal-400',  detail: d => d.scelta ? String(d.scelta) : '' },
+  onboarding_scelta_progetto:  { icon: '👆', label: 'Scelta primo progetto',           color: 'text-teal-400',  detail: d => d.scelta ? String(d.scelta) : '' },
   onboarding_idea_chip:        { icon: '💡', label: 'Template idea selezionato',       color: 'text-teal-400',  detail: d => d.idea ? String(d.idea) : '' },
+  template_idea_cancellato:    { icon: '🚫', label: 'Ha cancellato il template, descrizione personalizzata', color: 'text-zinc-400',  detail: d => d.template ? String(d.template) : '' },
+  descrizione_personalizzata:  { icon: '✍️', label: 'Sta scrivendo descrizione personalizzata', color: 'text-blue-300' },
+  cloud_mode_toggle:           { icon: '☁️', label: 'Cloud Mode',                      color: 'text-blue-400',   detail: d => d.attivo === 'sì' ? 'attivato' : 'disattivato' },
   tutorial_step_avanzato:      { icon: '📖', label: 'Step tutorial avanzato',          color: 'text-teal-400',  detail: d => d.nome_step ? String(d.nome_step) : '' },
   tutorial_saltato:            { icon: '⏭️', label: 'Tutorial saltato',               color: 'text-zinc-400' },
 
@@ -1149,39 +1152,15 @@ function UserDetailModal({
                       <p className="text-sm text-zinc-500">Nessuna azione per questo giorno</p>
                     ) : (
                       <div className="max-h-[420px] overflow-y-auto -mx-1 px-1">
-                        {/* Group consecutive same-type events */}
-                        {(() => {
-                          const evts = events.events;
-                          const groups: { events: typeof evts; formatted: ReturnType<typeof formatEvent> }[] = [];
-                          let currentGroup: typeof evts = [];
-                          let currentType = '';
+                        {/* Show every event individually */}
+                        {events.events.map((evt: any, gi: number) => {
+                            const isError = evt.type?.includes('errore') || evt.type?.includes('error');
+                            const isSession = evt.type === 'app_foreground' || evt.type === 'app_primo_piano';
+                            const isSessionEnd = evt.type === 'app_background';
+                            const { icon, label, detail, color } = formatEvent(evt);
 
-                          evts.forEach((evt: any) => {
-                            const isSessionMarker = evt.type === 'app_foreground' || evt.type === 'app_background' || evt.type === 'app_primo_piano';
-                            if (evt.type === currentType && !isSessionMarker && currentGroup.length < 5) {
-                              currentGroup.push(evt);
-                            } else {
-                              if (currentGroup.length > 0) {
-                                groups.push({ events: [...currentGroup], formatted: formatEvent(currentGroup[0]) });
-                              }
-                              currentGroup = [evt];
-                              currentType = isSessionMarker ? '' : evt.type;
-                            }
-                          });
-                          if (currentGroup.length > 0) {
-                            groups.push({ events: [...currentGroup], formatted: formatEvent(currentGroup[0]) });
-                          }
-
-                          return groups.map((group, gi) => {
-                            const firstEvt = group.events[0];
-                            const isError = firstEvt.type?.includes('errore') || firstEvt.type?.includes('error');
-                            const isSession = firstEvt.type === 'app_foreground' || firstEvt.type === 'app_primo_piano';
-                            const isSessionEnd = firstEvt.type === 'app_background';
-                            const { icon, label, detail, color } = group.formatted;
-                            const count = group.events.length;
-
-                            const timeStr = firstEvt.time || (() => {
-                              const t = new Date(firstEvt.timestamp);
+                            const timeStr = evt.time || (() => {
+                              const t = new Date(evt.timestamp);
                               return `${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}:${String(t.getSeconds()).padStart(2,'0')}`;
                             })();
 
@@ -1219,19 +1198,13 @@ function UserDetailModal({
                                   <span className={cn('text-[13px] font-medium', color)}>
                                     {label}
                                   </span>
-                                  {count > 1 && (
-                                    <span className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-white/[0.06] text-zinc-400 font-medium">
-                                      ×{count}
-                                    </span>
-                                  )}
                                   {detail && (
                                     <span className="text-[12px] text-white font-medium ml-2 bg-white/[0.06] px-1.5 py-0.5 rounded">{detail}</span>
                                   )}
                                 </div>
                               </div>
                             );
-                          });
-                        })()}
+                        })}
                       </div>
                     )}
                   </div>
