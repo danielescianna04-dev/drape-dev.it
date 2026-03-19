@@ -14,6 +14,7 @@ interface DataTableProps<T> {
   onRowClick?: (item: T) => void;
   emptyMessage?: string;
   loading?: boolean;
+  rowClassName?: (item: T) => string;
 }
 
 type SortDir = "asc" | "desc";
@@ -25,6 +26,7 @@ export function DataTable<T extends Record<string, any>>({
   onRowClick,
   emptyMessage = "No data available",
   loading = false,
+  rowClassName,
 }: DataTableProps<T>) {
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortDir, setSortDir] = useState<SortDir>("asc");
@@ -110,7 +112,7 @@ export function DataTable<T extends Record<string, any>>({
                   onClick={onRowClick ? () => onRowClick(item) : undefined}
                   className={`border-b border-white/[0.04] transition-colors hover:bg-white/[0.02] ${
                     onRowClick ? "cursor-pointer" : ""
-                  }`}
+                  } ${rowClassName ? rowClassName(item) : ""}`}
                 >
                   {columns.map((col) => (
                     <td

@@ -7,6 +7,7 @@ interface ModalProps {
   title: string;
   children: ReactNode;
   maxWidth?: string;
+  headerAction?: ReactNode;
 }
 
 export function Modal({
@@ -15,6 +16,7 @@ export function Modal({
   title,
   children,
   maxWidth = "max-w-lg",
+  headerAction,
 }: ModalProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
 
@@ -55,12 +57,15 @@ export function Modal({
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06]">
           <h2 className="text-base font-semibold text-white">{title}</h2>
-          <button
-            onClick={onClose}
-            className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-white/[0.06] transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
+          <div className="flex items-center gap-2">
+            {headerAction}
+            <button
+              onClick={onClose}
+              className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-white/[0.06] transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
         {/* Content */}

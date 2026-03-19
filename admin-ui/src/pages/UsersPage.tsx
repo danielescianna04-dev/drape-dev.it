@@ -294,10 +294,10 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
   onboarding_step:                { icon: '✅', label: 'Step onboarding completato',     color: 'text-teal-400' },
   onboarding_step_complete:       { icon: '✅', label: 'Step onboarding completato',     color: 'text-teal-400' },
   onboarding_skip:                { icon: '⏭️', label: 'Step onboarding saltato',        color: 'text-zinc-400', detail: d => d.step ? String(d.step) : '' },
-  onboarding_experience_selected: { icon: '🎓', label: 'Livello esperienza selezionato', color: 'text-teal-400', detail: d => d.experienceLevel ? String(d.experienceLevel) : '' },
-  onboarding_experience:          { icon: '🎓', label: 'Ha scelto esperienza',           color: 'text-teal-400', detail: d => (d.experienceLevel || d.experience) ? String(d.experienceLevel || d.experience) : '' },
-  onboarding_experience_select:   { icon: '🎓', label: 'Ha scelto esperienza',           color: 'text-teal-400', detail: d => d.experience ? String(d.experience) : '' },
-  onboarding_referral_selected:   { icon: '📢', label: 'Fonte scoperta selezionata',     color: 'text-teal-400', detail: d => d.referralSource ? String(d.referralSource) : '' },
+  onboarding_experience_selected: { icon: '👆', label: 'Ha selezionato esperienza:', color: 'text-teal-400', detail: d => d.experienceLevel ? String(d.experienceLevel) : '' },
+  onboarding_experience:          { icon: '👆', label: 'Ha selezionato esperienza:', color: 'text-teal-400', detail: d => (d.experienceLevel || d.experience) ? String(d.experienceLevel || d.experience) : '' },
+  onboarding_experience_select:   { icon: '👆', label: 'Ha selezionato esperienza:', color: 'text-teal-400', detail: d => d.experience ? String(d.experience) : '' },
+  onboarding_referral_selected:   { icon: '👆', label: 'Ha selezionato scoperta:',  color: 'text-teal-400', detail: d => d.referralSource ? String(d.referralSource) : '' },
   onboarding_referral:            { icon: '📢', label: 'Referral selezionato',           color: 'text-teal-400', detail: d => (d.referralSource || d.referral) ? String(d.referralSource || d.referral) : '' },
   onboarding_referral_select:     { icon: '📢', label: 'Referral selezionato',           color: 'text-teal-400', detail: d => d.referral ? String(d.referral) : '' },
   onboarding_completed:           { icon: '🎉', label: 'Onboarding completato',          color: 'text-green-400' },
@@ -450,8 +450,8 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
   // Onboarding
   onboarding_step_completato:  { icon: '👆', label: '',     color: 'text-teal-400',  detail: d => d.step ? String(d.step) : 'Step completato' },
   onboarding_step_saltato:     { icon: '⏭️', label: 'Step onboarding saltato',        color: 'text-zinc-400',  detail: d => d.step ? String(d.step) : '' },
-  onboarding_esperienza_scelta:{ icon: '🎓', label: 'Livello esperienza selezionato', color: 'text-teal-400',  detail: d => d.livello ? String(d.livello) : '' },
-  onboarding_scoperta_scelta:  { icon: '📢', label: 'Fonte scoperta selezionata',     color: 'text-teal-400',  detail: d => d.fonte ? String(d.fonte) : '' },
+  onboarding_esperienza_scelta:{ icon: '👆', label: 'Ha selezionato esperienza:', color: 'text-teal-400',  detail: d => d.livello ? String(d.livello) : (d.experienceLevel ? String(d.experienceLevel) : '') },
+  onboarding_scoperta_scelta:  { icon: '👆', label: 'Ha selezionato scoperta:',   color: 'text-teal-400',  detail: d => d.fonte ? String(d.fonte) : (d.referralSource ? String(d.referralSource) : '') },
   onboarding_completato:       { icon: '🎉', label: 'Onboarding completato',          color: 'text-green-400' },
   onboarding_piano_scelto:     { icon: '💰', label: 'Piano scelto in onboarding',     color: 'text-amber-400', detail: d => d.piano ? String(d.piano) : '' },
   onboarding_indietro:         { icon: '⬅️', label: 'Tornato indietro in onboarding', color: 'text-zinc-400',  detail: d => d.da_step ? String(d.da_step) : '' },
@@ -577,38 +577,37 @@ function UserDetailModal({
   const funnelIdx = FUNNEL_ORDER[user._funnelStage];
 
   return (
-    <Modal open onClose={onClose} title="Dettagli Utente" maxWidth="max-w-4xl">
-      {/* Tab bar + refresh */}
-      <div className="flex items-center border-b border-white/[0.06] -mx-6 px-6 mb-5">
-        <div className="flex gap-0 flex-1">
-          {tabs.map((t) => (
-            <button
-              key={t.key}
-              onClick={() => setActiveTab(t.key)}
-              className={cn(
-                'px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px',
-                activeTab === t.key
-                  ? 'text-white border-purple-500'
-                  : 'text-zinc-500 border-transparent hover:text-zinc-300',
-              )}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
-        <button
-          onClick={handleRefresh}
-          disabled={isRefreshing}
-          className={cn(
-            'p-1.5 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-all -mb-px',
-            isRefreshing && 'animate-spin text-purple-400',
-          )}
-          title="Aggiorna dati"
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
-          </svg>
-        </button>
+    <Modal open onClose={onClose} title="Dettagli Utente" maxWidth="max-w-4xl" headerAction={
+      <button
+        onClick={handleRefresh}
+        disabled={isRefreshing}
+        className={cn(
+          'p-1.5 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-all',
+          isRefreshing && 'animate-spin text-purple-400',
+        )}
+        title="Aggiorna dati"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+        </svg>
+      </button>
+    }>
+      {/* Tab bar */}
+      <div className="flex gap-0 border-b border-white/[0.06] -mx-6 px-6 mb-5">
+        {tabs.map((t) => (
+          <button
+            key={t.key}
+            onClick={() => setActiveTab(t.key)}
+            className={cn(
+              'px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px',
+              activeTab === t.key
+                ? 'text-white border-purple-500'
+                : 'text-zinc-500 border-transparent hover:text-zinc-300',
+            )}
+          >
+            {t.label}
+          </button>
+        ))}
       </div>
 
       {/* ── Tab: Panoramica ─────────────────────────────────────────── */}
@@ -1220,7 +1219,7 @@ function UserDetailModal({
                                     </span>
                                   )}
                                   {detail && (
-                                    <span className="text-[12px] text-zinc-500 ml-2">{detail}</span>
+                                    <span className="text-[12px] text-white font-medium ml-2 bg-white/[0.06] px-1.5 py-0.5 rounded">{detail}</span>
                                   )}
                                 </div>
                               </div>
@@ -1334,7 +1333,6 @@ export default function UsersPage() {
   const enrichedUsers = useMemo((): EnrichedUser[] => {
     if (!usersData?.users) return [];
     return usersData.users
-      .filter((u) => !u.deleted)
       .map((u) => {
         const engagement = engagementMap.get(u.email);
         const ret = getUserRetention(u);
@@ -1344,13 +1342,14 @@ export default function UsersPage() {
           _funnelStage: getUserFunnelStage(u, projCount),
           _retention: ret,
           _projectCount: projCount,
+          _isOnline: u.deleted ? -1 : (onlineEmails.has(u.email) ? 1 : 0),
         } as EnrichedUser;
       })
       .sort(
         (a, b) =>
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
       );
-  }, [usersData, engagementMap]);
+  }, [usersData, engagementMap, onlineEmails]);
 
   // Chip counts
   const chipCounts = useMemo(() => {
@@ -1471,9 +1470,18 @@ export default function UsersPage() {
         ),
       },
       {
-        key: 'status',
+        key: '_isOnline',
         header: 'Stato',
+        sortable: true,
         render: (row: EnrichedUser) => {
+          if (row.deleted) {
+            return (
+              <span className="inline-flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full flex-shrink-0 bg-red-500" />
+                <span className="text-xs text-red-400">Eliminato</span>
+              </span>
+            );
+          }
           const isOnline = onlineEmails.has(row.email);
           return (
             <span className="inline-flex items-center gap-1.5">
@@ -1539,6 +1547,14 @@ export default function UsersPage() {
         sortable: true,
         render: (row: EnrichedUser) => (
           <span className="text-sm text-zinc-300">{row._projectCount}</span>
+        ),
+      },
+      {
+        key: 'lastLogin',
+        header: 'Ultimo Accesso',
+        sortable: true,
+        render: (row: EnrichedUser) => (
+          <span className="text-sm text-zinc-400">{row.lastLogin ? formatDate(row.lastLogin) : '—'}</span>
         ),
       },
       {
@@ -1675,6 +1691,7 @@ export default function UsersPage() {
         onRowClick={(row) => setSelectedUserEmail((row as EnrichedUser).email)}
         loading={usersLoading}
         emptyMessage="Nessun utente trovato"
+        rowClassName={(row) => (row as EnrichedUser).deleted ? 'bg-red-500/[0.04] opacity-60' : ''}
       />
 
       {/* User detail modal */}
