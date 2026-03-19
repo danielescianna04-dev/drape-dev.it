@@ -1347,7 +1347,7 @@ export default function UsersPage() {
       })
       .sort(
         (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+          new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime(),
       );
   }, [usersData, engagementMap, onlineEmails]);
 
@@ -1361,7 +1361,7 @@ export default function UsersPage() {
     let nopush = 0;
 
     for (const u of enrichedUsers) {
-      if (u.createdAt.slice(0, 10) === today) newToday++;
+      if (u.createdAt && u.createdAt.slice(0, 10) === today) newToday++;
       const rStatus = retentionToFilterKey(u._retention.status);
       if (rStatus === 'active' || rStatus === 'new') active++;
       if (rStatus === 'dormant') dormant++;
@@ -1389,8 +1389,8 @@ export default function UsersPage() {
       const q = search.toLowerCase();
       list = list.filter(
         (u) =>
-          u.email.toLowerCase().includes(q) ||
-          (u.displayName && u.displayName.toLowerCase().includes(q)),
+          (u.email || '').toLowerCase().includes(q) ||
+          (u.displayName || '').toLowerCase().includes(q),
       );
     }
 
@@ -1417,7 +1417,7 @@ export default function UsersPage() {
       const today = new Date().toISOString().slice(0, 10);
       switch (activeChip) {
         case 'new':
-          list = list.filter((u) => u.createdAt.slice(0, 10) === today);
+          list = list.filter((u) => u.createdAt && u.createdAt.slice(0, 10) === today);
           break;
         case 'active':
           list = list.filter((u) => {
@@ -1691,14 +1691,15 @@ export default function UsersPage() {
         onRowClick={(row) => setSelectedUserEmail((row as EnrichedUser).email)}
         loading={usersLoading}
         emptyMessage="Nessun utente trovato"
-        rowClassName={(row) => (row as EnrichedUser).deleted ? 'bg-red-500/[0.04] opacity-60' : ''}
+        rowClassName={(row) => (row as EnrichedUser).deleted ? 'deleted-row' : ''}
       />
 
       {/* User detail modal */}
-      {selectedUser && (
+      {selectedUserEmail && selectedUser && (
         <UserDetailModal
+          key={selectedUserEmail}
           user={selectedUser}
-          onClose={() => setSelectedUserEmail(null)}
+          onClose={() => { setSelectedUserEmail(null); }}
         />
       )}
     </div>

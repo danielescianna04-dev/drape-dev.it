@@ -13,6 +13,7 @@ import PublishedSitesPage from "./pages/PublishedSitesPage";
 import ReportPage from "./pages/ReportPage";
 import BehaviorPage from "./pages/BehaviorPage";
 import ContainersPage from "./pages/ContainersPage";
+import TasksPage from "./pages/TasksPage";
 
 function LoginScreen({ onLogin, error }: { onLogin: (email: string, password: string) => Promise<void>; error: string | null }) {
   const [email, setEmail] = useState("");
@@ -154,6 +155,7 @@ export default function App() {
         <Route path="/report" element={<ReportPage />} />
         <Route path="/behavior" element={<BehaviorPage />} />
         <Route path="/containers" element={<ContainersPage />} />
+        <Route path="/tasks" element={<TasksPage />} />
       </Routes>
     </Layout>
   );

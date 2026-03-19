@@ -2105,6 +2105,199 @@ app.post('/admin/containers/:id/start', (req, res) => {
 });
 
 // ============================================
+// KANBAN TASK BOARD ENDPOINTS
+// ============================================
+
+// GET /admin/tasks/columns — list all columns sorted by ordine
+app.get('/admin/tasks/columns', async (req, res) => {
+  try {
+    const snapshot = await db.collection('admin_task_columns').orderBy('ordine').get();
+    const columns = [];
+    snapshot.forEach(doc => columns.push({ id: doc.id, ...doc.data() }));
+    res.json({ columns });
+  } catch (error) {
+    console.error('[Kanban Columns] Error:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// POST /admin/tasks/columns — create a column
+app.post('/admin/tasks/columns', async (req, res) => {
+  try {
+    const { nome, colore } = req.body;
+    if (!nome) return res.status(400).json({ error: 'nome is required' });
+
+    // Determine next ordine value
+    const snapshot = await db.collection('admin_task_columns').orderBy('ordine', 'desc').limit(1).get();
+    const lastOrdine = snapshot.empty ? 0 : (snapshot.docs[0].data().ordine || 0);
+
+    const docRef = await db.collection('admin_task_columns').add({
+      nome,
+      colore: colore || '#6366f1',
+      ordine: lastOrdine + 1,
+    });
+    const doc = await docRef.get();
+    res.status(201).json({ id: docRef.id, ...doc.data() });
+  } catch (error) {
+    console.error('[Kanban Columns POST] Error:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// PUT /admin/tasks/columns/:id — update a column
+app.put('/admin/tasks/columns/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nome, ordine, colore } = req.body;
+
+    const updates = {};
+    if (nome !== undefined) updates.nome = nome;
+    if (ordine !== undefined) updates.ordine = ordine;
+    if (colore !== undefined) updates.colore = colore;
+
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({ error: 'No fields to update' });
+    }
+
+    const colRef = db.collection('admin_task_columns').doc(id);
+    const col = await colRef.get();
+    if (!col.exists) return res.status(404).json({ error: 'Column not found' });
+
+    await colRef.update(updates);
+    const updated = await colRef.get();
+    res.json({ id: updated.id, ...updated.data() });
+  } catch (error) {
+    console.error('[Kanban Columns PUT] Error:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// DELETE /admin/tasks/columns/:id — delete a column, move its tasks to first remaining column
+app.delete('/admin/tasks/columns/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const colRef = db.collection('admin_task_columns').doc(id);
+    const col = await colRef.get();
+    if (!col.exists) return res.status(404).json({ error: 'Column not found' });
+
+    // Find the first remaining column (excluding the one being deleted)
+    const colsSnapshot = await db.collection('admin_task_columns').orderBy('ordine').get();
+    const remainingCols = colsSnapshot.docs.filter(d => d.id !== id);
+
+    // Move all tasks in this column to the first remaining column
+    if (remainingCols.length > 0) {
+      const targetColumnId = remainingCols[0].id;
+      const tasksSnapshot = await db.collection('admin_tasks').where('stato', '==', id).get();
+      const batch = db.batch();
+      tasksSnapshot.forEach(taskDoc => {
+        batch.update(taskDoc.ref, {
+          stato: targetColumnId,
+          aggiornato_il: admin.firestore.FieldValue.serverTimestamp(),
+        });
+      });
+      if (!tasksSnapshot.empty) await batch.commit();
+    }
+
+    await colRef.delete();
+    res.json({ success: true });
+  } catch (error) {
+    console.error('[Kanban Columns DELETE] Error:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// GET /admin/tasks — list all tasks
+app.get('/admin/tasks', async (req, res) => {
+  try {
+    const snapshot = await db.collection('admin_tasks').orderBy('creato_il', 'desc').get();
+    const tasks = [];
+    snapshot.forEach(doc => tasks.push({ id: doc.id, ...doc.data() }));
+    res.json({ tasks });
+  } catch (error) {
+    console.error('[Kanban Tasks GET] Error:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// POST /admin/tasks — create a task
+app.post('/admin/tasks', async (req, res) => {
+  try {
+    const { titolo, descrizione, stato, priorita, assegnato_a } = req.body;
+    if (!titolo) return res.status(400).json({ error: 'titolo is required' });
+
+    // Resolve stato: use provided value or default to first column
+    let statoValue = stato;
+    if (!statoValue) {
+      const colsSnapshot = await db.collection('admin_task_columns').orderBy('ordine').limit(1).get();
+      if (colsSnapshot.empty) return res.status(400).json({ error: 'No columns exist — create a column first' });
+      statoValue = colsSnapshot.docs[0].id;
+    }
+
+    const creato_da = req.adminUser.email || '';
+
+    const docRef = await db.collection('admin_tasks').add({
+      titolo,
+      descrizione: descrizione || '',
+      stato: statoValue,
+      priorita: priorita || 'media',
+      assegnato_a: assegnato_a || '',
+      creato_da,
+      creato_il: admin.firestore.FieldValue.serverTimestamp(),
+      aggiornato_il: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    const doc = await docRef.get();
+    res.status(201).json({ id: docRef.id, ...doc.data() });
+  } catch (error) {
+    console.error('[Kanban Tasks POST] Error:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// PUT /admin/tasks/:id — update a task
+app.put('/admin/tasks/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { titolo, descrizione, stato, priorita, assegnato_a } = req.body;
+
+    const taskRef = db.collection('admin_tasks').doc(id);
+    const task = await taskRef.get();
+    if (!task.exists) return res.status(404).json({ error: 'Task not found' });
+
+    const updates = { aggiornato_il: admin.firestore.FieldValue.serverTimestamp() };
+    if (titolo !== undefined) updates.titolo = titolo;
+    if (descrizione !== undefined) updates.descrizione = descrizione;
+    if (stato !== undefined) updates.stato = stato;
+    if (priorita !== undefined) updates.priorita = priorita;
+    if (assegnato_a !== undefined) updates.assegnato_a = assegnato_a;
+
+    await taskRef.update(updates);
+    const updated = await taskRef.get();
+    res.json({ id: updated.id, ...updated.data() });
+  } catch (error) {
+    console.error('[Kanban Tasks PUT] Error:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// DELETE /admin/tasks/:id — delete a task
+app.delete('/admin/tasks/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const taskRef = db.collection('admin_tasks').doc(id);
+    const task = await taskRef.get();
+    if (!task.exists) return res.status(404).json({ error: 'Task not found' });
+
+    await taskRef.delete();
+    res.json({ success: true });
+  } catch (error) {
+    console.error('[Kanban Tasks DELETE] Error:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ============================================
 // START SERVER
 // ============================================
 

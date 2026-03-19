@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useCallback, type ReactNode } from "react";
 import { X } from "lucide-react";
 
 interface ModalProps {
@@ -20,14 +20,19 @@ export function Modal({
 }: ModalProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
 
+  const handleClose = useCallback(() => {
+    document.body.style.overflow = "";
+    onClose();
+  }, [onClose]);
+
   useEffect(() => {
     if (!open) return;
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") handleClose();
     };
     document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
-  }, [open, onClose]);
+  }, [open, handleClose]);
 
   // Prevent body scroll when open
   useEffect(() => {
@@ -46,8 +51,8 @@ export function Modal({
   return (
     <div
       ref={overlayRef}
-      onClick={(e) => {
-        if (e.target === overlayRef.current) onClose();
+      onMouseDown={(e) => {
+        if (e.target === overlayRef.current) handleClose();
       }}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
     >
@@ -60,10 +65,12 @@ export function Modal({
           <div className="flex items-center gap-2">
             {headerAction}
             <button
-              onClick={onClose}
-              className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-white/[0.06] transition-colors"
+              type="button"
+              onClick={() => handleClose()}
+              className="p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/[0.06] transition-colors cursor-pointer"
+              style={{ zIndex: 100 }}
             >
-              <X className="w-4 h-4" />
+              <X className="w-5 h-5" />
             </button>
           </div>
         </div>

@@ -8,6 +8,7 @@ import {
   Container,
   LogOut,
   X,
+  Flag,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -42,6 +43,7 @@ export function Sidebar({
     { icon: Users, label: "Utenti", path: "/users", badge: badges.users },
     { icon: FolderOpen, label: "Progetti", path: "/projects" },
     { icon: Globe, label: "Siti Pubblicati", path: "/published" },
+    { icon: Flag, label: "Task Board", path: "/tasks" },
   ];
 
   const analyticsItems: NavItem[] = [

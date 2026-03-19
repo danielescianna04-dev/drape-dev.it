@@ -1,1 +1,11 @@
-/* Tailwind handles all styling. This file is intentionally empty. */
+/* Tailwind handles all styling. Custom overrides below. */
+
+tr.deleted-row,
+tr.deleted-row td {
+  background-color: rgba(127, 29, 29, 0.25) !important;
+  border-left: 3px solid #ef4444;
+}
+tr.deleted-row:hover,
+tr.deleted-row:hover td {
+  background-color: rgba(127, 29, 29, 0.35) !important;
+}
