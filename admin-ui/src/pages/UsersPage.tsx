@@ -290,7 +290,7 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
   push_token:            { icon: '🔔', label: 'Push token registrato',            color: 'text-zinc-400' },
 
   // ── Onboarding ──────────────────────────────────────
-  onboarding_step_completed:      { icon: '✅', label: 'Step onboarding completato',     color: 'text-teal-400', detail: d => d.step ? String(d.step) : '' },
+  onboarding_step_completed:      { icon: '👆', label: '',     color: 'text-teal-400', detail: d => d.step ? String(d.step) : 'Step completato' },
   onboarding_step:                { icon: '✅', label: 'Step onboarding completato',     color: 'text-teal-400' },
   onboarding_step_complete:       { icon: '✅', label: 'Step onboarding completato',     color: 'text-teal-400' },
   onboarding_skip:                { icon: '⏭️', label: 'Step onboarding saltato',        color: 'text-zinc-400', detail: d => d.step ? String(d.step) : '' },
@@ -448,7 +448,7 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
   ciclo_fatturazione_cambiato: { icon: '🔄', label: 'Ciclo fatturazione cambiato',    color: 'text-amber-300', detail: d => d.ciclo ? String(d.ciclo) : '' },
 
   // Onboarding
-  onboarding_step_completato:  { icon: '✅', label: 'Step onboarding completato',     color: 'text-teal-400',  detail: d => d.step ? String(d.step) : '' },
+  onboarding_step_completato:  { icon: '👆', label: '',     color: 'text-teal-400',  detail: d => d.step ? String(d.step) : 'Step completato' },
   onboarding_step_saltato:     { icon: '⏭️', label: 'Step onboarding saltato',        color: 'text-zinc-400',  detail: d => d.step ? String(d.step) : '' },
   onboarding_esperienza_scelta:{ icon: '🎓', label: 'Livello esperienza selezionato', color: 'text-teal-400',  detail: d => d.livello ? String(d.livello) : '' },
   onboarding_scoperta_scelta:  { icon: '📢', label: 'Fonte scoperta selezionata',     color: 'text-teal-400',  detail: d => d.fonte ? String(d.fonte) : '' },
@@ -498,8 +498,8 @@ function formatEvent(evt: { type: string; screen?: string; data?: Record<string,
   if (entry) {
     return {
       icon: entry.icon,
-      label: entry.label,
-      detail: entry.detail ? entry.detail(data) : '',
+      label: entry.label || (entry.detail ? entry.detail(data) : evt.type),
+      detail: entry.label ? (entry.detail ? entry.detail(data) : '') : '',
       color: entry.color,
     };
   }
@@ -524,16 +524,16 @@ function UserDetailModal({
   const [selectedDay, setSelectedDay] = useState<string>('');
 
   // Fetch per-user behavior detail (lazy: only when modal open)
-  const { data: detail, isLoading: detailLoading } = useQuery({
+  const { data: detail, isLoading: detailLoading, refetch: refetchDetail } = useQuery({
     queryKey: ['admin', 'behavior', 'user', user.email],
     queryFn: () =>
       apiCall<UserBehaviorDetail>(`/admin/stats/behavior/user/${encodeURIComponent(user.email)}`),
-    enabled: true, // fetch immediately — used by Panoramica (onboarding, AI budget) and Attivita
+    enabled: true,
     staleTime: 60_000,
   });
 
   // Fetch events for selected day
-  const { data: events, isLoading: eventsLoading } = useQuery({
+  const { data: events, isLoading: eventsLoading, refetch: refetchEvents } = useQuery({
     queryKey: ['admin', 'behavior', 'user', user.email, 'events', selectedDay],
     queryFn: () =>
       apiCall<UserEvents>(
@@ -542,6 +542,13 @@ function UserDetailModal({
     enabled: activeTab === 'activity' && !!selectedDay,
     staleTime: 60_000,
   });
+
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await Promise.all([refetchDetail(), refetchEvents()]);
+    setIsRefreshing(false);
+  };
 
   // Activity days for day chips (last 14)
   // API returns [{ date: "2026-03-17" }, ...] — extract date strings
@@ -571,22 +578,37 @@ function UserDetailModal({
 
   return (
     <Modal open onClose={onClose} title="Dettagli Utente" maxWidth="max-w-4xl">
-      {/* Tab bar */}
-      <div className="flex gap-0 border-b border-white/[0.06] -mx-6 px-6 mb-5">
-        {tabs.map((t) => (
-          <button
-            key={t.key}
-            onClick={() => setActiveTab(t.key)}
-            className={cn(
-              'px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px',
-              activeTab === t.key
-                ? 'text-white border-purple-500'
-                : 'text-zinc-500 border-transparent hover:text-zinc-300',
-            )}
-          >
-            {t.label}
-          </button>
-        ))}
+      {/* Tab bar + refresh */}
+      <div className="flex items-center border-b border-white/[0.06] -mx-6 px-6 mb-5">
+        <div className="flex gap-0 flex-1">
+          {tabs.map((t) => (
+            <button
+              key={t.key}
+              onClick={() => setActiveTab(t.key)}
+              className={cn(
+                'px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px',
+                activeTab === t.key
+                  ? 'text-white border-purple-500'
+                  : 'text-zinc-500 border-transparent hover:text-zinc-300',
+              )}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
+        <button
+          onClick={handleRefresh}
+          disabled={isRefreshing}
+          className={cn(
+            'p-1.5 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-all -mb-px',
+            isRefreshing && 'animate-spin text-purple-400',
+          )}
+          title="Aggiorna dati"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+          </svg>
+        </button>
       </div>
 
       {/* ── Tab: Panoramica ─────────────────────────────────────────── */}
@@ -610,7 +632,25 @@ function UserDetailModal({
                     <p className="text-sm text-zinc-400">{user.email}</p>
                   </div>
                 </div>
-                <div className="flex gap-4 shrink-0">
+                <div className="flex items-center gap-5 shrink-0">
+                  {/* AI budget compact */}
+                  {user.aiSpent != null && (
+                    <div className="text-right">
+                      <p className="text-[10px] text-zinc-600 uppercase tracking-wide">Uso AI</p>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        <div className="w-16 h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
+                          <div
+                            className={cn(
+                              'h-full rounded-full',
+                              (user.aiPercent ?? 0) > 80 ? 'bg-red-500' : (user.aiPercent ?? 0) > 50 ? 'bg-amber-500' : 'bg-purple-500',
+                            )}
+                            style={{ width: `${Math.min(100, user.aiPercent ?? 0)}%` }}
+                          />
+                        </div>
+                        <span className="text-[11px] text-zinc-400">{formatCurrency(user.aiSpent ?? 0)}</span>
+                      </div>
+                    </div>
+                  )}
                   <div className="text-right">
                     <p className="text-[10px] text-zinc-600 uppercase tracking-wide">Esperienza</p>
                     <p className="text-sm text-zinc-300">

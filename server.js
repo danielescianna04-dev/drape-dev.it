@@ -1163,6 +1163,55 @@ app.get('/admin/stats/behavior/user/:email/events', async (req, res) => {
       if (d.modal) event.modal = d.modal;
       if (d.deviceType) event.deviceType = d.deviceType;
       if (d.platform) event.platform = d.platform;
+      // Italian tracking fields (new app versions)
+      if (d.schermata) event.schermata = d.schermata;
+      if (d.nome) event.nome = d.nome;
+      if (d.nome_file) event.nome_file = d.nome_file;
+      if (d.nome_progetto) event.nome_progetto = d.nome_progetto;
+      if (d.nome_repo) event.nome_repo = d.nome_repo;
+      if (d.vecchio_nome) event.vecchio_nome = d.vecchio_nome;
+      if (d.nuovo_nome) event.nuovo_nome = d.nuovo_nome;
+      if (d.nuovo_titolo) event.nuovo_titolo = d.nuovo_titolo;
+      if (d.modello) event.modello = d.modello;
+      if (d.modalita) event.modalita = d.modalita;
+      if (d.modalita_agente) event.modalita_agente = d.modalita_agente;
+      if (d.linguaggio) event.linguaggio = d.linguaggio;
+      if (d.descrizione) event.descrizione = d.descrizione;
+      if (d.metodo) event.metodo = d.metodo;
+      if (d.livello) event.livello = d.livello;
+      if (d.fonte) event.fonte = d.fonte;
+      if (d.tipo) event.tipo = d.tipo;
+      if (d.tipo_tab) event.tipo_tab = d.tipo_tab;
+      if (d.tipo_file) event.tipo_file = d.tipo_file;
+      if (d.pannello) event.pannello = d.pannello;
+      if (d.titolo) event.titolo = d.titolo;
+      if (d.fissata) event.fissata = d.fissata;
+      if (d.compressa) event.compressa = d.compressa;
+      if (d.attivo) event.attivo = d.attivo;
+      if (d.aperta) event.aperta = d.aperta;
+      if (d.selettore) event.selettore = d.selettore;
+      if (d.messaggio) event.messaggio = d.messaggio;
+      if (d.messaggio_errore) event.messaggio_errore = d.messaggio_errore;
+      if (d.contesto) event.contesto = d.contesto;
+      if (d.sorgente) event.sorgente = d.sorgente;
+      if (d.url_repo) event.url_repo = d.url_repo;
+      if (d.filtro) event.filtro = d.filtro;
+      if (d.quantita) event.quantita = d.quantita;
+      if (d.chiave) event.chiave = d.chiave;
+      if (d.piano) event.piano = d.piano;
+      if (d.prodotto) event.prodotto = d.prodotto;
+      if (d.tipo_errore) event.tipo_errore = d.tipo_errore;
+      if (d.ciclo) event.ciclo = d.ciclo;
+      if (d.lingua) event.lingua = d.lingua;
+      if (d.modale) event.modale = d.modale;
+      if (d.tema) event.tema = d.tema;
+      if (d.scelta) event.scelta = d.scelta;
+      if (d.idea) event.idea = d.idea;
+      if (d.indice) event.indice = d.indice;
+      if (d.nome_step) event.nome_step = d.nome_step;
+      if (d.da_step) event.da_step = d.da_step;
+      if (d.step) event.step = d.step;
+      if (d.azione) event.azione = d.azione;
       events.push(event);
 
       // Calculate active time from foreground/background pairs
@@ -1713,6 +1762,9 @@ app.get('/admin/presence', async (req, res) => {
       .where('lastSeen', '>=', presenceCutoff)
       .get();
 
+    // Enrich presence data with user metadata (name, email)
+    const userMetadata = await getCachedUsersMetadata();
+
     const onlineUsers = [];
     for (const doc of presenceSnapshot.docs) {
       const data = doc.data();
@@ -1721,6 +1773,11 @@ app.get('/admin/presence', async (req, res) => {
 
       const now = new Date();
       const sessionDurationMs = sessionStart ? now - sessionStart : null;
+
+      // Enrich with user profile data
+      const userMeta = userMetadata[doc.id] || {};
+      const email = data.email || userMeta.email || userMeta.emailAddress || '';
+      const name = userMeta.displayName || userMeta.name || null;
 
       // Get location: 1) from cache, 2) from IP in presence doc via geoip-lite, 3) fallback
       let location = userLocationCache[doc.id] || null;
@@ -1742,7 +1799,8 @@ app.get('/admin/presence', async (req, res) => {
 
       onlineUsers.push({
         id: doc.id,
-        email: data.email,
+        email,
+        name,
         lastSeen: lastSeen.toISOString(),
         sessionStart: sessionStart ? sessionStart.toISOString() : null,
         sessionDurationMs: sessionDurationMs,
