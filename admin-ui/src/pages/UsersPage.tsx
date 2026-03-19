@@ -337,8 +337,13 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
   elimina_account:       { icon: '🗑️', label: 'Account eliminato',               color: 'text-red-400' },
   errore_app:            { icon: '⚠️', label: 'Errore app',                      color: 'text-red-400',   detail: d => [d.contesto, d.messaggio].filter(Boolean).map(String).join(': ').slice(0, 80) },
 
-  // Projects
-  progetto_creato:           { icon: '🚀', label: 'Progetto creato',                   color: 'text-green-400',  detail: d => [d.nome, d.linguaggio].filter(Boolean).map(String).join(' · ') },
+  // Projects - creation flow
+  continua_premuto:          { icon: '➡️', label: 'Ha premuto Continua',               color: 'text-blue-300',   detail: d => d.da_step ? String(d.da_step) : '' },
+  linguaggio_selezionato:    { icon: '🔧', label: 'Ha selezionato linguaggio',         color: 'text-teal-400',   detail: d => [d.linguaggio, d.consigliato === 'sì' ? '(consigliato)' : ''].filter(Boolean).join(' ') },
+  nome_progetto_inserito:    { icon: '✏️', label: 'Ha inserito nome progetto',         color: 'text-blue-300',   detail: d => d.nome ? String(d.nome) : '' },
+  generazione_avviata:       { icon: '⚡', label: 'Ha avviato generazione progetto',   color: 'text-amber-400',  detail: d => [d.nome, d.linguaggio].filter(Boolean).map(String).join(' · ') },
+  progetto_creato:           { icon: '🚀', label: 'Progetto creato con successo',      color: 'text-green-400',  detail: d => [d.nome, d.linguaggio].filter(Boolean).map(String).join(' · ') },
+  entrato_nel_progetto:      { icon: '🏠', label: 'È entrato nel progetto',            color: 'text-green-300',  detail: d => d.nome ? String(d.nome) : '' },
   progetto_aperto:           { icon: '📂', label: 'Progetto aperto',                   color: 'text-white',      detail: d => d.nome ? String(d.nome) : '' },
   progetto_eliminato:        { icon: '🗑️', label: 'Progetto eliminato',              color: 'text-red-400',    detail: d => d.nome ? String(d.nome) : '' },
   progetto_rinominato:       { icon: '✏️', label: 'Progetto rinominato',             color: 'text-blue-300',   detail: d => d.vecchio_nome && d.nuovo_nome ? `${d.vecchio_nome} → ${d.nuovo_nome}` : '' },
@@ -455,6 +460,7 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
   onboarding_completato:       { icon: '🎉', label: 'Onboarding completato',          color: 'text-green-400' },
   onboarding_piano_scelto:     { icon: '💰', label: 'Piano scelto in onboarding',     color: 'text-amber-400', detail: d => d.piano ? String(d.piano) : '' },
   onboarding_indietro:         { icon: '⬅️', label: 'Tornato indietro in onboarding', color: 'text-zinc-400',  detail: d => d.da_step ? String(d.da_step) : '' },
+  navigazione_indietro:        { icon: '⬅️', label: 'È tornato indietro',             color: 'text-zinc-400',  detail: d => d.a_schermata ? String(d.a_schermata) : '' },
   onboarding_scelta_progetto:  { icon: '🎯', label: 'Scelta primo progetto',           color: 'text-teal-400',  detail: d => d.scelta ? String(d.scelta) : '' },
   onboarding_idea_chip:        { icon: '💡', label: 'Template idea selezionato',       color: 'text-teal-400',  detail: d => d.idea ? String(d.idea) : '' },
   tutorial_step_avanzato:      { icon: '📖', label: 'Step tutorial avanzato',          color: 'text-teal-400',  detail: d => d.nome_step ? String(d.nome_step) : '' },

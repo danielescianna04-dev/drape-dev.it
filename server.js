@@ -2108,6 +2108,20 @@ app.post('/admin/containers/:id/start', (req, res) => {
 // KANBAN TASK BOARD ENDPOINTS
 // ============================================
 
+// GET /admin/team — list admin team members
+app.get('/admin/team', async (req, res) => {
+  try {
+    const members = [];
+    for (const email of ADMIN_EMAILS) {
+      try {
+        const user = await auth.getUserByEmail(email);
+        members.push({ email, displayName: user.displayName || email.split('@')[0], photoURL: user.photoURL || null });
+      } catch { members.push({ email, displayName: email.split('@')[0], photoURL: null }); }
+    }
+    res.json({ members });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
 // GET /admin/tasks/columns — list all columns sorted by ordine
 app.get('/admin/tasks/columns', async (req, res) => {
   try {
