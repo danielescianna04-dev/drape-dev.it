@@ -14,6 +14,7 @@ const serviceAccount = require('./serviceAccountKey.json');
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   projectId: serviceAccount.project_id,
+  storageBucket: 'drapev2.firebasestorage.app',
 });
 
 const db = admin.firestore();
@@ -206,7 +207,8 @@ app.use(express.json());
 
 // Admin email whitelist
 const ADMIN_EMAILS = [
-  'leonrivas27@gmail.com'
+  'leonrivas27@gmail.com',
+  'daniele.scianna00@gmail.com'
 ];
 
 // Auth middleware: verify Firebase ID token + check admin email
@@ -356,19 +358,31 @@ app.get('/admin/users', async (req, res) => {
         .limit(1000)
         .select('email', 'timestamp')
         .get(),
-      db.collection('user_events')
-        .where('type', '==', 'delete_account')
-        .get()
+      Promise.all([
+        db.collection('user_events').where('type', '==', 'delete_account').get(),
+        db.collection('user_events').where('type', '==', 'elimina_account').get(),
+      ]).then(([a, b]) => {
+        const merged = { forEach: (fn) => { a.forEach(fn); b.forEach(fn); } };
+        return merged;
+      })
     ]);
 
-    // Build map of last delete_account event per email
+    // Build map of last delete_account event per email AND per userId
     const deletedAccountMap = {};
+    const deletedByUidMap = {};
     deleteEventsSnapshot.forEach(doc => {
       const d = doc.data();
-      if (!d.email || !d.timestamp) return;
+      if (!d.timestamp) return;
       const ts = d.timestamp.toDate ? d.timestamp.toDate() : new Date(d.timestamp);
-      if (!deletedAccountMap[d.email] || ts > deletedAccountMap[d.email]) {
-        deletedAccountMap[d.email] = ts;
+      if (d.email) {
+        if (!deletedAccountMap[d.email] || ts > deletedAccountMap[d.email]) {
+          deletedAccountMap[d.email] = ts;
+        }
+      }
+      if (d.userId) {
+        if (!deletedByUidMap[d.userId] || ts > deletedByUidMap[d.userId]) {
+          deletedByUidMap[d.userId] = ts;
+        }
       }
     });
     const onlineUserIds = new Set();
@@ -413,8 +427,8 @@ app.get('/admin/users', async (req, res) => {
 
       // Deleted: not in Auth, or has delete_account event after registration
       let deleted = !isAuth;
-      if (isAuth && email) {
-        const deleteTs = deletedAccountMap[email];
+      if (isAuth) {
+        const deleteTs = (email && deletedAccountMap[email]) || deletedByUidMap[uid] || null;
         const createdTs = createdAt ? new Date(createdAt) : null;
         if (deleteTs && createdTs && deleteTs > createdTs) deleted = true;
       }
@@ -466,11 +480,13 @@ app.get('/admin/users', async (req, res) => {
     const deletedFromEvents = {};
     deleteEventsSnapshot.forEach(doc => {
       const d = doc.data();
-      if (!d.userId || !d.email || includedUids.has(d.userId) || includedEmails.has(d.email)) return;
+      if (!d.userId) return;
+      const email = d.email || `deleted-${d.userId}@unknown`;
+      if (includedUids.has(d.userId) || includedEmails.has(email)) return;
       const ts = d.timestamp?.toDate ? d.timestamp.toDate() : new Date(d.timestamp);
       // Keep the most recent delete event per email
-      if (!deletedFromEvents[d.email] || ts > deletedFromEvents[d.email].ts) {
-        deletedFromEvents[d.email] = { uid: d.userId, ts, email: d.email };
+      if (!deletedFromEvents[email] || ts > deletedFromEvents[email].ts) {
+        deletedFromEvents[email] = { uid: d.userId, ts, email };
       }
     });
     for (const info of Object.values(deletedFromEvents)) {
@@ -1212,6 +1228,10 @@ app.get('/admin/stats/behavior/user/:email/events', async (req, res) => {
       if (d.da_step) event.da_step = d.da_step;
       if (d.step) event.step = d.step;
       if (d.azione) event.azione = d.azione;
+      if (d.template) event.template = d.template;
+      if (d.a_schermata) event.a_schermata = d.a_schermata;
+      if (d.consigliato) event.consigliato = d.consigliato;
+      if (d.attivo) event.attivo = d.attivo;
       events.push(event);
 
       // Calculate active time from foreground/background pairs
@@ -2105,6 +2125,25 @@ app.post('/admin/containers/:id/start', (req, res) => {
 });
 
 // ============================================
+// POST /admin/upload — upload file to Firebase Storage, return URL
+app.post('/admin/upload', express.raw({ type: '*/*', limit: '10mb' }), async (req, res) => {
+  try {
+    const filename = req.query.filename || `${Date.now()}.png`;
+    const folder = req.query.folder || 'admin_uploads';
+    const bucket = admin.storage().bucket();
+    const file = bucket.file(`${folder}/${filename}`);
+    await file.save(req.body, {
+      metadata: { contentType: req.headers['content-type'] || 'image/png' },
+    });
+    await file.makePublic();
+    const url = `https://storage.googleapis.com/${bucket.name}/${folder}/${filename}`;
+    res.json({ url });
+  } catch (error) {
+    console.error('[Upload] Error:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // KANBAN TASK BOARD ENDPOINTS
 // ============================================
 
@@ -2154,6 +2193,23 @@ app.post('/admin/tasks/columns', async (req, res) => {
     res.status(201).json({ id: docRef.id, ...doc.data() });
   } catch (error) {
     console.error('[Kanban Columns POST] Error:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// POST /admin/tasks/columns/reorder — reorder all columns { ids: ['id1','id2',...] }
+app.post('/admin/tasks/columns/reorder', async (req, res) => {
+  try {
+    const { ids } = req.body;
+    if (!Array.isArray(ids)) return res.status(400).json({ error: 'ids array required' });
+    const batch = db.batch();
+    ids.forEach((id, i) => {
+      batch.update(db.collection('admin_task_columns').doc(id), { ordine: i });
+    });
+    await batch.commit();
+    res.json({ success: true });
+  } catch (error) {
+    console.error('[Kanban Reorder] Error:', error.message);
     res.status(500).json({ error: error.message });
   }
 });

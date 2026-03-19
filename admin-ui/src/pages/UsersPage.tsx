@@ -200,7 +200,7 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
   project_bulk_delete:   { icon: '🗑️', label: 'Eliminazione multipla progetti',  color: 'text-red-400',    detail: d => d.count ? `${d.count} progetti` : '' },
 
   // ── Editor / Panels / Tabs ──────────────────────────
-  panel_open:            { icon: '📌', label: 'Pannello aperto',                  color: 'text-blue-300',   detail: d => d.panel ? String(d.panel) : '' },
+  panel_open:            { icon: '📌', label: 'Pannello aperto',                  color: 'text-blue-300',   detail: d => { const names: Record<string, string> = { pty: 'Terminale', terminal: 'Log', preview: 'Anteprima', files: 'File', chat: 'Chat', database: 'Database', git: 'Git', secrets: 'Secrets' }; return d.panel ? (names[String(d.panel)] || String(d.panel)) : ''; } },
   panel_close:           { icon: '📌', label: 'Pannello chiuso',                  color: 'text-zinc-400',   detail: d => d.panel ? String(d.panel) : '' },
   tab_open:              { icon: '📑', label: 'Tab aperto',                       color: 'text-blue-300',   detail: d => d.tab ? String(d.tab) : '' },
   tab_switch:            { icon: '🔄', label: 'Cambio tab',                       color: 'text-zinc-300',   detail: d => d.tabType ? String(d.tabType) : '' },
@@ -234,7 +234,7 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
   model_select:          { icon: '🤖', label: 'Modello AI selezionato',           color: 'text-purple-300', detail: d => d.model ? String(d.model) : '' },
 
   // ── Preview ─────────────────────────────────────────
-  preview_start:         { icon: '▶️', label: 'Anteprima avviata',               color: 'text-cyan-400',   detail: d => d.projectName ? String(d.projectName) : '' },
+  preview_start:         { icon: '▶️', label: 'Ha avviato anteprima',             color: 'text-cyan-400',   detail: d => d.projectName ? String(d.projectName) : '' },
   preview_ready:         { icon: '✅', label: 'Anteprima pronta',                 color: 'text-green-400',  detail: d => d.projectName ? String(d.projectName) : '' },
   preview_refresh:       { icon: '🔄', label: 'Anteprima aggiornata',             color: 'text-cyan-400' },
   preview_stop:          { icon: '⏹️', label: 'Anteprima fermata',               color: 'text-zinc-400' },
@@ -315,7 +315,7 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
   purchase_error:        { icon: '❌', label: 'Errore acquisto',                  color: 'text-red-400',   detail: d => [d.productId, d.errorType].filter(Boolean).map(String).join(' · ') },
   plan_purchase:         { icon: '⭐', label: 'Abbonamento attivato',             color: 'text-amber-400', detail: d => d.plan ? String(d.plan) : '' },
   subscription_start:    { icon: '⭐', label: 'Abbonamento attivato',             color: 'text-amber-400', detail: d => d.plan ? String(d.plan) : '' },
-  plans_view:            { icon: '👁️', label: 'Pagina piani visualizzata',       color: 'text-amber-300', detail: d => d.source ? `Da: ${String(d.source)}` : '' },
+  plans_view:            { icon: '👁️', label: 'Ha aperto pagina Abbonamenti',    color: 'text-amber-300', detail: d => { const sources: Record<string, string> = { publish: 'da Pubblica', settings_model: 'da Impostazioni modello', preview_model: 'da modello Anteprima', preview_budget: 'da budget AI esaurito', sidebar_limit: 'da limite progetti', preview_limit: 'da limite preview', chat: 'da Chat', chat_model_locked: 'da modello bloccato in Chat' }; return d.source ? (sources[String(d.source)] || `da ${String(d.source)}`) : ''; } },
   plans_close:           { icon: '✖️', label: 'Pagina piani chiusa',              color: 'text-zinc-400' },
   billing_cycle_change:  { icon: '🔄', label: 'Ciclo fatturazione cambiato',      color: 'text-amber-300', detail: d => d.cycle ? String(d.cycle) : '' },
   legal_view:            { icon: '📜', label: 'Documento legale visualizzato',     color: 'text-zinc-300',  detail: d => d.legalType ? String(d.legalType) : '' },
@@ -363,7 +363,7 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
   chat_rinominata:         { icon: '✏️', label: 'Chat rinominata',                 color: 'text-purple-300', detail: d => d.nuovo_titolo ? String(d.nuovo_titolo) : '' },
   chat_fissata:            { icon: '📌', label: 'Chat fissata',                     color: 'text-purple-300', detail: d => d.fissata === 'true' ? 'Fissata' : 'Rimossa' },
   chat_spostata_cartella:  { icon: '📁', label: 'Chat spostata in cartella',        color: 'text-purple-300' },
-  anteprima_da_chat:       { icon: '👁️', label: 'Anteprima aperta da chat',        color: 'text-purple-300' },
+  anteprima_da_chat:       { icon: '▶️', label: 'Ha avviato anteprima dalla chat',  color: 'text-cyan-400' },
   chat_benvenuto_chiuso:   { icon: '👆', label: 'Ha premuto "Ho capito!" nel modale', color: 'text-teal-400' },
   modello_selezionato:     { icon: '🤖', label: 'Modello AI selezionato',           color: 'text-purple-300', detail: d => d.modello ? String(d.modello) : '' },
   immagine_caricata:       { icon: '📷', label: 'Immagine caricata in chat',        color: 'text-purple-300', detail: d => d.sorgente ? String(d.sorgente) : '' },
@@ -371,7 +371,7 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
   piano_approvato_agente:  { icon: '✅', label: 'Piano agente approvato',           color: 'text-green-400' },
 
   // Editor
-  pannello_aperto:         { icon: '📌', label: 'Pannello aperto',                  color: 'text-blue-300',   detail: d => d.pannello ? String(d.pannello) : '' },
+  pannello_aperto:         { icon: '📌', label: 'Pannello aperto',                  color: 'text-blue-300',   detail: d => { const names: Record<string, string> = { pty: 'Terminale', terminal: 'Log', preview: 'Anteprima', files: 'File', chat: 'Chat', database: 'Database', git: 'Git', secrets: 'Secrets' }; return d.pannello ? (names[String(d.pannello)] || String(d.pannello)) : ''; } },
   pannello_chiuso:         { icon: '📌', label: 'Pannello chiuso',                  color: 'text-zinc-400',   detail: d => d.pannello ? String(d.pannello) : '' },
   tab_aperto:              { icon: '📑', label: 'Tab aperto',                       color: 'text-blue-300',   detail: d => d.tab ? String(d.tab) : '' },
   tab_cambiato:            { icon: '🔄', label: 'Cambio tab',                       color: 'text-zinc-300',   detail: d => d.tipo_tab ? String(d.tipo_tab) : '' },
@@ -390,14 +390,16 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
   copia_codice:            { icon: '📋', label: 'Codice copiato',                   color: 'text-zinc-300' },
 
   // Preview
-  anteprima_avviata:       { icon: '▶️', label: 'Anteprima avviata',               color: 'text-cyan-400',   detail: d => d.nome_progetto ? String(d.nome_progetto) : '' },
-  anteprima_pronta:        { icon: '✅', label: 'Anteprima pronta',                 color: 'text-green-400',  detail: d => d.nome_progetto ? String(d.nome_progetto) : '' },
-  anteprima_aggiornata:    { icon: '🔄', label: 'Anteprima aggiornata',             color: 'text-cyan-400' },
+  anteprima_avviata:       { icon: '▶️', label: 'Ha avviato anteprima',             color: 'text-cyan-400',   detail: d => d.nome_progetto ? String(d.nome_progetto) : '' },
+  anteprima_pronta:        { icon: '✅', label: 'Anteprima caricata con successo',  color: 'text-green-400',  detail: d => d.nome_progetto ? String(d.nome_progetto) : '' },
+  anteprima_aggiornata:    { icon: '🔄', label: 'Anteprima aggiornata',             color: 'text-cyan-300' },
   anteprima_fermata:       { icon: '⏹️', label: 'Anteprima fermata',               color: 'text-zinc-400' },
   errore_anteprima:        { icon: '❌', label: 'Errore anteprima',                 color: 'text-red-400',    detail: d => d.messaggio_errore ? String(d.messaggio_errore).slice(0, 80) : '' },
   fix_ai_anteprima:        { icon: '🔧', label: 'Fix AI per errore anteprima',      color: 'text-amber-400' },
 
   // Publish
+  pubblica_premuto:              { icon: '👆', label: 'Ha premuto Pubblica',               color: 'text-teal-400' },
+  paywall_pubblica_mostrato:     { icon: '🔒', label: 'Modale paywall "Passa a Go" mostrato', color: 'text-amber-400' },
   pubblicazione_avviata:         { icon: '🌐', label: 'Pubblicazione avviata',            color: 'text-pink-400',   detail: d => d.slug ? String(d.slug) : '' },
   pubblicazione_riuscita:        { icon: '🎉', label: 'Pubblicazione riuscita',           color: 'text-green-400',  detail: d => d.slug ? String(d.slug) : '' },
   errore_pubblicazione:          { icon: '❌', label: 'Errore pubblicazione',             color: 'text-red-400',    detail: d => d.messaggio_errore ? String(d.messaggio_errore).slice(0, 80) : '' },
@@ -418,7 +420,8 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
   repo_importato:          { icon: '📥', label: 'Repository importato',             color: 'text-orange-400', detail: d => d.nome_repo ? String(d.nome_repo) : '' },
   import_git_avviato:      { icon: '📥', label: 'Import Git avviato',               color: 'text-orange-400' },
   import_git_annullato:    { icon: '✖️', label: 'Import Git annullato',             color: 'text-zinc-400' },
-  import_git_confermato:   { icon: '✅', label: 'Import Git confermato',            color: 'text-green-400',  detail: d => d.url_repo ? String(d.url_repo) : '' },
+  import_git_confermato:        { icon: '✅', label: 'Import Git confermato',            color: 'text-green-400',  detail: d => d.url_repo ? String(d.url_repo) : '' },
+  import_git_repo_non_valida:  { icon: '❌', label: 'Repo non valida',                 color: 'text-red-400',    detail: d => d.url_repo ? String(d.url_repo) : '' },
   tab_git_cambiato:        { icon: '🔄', label: 'Cambio tab Git',                   color: 'text-orange-400', detail: d => d.tab ? String(d.tab) : '' },
   branch_creato:           { icon: '🌿', label: 'Branch creato',                    color: 'text-green-400',  detail: d => d.branch ? String(d.branch) : '' },
   cronologia_commit:       { icon: '📜', label: 'Cronologia commit',                color: 'text-orange-400' },
@@ -448,7 +451,7 @@ const EVENT_REGISTRY: Record<string, { icon: string; label: string; color: strin
   acquisto_avviato:            { icon: '🛒', label: 'Acquisto avviato',               color: 'text-amber-300', detail: d => d.prodotto ? String(d.prodotto) : '' },
   acquisto_completato:         { icon: '✅', label: 'Acquisto completato',            color: 'text-green-400', detail: d => [d.prodotto, d.piano].filter(Boolean).map(String).join(' · ') },
   errore_acquisto:             { icon: '❌', label: 'Errore acquisto',                color: 'text-red-400',   detail: d => [d.prodotto, d.tipo_errore].filter(Boolean).map(String).join(' · ') },
-  pagina_piani_vista:          { icon: '👁️', label: 'Pagina piani visualizzata',     color: 'text-amber-300', detail: d => d.sorgente ? `Da: ${String(d.sorgente)}` : '' },
+  pagina_piani_vista:          { icon: '👁️', label: 'Ha aperto pagina Abbonamenti',  color: 'text-amber-300', detail: d => { const sources: Record<string, string> = { publish: 'da Pubblica', settings_model: 'da Impostazioni modello', preview_model: 'da modello Anteprima', preview_budget: 'da budget AI esaurito', sidebar_limit: 'da limite progetti', preview_limit: 'da limite preview', chat: 'da Chat', chat_model_locked: 'da modello bloccato in Chat' }; return d.sorgente ? (sources[String(d.sorgente)] || `da ${String(d.sorgente)}`) : ''; } },
   pagina_piani_chiusa:         { icon: '✖️', label: 'Pagina piani chiusa',            color: 'text-zinc-400' },
   ciclo_fatturazione_cambiato: { icon: '🔄', label: 'Ciclo fatturazione cambiato',    color: 'text-amber-300', detail: d => d.ciclo ? String(d.ciclo) : '' },
 
