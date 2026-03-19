@@ -88,13 +88,7 @@ function retentionToFilterKey(status: RetentionStatus): string {
 
 // ─── Funnel stages metadata ─────────────────────────────────────────────────
 
-const FUNNEL_STEPS: { key: FunnelStage; label: string }[] = [
-  { key: 'registered', label: 'Registrato' },
-  { key: 'onboarded', label: 'Onboarded' },
-  { key: 'project', label: 'Progetto' },
-  { key: 'engaged', label: 'Engaged' },
-  { key: 'paid', label: 'Pagante' },
-];
+// Funnel steps are now built dynamically in the UserDetailModal component
 
 const FUNNEL_ORDER: Record<FunnelStage, number> = {
   registered: 0,
@@ -534,7 +528,7 @@ function UserDetailModal({
     queryKey: ['admin', 'behavior', 'user', user.email],
     queryFn: () =>
       apiCall<UserBehaviorDetail>(`/admin/stats/behavior/user/${encodeURIComponent(user.email)}`),
-    enabled: activeTab !== 'overview',
+    enabled: true, // fetch immediately — used by Panoramica (onboarding, AI budget) and Attivita
     staleTime: 60_000,
   });
 
@@ -643,80 +637,160 @@ function UserDetailModal({
             </span>
           </div>
 
-          {/* Funnel progress */}
+          {/* Funnel — vertical timeline with rich details */}
           {(() => {
             const ob = (detail?.onboarding || {}) as Record<string, unknown>;
             const obCompleted = !!ob.completed;
-            const hasProjects = (detail?.projects?.length ?? 0) > 0;
+            const projCount = detail?.projects?.length ?? 0;
+            const hasProjects = projCount > 0;
+            const expLabels: Record<string, string> = { beginner: 'Principiante', developer: 'Sviluppatore', student: 'Studente', curious: 'Curioso' };
+            const refLabels: Record<string, string> = { tiktok: 'TikTok', instagram: 'Instagram', youtube: 'YouTube', friend: 'Amico', search: 'Ricerca', twitter: 'Twitter/X', other: 'Altro' };
 
-            // Determine onboarding sub-label from events when detail is loaded
-            let obSubLabel = '';
-            if (detail && !obCompleted) {
-              // Check events to see where user stopped
-              const days = detail.activityDays || [];
-              if (days.length > 0) obSubLabel = 'Iniziato';
-            }
-            if (obCompleted) obSubLabel = 'Completato';
-
-            // Determine project sub-label
-            let projSubLabel = '';
-            if (hasProjects) {
-              const count = detail?.projects?.length ?? 0;
-              const hasOnboardingProject = !!ob.completed; // if onboarding completed, first project was from onboarding
-              if (hasOnboardingProject) {
-                projSubLabel = count > 1 ? `Da onboarding + ${count - 1} creati` : 'Da onboarding';
-              } else {
-                projSubLabel = `${count} creati`;
-              }
-            }
-
-            const stepDetails: Record<string, string> = {
-              onboarded: obSubLabel,
-              project: projSubLabel,
-            };
+            // Build rich step data
+            const steps: { key: string; label: string; completed: boolean; isCurrent: boolean; icon: string; details: string[]; badge?: { text: string; color: string } }[] = [
+              {
+                key: 'registered',
+                label: 'Registrato',
+                completed: true,
+                isCurrent: funnelIdx === 0,
+                icon: '👤',
+                details: [
+                  `${formatDate(user.createdAt)}`,
+                  ...(user.provider ? [`via ${user.provider === 'apple' ? 'Apple' : user.provider === 'google' ? 'Google' : 'Email'}`] : []),
+                ],
+              },
+              {
+                key: 'onboarded',
+                label: 'Onboarding',
+                completed: funnelIdx >= 1,
+                isCurrent: funnelIdx === 0 && (detail?.activityDays?.length ?? 0) > 0,
+                icon: obCompleted ? '✅' : '📋',
+                details: obCompleted ? [
+                  ...(ob.experienceLevel ? [`Esperienza: ${expLabels[String(ob.experienceLevel)] || ob.experienceLevel}`] : []),
+                  ...(ob.referralSource ? [`Scoperta: ${refLabels[String(ob.referralSource)] || ob.referralSource}`] : []),
+                  ...(ob.completedAt ? [`Completato: ${formatDate(String(ob.completedAt))}`] : []),
+                ] : (detail ? ['Non completato'] : []),
+                badge: obCompleted
+                  ? { text: 'Completato', color: 'bg-green-500/15 text-green-400' }
+                  : detail ? { text: 'Non completato', color: 'bg-amber-500/15 text-amber-400' } : undefined,
+              },
+              {
+                key: 'project',
+                label: 'Primo Progetto',
+                completed: funnelIdx >= 2,
+                isCurrent: funnelIdx === 1,
+                icon: hasProjects ? '🚀' : '📁',
+                details: hasProjects ? [
+                  ...(detail?.projects?.slice(0, 2).map((p: Project) =>
+                    `${p.name}${p.framework ? ` · ${p.framework}` : ''}`
+                  ) || []),
+                  ...(projCount > 2 ? [`+${projCount - 2} altri`] : []),
+                ] : (detail ? ['Nessun progetto creato'] : []),
+                badge: hasProjects
+                  ? { text: `${projCount} progett${projCount === 1 ? 'o' : 'i'}`, color: 'bg-purple-500/15 text-purple-400' }
+                  : undefined,
+              },
+              {
+                key: 'engaged',
+                label: 'Engaged',
+                completed: funnelIdx >= 3,
+                isCurrent: funnelIdx === 2,
+                icon: (user.aiSpent ?? 0) > 0 ? '💬' : '⏳',
+                details: (user.aiSpent ?? 0) > 0 ? [
+                  `${formatCurrency(user.aiSpent ?? 0)} spesi su AI`,
+                  ...(detail?.totalAiCalls ? [`${detail.totalAiCalls} chiamate AI`] : []),
+                  `${detail?.totalDaysActive ?? 0} giorni attivi`,
+                ] : (detail ? ['Nessun utilizzo AI'] : []),
+                badge: (user.aiSpent ?? 0) > 0
+                  ? { text: `${formatCurrency(user.aiSpent ?? 0)} AI`, color: 'bg-purple-500/15 text-purple-400' }
+                  : undefined,
+              },
+              {
+                key: 'paid',
+                label: 'Pagante',
+                completed: funnelIdx >= 4,
+                isCurrent: funnelIdx === 3,
+                icon: user.plan !== 'free' ? '⭐' : '💳',
+                details: user.plan !== 'free' ? [
+                  `Piano: ${(user.plan || '').charAt(0).toUpperCase() + (user.plan || '').slice(1)}`,
+                ] : ['Piano Free'],
+                badge: user.plan !== 'free'
+                  ? { text: user.plan || '', color: 'bg-amber-500/15 text-amber-400' }
+                  : undefined,
+              },
+            ];
 
             return (
               <div>
-                <p className="text-xs text-zinc-500 uppercase tracking-wide mb-3">
-                  Funnel
-                </p>
-                <div className="flex items-center gap-2">
-                  {FUNNEL_STEPS.map((step, i) => {
-                    const completed = i <= funnelIdx;
-                    const sub = stepDetails[step.key] || '';
+                <p className="text-xs text-zinc-500 uppercase tracking-wide mb-3">Percorso utente</p>
+                <div className="relative">
+                  {steps.map((step, i) => {
+                    const isLast = i === steps.length - 1;
                     return (
-                      <div key={step.key} className="flex items-center gap-2">
-                        <div
-                          className={cn(
-                            'w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold border',
-                            completed
-                              ? 'bg-purple-500/20 border-purple-500 text-purple-400'
-                              : 'border-white/10 text-zinc-600',
-                          )}
-                        >
-                          {completed ? <Check className="w-3.5 h-3.5" /> : i + 1}
-                        </div>
-                        <div className="flex flex-col">
-                          <span
-                            className={cn(
-                              'text-xs',
-                              completed ? 'text-zinc-300' : 'text-zinc-600',
-                            )}
-                          >
-                            {step.label}
-                          </span>
-                          {sub && (
-                            <span className="text-[10px] text-zinc-500">{sub}</span>
-                          )}
-                        </div>
-                        {i < FUNNEL_STEPS.length - 1 && (
+                      <div key={step.key} className="flex gap-3 relative">
+                        {/* Vertical line + dot */}
+                        <div className="flex flex-col items-center flex-shrink-0" style={{ width: 24 }}>
                           <div
                             className={cn(
-                              'w-6 h-px',
-                              i < funnelIdx ? 'bg-purple-500' : 'bg-white/10',
+                              'w-6 h-6 rounded-full flex items-center justify-center text-xs z-10 border-2 transition-all',
+                              step.completed
+                                ? 'bg-purple-500/20 border-purple-500 text-purple-400'
+                                : step.isCurrent
+                                  ? 'bg-amber-500/20 border-amber-500 text-amber-400 shadow-[0_0_8px_rgba(245,158,11,0.3)]'
+                                  : 'bg-zinc-900 border-white/10 text-zinc-600',
                             )}
-                          />
-                        )}
+                          >
+                            {step.completed ? <Check className="w-3 h-3" /> : i + 1}
+                          </div>
+                          {!isLast && (
+                            <div className={cn(
+                              'w-0.5 flex-1 min-h-[16px]',
+                              step.completed ? 'bg-purple-500/40' : 'bg-white/[0.06]',
+                            )} />
+                          )}
+                        </div>
+
+                        {/* Content card */}
+                        <div className={cn(
+                          'flex-1 pb-4 min-w-0',
+                          isLast ? 'pb-0' : '',
+                        )}>
+                          <div className={cn(
+                            'rounded-lg p-3 transition-all',
+                            step.completed
+                              ? 'bg-white/[0.03] border border-white/[0.06]'
+                              : step.isCurrent
+                                ? 'bg-amber-500/[0.04] border border-amber-500/20'
+                                : 'bg-transparent border border-white/[0.04]',
+                          )}>
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <span style={{ fontSize: 14 }}>{step.icon}</span>
+                                <span className={cn(
+                                  'text-sm font-medium',
+                                  step.completed ? 'text-zinc-200' : step.isCurrent ? 'text-amber-300' : 'text-zinc-600',
+                                )}>
+                                  {step.label}
+                                </span>
+                              </div>
+                              {step.badge && (
+                                <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full', step.badge.color)}>
+                                  {step.badge.text}
+                                </span>
+                              )}
+                            </div>
+                            {step.details.length > 0 && (
+                              <div className="mt-1.5 space-y-0.5">
+                                {step.details.map((d, di) => (
+                                  <p key={di} className={cn(
+                                    'text-[11px]',
+                                    step.completed ? 'text-zinc-500' : 'text-zinc-600',
+                                  )}>{d}</p>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </div>
                       </div>
                     );
                   })}
