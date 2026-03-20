@@ -23,7 +23,7 @@ export function Layout({
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen" style={{ backgroundColor: '#0c0a12' }}>
       <Sidebar
         currentPage={currentPage}
         onNavigate={onNavigate}
@@ -34,7 +34,7 @@ export function Layout({
       />
 
       {/* Mobile header */}
-      <div className="fixed top-0 left-0 right-0 h-14 bg-black/80 backdrop-blur-md border-b border-white/[0.06] flex items-center px-4 z-30 lg:hidden">
+      <div className="fixed top-0 left-0 right-0 h-14 backdrop-blur-md border-b border-white/[0.06] flex items-center px-4 z-30 lg:hidden" style={{ backgroundColor: 'rgba(12,10,18,0.8)' }}>
         <button
           onClick={() => setMobileOpen(true)}
           className="p-2 -ml-2 text-zinc-400 hover:text-white rounded-lg hover:bg-white/[0.04]"
@@ -51,7 +51,7 @@ export function Layout({
 
       {/* Main content */}
       <main className="lg:ml-[260px] min-h-screen pt-14 lg:pt-0">
-        <div className="p-6 max-w-7xl mx-auto">{children}</div>
+        <div className="p-6">{children}</div>
       </main>
     </div>
   );

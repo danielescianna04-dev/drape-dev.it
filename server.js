@@ -457,20 +457,13 @@ app.get('/admin/users', async (req, res) => {
     });
 
     // Orphaned Firestore users (deleted from Auth but data still in Firestore)
-    // Deduplicate by email — same email with multiple orphan UIDs = one entry
-    const orphanByEmail = {};
+    // Each UID is a separate account — no deduplication by email
+    // This allows tracking every account created with the same email
     for (const [uid, meta] of Object.entries(userMetadata)) {
       if (authUidSet.has(uid)) continue;
       const email = meta.email || meta.emailAddress || null;
-      const key = email || uid; // use UID as key if no email
       const createdAt = meta.createdAt?.toDate?.()?.toISOString() || meta.createdAt || null;
-      // Keep the most recent orphan per email
-      if (!orphanByEmail[key] || (createdAt && (!orphanByEmail[key].createdAt || createdAt > orphanByEmail[key].createdAt))) {
-        orphanByEmail[key] = { uid, email, displayName: meta.displayName || meta.name, plan: meta.plan || meta.subscriptionPlan || 'free', createdAt };
-      }
-    }
-    for (const o of Object.values(orphanByEmail)) {
-      users.push(buildUser(o.uid, o.email, o.displayName, o.plan, o.createdAt, false, null));
+      users.push(buildUser(uid, email, meta.displayName || meta.name, meta.plan || meta.subscriptionPlan || 'free', createdAt, false, null));
     }
 
     // Fully deleted accounts (not in Auth, not in Firestore users, but have delete_account events)

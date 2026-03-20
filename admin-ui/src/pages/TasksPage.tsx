@@ -1,13 +1,14 @@
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Plus, MoreHorizontal, Trash2, Edit3, Flag, X, CheckCircle2, Circle } from 'lucide-react';
+import { Plus, MoreHorizontal, Trash2, Edit3, Flag, X, CheckCircle2, Circle, ImagePlus, Loader2 } from 'lucide-react';
 import { apiCall, apiPost as apiPostLib, apiDelete as apiDeleteLib } from '../lib/api';
 import { cn } from '../lib/utils';
+import { auth } from '../lib/firebase';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
 interface TaskColumn { id: string; nome: string; ordine: number; colore: string; }
-interface Task { id: string; titolo: string; descrizione: string; stato: string; priorita: 'alta' | 'media' | 'bassa'; assegnato_a: string; creato_da: string; creato_il: string; aggiornato_il: string; }
+interface Task { id: string; titolo: string; descrizione: string; stato: string; priorita: 'alta' | 'media' | 'bassa'; assegnato_a: string; creato_da: string; creato_il: string; aggiornato_il: string; allegati?: string[]; }
 interface TeamMember { email: string; displayName: string; photoURL: string | null; }
 
 const PRIORITY = {
@@ -52,8 +53,15 @@ function TaskCard({ task, onClick, onDragStart }: {
       draggable
       onDragStart={(e) => onDragStart(e, task.id)}
       onClick={onClick}
-      className="group task-card p-3.5 cursor-pointer"
-      style={{ borderLeftWidth: 3, borderLeftColor: pri.color }}
+      className="group p-3.5 cursor-pointer rounded-xl hover:translate-y-[-1px] active:scale-[0.98] transition-all"
+      style={{
+        background: '#1e1830',
+        border: '1px solid rgba(255,255,255,0.08)',
+        borderLeftWidth: 3,
+        borderLeftColor: pri.color,
+      }}
+      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#252040'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(139,92,246,0.3)'; }}
+      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = '#1e1830'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.08)'; }}
     >
       <div className="flex items-start gap-2.5">
         <CheckCircle2 className="w-4 h-4 text-zinc-600 mt-0.5 flex-shrink-0 group-hover:text-zinc-400" />
@@ -68,11 +76,154 @@ function TaskCard({ task, onClick, onDragStart }: {
         <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{ color: pri.color, backgroundColor: pri.bg }}>
           {pri.label}
         </span>
-        {task.assegnato_a && <Avatar name={task.assegnato_a} size={22} />}
+        <div className="flex items-center gap-2">
+          {(task.allegati?.length ?? 0) > 0 && (
+            <span className="flex items-center gap-0.5 text-[10px] text-zinc-500"><ImagePlus className="w-3 h-3" />{task.allegati!.length}</span>
+          )}
+          {task.assegnato_a && <Avatar name={task.assegnato_a} size={22} />}
+        </div>
       </div>
     </div>
   );
 }
+
+// ─── Detail Slide Panel (Asana style) ───────────────────────────────────────
+
+// ─── Description with Ctrl+V image paste ────────────────────────────────────
+
+function DescriptionWithPaste({ taskId, descrizione, allegati, onDescChange, onDescBlur, onUpdate }: {
+  taskId: string;
+  descrizione: string;
+  allegati: string[];
+  onDescChange: (v: string) => void;
+  onDescBlur: () => void;
+  onUpdate: (id: string, data: Partial<Task>) => void;
+}) {
+  const [uploading, setUploading] = useState(false);
+  const [preview, setPreview] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const uploadFile = async (file: File) => {
+    const token = await auth.currentUser?.getIdToken();
+    if (!token) throw new Error('Not authenticated');
+    const filename = `${Date.now()}_${file.name || 'screenshot.png'}`;
+    const res = await fetch(`https://drape-dev.it/admin-api/admin/upload?folder=admin_tasks/${taskId}&filename=${encodeURIComponent(filename)}`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': file.type || 'image/png' },
+      body: file,
+    });
+    if (!res.ok) throw new Error(`Upload failed: ${res.status}`);
+    const data = await res.json();
+    return data.url as string;
+  };
+
+  const handlePaste = async (e: React.ClipboardEvent) => {
+    const items = e.clipboardData.items;
+    const imageFiles: File[] = [];
+    for (const item of Array.from(items)) {
+      if (item.type.startsWith('image/')) {
+        const file = item.getAsFile();
+        if (file) imageFiles.push(file);
+      }
+    }
+    if (imageFiles.length === 0) return;
+    e.preventDefault();
+    setUploading(true);
+    try {
+      const newUrls: string[] = [];
+      for (const file of imageFiles) {
+        const url = await uploadFile(file);
+        newUrls.push(url);
+      }
+      onUpdate(taskId, { allegati: [...allegati, ...newUrls] } as any);
+    } catch (err) {
+      console.error('Paste upload error:', err);
+    }
+    setUploading(false);
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    setUploading(true);
+    try {
+      const newUrls: string[] = [];
+      for (const file of Array.from(files)) {
+        const url = await uploadFile(file);
+        newUrls.push(url);
+      }
+      onUpdate(taskId, { allegati: [...allegati, ...newUrls] } as any);
+    } catch (err) {
+      console.error('Upload error:', err);
+    }
+    setUploading(false);
+    if (fileRef.current) fileRef.current.value = '';
+  };
+
+  const handleDeleteImage = (url: string) => {
+    onUpdate(taskId, { allegati: allegati.filter(a => a !== url) } as any);
+  };
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-2">
+        <p className="text-xs text-zinc-500 uppercase tracking-wide">Descrizione</p>
+        <div className="flex items-center gap-2">
+          {uploading && <Loader2 className="w-3 h-3 animate-spin text-purple-400" />}
+          <button
+            onClick={() => fileRef.current?.click()}
+            className="flex items-center gap-1 text-[11px] text-zinc-500 hover:text-purple-400 transition-colors"
+          >
+            <ImagePlus className="w-3 h-3" /> Allega
+          </button>
+          <input ref={fileRef} type="file" accept="image/*" multiple onChange={handleFileUpload} className="hidden" />
+        </div>
+      </div>
+
+      <textarea
+        value={descrizione}
+        onChange={(e) => onDescChange(e.target.value)}
+        onBlur={onDescBlur}
+        onPaste={handlePaste}
+        placeholder="Descrivi la task... (Ctrl+V per incollare screenshot)"
+        rows={4}
+        className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2.5 text-sm text-zinc-200 outline-none focus:border-purple-500/30 resize-none placeholder:text-zinc-700 leading-relaxed"
+      />
+      {uploading && (
+        <p className="text-[11px] text-purple-400 mt-1 flex items-center gap-1"><Loader2 className="w-3 h-3 animate-spin" /> Caricamento screenshot...</p>
+      )}
+
+      {/* Inline images */}
+      {allegati.length > 0 && (
+        <div className="grid grid-cols-2 gap-2 mt-3">
+          {allegati.map((url, i) => (
+            <div key={i} className="relative group rounded-lg overflow-hidden border border-white/[0.06] cursor-pointer"
+              onClick={() => setPreview(url)}>
+              <img src={url} alt="" className="w-full h-28 object-cover" loading="lazy" />
+              <button
+                onClick={(e) => { e.stopPropagation(); handleDeleteImage(url); }}
+                className="absolute top-1.5 right-1.5 p-1 rounded-md bg-black/70 text-zinc-400 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                <Trash2 className="w-3 h-3" />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Fullscreen preview */}
+      {preview && (
+        <div className="fixed inset-0 z-[60] bg-black/80 flex items-center justify-center p-8 cursor-pointer" onClick={() => setPreview(null)}>
+          <button onClick={() => setPreview(null)} className="absolute top-4 right-4 p-2 rounded-lg bg-white/10 text-white hover:bg-white/20">
+            <X className="w-5 h-5" />
+          </button>
+          <img src={preview} alt="" className="max-w-full max-h-full rounded-xl shadow-2xl" onClick={e => e.stopPropagation()} />
+        </div>
+      )}
+    </div>
+  );
+}
+
 
 // ─── Detail Slide Panel (Asana style) ───────────────────────────────────────
 
@@ -213,18 +364,15 @@ function DetailPanel({ task, columns, team, onUpdate, onDelete, onClose }: {
             )}
           </div>
 
-          {/* Description */}
-          <div>
-            <p className="text-xs text-zinc-500 uppercase tracking-wide mb-2">Descrizione</p>
-            <textarea
-              value={descrizione}
-              onChange={(e) => setDescrizione(e.target.value)}
-              onBlur={handleDescBlur}
-              placeholder="Aggiungi una descrizione..."
-              rows={5}
-              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2.5 text-sm text-zinc-200 outline-none focus:border-purple-500/30 resize-none placeholder:text-zinc-700 leading-relaxed"
-            />
-          </div>
+          {/* Description with paste-to-upload */}
+          <DescriptionWithPaste
+            taskId={task.id}
+            descrizione={descrizione}
+            allegati={task.allegati ?? []}
+            onDescChange={setDescrizione}
+            onDescBlur={handleDescBlur}
+            onUpdate={onUpdate}
+          />
         </div>
       </div>
     </>
@@ -308,7 +456,7 @@ function QuickAdd({ onSubmit, onCancel }: { onSubmit: (titolo: string) => void; 
   const ref = useRef<HTMLInputElement>(null);
   useEffect(() => { ref.current?.focus(); }, []);
   return (
-    <div className="task-card p-3" style={{ borderColor: 'rgba(139,92,246,0.3)' }}>
+    <div className="p-3 rounded-xl" style={{ background: '#1e1830', border: '1px solid rgba(139,92,246,0.3)' }}>
       <div className="flex items-center gap-2">
         <Circle className="w-4 h-4 text-zinc-600 flex-shrink-0" />
         <input ref={ref} value={val} onChange={e => setVal(e.target.value)}
@@ -414,7 +562,7 @@ export default function TasksPage() {
   }, []);
 
   return (
-    <div className="h-full flex flex-col task-board-bg -m-6 p-6 rounded-xl">
+    <div className="h-full flex flex-col">
       <div className="flex items-center justify-between mb-6 pb-5 border-b border-purple-500/10">
         <div>
           <h1 className="text-2xl font-bold text-white flex items-center gap-3">
@@ -434,20 +582,22 @@ export default function TasksPage() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-x-auto">
-        <div className="flex gap-5 h-full min-h-[500px] pb-4">
+      <div className="flex-1 overflow-x-auto" style={{ margin: '0 -6px', padding: '0 6px' }}>
+        <div className="flex gap-4 h-full min-h-[calc(100vh-180px)] pb-4">
           {columns.map(col => {
             const colTasks = byCol[col.id] ?? [];
             const isDragTarget = dragOver === col.id;
             return (
               <div
                 key={col.id}
-                className={cn(
-                  'w-80 flex-shrink-0 flex flex-col rounded-2xl task-column',
-                  isDragTarget && 'drag-over',
-                  dragOverColId === col.id && 'drag-over',
-                  draggedColId === col.id && 'dragging',
-                )}
+                className="w-72 flex-shrink-0 flex flex-col rounded-2xl"
+                style={{
+                  background: (isDragTarget || dragOverColId === col.id) ? '#1f1835' : '#161222',
+                  border: (isDragTarget || dragOverColId === col.id) ? '1.5px solid rgba(139,92,246,0.5)' : '1.5px solid rgba(139,92,246,0.15)',
+                  boxShadow: (isDragTarget || dragOverColId === col.id) ? '0 0 30px rgba(139,92,246,0.08)' : 'none',
+                  opacity: draggedColId === col.id ? 0.4 : 1,
+                  transition: 'all 0.2s ease',
+                }}
                 onDragOver={e => {
                   e.preventDefault();
                   if (draggedColId) { onColDragOver(e, col.id); }
@@ -498,7 +648,7 @@ export default function TasksPage() {
           })}
 
           <button onClick={() => { const i = columns.length % COL_COLORS.length; createCol.mutate({nome:'Nuova colonna',colore:COL_COLORS[i]}); }}
-            className="w-80 flex-shrink-0 flex flex-col items-center justify-center rounded-2xl add-column-btn cursor-pointer min-h-[200px] group">
+            className="w-72 flex-shrink-0 flex flex-col items-center justify-center rounded-2xl add-column-btn cursor-pointer min-h-[200px] group">
             <div className="w-12 h-12 rounded-2xl bg-purple-500/8 border border-purple-500/15 flex items-center justify-center group-hover:bg-purple-500/15 group-hover:border-purple-500/30 transition-all mb-3">
               <Plus className="w-5 h-5 text-purple-500/40 group-hover:text-purple-400 transition-colors" />
             </div>
